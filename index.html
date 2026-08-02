@@ -3,81 +3,505 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biblioteca de recursos visuales e interactivos para aprender Matemática.">
   <title>Matemática Interactiva</title>
+
   <style>
-    :root{--navy:#1f3a52;--blue:#1f5fa6;--green:#2e7c45;--orange:#d97828;--purple:#6b3fa6;--gold:#cb9b4c;--ink:#29323a;--muted:#687781;--border:#dce3e8;--paper:#fff;--bg:#f3f6f8}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.6}.site{max-width:1160px;margin:0 auto;min-height:100vh;background:var(--paper);box-shadow:0 0 28px rgba(20,40,55,.10)}
-    .hero{position:relative;overflow:hidden;padding:54px clamp(24px,6vw,72px) 48px;background:linear-gradient(135deg,#1f3a52 0%,#2f5363 100%);color:#fff;border-bottom:5px solid var(--gold)}.hero::after{content:"∑   π   √   f(x)   x²";position:absolute;right:-10px;bottom:-25px;font-family:Georgia,'Times New Roman',serif;font-size:clamp(48px,8vw,98px);color:rgba(255,255,255,.055);letter-spacing:12px;white-space:nowrap;pointer-events:none}.eyebrow{margin-bottom:8px;color:#d8c08b;font-size:12px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase}.hero h1{margin:0;max-width:760px;font-size:clamp(34px,6vw,58px);line-height:1.08;letter-spacing:-1px}.hero p{margin:16px 0 0;max-width:720px;color:#dce8ef;font-size:clamp(16px,2vw,19px);line-height:1.65}
-    main{padding:38px clamp(20px,5vw,58px) 56px}.intro{display:grid;grid-template-columns:1.4fr .6fr;gap:22px;align-items:stretch;margin-bottom:38px}.intro-text{padding:22px 24px;border:1px solid var(--border);border-left:5px solid var(--gold);border-radius:12px;background:#fbfaf6}.intro-text h2{margin:0 0 8px;color:var(--navy);font-size:22px}.intro-text p{margin:0;color:#3d464d;font-size:15px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick div{display:flex;flex-direction:column;justify-content:center;min-height:96px;padding:14px;border:1px solid var(--border);border-radius:12px;background:#f7f9fb;text-align:center}.quick strong{color:var(--navy);font-size:21px;line-height:1.2}.quick span{margin-top:4px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}
-    .section-title{margin:0 0 20px}.section-title span{display:block;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase}.section-title h2{margin:4px 0 0;color:var(--navy);font-size:27px}.units{display:grid;gap:24px}.unit{overflow:hidden;border:1px solid var(--border);border-radius:14px;background:#fff}.unit-head{display:flex;align-items:center;gap:15px;padding:18px 20px;border-bottom:1px solid var(--border);background:#fafbfc}.unit-mark{display:grid;place-items:center;width:43px;height:43px;flex:none;border-radius:11px;color:#fff;font-size:19px;font-weight:800}.unit-head h3{margin:0;color:var(--navy);font-size:20px;line-height:1.25}.unit-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
-    .resources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px}.resource{display:flex;flex-direction:column;min-height:164px;padding:17px;border:1px solid var(--border);border-radius:11px;background:#fff;text-decoration:none;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}.resource.available:hover{transform:translateY(-2px);border-color:#9fb7c7;box-shadow:0 7px 16px rgba(31,58,82,.10)}.resource .tag{align-self:flex-start;margin-bottom:10px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}.resource h4{margin:0 0 6px;color:var(--navy);font-size:17px;line-height:1.35}.resource p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}.resource .action{margin-top:auto;padding-top:14px;color:var(--navy);font-size:13px;font-weight:700}.resource.pending{background:#f8f9fa;cursor:default;opacity:.82}.resource.pending .action{color:#7d8991}
-    .u1{background:var(--blue)}.u2{background:var(--green)}.u3{background:var(--orange)}.u4{background:var(--purple)}.tag-blue{color:#1f5fa6;background:#edf4fb}.tag-pending{color:#6f7b83;background:#eef1f3}
-    footer{padding:18px 28px;border-top:1px solid var(--border);background:#f7f8fa;color:#7c8992;font-size:12px;text-align:center}@media(max-width:820px){.intro{grid-template-columns:1fr}.resources{grid-template-columns:1fr 1fr}}@media(max-width:560px){.hero{padding-top:40px}main{padding-top:28px}.resources{grid-template-columns:1fr}.quick{grid-template-columns:1fr 1fr}.unit-head{align-items:flex-start}}
+    :root{
+      --navy:#1f3a52;
+      --navy-2:#2f5363;
+      --blue:#1f5fa6;
+      --green:#2e7c45;
+      --orange:#d97828;
+      --purple:#6b3fa6;
+      --teal:#1f6f8b;
+      --red:#b8463d;
+      --gold:#cb9b4c;
+      --ink:#29323a;
+      --muted:#687781;
+      --border:#dce3e8;
+      --paper:#ffffff;
+      --bg:#f3f6f8;
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:'Segoe UI',Arial,sans-serif;
+      line-height:1.6;
+    }
+
+    a{color:inherit}
+
+    .site{
+      max-width:1180px;
+      min-height:100vh;
+      margin:0 auto;
+      background:var(--paper);
+      box-shadow:0 0 30px rgba(20,40,55,.10);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:58px clamp(24px,6vw,76px) 52px;
+      color:#ffffff;
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+      border-bottom:5px solid var(--gold);
+    }
+
+    .hero::after{
+      content:"∑  π  √  f(x)  x²";
+      position:absolute;
+      right:-20px;
+      bottom:-32px;
+      color:rgba(255,255,255,.055);
+      font-family:Georgia,'Times New Roman',serif;
+      font-size:clamp(50px,9vw,104px);
+      letter-spacing:14px;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      margin-bottom:8px;
+      color:#d8c08b;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      max-width:780px;
+      margin:0;
+      font-size:clamp(38px,6vw,62px);
+      line-height:1.05;
+      letter-spacing:-1.5px;
+    }
+
+    .hero p{
+      max-width:760px;
+      margin:18px 0 0;
+      color:#dce8ef;
+      font-size:clamp(16px,2vw,19px);
+      line-height:1.65;
+    }
+
+    main{
+      padding:40px clamp(20px,5vw,60px) 60px;
+    }
+
+    .intro{
+      display:grid;
+      grid-template-columns:1.45fr .55fr;
+      gap:22px;
+      align-items:stretch;
+      margin-bottom:40px;
+    }
+
+    .intro-copy{
+      padding:23px 24px;
+      background:#fbfaf6;
+      border:1px solid var(--border);
+      border-left:5px solid var(--gold);
+      border-radius:12px;
+    }
+
+    .intro-copy h2{
+      margin:0 0 8px;
+      color:var(--navy);
+      font-size:22px;
+    }
+
+    .intro-copy p{
+      margin:0;
+      color:#3d464d;
+      font-size:15px;
+    }
+
+    .summary{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .summary div{
+      display:flex;
+      min-height:98px;
+      padding:14px;
+      flex-direction:column;
+      justify-content:center;
+      text-align:center;
+      background:#f7f9fb;
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .summary strong{
+      color:var(--navy);
+      font-size:21px;
+      line-height:1.15;
+    }
+
+    .summary span{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .section-head{
+      display:flex;
+      gap:18px;
+      align-items:end;
+      justify-content:space-between;
+      margin-bottom:20px;
+    }
+
+    .section-head span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+    }
+
+    .section-head h2{
+      margin:4px 0 0;
+      color:var(--navy);
+      font-size:28px;
+      line-height:1.2;
+    }
+
+    .section-head p{
+      max-width:430px;
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      text-align:right;
+    }
+
+    .topics{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .topic{
+      display:flex;
+      min-height:205px;
+      padding:21px;
+      flex-direction:column;
+      text-decoration:none;
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-top:5px solid var(--topic-color);
+      border-radius:13px;
+      transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+    }
+
+    .topic:hover{
+      transform:translateY(-3px);
+      border-color:#aebdc6;
+      box-shadow:0 9px 20px rgba(31,58,82,.10);
+    }
+
+    .topic.disabled{
+      cursor:default;
+      background:#f8f9fa;
+      opacity:.82;
+    }
+
+    .topic.disabled:hover{
+      transform:none;
+      border-color:var(--border);
+      box-shadow:none;
+    }
+
+    .topic-top{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:13px;
+    }
+
+    .topic-icon{
+      display:grid;
+      width:44px;
+      height:44px;
+      flex:none;
+      place-items:center;
+      color:#ffffff;
+      background:var(--topic-color);
+      border-radius:11px;
+      font-family:Georgia,'Times New Roman',serif;
+      font-size:21px;
+      font-weight:700;
+    }
+
+    .topic h3{
+      margin:0;
+      color:var(--navy);
+      font-size:20px;
+      line-height:1.25;
+    }
+
+    .topic p{
+      margin:0;
+      color:var(--muted);
+      font-size:13.5px;
+      line-height:1.6;
+    }
+
+    .topic .action{
+      margin-top:auto;
+      padding-top:17px;
+      color:var(--topic-color);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .topic .status{
+      display:inline-block;
+      align-self:flex-start;
+      margin-top:12px;
+      padding:4px 9px;
+      color:#6f7b83;
+      background:#eef1f3;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    .real{--topic-color:var(--blue)}
+    .algebra{--topic-color:var(--green)}
+    .functions{--topic-color:var(--orange)}
+    .systems{--topic-color:var(--purple)}
+    .matrices{--topic-color:var(--teal)}
+    .statistics{--topic-color:#8a6a3f}
+    .probability{--topic-color:var(--red)}
+    .geometry{--topic-color:#5f7e48}
+
+    .note{
+      margin-top:34px;
+      padding:16px 18px;
+      color:#4b5a63;
+      background:#f5f8fa;
+      border:1px solid #dce5ea;
+      border-left:4px solid var(--teal);
+      border-radius:9px;
+      font-size:13px;
+    }
+
+    footer{
+      padding:18px 28px;
+      color:#7c8992;
+      background:#f7f8fa;
+      border-top:1px solid var(--border);
+      font-size:12px;
+      text-align:center;
+    }
+
+    @media(max-width:820px){
+      .intro{grid-template-columns:1fr}
+      .topics{grid-template-columns:1fr}
+      .section-head{
+        display:block;
+      }
+      .section-head p{
+        margin-top:8px;
+        text-align:left;
+      }
+    }
+
+    @media(max-width:520px){
+      .hero{padding-top:42px}
+      main{padding-top:30px}
+      .summary{grid-template-columns:1fr 1fr}
+      .topic{min-height:auto}
+    }
   </style>
 </head>
+
 <body>
   <div class="site">
+
     <header class="hero">
-      <div class="eyebrow">Explorar · comprender · practicar</div>
+      <div class="eyebrow">Biblioteca digital</div>
       <h1>Matemática Interactiva</h1>
-      <p>Un espacio de recorridos visuales y actividades breves para acompañar el aprendizaje de conceptos matemáticos.</p>
+      <p>
+        Recursos visuales e interactivos para explorar conceptos,
+        comprender ideas y practicar Matemática.
+      </p>
     </header>
 
     <main>
+
       <section class="intro">
-        <div class="intro-text">
-          <h2>Aprender recorriendo</h2>
-          <p>Cada recurso combina explicaciones breves, ejemplos, videos y actividades de comprobación. Podés avanzar a tu ritmo y volver a consultar cada recorrido cuando lo necesites.</p>
+        <div class="intro-copy">
+          <h2>Aprender explorando</h2>
+          <p>
+            Los recursos están organizados por temas matemáticos y pueden
+            utilizarse de manera independiente. Cada recorrido combina
+            explicaciones breves, ejemplos, videos y actividades de comprobación.
+          </p>
         </div>
-        <div class="quick" aria-label="Información general del sitio">
-          <div><strong>4</strong><span>Unidades</span></div>
-          <div><strong>10</strong><span>Bloques</span></div>
+
+        <div class="summary" aria-label="Características del sitio">
+          <div>
+            <strong>Por temas</strong>
+            <span>Navegación simple</span>
+          </div>
+          <div>
+            <strong>A tu ritmo</strong>
+            <span>Acceso libre</span>
+          </div>
         </div>
       </section>
 
       <section>
-        <div class="section-title"><span>Recursos disponibles</span><h2>Elegí un recorrido</h2></div>
-        <div class="units">
+        <div class="section-head">
+          <div>
+            <span>Biblioteca de contenidos</span>
+            <h2>Explorá por tema</h2>
+          </div>
+          <p>
+            La colección se amplía progresivamente con nuevos recorridos
+            y actividades.
+          </p>
+        </div>
 
-          <article class="unit">
-            <div class="unit-head"><div class="unit-mark u1">1</div><div><h3>De las cantidades al cálculo</h3><p>Conjuntos, números reales, operaciones, proporcionalidad y porcentajes.</p></div></div>
-            <div class="resources">
-              <a class="resource available" href="unidad1/numeros-reales.html"><span class="tag tag-blue">Disponible</span><h4>Conjuntos y números reales</h4><p>Clasificación numérica, recta numérica, orden y valor absoluto.</p><span class="action">Abrir recorrido →</span></a>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Operaciones con números reales</h4><p>Propiedades, jerarquía de operaciones, potenciación y radicación.</p><span class="action">En preparación</span></div>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Proporcionalidad y porcentajes</h4><p>Proporciones, porcentajes, aumentos y disminuciones.</p><span class="action">En preparación</span></div>
-            </div>
-          </article>
+        <div class="topics">
 
-          <article class="unit">
-            <div class="unit-head"><div class="unit-mark u2">2</div><div><h3>Del cálculo a la incógnita</h3><p>Lenguaje algebraico, polinomios, ecuaciones e inecuaciones.</p></div></div>
-            <div class="resources">
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Expresiones algebraicas y polinomios</h4><p>Variables, operaciones, simplificación y factorización.</p><span class="action">En preparación</span></div>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Ecuaciones e inecuaciones</h4><p>Resolución, verificación, intervalos y representación.</p><span class="action">En preparación</span></div>
+          <!-- NÚMEROS REALES -->
+          <a class="topic real" href="numeros-reales/index.html">
+            <div class="topic-top">
+              <div class="topic-icon">ℝ</div>
+              <h3>Números reales</h3>
             </div>
-          </article>
+            <p>
+              Conjuntos numéricos, recta numérica, orden, valor absoluto,
+              intervalos, operaciones, potencias, raíces y porcentajes.
+            </p>
+            <span class="action">Explorar recursos →</span>
+          </a>
 
-          <article class="unit">
-            <div class="unit-head"><div class="unit-mark u3">3</div><div><h3>De la incógnita a la relación</h3><p>Funciones, representaciones y análisis del comportamiento.</p></div></div>
-            <div class="resources">
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Introducción a funciones</h4><p>Plano cartesiano, dominio, imagen y formas de representación.</p><span class="action">En preparación</span></div>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Función lineal</h4><p>Pendiente, ordenada al origen y representación gráfica.</p><span class="action">En preparación</span></div>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Función cuadrática</h4><p>Parábola, raíces, vértice, máximos y mínimos.</p><span class="action">En preparación</span></div>
+          <!-- ÁLGEBRA -->
+          <div class="topic algebra disabled">
+            <div class="topic-top">
+              <div class="topic-icon">x</div>
+              <h3>Álgebra</h3>
             </div>
-          </article>
+            <p>
+              Expresiones algebraicas, polinomios, productos notables,
+              factorización, ecuaciones e inecuaciones.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
 
-          <article class="unit">
-            <div class="unit-head"><div class="unit-mark u4">4</div><div><h3>De la relación al sistema</h3><p>Sistemas de ecuaciones, matrices y organización de información.</p></div></div>
-            <div class="resources">
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Sistemas de ecuaciones lineales</h4><p>Planteo, resolución, representación y clasificación.</p><span class="action">En preparación</span></div>
-              <div class="resource pending"><span class="tag tag-pending">Próximamente</span><h4>Matrices</h4><p>Organización de información, operaciones y resolución de sistemas.</p><span class="action">En preparación</span></div>
+          <!-- FUNCIONES -->
+          <div class="topic functions disabled">
+            <div class="topic-top">
+              <div class="topic-icon">f</div>
+              <h3>Funciones</h3>
             </div>
-          </article>
+            <p>
+              Plano cartesiano, concepto de función, función lineal,
+              función cuadrática y análisis de gráficos.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
+
+          <!-- SISTEMAS -->
+          <div class="topic systems disabled">
+            <div class="topic-top">
+              <div class="topic-icon">{ }</div>
+              <h3>Sistemas lineales</h3>
+            </div>
+            <p>
+              Sistemas de ecuaciones, representación, clasificación
+              y métodos de resolución.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
+
+          <!-- MATRICES -->
+          <div class="topic matrices disabled">
+            <div class="topic-top">
+              <div class="topic-icon">[]</div>
+              <h3>Matrices</h3>
+            </div>
+            <p>
+              Notación, tipos de matrices, operaciones, organización
+              de información y aplicaciones.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
+
+          <!-- GEOMETRÍA -->
+          <div class="topic geometry disabled">
+            <div class="topic-top">
+              <div class="topic-icon">△</div>
+              <h3>Geometría</h3>
+            </div>
+            <p>
+              Figuras, medidas, relaciones geométricas, área,
+              perímetro y volumen.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
+
+          <!-- ESTADÍSTICA -->
+          <div class="topic statistics disabled">
+            <div class="topic-top">
+              <div class="topic-icon">▥</div>
+              <h3>Estadística</h3>
+            </div>
+            <p>
+              Organización de datos, gráficos, distribuciones
+              y medidas descriptivas.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
+
+          <!-- PROBABILIDAD -->
+          <div class="topic probability disabled">
+            <div class="topic-top">
+              <div class="topic-icon">P</div>
+              <h3>Probabilidad</h3>
+            </div>
+            <p>
+              Experimentos aleatorios, eventos, cálculo de probabilidades
+              y distribuciones.
+            </p>
+            <span class="status">Próximamente</span>
+          </div>
 
         </div>
       </section>
+
+      <div class="note">
+        Los recursos pueden actualizarse, ampliarse o reorganizarse sin modificar
+        la dirección principal del sitio.
+      </div>
+
     </main>
 
-    <footer>Matemática Interactiva · Recursos educativos de acceso abierto</footer>
+    <footer>
+      Matemática Interactiva · Biblioteca digital de recursos educativos
+    </footer>
+
   </div>
 </body>
 </html>
