@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Números reales · Matemática Interactiva</title>
+<style>
+:root{--navy:#1f3a52;--navy2:#2f5363;--blue:#1f5fa6;--blueSoft:#eef5fb;--gold:#cb9b4c;--green:#2e7c45;--greenSoft:#eef8f1;--orange:#d97828;--purple:#6b3fa6;--purpleSoft:#f4effa;--red:#b8463d;--redSoft:#fceeee;--ink:#29323a;--muted:#687781;--border:#dce3e8;--bg:#f3f6f8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.6}button,select,input{font:inherit}button{cursor:pointer}
+.site{max-width:1080px;min-height:100vh;margin:0 auto;background:#fff;box-shadow:0 0 30px rgba(20,40,55,.10)}
+.hero{position:relative;overflow:hidden;padding:42px clamp(22px,5vw,58px) 38px;color:#fff;background:linear-gradient(135deg,var(--navy),var(--navy2));border-bottom:5px solid var(--gold)}
+.hero:after{content:"ℕ  ℤ  ℚ  ℝ";position:absolute;right:-12px;bottom:-24px;color:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:clamp(52px,9vw,104px);letter-spacing:12px;white-space:nowrap}
+.eyebrow{margin-bottom:7px;color:#d8c08b;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.hero h1{margin:0;font-size:clamp(32px,5vw,50px);line-height:1.08}.hero p{max-width:760px;margin:13px 0 0;color:#dce8ef;font-size:16px}
+.progress-wrap{position:sticky;top:0;z-index:40;padding:10px clamp(16px,4vw,38px);background:rgba(255,255,255,.97);border-bottom:1px solid var(--border)}.progress-meta{display:flex;justify-content:space-between;gap:15px;margin-bottom:6px;color:var(--muted);font-size:13px}.track{height:9px;overflow:hidden;background:#e8edf0;border-radius:999px}.bar{width:0;height:100%;background:var(--green);transition:width .35s}
+main{padding:26px clamp(18px,5vw,48px) 54px}.intro{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;margin-bottom:25px}.intro-copy{padding:18px 20px;background:#fbfaf6;border:1px solid var(--border);border-left:5px solid var(--gold);border-radius:11px}.intro-copy h2{margin:0 0 6px;color:var(--navy);font-size:20px}.intro-copy p{margin:0;font-size:14px}.intro-facts{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fact{display:flex;min-height:96px;padding:13px;flex-direction:column;justify-content:center;text-align:center;background:#f7f9fb;border:1px solid var(--border);border-radius:11px}.fact strong{color:var(--navy);font-size:19px}.fact span{margin-top:4px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.route{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 28px}.route button{min-height:54px;padding:9px 8px;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:10px;font-size:13px}.route button.active{color:var(--navy);background:var(--blueSoft);border-color:#b9d1e6;font-weight:700}.route button.done:before{content:"✓ ";color:var(--green);font-weight:800}
+.module{display:none}.module.active{display:block}.module-head{display:flex;gap:13px;align-items:center;padding-bottom:12px;margin-bottom:18px;border-bottom:2px solid var(--border)}.num{display:grid;width:42px;height:42px;flex:none;place-items:center;color:#fff;background:var(--navy);border-radius:11px;font-size:19px;font-weight:800}.module h2{margin:0;color:var(--navy);font-size:25px}.module-head small{color:var(--muted)}
+.card{padding:20px;margin:16px 0;background:#fff;border:1px solid var(--border);border-radius:11px}.card h3{margin:0 0 8px;color:var(--navy);font-size:19px}.visual{margin:16px 0;overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:11px}.visual img{display:block;width:100%;height:auto}.caption{padding:9px 12px;color:var(--muted);background:#f7f9fb;border-top:1px solid var(--border);font-size:12px}
+.key-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.key{padding:13px 14px;background:#f8fafb;border:1px solid var(--border);border-radius:9px;font-size:13.5px}.key strong{display:block;margin-bottom:2px;color:var(--navy)}.formula{margin:14px 0;padding:12px 15px;color:#422c68;background:var(--purpleSoft);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;font-family:Georgia,serif;font-size:19px}
+.video{margin:18px 0;overflow:hidden;background:#000;border:1px solid var(--border);border-radius:11px}.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0}.video-note{padding:10px 13px;color:var(--muted);background:#f7f9fb;font-size:13px}
+.activity{padding:19px;margin:21px 0;background:#fbfcfd;border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:11px}.activity h3{margin:0 0 4px;color:var(--navy);font-size:18px}.instruction{margin:0 0 14px;color:var(--muted);font-size:14px}.classify{display:grid;grid-template-columns:minmax(110px,.8fr) minmax(170px,1.2fr);gap:10px;align-items:center;margin-bottom:9px}.classify label{font-weight:650}.classify select{width:100%;padding:9px;background:#fff;border:1px solid #bdc8cf;border-radius:7px}
+.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:8px}.option input{margin-top:5px}.check{margin-top:13px;padding:10px 16px;color:#fff;background:var(--navy);border:0;border-radius:8px;font-weight:700}.feedback{display:none;margin-top:12px;padding:11px 13px;border-radius:8px;font-size:14px}.feedback.ok{display:block;color:#246b4a;background:#e8f6ef;border:1px solid #bde3ce}.feedback.bad{display:block;color:#8c3029;background:#fceceb;border:1px solid #efc4c0}
+.error-box{margin:16px 0;padding:14px 16px;color:#6d2f2a;background:var(--redSoft);border-left:4px solid var(--red);border-radius:0 9px 9px 0;font-size:14px}.error-box strong{display:block;margin-bottom:4px;color:#8c3029}
+.tokens{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:12px}.token{padding:8px 11px;color:var(--navy);background:var(--blueSoft);border:1px solid #b9d1e6;border-radius:999px;font-weight:700;touch-action:none;user-select:none;cursor:grab}.token.dragging{opacity:.45}
+.drag-zone{position:relative;min-height:250px;margin:17px 0 8px;padding:18px 16px 48px;overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:10px}.drag-axis{position:absolute;left:7%;right:7%;top:125px;height:3px;background:var(--navy)}.drag-axis:before,.drag-axis:after{content:"";position:absolute;top:-6px;border-top:8px solid transparent;border-bottom:8px solid transparent}.drag-axis:before{left:-5px;border-right:12px solid var(--navy)}.drag-axis:after{right:-5px;border-left:12px solid var(--navy)}
+.ticks,.drop-slots{position:absolute;left:7%;right:7%;display:grid;grid-template-columns:repeat(9,1fr)}.ticks{top:105px}.drop-slots{top:78px}.tick{position:relative;height:40px;text-align:center;font-size:12px}.tick:before{content:"";position:absolute;left:50%;top:18px;width:2px;height:20px;background:var(--navy);transform:translateX(-50%)}.tick span{position:absolute;left:50%;top:40px;transform:translateX(-50%)}.slot{height:92px;border-left:1px dashed rgba(31,58,82,.14)}.slot:last-child{border-right:1px dashed rgba(31,58,82,.14)}.slot .placed{display:block;width:max-content;max-width:90px;margin:0 auto;padding:5px 8px;color:#fff;background:var(--orange);border-radius:999px;font-size:12px;font-weight:700;transform:translateY(-31px)}
+.abs-tool{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;margin:18px 0}.abs-panel{padding:16px;text-align:center;background:var(--purpleSoft);border:1px solid #ddd1ef;border-radius:10px}.abs-value{margin-bottom:8px;color:var(--purple);font-family:Georgia,serif;font-size:28px;font-weight:700}.abs-panel input{width:100%}.abs-explain{color:var(--muted);font-size:13px}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}.nav-actions button{padding:10px 16px;border-radius:8px;font-weight:700}.prev{color:var(--navy);background:#fff;border:1px solid var(--navy)}.next{color:#fff;background:var(--navy);border:1px solid var(--navy)}.next:disabled{opacity:.45;cursor:not-allowed}
+.finish{display:none;margin-top:24px;padding:24px;text-align:center;background:var(--greenSoft);border:1px solid #bde3ce;border-radius:12px}.finish h2{margin:0 0 8px;color:#246b4a}.essentials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px;text-align:left}.essential{padding:11px 12px;color:#315b45;background:#fff;border:1px solid #cde6d7;border-radius:8px;font-size:13px}
+@media(max-width:760px){.intro{grid-template-columns:1fr}.route{grid-template-columns:1fr 1fr}.key-grid,.abs-tool,.essentials{grid-template-columns:1fr}}@media(max-width:560px){.classify{grid-template-columns:1fr}.intro-facts{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="site">
+<header class="hero">
+<div class="eyebrow">Experiencia de aprendizaje interactiva</div>
+<h1>Números reales</h1>
+<p>Conjuntos numéricos, recta numérica, orden y valor absoluto mediante explicaciones breves, ejemplos, videos y actividades.</p>
+</header>
+
+<div class="progress-wrap">
+<div class="progress-meta"><span>Tu avance</span><strong id="progressText">0 de 4 etapas</strong></div>
+<div class="track"><div class="bar" id="progressBar"></div></div>
+</div>
+
+<main>
+<section class="intro">
+<div class="intro-copy"><h2>¿Cómo recorrer este recurso?</h2><p>Avanzá por las cuatro etapas. Cada una presenta una idea central, un ejemplo visual, un video y una actividad breve. Al resolverla correctamente se habilita la etapa siguiente.</p></div>
+<div class="intro-facts"><div class="fact"><strong>4 etapas</strong><span>Recorrido breve</span></div><div class="fact"><strong>20–25 min</strong><span>Tiempo estimado</span></div></div>
+</section>
+
+<nav class="route">
+<button class="active" data-go="0">1. Conjuntos</button>
+<button data-go="1">2. Reconocer</button>
+<button data-go="2">3. Recta y orden</button>
+<button data-go="3">4. Valor absoluto</button>
+</nav>
+
+<section class="module active" data-module="0">
+<div class="module-head"><div class="num">1</div><div><h2>Conjuntos numéricos</h2><small>Comprender cómo se organizan los números reales</small></div></div>
+<div class="card">
+<h3>Una familia de conjuntos que se amplía</h3>
+<p>Los naturales están incluidos en los enteros; los enteros, en los racionales; y los racionales, en los reales. Los irracionales también son reales, pero no son racionales.</p>
+<div class="formula">ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ &nbsp; · &nbsp; ℝ = ℚ ∪ 𝕀</div>
+<div class="visual"><img src="../../img/numeros-reales/conjuntos-numericos.jpg" alt="Clasificación de los números reales"><div class="caption">Los racionales incluyen enteros, fracciones y decimales exactos o periódicos. Los irracionales tienen expresión decimal infinita no periódica.</div></div>
+</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/c9IwjTFMkng" title="El conjunto de los números reales" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="video-note">Mientras mirás, observá especialmente la relación de inclusión entre los conjuntos.</div></div>
+<div class="activity" data-activity="0">
+<h3>Tu turno</h3><p class="instruction">Elegí el conjunto más específico al que pertenece cada número.</p>
+<div class="classify"><label for="c1">−18</label><select id="c1"><option value="">Elegí…</option><option value="N">ℕ</option><option value="Z">ℤ</option><option value="Q">ℚ</option><option value="I">𝕀</option></select></div>
+<div class="classify"><label for="c2">0,75</label><select id="c2"><option value="">Elegí…</option><option value="N">ℕ</option><option value="Z">ℤ</option><option value="Q">ℚ</option><option value="I">𝕀</option></select></div>
+<div class="classify"><label for="c3">√5</label><select id="c3"><option value="">Elegí…</option><option value="N">ℕ</option><option value="Z">ℤ</option><option value="Q">ℚ</option><option value="I">𝕀</option></select></div>
+<button class="check" type="button">Verificar</button><div class="feedback"></div>
+</div>
+<div class="error-box"><strong>Error frecuente</strong>Pensar que todo número con parte decimal es irracional. Por ejemplo, 0,75 es racional porque puede escribirse como 3/4.</div>
+<div class="nav-actions"><span></span><button class="next" disabled>Siguiente etapa →</button></div>
+</section>
+
+<section class="module" data-module="1">
+<div class="module-head"><div class="num">2</div><div><h2>¿Cómo reconocerlos?</h2><small>Distinguir racionales e irracionales</small></div></div>
+<div class="card">
+<h3>La forma decimal da una pista</h3>
+<div class="key-grid">
+<div class="key"><strong>Decimal exacto</strong>Termina. Ejemplo: 0,25 = 1/4. Es racional.</div>
+<div class="key"><strong>Decimal periódico</strong>Repite un patrón. Ejemplo: 0,333… = 1/3. Es racional.</div>
+<div class="key"><strong>Fracción de enteros</strong>Puede escribirse como a/b, con b ≠ 0. Es racional.</div>
+<div class="key"><strong>Decimal infinito no periódico</strong>No termina ni repite un patrón. Es irracional.</div>
+</div>
+<div class="formula">√2 ≈ 1,41 &nbsp; y &nbsp; π ≈ 3,14</div>
+<p>El símbolo <strong>≈</strong> indica aproximación. No corresponde escribir √2 = 1,41 ni π = 3,14 porque esos valores no son exactos.</p>
+</div>
+<div class="activity" data-activity="1">
+<h3>Clasificá según su expresión</h3><p class="instruction">Marcá la afirmación correcta.</p>
+<div class="options">
+<label class="option"><input type="radio" name="q2" value="a">0,333… es irracional porque tiene infinitas cifras.</label>
+<label class="option"><input type="radio" name="q2" value="b">2,75 es racional porque puede escribirse como 11/4.</label>
+<label class="option"><input type="radio" name="q2" value="c">√2 es racional porque puede aproximarse con un decimal.</label>
+</div>
+<button class="check" type="button">Verificar</button><div class="feedback"></div>
+</div>
+<div class="error-box"><strong>Error frecuente</strong>Usar el signo = en una aproximación. Cuando se reemplaza un irracional por una cantidad limitada de decimales, se usa ≈.</div>
+<div class="nav-actions"><button class="prev">← Etapa anterior</button><button class="next" disabled>Siguiente etapa →</button></div>
+</section>
+
+<section class="module" data-module="2">
+<div class="module-head"><div class="num">3</div><div><h2>Recta numérica y orden</h2><small>Ubicar, comparar y ordenar números reales</small></div></div>
+<div class="card">
+<h3>La posición determina el orden</h3>
+<p>En la recta numérica, los números aumentan de izquierda a derecha. El 0 es el origen: los negativos quedan a su izquierda y los positivos, a su derecha.</p>
+<div class="visual"><img src="../../img/numeros-reales/recta-numerica.png" alt="Recta numérica"><div class="caption">El número situado más a la derecha es siempre el mayor.</div></div>
+<div class="visual"><img src="../../img/numeros-reales/recta-numerica-ejemplo.png" alt="Ejemplo de números reales en la recta"><div class="caption">Para comparar fracciones, raíces y decimales puede ser útil expresarlos mediante aproximaciones decimales.</div></div>
+</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/5MPJ4l7jLr8" title="Representación y recta numérica" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="video-note">Observá cómo se ubican números positivos, negativos, fracciones y decimales.</div></div>
+<div class="activity" data-activity="2">
+<h3>Ubicá los números</h3><p class="instruction">Arrastrá cada número hasta la posición que le corresponde.</p>
+<div class="tokens" id="tokens">
+<div class="token" draggable="true" data-target="1">−3</div><div class="token" draggable="true" data-target="3">−1</div><div class="token" draggable="true" data-target="5">1</div><div class="token" draggable="true" data-target="7">3</div>
+</div>
+<div class="drag-zone">
+<div class="drag-axis"></div>
+<div class="ticks">
+<div class="tick"><span>−4</span></div><div class="tick"><span>−3</span></div><div class="tick"><span>−2</span></div><div class="tick"><span>−1</span></div><div class="tick"><span>0</span></div><div class="tick"><span>1</span></div><div class="tick"><span>2</span></div><div class="tick"><span>3</span></div><div class="tick"><span>4</span></div>
+</div>
+<div class="drop-slots">
+<div class="slot" data-slot="0"></div><div class="slot" data-slot="1"></div><div class="slot" data-slot="2"></div><div class="slot" data-slot="3"></div><div class="slot" data-slot="4"></div><div class="slot" data-slot="5"></div><div class="slot" data-slot="6"></div><div class="slot" data-slot="7"></div><div class="slot" data-slot="8"></div>
+</div>
+</div>
+<button class="check" type="button">Verificar</button><div class="feedback"></div>
+</div>
+<div class="error-box"><strong>Error frecuente</strong>Creer que −8 &gt; −3 porque 8 &gt; 3. En la recta, −8 está más a la izquierda: por eso −8 &lt; −3.</div>
+<div class="nav-actions"><button class="prev">← Etapa anterior</button><button class="next" disabled>Siguiente etapa →</button></div>
+</section>
+
+<section class="module" data-module="3">
+<div class="module-head"><div class="num">4</div><div><h2>Valor absoluto</h2><small>Interpretarlo como distancia al cero</small></div></div>
+<div class="card">
+<h3>La magnitud no depende del signo</h3>
+<p>El valor absoluto de un número es su distancia al 0. Como una distancia nunca es negativa, el resultado siempre es mayor o igual que 0.</p>
+<div class="formula">|a| = a si a ≥ 0 &nbsp; · &nbsp; |a| = −a si a &lt; 0</div>
+<div class="visual"><img src="../../img/numeros-reales/valor-absoluto-ejemplo.png" alt="Valor absoluto como distancia al origen"><div class="caption">−3 y 3 están en lados opuestos, pero ambos se encuentran a 3 unidades del 0.</div></div>
+<div class="abs-tool"><div class="abs-panel"><div class="abs-value" id="absDisplay">|−4| = 4</div><input id="absRange" type="range" min="-8" max="8" value="-4" step="1"><div class="abs-explain">Mové el punto y observá cómo cambia la distancia.</div></div><div class="key"><strong>Signo y magnitud</strong>El signo indica la posición respecto del 0. El valor absoluto indica cuántas unidades separan al número del origen.</div></div>
+</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/O5PjnphvXaI" title="Valor absoluto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="video-note">Relacioná cada cálculo con la idea de distancia al 0.</div></div>
+<div class="activity" data-activity="3">
+<h3>Último desafío</h3><p class="instruction">Elegí la interpretación correcta.</p>
+<div class="options">
+<label class="option"><input type="radio" name="q4" value="a">|−4200| = −4200 porque el número original es negativo.</label>
+<label class="option"><input type="radio" name="q4" value="b">|−4200| = 4200 porque la distancia entre −4200 y 0 es 4200.</label>
+<label class="option"><input type="radio" name="q4" value="c">|−4200| = 0 porque el valor absoluto elimina el número.</label>
+</div>
+<button class="check" type="button">Verificar</button><div class="feedback"></div>
+</div>
+<div class="error-box"><strong>Error frecuente</strong>Pensar que el valor absoluto simplemente “borra el signo”. En realidad, mide una distancia; por eso siempre produce un número no negativo.</div>
+<div class="nav-actions"><button class="prev">← Etapa anterior</button><span></span></div>
+</section>
+
+<section class="finish" id="finish">
+<h2>Lo esencial</h2><p>Completaste el recorrido y trabajaste las ideas centrales del tema.</p>
+<div class="essentials"><div class="essential">✓ Reconocer los principales conjuntos numéricos.</div><div class="essential">✓ Distinguir racionales e irracionales.</div><div class="essential">✓ Ubicar y comparar números en la recta.</div><div class="essential">✓ Interpretar el valor absoluto como distancia.</div></div>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+const modules=[...document.querySelectorAll('.module')],route=[...document.querySelectorAll('.route button')],done=[false,false,false,false];let current=0;
+function update(){const n=done.filter(Boolean).length;progressText.textContent=n+' de 4 etapas';progressBar.style.width=(n*25)+'%';route.forEach((b,i)=>b.classList.toggle('done',done[i]));if(n===4)finish.style.display='block'}
+function show(i){if(i>0&&!done[i-1])return;current=i;modules.forEach((m,j)=>m.classList.toggle('active',j===i));route.forEach((b,j)=>b.classList.toggle('active',j===i));window.scrollTo({top:0,behavior:'smooth'})}
+route.forEach((b,i)=>b.addEventListener('click',()=>show(i)));document.querySelectorAll('.prev').forEach(b=>b.addEventListener('click',()=>show(current-1)));document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>show(current+1)));
+function result(a,ok,good,bad){const f=a.querySelector('.feedback');f.className='feedback '+(ok?'ok':'bad');f.textContent=ok?good:bad;if(ok){const i=+a.dataset.activity;done[i]=true;const next=modules[i].querySelector('.next');if(next)next.disabled=false;update()}}
+const a0=document.querySelector('[data-activity="0"]');a0.querySelector('.check').addEventListener('click',()=>result(a0,c1.value==='Z'&&c2.value==='Q'&&c3.value==='I','¡Correcto! −18 es entero, 0,75 es racional y √5 es irracional.','Revisá la cadena de inclusión y elegí el conjunto más específico.'));
+const a1=document.querySelector('[data-activity="1"]');a1.querySelector('.check').addEventListener('click',()=>{const v=document.querySelector('input[name="q2"]:checked');result(a1,v&&v.value==='b','¡Correcto! 2,75 = 11/4, por lo tanto es racional.','Revisá la diferencia entre decimal exacto, periódico e infinito no periódico.')});
+let dragged=null;document.querySelectorAll('.token').forEach(t=>{t.addEventListener('dragstart',()=>{dragged=t;t.classList.add('dragging')});t.addEventListener('dragend',()=>t.classList.remove('dragging'))});
+document.querySelectorAll('.slot').forEach(s=>{s.addEventListener('dragover',e=>e.preventDefault());s.addEventListener('drop',e=>{e.preventDefault();if(!dragged)return;const old=s.querySelector('.placed');if(old){tokens.appendChild(old);old.className='token'}dragged.className='placed';s.appendChild(dragged);dragged=null})});
+const a2=document.querySelector('[data-activity="2"]');a2.querySelector('.check').addEventListener('click',()=>{const p=[...document.querySelectorAll('.slot .placed')];result(a2,p.length===4&&p.every(x=>x.parentElement.dataset.slot===x.dataset.target),'¡Muy bien! Ubicaste correctamente los cuatro números.','Todavía hay alguna ubicación incorrecta. Recordá que los números aumentan de izquierda a derecha.')});
+function updAbs(){const x=Number(absRange.value);absDisplay.textContent='|'+(x<0?'−'+Math.abs(x):x)+'| = '+Math.abs(x)}absRange.addEventListener('input',updAbs);updAbs();
+const a3=document.querySelector('[data-activity="3"]');a3.querySelector('.check').addEventListener('click',()=>{const v=document.querySelector('input[name="q4"]:checked');result(a3,v&&v.value==='b','¡Correcto! El valor absoluto expresa una distancia y nunca es negativo.','Recordá que el valor absoluto mide la distancia al 0.')});
+update();
+})();
+</script>
+</body>
+</html>
