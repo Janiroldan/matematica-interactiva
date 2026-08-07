@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Potenciación, radicación y jerarquía · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:2rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:720px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.55rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:24px}
+.muted{color:var(--slate-700)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.92rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:10px 12px;font-size:.88rem}
+.mini-table td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.95rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn span:last-child{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.93rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.93rem}
+.errores-titulo{font-size:.88rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px}
+
+.practica-titulo{font-size:1.1rem;font-weight:800;color:var(--navy-900);margin:24px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--teal-100)}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.vf-item{margin:0 0 8px;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.vf-block{background:#F7FCFC;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vf-block:last-child{margin-bottom:0}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.93rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.83rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+
+.drag-item{background:#fff;border:2px solid var(--teal-700);color:var(--teal-900);font-weight:700;padding:8px 16px;border-radius:10px;cursor:grab;user-select:none;transition:.15s;font-size:.95rem}
+.drag-item:active{cursor:grabbing;transform:scale(1.06);box-shadow:0 6px 18px rgba(10,79,83,.18)}
+.drag-item.dragging{opacity:.4}
+.drag-item.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green);cursor:default}
+.drag-item.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.drop-zones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px}
+.drop-zone{border:2px dashed var(--line);border-radius:14px;padding:12px;min-height:90px;transition:.15s;background:#FAFEFE}
+.drop-zone.over{border-color:var(--teal-700);background:#EAF7F7}
+.zone-label{display:block;font-weight:800;color:var(--teal-800);font-size:1rem;margin-bottom:8px;text-align:center}
+.zone-items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:36px}
+.btn-verificar{background:var(--teal-800);color:#fff;border:none;border-radius:8px;padding:9px 22px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:.15s}
+.btn-verificar:hover{background:var(--teal-700)}
+
+.video{position:relative;margin:16px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.visual .caption{padding:10px 15px;color:var(--slate-700);background:#F7FCFC;font-size:.88rem;border-top:1px solid var(--line)}
+
+.launch-card{border:1px solid var(--line);background:linear-gradient(135deg,#fff,#F7FCFC);border-radius:16px;padding:18px;display:flex;align-items:center;gap:16px;margin:14px 0}
+.acc-item.prop{border-color:var(--line);border-left:5px solid var(--teal-700)}
+.acc-item.prop .acc-btn{color:var(--navy-900)}
+.acc-item.prop .acc-btn span:last-child{color:var(--teal-700)}
+.acc-item.prop.open .acc-btn{background:var(--teal-100)}
+.acc-item.prop:hover .acc-btn{background:var(--teal-100)}
+.acc-item.prop .acc-panel p{margin-bottom:10px}
+.acc-item.prop.p-orange{border-left-color:var(--orange)}
+.acc-item.prop.p-orange .acc-btn span:last-child{color:var(--orange)}
+.acc-item.prop.p-orange.open .acc-btn,.acc-item.prop.p-orange:hover .acc-btn{background:var(--orange-soft)}
+.acc-item.prop.p-violet{border-left-color:var(--violet)}
+.acc-item.prop.p-violet .acc-btn span:last-child{color:var(--violet)}
+.acc-item.prop.p-violet.open .acc-btn,.acc-item.prop.p-violet:hover .acc-btn{background:var(--violet-soft)}
+.acc-item.prop.p-green{border-left-color:var(--green)}
+.acc-item.prop.p-green .acc-btn span:last-child{color:var(--green)}
+.acc-item.prop.p-green.open .acc-btn,.acc-item.prop.p-green:hover .acc-btn{background:var(--green-soft)}
+.launch-icon{width:50px;height:50px;border-radius:13px;background:var(--teal-800);color:#fff;display:grid;place-items:center;font-size:1.3rem;flex-shrink:0}
+.launch-body h3{margin-bottom:3px}
+.launch-body p{margin-bottom:0;color:var(--slate-700);font-size:.88rem}
+.btn-launch{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:8px 16px;background:var(--teal-800);color:#fff;border-radius:9px;font-weight:700;font-size:.83rem;text-decoration:none}
+.btn-launch:hover{background:var(--teal-700)}
+
+.activation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 18px}
+.activation-card{border:1px solid #E1D9F7;background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border-radius:14px;padding:14px;text-align:center}
+.activation-expr{font-size:1.1rem;font-weight:700;color:var(--navy-900);margin-bottom:10px}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.reveal-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px}
+.reveal-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.reveal-answer{display:none;margin-top:12px;padding:10px 13px;background:var(--green-soft);border:1px solid #BCE3CF;border-radius:10px;color:var(--green);font-weight:600;font-size:.9rem}
+.reveal-answer.show{display:block}
+.btn-revelar{margin-top:10px;font-size:.83rem;font-weight:700;color:var(--teal-800);cursor:pointer;background:#fff;border:1px solid var(--teal-800);border-radius:8px;padding:6px 14px;font-family:inherit}
+.btn-revelar:hover{background:var(--teal-100)}
+
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-card .steps li{background:#fff}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+
+@media(max-width:1020px){.grid-2,.grid-3{grid-template-columns:1fr}.activation-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.drop-zones{grid-template-columns:repeat(2,1fr)}body{font-size:15px}.capsula{margin:10px;border-radius:22px}.hero{padding:28px 18px 18px}.tabs-wrap,.content{padding-left:14px;padding-right:14px}.section{padding:22px 16px}.tab{flex:1 1 calc(50% - 8px);justify-content:center}h2{font-size:1.5rem}.launch-card{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma">xⁿ</div>
+<h1>Potenciación, radicación y jerarquía</h1>
+<h2>Otra forma de recorrer el mismo contenido: observar, anticipar, practicar, formalizar y aplicar</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Potenciación, radicación y jerarquía</h1>
+<p>Un recorrido corto con videos y actividades para anticipar, practicar y formalizar potenciación, radicación y jerarquía de las operaciones.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Potenciación</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Radicación</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Jerarquía</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+
+<!-- ============ PANEL 1: POTENCIACIÓN ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Potenciación</span>
+<h2>Multiplicar lo mismo, varias veces</h2>
+<p class="section-intro">Antes de definir nada, observemos cómo se construyen algunos cálculos.</p>
+
+<div class="activation-grid">
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">Observá la secuencia: \(2,4,8,16\). ¿Qué ocurre en cada paso?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Se suma \(2\)</button>
+<button class="opt" data-value="b">Se multiplica por \(2\)</button>
+<button class="opt" data-value="c">Se multiplica por el número de posición</button>
+</div>
+<div class="feedback" data-ok="Exacto: el valor no aumenta siempre en la misma cantidad; en cada paso se aplica el mismo factor." data-no="Fijate si la diferencia entre un término y el siguiente es siempre la misma, o si más bien cada uno es el anterior multiplicado por algo fijo."></div>
+</div>
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">Si quisieras registrar de forma más breve el cálculo \(5\cdot5\cdot5\cdot5\), ¿qué información no puede faltar?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Solo el resultado</button>
+<button class="opt" data-value="b">El número que se repite y cuántas veces se repite</button>
+<button class="opt" data-value="c">Solo la cantidad de factores</button>
+</div>
+<div class="feedback" data-ok="Correcto: para reconstruir ese cálculo hace falta saber qué número se repite y cuántas repeticiones hay." data-no="Pensá qué necesitarías saber para poder reconstruir el cálculo completo, no solo el resultado final."></div>
+</div>
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">¿En cuál de estos pares se repite el mismo número, pero cambia la cantidad de repeticiones?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(4\cdot4\cdot4\) y \(4\cdot4\cdot4\cdot4\)</button>
+<button class="opt" data-value="b">\(4\cdot4\cdot4\) y \(3\cdot3\cdot3\)</button>
+<button class="opt" data-value="c">\(4\cdot4\cdot4\) y \(4+4+4+4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: en ambos casos se repite el mismo factor; lo que cambia es cuántas veces aparece." data-no="Buscá el par donde el número que se multiplica sea el mismo en las dos expresiones, y solo cambie la cantidad de veces que se repite."></div>
+</div>
+</div>
+
+<p class="muted" style="margin-top:16px">Para no escribir estos productos tan largos, usamos una potencia: una forma breve de anotar el número que se repite (la base) y cuántas veces se repite (el exponente). Mientras mirás el video, prestá atención a cómo se nombran esos dos datos, y qué pasa cuando la base es negativa.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/-K0ZSm9lPeY" title="¿Qué son las potencias?" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<h3 style="margin-top:20px">Formalización</h3>
+<div class="concept-card"><h3>Definición</h3><p>La potenciación abrevia una multiplicación repetida del mismo número. Si \(a\) es un número real y \(n\) un número natural:</p><div class="formula teal">\[ a^n=\underbrace{a\cdot a\cdot a\cdots a}_{n\text{ veces}} \]</div><p>\(a\) es la <strong>base</strong> y \(n\) es el <strong>exponente</strong>.</p></div>
+
+<table class="mini-table">
+<thead><tr><th>Caso</th><th>Expresión</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>Exponente \(0\)</td><td>\(a^0\) (\(a\neq0\))</td><td>\(=1\) siempre</td></tr>
+<tr><td>Exponente \(1\)</td><td>\(a^1\)</td><td>\(=a\)</td></tr>
+<tr><td>Base negativa, exponente par</td><td>\((-4)^2\)</td><td>\(16\) <span class="check">✓</span> positivo</td></tr>
+<tr><td>Base negativa, exponente impar</td><td>\((-2)^3\)</td><td>\(-8\) <span class="cruz">✗</span> negativo</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:20px">Propiedades: tocá cada una para ver el video</h3>
+<div class="accordion">
+<div class="acc-item prop">
+<button class="acc-btn" onclick="toggleAcc(this)">Producto de potencias, igual base: \(a^m\cdot a^n=a^{m+n}\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \(2^3\cdot2^2=2^5=32\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/uIntz8yaJH0" title="Producto de potencias de igual base" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+<div class="acc-item prop p-orange">
+<button class="acc-btn" onclick="toggleAcc(this)">Cociente de potencias, igual base: \(a^m\div a^n=a^{m-n}\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \(2^5\div2^2=2^3=8\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/FkMxL0fne40" title="Cociente de potencias de igual base" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+<div class="acc-item prop p-violet">
+<button class="acc-btn" onclick="toggleAcc(this)">Potencia de potencia: \((a^m)^n=a^{m\cdot n}\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \((2^3)^2=2^6=64\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/aBNWAxU34p4" title="Potencia de otra potencia" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+<div class="acc-item prop p-green">
+<button class="acc-btn" onclick="toggleAcc(this)">Potencia de un producto: \((a\cdot b)^n=a^n\cdot b^n\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \((2\cdot3)^2=4\cdot9=36\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/oyFNgNkM-uc" title="Potencia de un producto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+<div class="acc-item prop p-orange">
+<button class="acc-btn" onclick="toggleAcc(this)">Potencia de un cociente: \((a/b)^n=a^n/b^n\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \((4/2)^3=64/8=8\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/8d2zEsqPJBw" title="Potencia de un cociente" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+<div class="acc-item prop p-violet">
+<button class="acc-btn" onclick="toggleAcc(this)">Exponente negativo: \(a^{-n}=\dfrac{1}{a^n}\) <span>+</span></button>
+<div class="acc-panel">
+<p>Ejemplo: \(2^{-3}=\dfrac{1}{2^3}=\dfrac{1}{8}\)</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/NrbE9ZBER7I" title="Exponente negativo" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+</div>
+</div>
+
+<div class="errores-titulo">Errores frecuentes</div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Confundir \(-2^2\) con \((-2)^2\) <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ \(-2^2=4\)</div>
+<div class="error-correcto">✓ \(-2^2=-(2^2)=-4\): el signo no forma parte de la base si no está dentro del paréntesis. \((-2)^2=4\) sí eleva el signo.</div>
+</div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Confundir \((a+b)^2\) con \(a^2+b^2\) <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ \((3+2)^2=3^2+2^2=13\)</div>
+<div class="error-correcto">✓ \((3+2)^2=5^2=25\): la potencia no se distribuye sobre la suma.</div>
+</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">¿Cuál es la base en \(5^3\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(5\)</button>
+<button class="opt" data-value="b">\(3\)</button>
+<button class="opt" data-value="c">\(15\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: en \(a^n\), \(a\) es la base." data-no="La base es el número que se repite en la multiplicación."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">\((-3)^4\): ¿el resultado es positivo o negativo?</div>
+<div class="options compact" data-answer="pos">
+<button class="opt" data-value="pos">Positivo</button>
+<button class="opt" data-value="neg">Negativo</button>
+</div>
+<div class="feedback" data-ok="Correcto: exponente par con base negativa da resultado positivo." data-no="Contá el exponente: si es par, el resultado es positivo aunque la base sea negativa."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">\(2^3\cdot2^2=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(2^5=32\)</button>
+<button class="opt" data-value="b">\(2^6=64\)</button>
+<button class="opt" data-value="c">\(4^5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: producto de potencias de igual base → se suman los exponentes." data-no="Cuando la base es igual, el producto de potencias suma los exponentes: \(a^m\cdot a^n=a^{m+n}\)."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">¿Verdadero o falso? \(-3^2=9\)</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Verdadero</button>
+<button class="opt" data-value="b">Falso</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(-3^2=-(3^2)=-9\). El signo no está elevado al cuadrado porque no está entre paréntesis." data-no="Fijate si el signo está dentro del paréntesis: acá no lo está, entonces no se eleva."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">Calculá: \(2^{-3}\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(1/8\)</button>
+<button class="opt" data-value="b">\(-8\)</button>
+<button class="opt" data-value="c">\(8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2^{-3}=1/2^3=1/8\)." data-no="Un exponente negativo invierte la base: \(a^{-n}=1/a^n\)."></div>
+</div>
+
+<h3 style="margin-top:22px">Aplicación</h3>
+<div class="reveal-card">
+<p>Una red de sensores se organiza en niveles: cada sensor conecta con \(3\) sensores nuevos, y esa conexión se repite durante \(4\) niveles sucesivos. ¿Cuántos sensores hay en el último nivel, y cómo se escribe eso de forma compacta?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">\(3^4=81\) sensores. El número que se repite (\(3\)) es la base; la cantidad de niveles (\(4\)) es el exponente.</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: RADICACIÓN ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Radicación</span>
+<h2>La operación inversa</h2>
+<p class="section-intro">Si potenciar es multiplicar un número por sí mismo varias veces, radicar es recuperar el número que genera un resultado conocido.</p>
+
+<h3 style="margin-top:20px">De la potencia a la raíz</h3>
+<p class="muted">Esta misma lógica aparece al medir: si conocemos el área de un cuadrado o el volumen de un cubo, podemos preguntarnos qué longitud los genera.</p>
+
+<div class="visual">
+<img src="cuadrado-cubo.png" alt="Recuperar el lado de un cuadrado a partir de su área, y la arista de un cubo a partir de su volumen">
+</div>
+
+<div class="formula teal" style="margin-bottom:10px">\[ x^2=49 \;\Rightarrow\; x=\sqrt{49}=7 \]</div>
+<div class="formula teal">\[ a^3=125 \;\Rightarrow\; a=\sqrt[3]{125}=5 \]</div>
+
+<p class="muted" style="margin-top:14px">En ambos casos, la radicación deshace una potenciación: la raíz cuadrada recupera el lado a partir del área, y la raíz cúbica recupera la arista a partir del volumen.</p>
+
+<p class="muted" style="margin-top:16px">Mientras mirás el video, prestá atención a por qué la raíz cuadrada principal de un número positivo se toma no negativa.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/5rK0t_GgwS8" title="Radicación: definición y propiedades" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<h3 style="margin-top:20px">Formalización</h3>
+<div class="concept-card"><h3>Definición</h3><p>La radicación es la operación inversa de la potenciación: busca el número \(b\) que, elevado al índice \(n\), produce el radicando \(a\).</p><div class="formula teal">\[ \sqrt[n]{a}=b \iff b^n=a \]</div><p>\(a\) es el <strong>radicando</strong>, \(n\) es el <strong>índice</strong>, \(b\) es la <strong>raíz</strong>. Cuando el índice no se escribe, es \(2\).</p></div>
+
+<div class="grid-2">
+<div class="box teal"><h3>Índice par</h3><p>Si el radicando es positivo, existen dos números reales que elevados al índice dan el mismo resultado. Por convención se toma la <strong>raíz principal</strong> (no negativa): \(\sqrt9=3\), no \(-3\).</p></div>
+<div class="box orange"><h3>Índice impar</h3><p>Todo número real tiene una única raíz real, sin necesidad de convención: \(\sqrt[3]{-8}=-2\), porque \((-2)^3=-8\).</p></div>
+</div>
+
+<table class="mini-table">
+<thead><tr><th>Propiedad</th><th>Expresión</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td>Raíz de un producto</td><td>\(\sqrt[n]{a\cdot b}=\sqrt[n]{a}\cdot\sqrt[n]{b}\)</td><td>\(\sqrt{4\cdot9}=\sqrt4\cdot\sqrt9=6\)</td></tr>
+<tr><td>Raíz de un cociente</td><td>\(\sqrt[n]{a/b}=\sqrt[n]{a}/\sqrt[n]{b}\)</td><td>\(\sqrt{16/4}=\sqrt{16}/\sqrt4=2\)</td></tr>
+<tr><td>Raíz de una raíz</td><td>\(\sqrt[m]{\sqrt[n]{a}}=\sqrt[m\cdot n]{a}\)</td><td>\(\sqrt{\sqrt{81}}=\sqrt[4]{81}=3\)</td></tr>
+<tr><td>Potencia de una raíz</td><td>\((\sqrt[n]{a})^m=\sqrt[n]{a^m}\)</td><td>\((\sqrt4)^3=\sqrt{4^3}=8\)</td></tr>
+<tr><td>Raíz como potencia fraccionaria</td><td>\(\sqrt[n]{a^m}=a^{m/n}\)</td><td>\(\sqrt[3]{2^6}=2^{6/3}=4\)</td></tr>
+</tbody>
+</table>
+
+<div class="errores-titulo">Error frecuente</div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Pensar que toda raíz cuadrada existe en \(\mathbb{R}\) <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ \(\sqrt{-4}=-2\)</div>
+<div class="error-correcto">✓ \(\sqrt{-4}\) no existe en \(\mathbb{R}\): ningún número real al cuadrado da negativo. No confundir con \(-\sqrt4=-2\), que sí existe.</div>
+</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 6</span>
+<div class="activity">
+<div class="question">¿Existe \(\sqrt{-16}\) en \(\mathbb{R}\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí, es \(-4\)</button>
+<button class="opt" data-value="b">No existe en \(\mathbb{R}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: no hay ningún real que al cuadrado dé un resultado negativo." data-no="Pensá si algún número real elevado al cuadrado puede dar un resultado negativo."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 7</span>
+<div class="activity">
+<div class="question">\(\sqrt[3]{8}\) equivale a qué potencia fraccionaria:</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(8^{1/3}\)</button>
+<button class="opt" data-value="b">\(8^3\)</button>
+<button class="opt" data-value="c">\(8^{-3}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\sqrt[n]{a}=a^{1/n}\)." data-no="El índice de la raíz pasa a ser el denominador del exponente fraccionario."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 8</span>
+<div class="activity">
+<div class="question">\(\sqrt[3]{-27}=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(-3\)</button>
+<button class="opt" data-value="b">No existe</button>
+<button class="opt" data-value="c">\(3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: con índice impar, todo real (incluso negativo) tiene raíz real: \((-3)^3=-27\)." data-no="El índice es impar: ahí sí existe raíz de un número negativo."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 9</span>
+<div class="activity">
+<div class="question">\(\sqrt{25\cdot4}=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(10\)</button>
+<button class="opt" data-value="b">\(100\)</button>
+<button class="opt" data-value="c">\(29\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\sqrt{25\cdot4}=\sqrt{25}\cdot\sqrt4=5\cdot2=10\)." data-no="Usá la propiedad de la raíz de un producto: \(\sqrt{a\cdot b}=\sqrt{a}\cdot\sqrt{b}\)."></div>
+</div>
+
+<h3 style="margin-top:22px">Aplicación</h3>
+<div class="reveal-card">
+<p>En un ensayo agronómico, se distribuyen \(289\) posiciones de siembra en una parcela cuadrada, con la misma cantidad de filas y columnas. ¿Cuántas posiciones hay por lado?</p>
+<div class="visual">
+<img src="parcela.png" alt="Parcela cuadrada de ensayo agronómico organizada como matriz de posiciones de siembra, con 289 posiciones totales">
+</div>
+<button class="btn-revelar" onclick="toggleReveal(this)" style="margin-top:12px">Ver resolución</button>
+<div class="reveal-answer">\(x^2=289 \Rightarrow x=\sqrt{289}=17\) posiciones por lado. Misma lógica que con el cuadrado y el cubo: la raíz deshace la potenciación y recupera una dimensión a partir de un total conocido.</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: JERARQUÍA ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Jerarquía de operaciones</span>
+<h2>El orden en el que se resuelve</h2>
+<p class="section-intro">Antes de formalizar la jerarquía de operaciones, observemos qué ocurre cuando cambia el orden de resolución.</p>
+
+<div class="activation-grid">
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">Para la expresión \(3+2\cdot5\), ¿qué resultado te parece correcto?</div>
+<div class="options compact" data-answer="13">
+<button class="opt" data-value="25">\(25\)</button>
+<button class="opt" data-value="13">\(13\)</button>
+<button class="opt" data-value="10">\(10\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2\cdot5=10\), y \(3+10=13\)." data-no="No alcanza con leer de izquierda a derecha: antes de sumar, hay que mirar si hay una multiplicación."></div>
+</div>
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">En la expresión \((8-3)\cdot4\), ¿qué conviene resolver primero?</div>
+<div class="options compact" data-answer="83">
+<button class="opt" data-value="34">\(3\cdot4\)</button>
+<button class="opt" data-value="83">\(8-3\)</button>
+<button class="opt" data-value="84">\(8\cdot4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: los signos de agrupación indican qué parte de la expresión se atiende primero." data-no="Fijate qué parte de la expresión está entre paréntesis: eso se resuelve antes que cualquier otra operación."></div>
+</div>
+<div class="activation-card">
+<div class="activation-expr" style="font-size:.95rem;font-weight:600;text-align:left">Alguien resolvió \(12-4\cdot2\) así: \((12-4)\cdot2=16\). ¿Qué pasó?</div>
+<div class="options compact" data-answer="orden">
+<button class="opt" data-value="ok">El procedimiento es correcto</button>
+<button class="opt" data-value="orden">Restó antes de multiplicar</button>
+<button class="opt" data-value="mult">Multiplicó mal</button>
+</div>
+<div class="feedback" data-ok="Correcto: el problema no está en la cuenta final, sino en el orden elegido para empezar." data-no="Revisá qué operación se resolvió primero: acá no había ningún paréntesis en la expresión original."></div>
+</div>
+</div>
+
+<h3 style="margin-top:20px">El orden, paso a paso</h3>
+<table class="mini-table">
+<thead><tr><th>Orden</th><th>Regla</th></tr></thead>
+<tbody>
+<tr><td>1°</td><td>Agrupadores: paréntesis \(( )\) → corchetes \([\,]\) → llaves \(\{\,\}\)</td></tr>
+<tr><td>✱</td><td>La barra de fracción actúa como agrupador implícito: agrupa numerador y denominador.</td></tr>
+<tr><td>2°</td><td>Potencias y raíces</td></tr>
+<tr><td>3°</td><td>Multiplicación y división (de izquierda a derecha; tienen la misma jerarquía)</td></tr>
+<tr><td>4°</td><td>Suma y resta (de izquierda a derecha; tienen la misma jerarquía)</td></tr>
+</tbody>
+</table>
+
+<p class="muted">Mientras mirás el video, fijate cómo se aplica este orden en una expresión con varias operaciones combinadas.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/enBEKjYHQ-I" title="Jerarquía de las operaciones" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="concept-card yellow"><h3>Idea clave</h3><ul class="list">
+<li>Multiplicación y división están al mismo nivel: se resuelven en el orden en que aparecen.</li>
+<li>Suma y resta están al mismo nivel: también de izquierda a derecha.</li>
+<li>Un paréntesis puede contener cualquier operación, y siempre se resuelve primero.</li>
+</ul></div>
+
+<h3 style="margin-top:20px">Resolución guiada</h3>
+<div class="guided">
+<div class="guided-title">Ejemplo: \((3+\frac{1}{2})\cdot4-2^2\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span>Paréntesis: \(3+\frac{1}{2}=\frac{7}{2}\) → queda \(\frac{7}{2}\cdot4-2^2\).</li>
+<li><span class="step-num">2</span>Potencia: \(2^2=4\) → queda \(\frac{7}{2}\cdot4-4\).</li>
+<li><span class="step-num">3</span>Multiplicación: \(\frac{7}{2}\cdot4=14\) → queda \(14-4\).</li>
+<li><span class="step-num">4</span>Resta: \(14-4=10\).</li>
+</ol>
+<div class="result-line">Resultado: \(10\)</div>
+</div>
+
+<div class="errores-titulo">Error frecuente</div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Resolver de izquierda a derecha sin respetar la jerarquía <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ \(3+4\cdot2=14\)</div>
+<div class="error-correcto">✓ Primero la multiplicación: \(4\cdot2=8\), después \(3+8=11\).</div>
+</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 10</span>
+<div class="activity">
+<div class="question">En \((5+3)^2\div4\), ¿qué se resuelve primero?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">El paréntesis: \(5+3\)</button>
+<button class="opt" data-value="b">La potencia: \(3^2\)</button>
+<button class="opt" data-value="c">La división: \(8\div4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: los agrupadores van primero, sin importar qué contengan." data-no="Los paréntesis se resuelven antes que las potencias, multiplicaciones o divisiones."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 11</span>
+<div class="activity">
+<div class="question">Alguien resolvió \(4+3\cdot2\) así: primero \(4+3=7\), después \(7\cdot2=14\). ¿Es correcto?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: la multiplicación va antes. El resultado correcto es \(4+6=10\)." data-no="Revisá el orden: la multiplicación tiene mayor jerarquía que la suma."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 12</span>
+<div class="activity">
+<div class="question">Calculá: \(2^3+\sqrt9\cdot2\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(14\)</button>
+<button class="opt" data-value="b">\(22\)</button>
+<button class="opt" data-value="c">\(100\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2^3=8\), \(\sqrt9=3\), \(3\cdot2=6\), y \(8+6=14\)." data-no="Resolvé primero potencia y raíz, después la multiplicación, y al final la suma."></div>
+</div>
+
+<h3 style="margin-top:22px">Aplicación</h3>
+<div class="reveal-card">
+<p>Para calcular \(\sqrt9+2\cdot(5-3)^2\), ¿por dónde conviene empezar?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">Primero el paréntesis: \((5-3)^2=2^2=4\). Después la multiplicación: \(2\cdot4=8\). Y la raíz: \(\sqrt9=3\). Recién al final se suma: \(3+8=11\).</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: CIERRE INTEGRADOR ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Tres ideas, una misma lógica</h2>
+<p class="section-intro">La potenciación y la radicación son operaciones inversas, y ambas aparecen dentro de expresiones más complejas, donde la jerarquía organiza el orden de resolución.</p>
+
+<div class="grid-3">
+<div class="box teal"><h3>Potenciación</h3><p>Abrevia una multiplicación repetida. La base y el exponente determinan el resultado y su signo.</p></div>
+<div class="box orange"><h3>Radicación</h3><p>Es la operación inversa: busca qué número, elevado al índice, da el radicando.</p></div>
+<div class="box yellow"><h3>Jerarquía</h3><p>Ordena cómo se resuelve una expresión cuando aparecen varias operaciones juntas, incluidas potencias y raíces.</p></div>
+</div>
+
+<h3 style="margin-top:22px">De la potencia a la raíz, y de vuelta</h3>
+<div class="activity">
+<div class="question">Un cubo tiene un volumen de \(64\ \text{cm}^3\). Si se duplica su arista, ¿cuál es el volumen del nuevo cubo?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(128\ \text{cm}^3\)</button>
+<button class="opt" data-value="b">\(512\ \text{cm}^3\)</button>
+<button class="opt" data-value="c">\(256\ \text{cm}^3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la arista original es \(\sqrt[3]{64}=4\) cm. Al duplicarla queda \(8\) cm, y el nuevo volumen es \(8^3=512\ \text{cm}^3\)." data-no="Primero recuperá la arista original con una raíz cúbica, después duplicala, y recién ahí volvé a elevarla al cubo."></div>
+</div>
+
+<div class="sintesis-card">
+<h3>Síntesis</h3>
+<p>Para resolver una expresión con potencias, raíces y otras operaciones:</p>
+<ol class="steps">
+<li><span class="step-num">1</span>Resolvé lo que está dentro de los agrupadores.</li>
+<li><span class="step-num">2</span>Calculá potencias y raíces.</li>
+<li><span class="step-num">3</span>Resolvé multiplicaciones y divisiones, de izquierda a derecha.</li>
+<li><span class="step-num">4</span>Resolvé sumas y restas, de izquierda a derecha.</li>
+</ol>
+<p class="sintesis-frase">Conocer el orden es tan importante como saber calcular cada operación por separado.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+function toggleReveal(btn){
+  const answer=btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent=answer.classList.contains('show')?'Ocultar resolución':'Ver resolución';
+  setTimeout(()=>typeset(answer),60);
+}
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const s=btn.querySelector('span:last-child');
+  if(s)s.textContent=item.classList.contains('open')?'−':'+';
+  setTimeout(()=>typeset(item),80);
+}
+
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:feedback.dataset.no;
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+document.addEventListener('DOMContentLoaded',()=>typeset(document.body));
+</script>
+</body>
+</html>
