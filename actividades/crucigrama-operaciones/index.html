@@ -101,13 +101,9 @@
   .hint-tally b{ color:var(--amber); }
 
   .layout{
-    display:grid;
-    grid-template-columns: minmax(0,1.35fr) minmax(260px,1fr);
-    gap:26px;
-    align-items:start;
-  }
-  @media (max-width:760px){
-    .layout{ grid-template-columns:1fr; }
+    display:flex;
+    flex-direction:column;
+    gap:22px;
   }
 
   .board-panel{
@@ -188,7 +184,14 @@
     margin:0 0 10px;
     letter-spacing:0.01em;
   }
-  .clue-list{
+  .clue-columns{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:0 24px;
+  }
+  @media (max-width:560px){
+    .clue-columns{ grid-template-columns:1fr; }
+  }
     list-style:none;
     margin:0 0 14px;
     padding:0;
@@ -350,10 +353,16 @@
       </div>
 
       <div class="clue-box">
-        <h2>Horizontales</h2>
-        <ul class="clue-list" id="acrossList"></ul>
-        <h2>Verticales</h2>
-        <ul class="clue-list" id="downList"></ul>
+        <div class="clue-columns">
+          <div class="clue-column">
+            <h2>Horizontales</h2>
+            <ul class="clue-list" id="acrossList"></ul>
+          </div>
+          <div class="clue-column">
+            <h2>Verticales</h2>
+            <ul class="clue-list" id="downList"></ul>
+          </div>
+        </div>
       </div>
 
       <button class="copy-btn" id="finalizeBtn" style="width:100%; padding:13px;">Corregir y finalizar</button>
