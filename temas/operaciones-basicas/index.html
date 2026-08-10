@@ -338,7 +338,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <button class="opt" data-value="b">\(16\)</button>
 <button class="opt" data-value="c">\(4\)</button>
 </div>
-<div class="feedback" data-ok="Correcto: signos distintos → \(10-6=4\), y se conserva el signo del \(-10\) por tener mayor valor absoluto." data-no="Revisá el signo: acá predomina el número con mayor valor absoluto, el \(-10\)."></div>
+<div class="feedback" data-ok="Correcto: signos distintos → \(10-6=4\), y se conserva el signo del \(-10\) por tener mayor valor absoluto." data-no="Recordá que en la suma de números con distinto signo predomina el signo del número con mayor valor absoluto: acá es el \(-10\)."></div>
 </div>
 
 <span class="ejercicio-badge b-orange">Ejercicio 2</span>
@@ -349,7 +349,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <button class="opt" data-value="b">\(11\)</button>
 <button class="opt" data-value="c">\(-19\)</button>
 </div>
-<div class="feedback" data-ok="Correcto: \(15-4=11\), con el signo del \(-15\) por tener mayor valor absoluto." data-no="Revisá el signo: aquí predomina el número con mayor valor absoluto."></div>
+<div class="feedback" data-ok="Correcto: \(15-4=11\), con el signo del \(-15\) por tener mayor valor absoluto." data-no="Recordá que en la suma de números con distinto signo predomina el signo del número con mayor valor absoluto."></div>
 </div>
 
 <span class="ejercicio-badge b-violet">Ejercicio 3</span>
@@ -961,7 +961,6 @@ function initDragDrop(scopeId,bankId,btnVerificarId,btnReiniciarId,feedbackId,ok
     document.getElementById(feedbackId).textContent='';
   });
 }
-initDragDrop('drag-activity-ops','drag-numbers-ops','btn-verificar-ops','btn-reiniciar-ops','drag-feedback-ops','¡Perfecto! Cada situación quedó con la operación correcta.');
 initDragDrop('drag-activity-props','drag-numbers-props','btn-verificar-props','btn-reiniciar-props','drag-feedback-props','¡Perfecto! Identificaste bien las cuatro propiedades.');
 
 document.addEventListener('DOMContentLoaded',()=>typeset(document.body));
