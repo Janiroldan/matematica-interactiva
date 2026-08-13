@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa Municipal de Gestión Diferenciada de Residuos</title>
+    
+    <style>
+        :root {
+            --azul-principal: #0B4F8C;
+            --azul-oscuro: #083B66;
+            --dorado: #D4A017;
+            --fondo-gris: #F5F7FA;
+            --texto-principal: #2C3E50;
+            --blanco: #FFFFFF;
+            --borde-color: #E2E8F0;
+            --exito: #2E7D32;
+            --exito-bg: #E8F5E9;
+            --error: #C62828;
+            --error-bg: #FFEBEE;
+            --advertencia: #E65100;
+            --advertencia-bg: #FFF3E0;
+            --teal: #0E8A7D;
+            --violeta: #7C4DBB;
+            --sombra: 0 4px 12px rgba(8, 59, 102, 0.08);
+            --sombra-fuerte: 0 8px 24px rgba(8, 59, 102, 0.15);
+            --radio: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--fondo-gris);
+            color: var(--texto-principal);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-principal) 100%);
+            color: var(--blanco);
+            padding: 20px 0;
+            border-bottom: 4px solid var(--dorado);
+            box-shadow: var(--sombra);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-title-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-pampean {
+            background-color: var(--dorado);
+            color: var(--azul-oscuro);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-reset {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--blanco);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-reset:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: var(--blanco);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--blanco);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            padding: 25px;
+            border: 1px solid var(--borde-color);
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--fondo-gris);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+
+        .challenge-box {
+            border-top: 5px solid var(--borde-color);
+        }
+
+        #challenge-1 { border-top-color: var(--azul-principal); }
+        #challenge-2 { border-top-color: var(--dorado); }
+        #challenge-3 { border-top-color: var(--teal); }
+        #challenge-4 { border-top-color: var(--violeta); }
+        #challenge-5 { border-top-color: var(--advertencia); }
+
+        .badge-desafio {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            border-radius: 50%;
+            color: var(--blanco);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .badge-desafio.badge-d1 { background-color: var(--azul-principal); }
+        .badge-desafio.badge-d2 { background-color: var(--dorado); }
+        .badge-desafio.badge-d3 { background-color: var(--teal); }
+        .badge-desafio.badge-d4 { background-color: var(--violeta); }
+        .badge-desafio.badge-d5 { background-color: var(--advertencia); }
+
+        .card-title {
+            color: var(--azul-principal);
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        @media (max-width: 860px) {
+            .context-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .planning-sheet {
+            width: 100%;
+        }
+
+        .planning-sheet .card {
+            background-color: #FFFBEB;
+            border-color: var(--dorado);
+            border-width: 1.5px;
+        }
+
+        .sheet-badge {
+            background-color: var(--dorado);
+            color: var(--azul-oscuro);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .sheet-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            list-style: none;
+        }
+
+        @media (max-width: 480px) {
+            .sheet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .planning-sheet .sheet-item {
+            background-color: var(--blanco);
+        }
+
+        .sheet-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--fondo-gris);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--borde-color);
+        }
+
+        .sheet-label {
+            font-size: 0.8rem;
+            color: #5A6A85;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .sheet-value {
+            font-weight: 700;
+            color: var(--azul-oscuro);
+            font-size: 0.95rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .sheet-value.pending {
+            color: #A0AEC0;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .sentence-builder {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(11, 79, 140, 0.03);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--borde-color);
+            font-size: 1rem;
+            line-height: 2.2;
+            color: var(--texto-principal);
+        }
+
+        .sentence-builder select {
+            width: auto;
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--azul-oscuro);
+            background-color: var(--blanco);
+        }
+
+        .sentence-builder-input-group {
+            display: inline-flex;
+            align-items: center;
+            background: var(--blanco);
+            border: 1px solid var(--borde-color);
+            border-radius: 6px;
+            padding: 0 8px;
+        }
+
+        .sentence-builder-input-group span {
+            font-weight: 700;
+            color: var(--texto-principal);
+            margin-right: 4px;
+        }
+
+        .sentence-builder-input-group input {
+            border: none;
+            outline: none;
+            padding: 6px 4px;
+            width: 140px;
+            font-size: 0.95rem;
+        }
+
+        .sentence-builder-input-group input:focus {
+            box-shadow: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(8, 59, 102, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-card {
+            background-color: var(--blanco);
+            border-radius: var(--radio);
+            padding: 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: var(--sombra-fuerte);
+            border: 1px solid var(--borde-color);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--texto-principal);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .input-addon {
+            background-color: var(--fondo-gris);
+            border: 1px solid var(--borde-color);
+            padding: 10px 14px;
+            font-weight: 600;
+            color: var(--texto-principal);
+            font-size: 0.95rem;
+        }
+
+        .input-addon.prefix {
+            border-right: none;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .input-addon.suffix {
+            border-left: none;
+            border-radius: 0 6px 6px 0;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--borde-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--texto-principal);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-group input.has-prefix {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .input-group input.has-suffix {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--azul-principal);
+            box-shadow: 0 0 0 3px rgba(11, 79, 140, 0.15);
+        }
+
+        input:disabled, select:disabled {
+            background-color: var(--fondo-gris);
+            cursor: not-allowed;
+            color: #7F8C8D;
+        }
+
+        .btn-primary {
+            background-color: var(--azul-principal);
+            color: var(--blanco);
+            border: none;
+            padding: 11px 22px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--azul-oscuro);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: var(--blanco);
+            color: var(--azul-principal);
+            border: 1.5px solid var(--azul-principal);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--fondo-gris);
+            border-color: var(--azul-oscuro);
+            color: var(--azul-oscuro);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background-color: var(--blanco);
+        }
+
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--borde-color);
+        }
+
+        th {
+            background-color: var(--fondo-gris);
+            color: var(--azul-oscuro);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.total-row {
+            font-weight: 700;
+            background-color: rgba(11, 79, 140, 0.04);
+        }
+
+        .feedback {
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .feedback.success {
+            background-color: var(--exito-bg);
+            border-left: 4px solid var(--exito);
+            color: var(--exito);
+        }
+
+        .feedback.error {
+            background-color: var(--error-bg);
+            border-left: 4px solid var(--error);
+            color: var(--error);
+        }
+
+        .feedback.warning {
+            background-color: var(--advertencia-bg);
+            border-left: 4px solid var(--advertencia);
+            color: var(--advertencia);
+        }
+
+        .feedback.info {
+            background-color: rgba(11, 79, 140, 0.06);
+            border-left: 4px solid var(--azul-principal);
+            color: var(--azul-oscuro);
+        }
+
+        .feedback.info-help {
+            background-color: #FFF8E1;
+            border-left: 4px solid var(--dorado);
+            color: #6B4E00;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .feedback.info-help .ayuda-titulo {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6B4E00;
+        }
+
+        .feedback.info-help .ayuda-cuerpo p {
+            margin-bottom: 6px;
+        }
+
+        .feedback.info-help .ayuda-formula {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: rgba(212, 160, 23, 0.15);
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin: 6px 0;
+            font-size: 0.88rem;
+        }
+
+        .btn-ayuda {
+            background-color: var(--blanco);
+            color: #8A6D00;
+            border: 1.5px dashed var(--dorado);
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-ayuda:hover {
+            background-color: #FFF8E1;
+            border-color: #8A6D00;
+        }
+
+        .help-btn-container {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--borde-color);
+        }
+
+        .badge-ayuda-usada {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #FFF8E1;
+            border: 1px solid var(--dorado);
+            color: #6B4E00;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        .final-codigo-box {
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-principal) 100%);
+            color: var(--blanco);
+            border-radius: 10px;
+            padding: 22px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .final-codigo-box .codigo-label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .final-codigo-box .codigo-valor {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--dorado);
+            margin-bottom: 12px;
+        }
+
+        .final-codigo-box .codigo-hint {
+            font-size: 0.82rem;
+            opacity: 0.85;
+        }
+
+        .final-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .final-stat-item {
+            background-color: var(--fondo-gris);
+            border: 1px solid var(--borde-color);
+            border-radius: 8px;
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        .final-stat-item .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+        }
+
+        .final-stat-item .stat-label {
+            font-size: 0.78rem;
+            color: #5A6A85;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .copy-confirm-msg {
+            font-size: 0.82rem;
+            color: var(--exito);
+            font-weight: 600;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .copy-confirm-msg.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--borde-color);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-node {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--blanco);
+            border: 2px solid var(--borde-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #7F8C8D;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .step-node.active {
+            border-color: var(--azul-principal);
+            background-color: var(--azul-principal);
+            color: var(--blanco);
+            box-shadow: 0 0 0 4px rgba(11, 79, 140, 0.2);
+        }
+
+        #node-1.active { border-color: var(--azul-principal); background-color: var(--azul-principal); box-shadow: 0 0 0 4px rgba(11, 79, 140, 0.2); }
+        #node-2.active { border-color: var(--dorado); background-color: var(--dorado); box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.25); }
+        #node-3.active { border-color: var(--teal); background-color: var(--teal); box-shadow: 0 0 0 4px rgba(14, 138, 125, 0.2); }
+        #node-4.active { border-color: var(--violeta); background-color: var(--violeta); box-shadow: 0 0 0 4px rgba(124, 77, 187, 0.2); }
+        #node-5.active { border-color: var(--advertencia); background-color: var(--advertencia); box-shadow: 0 0 0 4px rgba(230, 81, 0, 0.2); }
+
+        .step-node.completed {
+            border-color: var(--exito);
+            background-color: var(--exito);
+            color: var(--blanco);
+        }
+
+        .info-box {
+            background-color: rgba(11, 79, 140, 0.05);
+            border-left: 4px solid var(--azul-principal);
+            padding: 15px 18px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+        }
+
+        .icon-inline {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        .mt-10 { margin-top: 10px; }
+        .mt-20 { margin-top: 20px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="header-title-box">
+                <svg class="icon-inline" style="width: 28px; height: 28px;" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                <div>
+                    <h1>Gestión Diferenciada de Residuos <span class="badge-pampean">La Pampa</span></h1>
+                    <p>Tecnicatura en Administración y Gestión Pública — Matemática</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="header-reset-btn" class="btn-reset" onclick="confirmarReiniciar()" title="Reiniciar actividad y borrar avance local">
+                    <svg class="icon-inline" viewBox="0 0 24 24">
+                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                    </svg>
+                    Reiniciar Caso
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        
+        <!-- PANTALLA INICIAL: INGRESO DE DATOS -->
+        <div id="screen-welcome" class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    Identificación del Integrante de Equipo
+                </h2>
+            </div>
+            <p style="margin-bottom: 20px;">
+                Bienvenido/a al entorno de simulación profesional. Para acceder al caso asignado de la asignatura Matemática, por favor ingresá tus datos personales:
+            </p>
+            <form id="form-login" onsubmit="iniciarPlanificacion(event)" novalidate>
+                <div class="form-group">
+                    <label for="input-nombre">Nombre:</label>
+                    <input type="text" id="input-nombre" required placeholder="Ej. María" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                    <label for="input-apellido">Apellido:</label>
+                    <input type="text" id="input-apellido" required placeholder="Ej. González" autocomplete="family-name">
+                </div>
+                <button type="button" class="btn-primary mt-10" onclick="iniciarPlanificacion(event)">
+                    Comenzar planificación
+                    <svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </button>
+                <div id="login-feedback" class="hidden mt-10"></div>
+            </form>
+        </div>
+
+        <!-- CONTENEDOR DE DESAFÍOS -->
+        <div id="screen-challenges" class="hidden">
+            
+            <div class="info-box">
+                <strong id="welcome-user-text">Bienvenida/o, [Nombre].</strong> Se te ha asignado un caso para colaborar con la planificación de la nueva etapa del Programa Municipal de Gestión Diferenciada de Residuos.
+            </div>
+
+            <div class="context-grid">
+                <!-- 1. SITUACIÓN PROFESIONAL DE TRABAJO -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                            Situación Profesional de Trabajo
+                        </h2>
+                    </div>
+                    <p>
+                        La Municipalidad de una pequeña localidad de La Pampa decidió ampliar su Programa de Gestión Diferenciada de Residuos Domiciliarios con el propósito de incrementar la cantidad de hogares que separan correctamente los residuos reciclables.
+                    </p>
+                    <p class="mt-10">
+                        Como integrante del Área de Ambiente, deberás analizar la información disponible, estimar los recursos necesarios y determinar si el presupuesto permitiría adquirir los contenedores previstos.
+                    </p>
+                    <p class="mt-10" style="font-size: 0.88rem; color: #4A5568;">
+                        <em>La actividad está organizada en cinco desafíos progresivos. Cada resultado obtenido se registrará automáticamente en la Hoja de planificación para avanzar.</em>
+                    </p>
+                </div>
+
+                <!-- 2. HOJA DE PLANIFICACIÓN -->
+                <aside id="planning-sheet-container" class="planning-sheet">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <svg class="icon-inline" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                Hoja de planificación
+                            </h3>
+                            <span class="sheet-badge">En curso</span>
+                        </div>
+                        <ul class="sheet-grid">
+                            <li class="sheet-item">
+                                <span class="sheet-label">Participación piloto</span>
+                                <span id="sheet-participacion" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Nuevos hogares</span>
+                                <span id="sheet-nuevos" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Total proyectado</span>
+                                <span id="sheet-total-hogares" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Contenedores Norte</span>
+                                <span id="sheet-cnorte" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Contenedores Centro</span>
+                                <span id="sheet-ccentro" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Contenedores Sur</span>
+                                <span id="sheet-csur" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Precio final contenedor</span>
+                                <span id="sheet-precio-unitario" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Costo total compra</span>
+                                <span id="sheet-costo-total" class="sheet-value pending">—</span>
+                            </li>
+                            <li class="sheet-item">
+                                <span class="sheet-label">Resultado presupuestario</span>
+                                <span id="sheet-resultado-presupuestario" class="sheet-value pending">—</span>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="step-indicator">
+                <div class="step-node active" id="node-1">1</div>
+                <div class="step-node" id="node-2">2</div>
+                <div class="step-node" id="node-3">3</div>
+                <div class="step-node" id="node-4">4</div>
+                <div class="step-node" id="node-5">5</div>
+            </div>
+
+            <div id="challenge-1" class="card challenge-box">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="badge-desafio badge-d1">1</span>Desafío 1: Analizar la participación de la etapa piloto</h3>
+                </div>
+                <p id="c1-context" style="margin-bottom: 15px;"></p>
+                <div class="form-group">
+                    <label for="c1-input">¿Qué porcentaje de los hogares invitados participó efectivamente del programa?</label>
+                    <div class="input-group" style="max-width: 250px;">
+                        <input type="text" id="c1-input" class="has-suffix" placeholder="Ej. 75">
+                        <span class="input-addon suffix">%</span>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="verificarDesafio1()">Verificar</button>
+                <div id="c1-feedback" class="hidden"></div>
+                <div id="c1-help-btn-container" class="help-btn-container hidden">
+                    <p style="font-size:0.85rem; color:#5A6A85; margin-bottom:10px;">Si preferís ver la resolución, podés pedir ayuda.</p>
+                    <button type="button" class="btn-ayuda" onclick="usarAyuda(1)">
+                        <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                        Necesito ayuda para continuar
+                    </button>
+                </div>
+                <div id="c1-help-content" class="feedback info-help hidden"></div>
+            </div>
+
+            <div id="challenge-2" class="card challenge-box hidden">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="badge-desafio badge-d2">2</span>Desafío 2: Proyectar la nueva etapa</h3>
+                </div>
+                <p id="c2-context" style="margin-bottom: 15px;"></p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hogares participantes actuales</td>
+                                <td id="c2-participantes-val"><b>--</b></td>
+                            </tr>
+                            <tr>
+                                <td>Incremento previsto</td>
+                                <td id="c2-incremento-val"><b>-- %</b></td>
+                            </tr>
+                            <tr>
+                                <td><label for="c2-nuevos">Nuevos hogares incorporados</label></td>
+                                <td><input type="text" id="c2-nuevos" style="max-width: 150px;" placeholder="Cantidad"></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td><label for="c2-total">Total de hogares proyectados</label></td>
+                                <td><input type="text" id="c2-total" style="max-width: 150px;" placeholder="Cantidad final"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.88rem; color: #4A5568; margin-bottom: 12px;">Completá la tabla con los valores calculados.</p>
+                <button class="btn-primary" onclick="verificarDesafio2()">Verificar</button>
+                <div id="c2-feedback" class="hidden"></div>
+                <div id="c2-help-btn-container" class="help-btn-container hidden">
+                    <p style="font-size:0.85rem; color:#5A6A85; margin-bottom:10px;">Si preferís ver la resolución, podés pedir ayuda.</p>
+                    <button type="button" class="btn-ayuda" onclick="usarAyuda(2)">
+                        <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                        Necesito ayuda para continuar
+                    </button>
+                </div>
+                <div id="c2-help-content" class="feedback info-help hidden"></div>
+            </div>
+
+            <div id="challenge-3" class="card challenge-box hidden">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="badge-desafio badge-d3">3</span>Desafío 3: Distribuir los contenedores por sector</h3>
+                </div>
+                <p id="c3-context" style="margin-bottom: 15px;"></p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sector</th>
+                                <th>Hogares proyectados</th>
+                                <th>Contenedores asignados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sector Norte</td>
+                                <td id="c3-hnorte">--</td>
+                                <td><input type="text" id="c3-cnorte" style="max-width: 140px;" placeholder="Cantidad"></td>
+                            </tr>
+                            <tr>
+                                <td>Sector Centro</td>
+                                <td id="c3-hcentro">--</td>
+                                <td><input type="text" id="c3-ccentro" style="max-width: 140px;" placeholder="Cantidad"></td>
+                            </tr>
+                            <tr>
+                                <td>Sector Sur</td>
+                                <td id="c3-hsur">--</td>
+                                <td><input type="text" id="c3-csur" style="max-width: 140px;" placeholder="Cantidad"></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Municipal</td>
+                                <td id="c3-htotal">--</td>
+                                <td id="c3-ctotal">--</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.88rem; color: #4A5568; margin-bottom: 12px;">Completá la tabla indicando cuántos contenedores corresponden a cada sector.</p>
+                <button class="btn-primary" onclick="verificarDesafio3()">Verificar</button>
+                <div id="c3-feedback" class="hidden"></div>
+                <div id="c3-help-btn-container" class="help-btn-container hidden">
+                    <p style="font-size:0.85rem; color:#5A6A85; margin-bottom:10px;">Si preferís ver la resolución, podés pedir ayuda.</p>
+                    <button type="button" class="btn-ayuda" onclick="usarAyuda(3)">
+                        <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                        Necesito ayuda para continuar
+                    </button>
+                </div>
+                <div id="c3-help-content" class="feedback info-help hidden"></div>
+            </div>
+
+            <div id="challenge-4" class="card challenge-box hidden">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="badge-desafio badge-d4">4</span>Desafío 4: Actualizar el precio unitario del contenedor</h3>
+                </div>
+                <p id="c4-context" style="margin-bottom: 15px;"></p>
+                <div class="form-group">
+                    <label for="c4-precio">¿Cuál será el precio final de cada contenedor?</label>
+                    <div class="input-group" style="max-width: 280px;">
+                        <span class="input-addon prefix">$</span>
+                        <input type="text" id="c4-precio" class="has-prefix" placeholder="Monto final">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="verificarDesafio4()">Verificar</button>
+                <div id="c4-feedback" class="hidden"></div>
+                <div id="c4-help-btn-container" class="help-btn-container hidden">
+                    <p style="font-size:0.85rem; color:#5A6A85; margin-bottom:10px;">Si preferís ver la resolución, podés pedir ayuda.</p>
+                    <button type="button" class="btn-ayuda" onclick="usarAyuda(4)">
+                        <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                        Necesito ayuda para continuar
+                    </button>
+                </div>
+                <div id="c4-help-content" class="feedback info-help hidden"></div>
+            </div>
+
+            <div id="challenge-5" class="card challenge-box hidden">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="badge-desafio badge-d5">5</span>Desafío 5: Analizar la viabilidad presupuestaria</h3>
+                </div>
+                <p id="c5-context" style="margin-bottom: 15px;"></p>
+
+                <div class="form-group">
+                    <label for="c5-costo-total">1. ¿Cuál será el costo total de la compra?</label>
+                    <div class="input-group" style="max-width: 300px;">
+                        <span class="input-addon prefix">$</span>
+                        <input type="text" id="c5-costo-total" class="has-prefix" placeholder="Monto total">
+                    </div>
+                </div>
+
+                <div class="form-group mt-20">
+                    <label style="margin-bottom: 10px;">2. Evaluación de balance presupuestario:</label>
+                    <div class="sentence-builder">
+                        <span>Luego de comparar el presupuesto disponible con el costo total de la compra, se concluye que al municipio le</span>
+                        <select id="c5-opcion-resultado" aria-label="Seleccionar si sobran o faltan">
+                            <option value="">-- seleccionar --</option>
+                            <option value="sobran">sobran</option>
+                            <option value="faltan">faltan</option>
+                        </select>
+                        <div class="sentence-builder-input-group">
+                            <span>$</span>
+                            <input type="text" id="c5-monto-diferencia" placeholder="Monto" aria-label="Monto de la diferencia">
+                        </div>
+                        <span>para adquirir los contenedores.</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary mt-10" onclick="verificarDesafio5()">Verificar</button>
+                <div id="c5-feedback" class="hidden"></div>
+                <div id="c5-help-btn-container" class="help-btn-container hidden">
+                    <p style="font-size:0.85rem; color:#5A6A85; margin-bottom:10px;">Si preferís ver la resolución, podés pedir ayuda.</p>
+                    <button type="button" class="btn-ayuda" onclick="usarAyuda(5)">
+                        <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                        Necesito ayuda para continuar
+                    </button>
+                </div>
+                <div id="c5-help-content" class="feedback info-help hidden"></div>
+            </div>
+
+            <div id="screen-final" class="card hidden">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: var(--exito);">
+                        <svg class="icon-inline" style="color: var(--exito); width:24px; height:24px;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Planificación Finalizada con Éxito
+                    </h2>
+                </div>
+                <p style="font-size: 1.05rem;" id="final-congratulations">
+                    ¡Felicitaciones! Completaste correctamente la planificación del Programa Municipal de Gestión Diferenciada de Residuos.
+                </p>
+
+                <div class="final-stats-grid">
+                    <div class="final-stat-item">
+                        <div class="stat-value" id="final-sin-ayuda">--</div>
+                        <div class="stat-label">Desafíos sin ayuda</div>
+                    </div>
+                    <div class="final-stat-item">
+                        <div class="stat-value" id="final-con-ayuda">--</div>
+                        <div class="stat-label">Desafíos con ayuda</div>
+                    </div>
+                    <div class="final-stat-item">
+                        <div class="stat-value" id="final-porcentaje">--</div>
+                        <div class="stat-label">Desempeño obtenido</div>
+                    </div>
+                </div>
+
+                <div class="final-codigo-box">
+                    <div class="codigo-label">Código de validación</div>
+                    <div class="codigo-valor" id="final-codigo-validacion">-------</div>
+                    <button type="button" class="btn-secondary" style="background-color: rgba(255,255,255,0.1); color: var(--blanco); border-color: rgba(255,255,255,0.5);" onclick="copiarCodigo()">
+                        Copiar código
+                    </button>
+                    <div id="copy-confirm-msg" class="copy-confirm-msg" style="color: var(--dorado);">Código copiado correctamente.</div>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;" class="mt-20">
+                    <button class="btn-secondary" onclick="revisarPlanificacion()">
+                        Revisar planificación
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="modal-reset" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h3 style="color: var(--azul-oscuro); margin-bottom: 12px; font-size: 1.15rem;">¿Reiniciar caso?</h3>
+            <p style="font-size: 0.95rem; color: var(--texto-principal);">
+                Se borrarán todos tus datos ingresados y avances guardados en este navegador para comenzar una nueva planificación.
+            </p>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="cerrarModalReiniciar()">Cancelar</button>
+                <button class="btn-primary" onclick="ejecutarReiniciar()">Sí, reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* CONFIGURACIÓN DE CASOS */
+        // Colección de 12 casos matemáticamente validados conforme a las especificaciones
+        const CASOS_BANCO = [
+            {
+                id: 1,
+                hogaresInvitados: 800,
+                porcentajeParticipacion: 75,
+                porcentajeAmpliacion: 25,
+                hogaresNorte: 250,
+                hogaresCentro: 350,
+                hogaresSur: 150,
+                totalContenedores: 150,
+                precioInicial: 180000,
+                porcentajeAumento: 10,
+                porcentajeBonificacion: 5,
+                presupuestoDisponible: 28332000
+            },
+            {
+                id: 2,
+                hogaresInvitados: 1000,
+                porcentajeParticipacion: 60,
+                porcentajeAmpliacion: 20,
+                hogaresNorte: 240,
+                hogaresCentro: 300,
+                hogaresSur: 180,
+                totalContenedores: 120,
+                precioInicial: 175000,
+                porcentajeAumento: 12,
+                porcentajeBonificacion: 10,
+                presupuestoDisponible: 21050000
+            },
+            {
+                id: 3,
+                hogaresInvitados: 800,
+                porcentajeParticipacion: 70,
+                porcentajeAmpliacion: 25,
+                hogaresNorte: 200,
+                hogaresCentro: 350,
+                hogaresSur: 150,
+                totalContenedores: 140,
+                precioInicial: 200000,
+                porcentajeAumento: 15,
+                porcentajeBonificacion: 8,
+                presupuestoDisponible: 29740000
+            },
+            {
+                id: 4,
+                hogaresInvitados: 900,
+                porcentajeParticipacion: 80,
+                porcentajeAmpliacion: 25,
+                hogaresNorte: 300,
+                hogaresCentro: 400,
+                hogaresSur: 200,
+                totalContenedores: 180,
+                precioInicial: 170000,
+                porcentajeAumento: 20,
+                porcentajeBonificacion: 5,
+                presupuestoDisponible: 34765000
+            },
+            {
+                id: 5,
+                hogaresInvitados: 800,
+                porcentajeParticipacion: 65,
+                porcentajeAmpliacion: 25,
+                hogaresNorte: 200,
+                hogaresCentro: 300,
+                hogaresSur: 150,
+                totalContenedores: 130,
+                precioInicial: 185000,
+                porcentajeAumento: 10,
+                porcentajeBonificacion: 10,
+                presupuestoDisponible: 23925000
+            },
+            {
+                id: 6,
+                hogaresInvitados: 700,
+                porcentajeParticipacion: 80,
+                porcentajeAmpliacion: 35,
+                hogaresNorte: 252,
+                hogaresCentro: 336,
+                hogaresSur: 168,
+                totalContenedores: 108,
+                precioInicial: 190000,
+                porcentajeAumento: 15,
+                porcentajeBonificacion: 8,
+                presupuestoDisponible: 21593160
+            },
+            {
+                id: 7,
+                hogaresInvitados: 600,
+                porcentajeParticipacion: 75,
+                porcentajeAmpliacion: 20,
+                hogaresNorte: 180,
+                hogaresCentro: 240,
+                hogaresSur: 120,
+                totalContenedores: 90,
+                precioInicial: 195000,
+                porcentajeAumento: 12,
+                porcentajeBonificacion: 5,
+                presupuestoDisponible: 18791200
+            },
+            {
+                id: 8,
+                hogaresInvitados: 1000,
+                porcentajeParticipacion: 70,
+                porcentajeAmpliacion: 30,
+                hogaresNorte: 350,
+                hogaresCentro: 420,
+                hogaresSur: 140,
+                totalContenedores: 130,
+                precioInicial: 180000,
+                porcentajeAumento: 18,
+                porcentajeBonificacion: 10,
+                presupuestoDisponible: 24735800
+            },
+            {
+                id: 9,
+                hogaresInvitados: 800,
+                porcentajeParticipacion: 60,
+                porcentajeAmpliacion: 35,
+                hogaresNorte: 216,
+                hogaresCentro: 288,
+                hogaresSur: 144,
+                totalContenedores: 108,
+                precioInicial: 185000,
+                porcentajeAumento: 20,
+                porcentajeBonificacion: 8,
+                presupuestoDisponible: 22174420
+            },
+            {
+                id: 10,
+                hogaresInvitados: 750,
+                porcentajeParticipacion: 80,
+                porcentajeAmpliacion: 25,
+                hogaresNorte: 240,
+                hogaresCentro: 330,
+                hogaresSur: 180,
+                totalContenedores: 125,
+                precioInicial: 170000,
+                porcentajeAumento: 15,
+                porcentajeBonificacion: 10,
+                presupuestoDisponible: 21874250
+            },
+            {
+                id: 11,
+                hogaresInvitados: 900,
+                porcentajeParticipacion: 65,
+                porcentajeAmpliacion: 20,
+                hogaresNorte: 234,
+                hogaresCentro: 312,
+                hogaresSur: 156,
+                totalContenedores: 117,
+                precioInicial: 190000,
+                porcentajeAumento: 10,
+                porcentajeBonificacion: 5,
+                presupuestoDisponible: 23350150
+            },
+            {
+                id: 12,
+                hogaresInvitados: 1000,
+                porcentajeParticipacion: 75,
+                porcentajeAmpliacion: 30,
+                hogaresNorte: 325,
+                hogaresCentro: 455,
+                hogaresSur: 195,
+                totalContenedores: 150,
+                precioInicial: 200000,
+                porcentajeAumento: 18,
+                porcentajeBonificacion: 8,
+                presupuestoDisponible: 32451000
+            }
+        ];
+
+        let state = {
+            nombre: '',
+            apellido: '',
+            casoId: null,
+            currentStep: 1,
+            attempts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+            answers: {},
+            caseData: null,
+            desafiosConAyuda: []
+        };
+
+        const STORAGE_KEY = 'muni_residuos_la_pampa_v2';
+
+        /* ==================================================================
+           CÓDIGOS DE VALIDACIÓN PARA MOODLE
+           Códigos fijos y predefinidos por combinación de caso y porcentaje
+           de desempeño. No se generan de forma aleatoria ni dependen de
+           fecha, hora, navegador o datos ingresados por el estudiante.
+           Deben cargarse en Moodle como respuestas correctas de una
+           pregunta de tipo Respuesta corta (ver tabla docente adjunta).
+           ================================================================== */
+        const codigosValidacion = {
+            1: { 100: "RV1-JL6", 80: "RV1-UME", 60: "RV1-6Z3", 40: "RV1-DBX", 20: "RV1-WK9", 0: "RV1-BFS" },
+            2: { 100: "RV2-7C2", 80: "RV2-A67", 60: "RV2-BMP", 40: "RV2-GA4", 20: "RV2-RPC", 0: "RV2-MQ8" },
+            3: { 100: "RV3-S5A", 80: "RV3-CTA", 60: "RV3-AML", 40: "RV3-RTA", 20: "RV3-RZ4", 0: "RV3-F86" },
+            4: { 100: "RV4-3ZD", 80: "RV4-B39", 60: "RV4-VHH", 40: "RV4-RSP", 20: "RV4-XKQ", 0: "RV4-LS7" },
+            5: { 100: "RV5-9YC", 80: "RV5-7A8", 60: "RV5-6D2", 40: "RV5-6CR", 20: "RV5-VUY", 0: "RV5-W5M" },
+            6: { 100: "RV6-VDU", 80: "RV6-RQJ", 60: "RV6-H4U", 40: "RV6-ZW3", 20: "RV6-5JU", 0: "RV6-AUL" },
+            7: { 100: "RV7-8Q4", 80: "RV7-TSQ", 60: "RV7-CXL", 40: "RV7-AMM", 20: "RV7-948", 0: "RV7-2JX" },
+            8: { 100: "RV8-Y77", 80: "RV8-HML", 60: "RV8-6ZL", 40: "RV8-V4R", 20: "RV8-UUM", 0: "RV8-RR4" },
+            9: { 100: "RV9-R9E", 80: "RV9-2QT", 60: "RV9-Z2P", 40: "RV9-TLB", 20: "RV9-V9Y", 0: "RV9-69C" },
+            10: { 100: "RV10-9T3", 80: "RV10-TJ9", 60: "RV10-LJ7", 40: "RV10-9VR", 20: "RV10-Z53", 0: "RV10-66A" },
+            11: { 100: "RV11-582", 80: "RV11-ZLG", 60: "RV11-6ZW", 40: "RV11-NXY", 20: "RV11-E8N", 0: "RV11-G4B" },
+            12: { 100: "RV12-9M3", 80: "RV12-ZMK", 60: "RV12-MFN", 40: "RV12-S8R", 20: "RV12-DE2", 0: "RV12-ZV5" }
+        };
+
+        /* Escala de desempeño según cantidad de desafíos resueltos con ayuda */
+        /* Escala de desempeño según cantidad de desafíos resueltos con ayuda.
+           Si se usó ayuda en los 5 desafíos, el desempeño queda en 0 %,
+           porque el estudiante no resolvió ninguno por sí mismo. */
+        const ESCALA_DESEMPENO = { 0: 100, 1: 80, 2: 60, 3: 40, 4: 20, 5: 0 };
+
+        function confirmarReiniciar() {
+            document.getElementById('modal-reset').classList.remove('hidden');
+        }
+
+        function cerrarModalReiniciar() {
+            document.getElementById('modal-reset').classList.add('hidden');
+        }
+
+        function ejecutarReiniciar() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+            } catch (e) {
+                console.warn('Error borrando localStorage:', e);
+            }
+            window.location.reload();
+        }
+
+        function verificarConsistenciaMatematica(casos) {
+            let sobrantesCount = 0;
+            let faltantesCount = 0;
+
+            casos.forEach(c => {
+                const participantes = (c.hogaresInvitados * c.porcentajeParticipacion) / 100;
+                const nuevos = (participantes * c.porcentajeAmpliacion) / 100;
+                const totalProj = participantes + nuevos;
+
+                const cNorte = c.totalContenedores * (c.hogaresNorte / totalProj);
+                const cCentro = c.totalContenedores * (c.hogaresCentro / totalProj);
+                const cSur = c.totalContenedores * (c.hogaresSur / totalProj);
+
+                if (!Number.isInteger(cNorte) || !Number.isInteger(cCentro) || !Number.isInteger(cSur)) {
+                    throw new Error(`Caso ${c.id}: distribución de contenedores genera decimales`);
+                }
+
+                if (cNorte + cCentro + cSur !== c.totalContenedores) {
+                    throw new Error(`Caso ${c.id}: suma de contenedores no coincide con total`);
+                }
+
+                const pAumentado = c.precioInicial * (1 + c.porcentajeAumento / 100);
+                const pFinal = pAumentado * (1 - c.porcentajeBonificacion / 100);
+                const costoTotal = c.totalContenedores * pFinal;
+                const diff = c.presupuestoDisponible - costoTotal;
+                const absDiff = Math.abs(diff);
+
+                if (absDiff < 115000 || absDiff > 120000) {
+                    throw new Error(`Caso ${c.id}: diferencia fuera de rango [115.000, 120.000]. Valor: ${absDiff}`);
+                }
+
+                if (diff > 0) sobrantesCount++;
+                else if (diff < 0) faltantesCount++;
+                else throw new Error(`Caso ${c.id}: diferencia es cero`);
+            });
+
+            console.log(`[Verificación OK] 12 casos validados. Sobrantes: ${sobrantesCount}, Faltantes: ${faltantesCount}.`);
+        }
+
+        function parseUserNumber(input) {
+            if (typeof input === 'number') return input;
+            if (!input) return NaN;
+            
+            let str = String(input).trim().replace(/[$%\s]/g, '');
+            if (!str) return NaN;
+
+            if (str.includes('.') && str.includes(',')) {
+                if (str.indexOf('.') < str.indexOf(',')) {
+                    str = str.replace(/\./g, '').replace(',', '.');
+                } else {
+                    str = str.replace(/,/g, '');
+                }
+            } else if (str.includes(',')) {
+                const parts = str.split(',');
+                if (parts.length > 2) {
+                    str = str.replace(/,/g, '');
+                } else if (parts.length === 2) {
+                    if (parts[1].length === 3 && parts[0].length <= 3) {
+                        str = parts[0] + parts[1];
+                    } else {
+                        str = parts[0] + '.' + parts[1];
+                    }
+                }
+            } else if (str.includes('.')) {
+                const parts = str.split('.');
+                if (parts.length > 2) {
+                    str = str.replace(/\./g, '');
+                } else if (parts.length === 2) {
+                    if (parts[1].length === 3 && parts[0].length <= 3) {
+                        str = parts[0] + parts[1];
+                    } else {
+                        str = parts[0] + '.' + parts[1];
+                    }
+                }
+            }
+
+            return parseFloat(str);
+        }
+
+        function formatMoney(amount) {
+            return '$ ' + amount.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        }
+
+        function formatInteger(num) {
+            return num.toLocaleString('es-AR');
+        }
+
+        function calcularValoresCaso(base) {
+            const participantes = (base.hogaresInvitados * base.porcentajeParticipacion) / 100;
+            const nuevos = (participantes * base.porcentajeAmpliacion) / 100;
+            const totalProyectado = participantes + nuevos;
+
+            const cNorte = base.totalContenedores * (base.hogaresNorte / totalProyectado);
+            const cCentro = base.totalContenedores * (base.hogaresCentro / totalProyectado);
+            const cSur = base.totalContenedores * (base.hogaresSur / totalProyectado);
+
+            const pAumentado = base.precioInicial * (1 + base.porcentajeAumento / 100);
+            const pFinal = pAumentado * (1 - base.porcentajeBonificacion / 100);
+            const costoTotal = base.totalContenedores * pFinal;
+
+            const dif = base.presupuestoDisponible - costoTotal;
+            const esSobrante = dif > 0;
+            const difAbs = Math.abs(dif);
+
+            return {
+                ...base,
+                hogaresParticipantes: participantes,
+                hogaresNuevos: nuevos,
+                totalProyectado: totalProyectado,
+                contenedoresNorte: cNorte,
+                contenedoresCentro: cCentro,
+                contenedoresSur: cSur,
+                precioFinal: pFinal,
+                costoTotal: costoTotal,
+                diferenciaAbs: difAbs,
+                resultadoTexto: esSobrante ? 'sobran' : 'faltan'
+            };
+        }
+
+        function obtenerCasoPorURL() {
+            const params = new URLSearchParams(window.location.search);
+            const casoParam = parseInt(params.get('caso'), 10);
+            if (casoParam >= 1 && casoParam <= 12) {
+                return casoParam;
+            }
+            return Math.floor(Math.random() * 12) + 1;
+        }
+
+        function guardarEstadoLocal() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.warn('No se pudo guardar en localStorage:', e);
+            }
+        }
+
+        function cargarEstadoLocal() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed && parsed.nombre && parsed.casoId) {
+                        state = parsed;
+                        if (!Array.isArray(state.desafiosConAyuda)) state.desafiosConAyuda = [];
+                        const baseCaso = CASOS_BANCO.find(c => c.id === state.casoId) || CASOS_BANCO[0];
+                        state.caseData = calcularValoresCaso(baseCaso);
+                        return true;
+                    }
+                }
+            } catch (e) {
+                console.warn('Error al cargar localStorage:', e);
+            }
+            return false;
+        }
+
+        function iniciarPlanificacion(event) {
+            if (event) event.preventDefault();
+            const nom = document.getElementById('input-nombre').value.trim();
+            const ape = document.getElementById('input-apellido').value.trim();
+            const feedbackEl = document.getElementById('login-feedback');
+
+            if (!nom || !ape) {
+                feedbackEl.className = 'feedback error';
+                feedbackEl.innerHTML = 'Completá el Nombre y el Apellido antes de comenzar la planificación.';
+                feedbackEl.classList.remove('hidden');
+                return;
+            }
+            feedbackEl.classList.add('hidden');
+
+            state.nombre = nom;
+            state.apellido = ape;
+
+            if (!state.casoId) {
+                state.casoId = obtenerCasoPorURL();
+                const baseCaso = CASOS_BANCO.find(c => c.id === state.casoId);
+                if (!baseCaso) {
+                    feedbackEl.className = 'feedback error';
+                    feedbackEl.innerHTML = 'No se pudo determinar el caso asignado. Recargá la página e intentá nuevamente.';
+                    feedbackEl.classList.remove('hidden');
+                    return;
+                }
+                state.caseData = calcularValoresCaso(baseCaso);
+            }
+
+            guardarEstadoLocal();
+            renderizarApp();
+        }
+
+        function renderizarApp() {
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-challenges').classList.remove('hidden');
+
+            document.getElementById('welcome-user-text').textContent = `Bienvenida/o, ${state.nombre} ${state.apellido}.`;
+
+            const cd = state.caseData;
+            document.getElementById('c1-context').innerHTML = 
+                `Durante la etapa piloto fueron invitados <strong>${formatInteger(cd.hogaresInvitados)}</strong> hogares. Al finalizar el período, <strong>${formatInteger(cd.hogaresParticipantes)}</strong> hogares separaban correctamente sus residuos.`;
+
+            document.getElementById('c2-context').innerHTML = 
+                `El municipio proyecta incorporar un <strong>${cd.porcentajeAmpliacion} %</strong> más de hogares respecto de la cantidad que actualmente participa.`;
+            document.getElementById('c2-participantes-val').textContent = formatInteger(cd.hogaresParticipantes);
+            document.getElementById('c2-incremento-val').textContent = cd.porcentajeAmpliacion + ' %';
+
+            document.getElementById('c3-context').innerHTML = 
+                `El municipio dispone de <strong>${formatInteger(cd.totalContenedores)}</strong> contenedores y decidió distribuirlos proporcionalmente según la cantidad de hogares proyectados en cada sector.`;
+            document.getElementById('c3-hnorte').textContent = formatInteger(cd.hogaresNorte);
+            document.getElementById('c3-hcentro').textContent = formatInteger(cd.hogaresCentro);
+            document.getElementById('c3-hsur').textContent = formatInteger(cd.hogaresSur);
+            document.getElementById('c3-htotal').textContent = formatInteger(cd.totalProyectado);
+            document.getElementById('c3-ctotal').textContent = formatInteger(cd.totalContenedores);
+
+            document.getElementById('c4-context').innerHTML = 
+                `El precio inicial de cada contenedor es de <strong>${formatMoney(cd.precioInicial)}</strong>.<br>Antes de concretar la compra, el proveedor aplicó un aumento del <strong>${cd.porcentajeAumento} %</strong>. Posteriormente, el municipio obtuvo una bonificación del <strong>${cd.porcentajeBonificacion} %</strong> sobre el precio ya actualizado.`;
+
+            document.getElementById('c5-context').innerHTML = 
+                `Para implementar la ampliación será necesario adquirir los <strong>${formatInteger(cd.totalContenedores)}</strong> contenedores previstos.<br>El municipio dispone de un presupuesto de <strong>${formatMoney(cd.presupuestoDisponible)}</strong> destinado a esta compra.`;
+
+            actualizarPasosEInterfaz();
+            actualizarHojaPlanificacion();
+        }
+
+        function actualizarPasosEInterfaz() {
+            const step = state.currentStep;
+
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`challenge-${i}`).classList.add('hidden');
+                const node = document.getElementById(`node-${i}`);
+                node.classList.remove('active', 'completed');
+                if (i < step) node.classList.add('completed');
+                else if (i === step) node.classList.add('active');
+            }
+
+            if (step <= 5) {
+                document.getElementById(`challenge-${step}`).classList.remove('hidden');
+                document.getElementById('screen-final').classList.add('hidden');
+            } else {
+                document.getElementById('screen-final').classList.remove('hidden');
+                mostrarPantallaFinal();
+            }
+        }
+
+        function actualizarHojaPlanificacion() {
+            const a = state.answers;
+
+            const setVal = (id, val, suffix = '') => {
+                const el = document.getElementById(id);
+                if (val !== undefined && val !== null) {
+                    el.textContent = val + suffix;
+                    el.classList.remove('pending');
+                } else {
+                    el.textContent = '—';
+                    el.classList.add('pending');
+                }
+            };
+
+            setVal('sheet-participacion', a.c1 !== undefined ? a.c1 : undefined, ' %');
+            setVal('sheet-nuevos', a.c2_nuevos !== undefined ? formatInteger(a.c2_nuevos) : undefined);
+            setVal('sheet-total-hogares', a.c2_total !== undefined ? formatInteger(a.c2_total) : undefined);
+            setVal('sheet-cnorte', a.c3_norte !== undefined ? formatInteger(a.c3_norte) : undefined);
+            setVal('sheet-ccentro', a.c3_centro !== undefined ? formatInteger(a.c3_centro) : undefined);
+            setVal('sheet-csur', a.c3_sur !== undefined ? formatInteger(a.c3_sur) : undefined);
+            setVal('sheet-precio-unitario', a.c4 !== undefined ? formatMoney(a.c4) : undefined);
+            setVal('sheet-costo-total', a.c5_costo !== undefined ? formatMoney(a.c5_costo) : undefined);
+
+            if (a.c5_opcion !== undefined) {
+                setVal('sheet-resultado-presupuestario', `${a.c5_opcion.toUpperCase()} ${formatMoney(state.caseData.diferenciaAbs)}`);
+            } else {
+                setVal('sheet-resultado-presupuestario', undefined);
+            }
+        }
+
+        function mostrarFeedback(elementId, mensaje, tipo) {
+            const container = document.getElementById(elementId);
+            container.className = `feedback ${tipo}`;
+            container.innerHTML = `
+                <svg class="icon-inline" style="flex-shrink:0; width:20px; height:20px;" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v4z"/>
+                </svg>
+                <div>${mensaje}</div>
+            `;
+            container.classList.remove('hidden');
+        }
+
+        /* ==================================================================
+           SISTEMA DE AYUDAS
+           ================================================================== */
+
+        function mostrarBotonAyuda(n) {
+            if (state.desafiosConAyuda.includes(n)) return;
+            document.getElementById(`c${n}-help-btn-container`).classList.remove('hidden');
+        }
+
+        function ocultarBotonAyuda(n) {
+            document.getElementById(`c${n}-help-btn-container`).classList.add('hidden');
+        }
+
+        function registrarAyudaUsada(n) {
+            if (!state.desafiosConAyuda.includes(n)) {
+                state.desafiosConAyuda.push(n);
+            }
+        }
+
+        function deshabilitarInputs(ids) {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.disabled = true;
+            });
+        }
+
+        function mostrarAyudaCompleta(elementId, html, n) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = `
+                <div class="ayuda-titulo">
+                    <svg class="icon-inline" style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                    Resolución guiada
+                </div>
+                <div class="ayuda-cuerpo">${html}</div>
+                <div style="margin-top:10px; font-size:0.85rem; font-style:italic;">Este desafío fue completado con ayuda guiada.</div>
+                <button type="button" class="btn-primary mt-10" style="align-self:flex-start;" onclick="avanzarTrasAyuda(${n})">
+                    Continuar al desafío siguiente
+                    <svg class="icon-inline" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </button>
+            `;
+            container.classList.remove('hidden');
+        }
+
+        function avanzarTrasAyuda(n) {
+            state.currentStep = n + 1;
+            guardarEstadoLocal();
+            actualizarPasosEInterfaz();
+            actualizarHojaPlanificacion();
+        }
+
+        function usarAyuda(n) {
+            if (state.desafiosConAyuda.includes(n)) return;
+            const cd = state.caseData;
+
+            if (n === 1) {
+                const parte = cd.hogaresParticipantes;
+                const total = cd.hogaresInvitados;
+                const resultado = cd.porcentajeParticipacion;
+                mostrarAyudaCompleta('c1-help-content', `
+                    <p>Parte (hogares participantes): <strong>${formatInteger(parte)}</strong></p>
+                    <p>Total de referencia (hogares invitados): <strong>${formatInteger(total)}</strong></p>
+                    <div class="ayuda-formula">Porcentaje = (Parte ÷ Total) × 100 = (${formatInteger(parte)} ÷ ${formatInteger(total)}) × 100 = ${resultado} %</div>
+                `, 1);
+                document.getElementById('c1-input').value = resultado;
+                deshabilitarInputs(['c1-input']);
+                state.answers.c1 = resultado;
+            } else if (n === 2) {
+                const actuales = cd.hogaresParticipantes;
+                const pct = cd.porcentajeAmpliacion;
+                const nuevos = cd.hogaresNuevos;
+                const total = cd.totalProyectado;
+                mostrarAyudaCompleta('c2-help-content', `
+                    <p>Hogares actuales: <strong>${formatInteger(actuales)}</strong> — Porcentaje de incremento: <strong>${pct} %</strong></p>
+                    <div class="ayuda-formula">Nuevos hogares = (${pct} ÷ 100) × ${formatInteger(actuales)} = ${formatInteger(nuevos)}</div>
+                    <div class="ayuda-formula">Total proyectado = ${formatInteger(actuales)} + ${formatInteger(nuevos)} = ${formatInteger(total)}</div>
+                `, 2);
+                document.getElementById('c2-nuevos').value = nuevos;
+                document.getElementById('c2-total').value = total;
+                deshabilitarInputs(['c2-nuevos', 'c2-total']);
+                state.answers.c2_nuevos = nuevos;
+                state.answers.c2_total = total;
+            } else if (n === 3) {
+                mostrarAyudaCompleta('c3-help-content', `
+                    <p>Podés plantear una regla de tres simple directa (u otra estrategia equivalente, como porcentajes o razones) para cada sector: al total de hogares le corresponde el total de contenedores.</p>
+                    <div class="ayuda-formula">
+                        Total municipal: ${formatInteger(cd.totalProyectado)} hogares → ${formatInteger(cd.totalContenedores)} contenedores<br>
+                        Sector Norte: ${formatInteger(cd.hogaresNorte)} hogares → x<br><br>
+                        x = (${formatInteger(cd.hogaresNorte)} · ${formatInteger(cd.totalContenedores)}) / ${formatInteger(cd.totalProyectado)} = ${formatInteger(cd.contenedoresNorte)}
+                    </div>
+                    <div class="ayuda-formula">
+                        Total municipal: ${formatInteger(cd.totalProyectado)} hogares → ${formatInteger(cd.totalContenedores)} contenedores<br>
+                        Sector Centro: ${formatInteger(cd.hogaresCentro)} hogares → x<br><br>
+                        x = (${formatInteger(cd.hogaresCentro)} · ${formatInteger(cd.totalContenedores)}) / ${formatInteger(cd.totalProyectado)} = ${formatInteger(cd.contenedoresCentro)}
+                    </div>
+                    <div class="ayuda-formula">
+                        Total municipal: ${formatInteger(cd.totalProyectado)} hogares → ${formatInteger(cd.totalContenedores)} contenedores<br>
+                        Sector Sur: ${formatInteger(cd.hogaresSur)} hogares → x<br><br>
+                        x = (${formatInteger(cd.hogaresSur)} · ${formatInteger(cd.totalContenedores)}) / ${formatInteger(cd.totalProyectado)} = ${formatInteger(cd.contenedoresSur)}
+                    </div>
+                    <p>Comprobación: ${formatInteger(cd.contenedoresNorte)} + ${formatInteger(cd.contenedoresCentro)} + ${formatInteger(cd.contenedoresSur)} = ${formatInteger(cd.totalContenedores)}</p>
+                `, 3);
+                document.getElementById('c3-cnorte').value = cd.contenedoresNorte;
+                document.getElementById('c3-ccentro').value = cd.contenedoresCentro;
+                document.getElementById('c3-csur').value = cd.contenedoresSur;
+                deshabilitarInputs(['c3-cnorte', 'c3-ccentro', 'c3-csur']);
+                state.answers.c3_norte = cd.contenedoresNorte;
+                state.answers.c3_centro = cd.contenedoresCentro;
+                state.answers.c3_sur = cd.contenedoresSur;
+            } else if (n === 4) {
+                const f1 = 1 + cd.porcentajeAumento / 100;
+                const f2 = 1 - cd.porcentajeBonificacion / 100;
+                mostrarAyudaCompleta('c4-help-content', `
+                    <p>El aumento y la bonificación se aplican de forma sucesiva, cada una sobre el valor ya modificado por la anterior.</p>
+                    <div class="ayuda-formula">F1 = 1 + (${cd.porcentajeAumento} ÷ 100) = ${f1.toFixed(4)}</div>
+                    <div class="ayuda-formula">F2 = 1 − (${cd.porcentajeBonificacion} ÷ 100) = ${f2.toFixed(4)}</div>
+                    <div class="ayuda-formula">Precio final = ${formatMoney(cd.precioInicial)} × F1 × F2 = ${formatMoney(cd.precioFinal)}</div>
+                `, 4);
+                document.getElementById('c4-precio').value = Math.round(cd.precioFinal * 100) / 100;
+                deshabilitarInputs(['c4-precio']);
+                state.answers.c4 = cd.precioFinal;
+            } else if (n === 5) {
+                mostrarAyudaCompleta('c5-help-content', `
+                    <div class="ayuda-formula">Costo total = ${formatInteger(cd.totalContenedores)} × ${formatMoney(cd.precioFinal)} = ${formatMoney(cd.costoTotal)}</div>
+                    <div class="ayuda-formula">Diferencia = ${formatMoney(cd.presupuestoDisponible)} − ${formatMoney(cd.costoTotal)} = ${formatMoney(cd.diferenciaAbs)}</div>
+                    <p>Comparando el presupuesto disponible (${formatMoney(cd.presupuestoDisponible)}) con el costo total, al municipio le <strong>${cd.resultadoTexto} ${formatMoney(cd.diferenciaAbs)}</strong> para adquirir los contenedores.</p>
+                `, 5);
+                document.getElementById('c5-costo-total').value = Math.round(cd.costoTotal * 100) / 100;
+                document.getElementById('c5-opcion-resultado').value = cd.resultadoTexto;
+                document.getElementById('c5-monto-diferencia').value = Math.round(cd.diferenciaAbs * 100) / 100;
+                deshabilitarInputs(['c5-costo-total', 'c5-opcion-resultado', 'c5-monto-diferencia']);
+                state.answers.c5_costo = cd.costoTotal;
+                state.answers.c5_opcion = cd.resultadoTexto;
+                state.answers.c5_monto = cd.diferenciaAbs;
+            }
+
+            registrarAyudaUsada(n);
+            ocultarBotonAyuda(n);
+        }
+
+        /* ==================================================================
+           VERIFICACIÓN DE DESAFÍOS (intentos ilimitados, pistas progresivas)
+           ================================================================== */
+
+        function verificarDesafio1() {
+            state.attempts[1]++;
+            const userVal = parseUserNumber(document.getElementById('c1-input').value);
+            const expected = state.caseData.porcentajeParticipacion;
+
+            if (!isNaN(userVal) && Math.abs(userVal - expected) < 0.01) {
+                mostrarFeedback('c1-feedback', 'Correcto. Comparaste la cantidad de hogares participantes con el total de hogares invitados.', 'success');
+                state.answers.c1 = expected;
+                state.currentStep = 2;
+                guardarEstadoLocal();
+                setTimeout(() => {
+                    actualizarPasosEInterfaz();
+                    actualizarHojaPlanificacion();
+                }, 1400);
+            } else {
+                if (state.attempts[1] === 1) {
+                    mostrarFeedback('c1-feedback', 'Revisá cuál es la cantidad que representa la parte y cuál es el total de hogares tomado como referencia.', 'error');
+                } else if (state.attempts[1] === 2) {
+                    mostrarFeedback('c1-feedback', 'Comparé los hogares que participaron efectivamente con el total de hogares invitados.', 'warning');
+                } else {
+                    mostrarFeedback('c1-feedback', 'Para determinar qué porcentaje representa una parte respecto del total, dividí la parte por el total y multiplicá el resultado por 100.', 'warning');
+                    mostrarBotonAyuda(1);
+                }
+            }
+        }
+
+        function verificarDesafio2() {
+            state.attempts[2]++;
+            const userNuevos = parseUserNumber(document.getElementById('c2-nuevos').value);
+            const userTotal = parseUserNumber(document.getElementById('c2-total').value);
+
+            const expNuevos = state.caseData.hogaresNuevos;
+            const expTotal = state.caseData.totalProyectado;
+
+            const okNuevos = !isNaN(userNuevos) && Math.abs(userNuevos - expNuevos) < 0.01;
+            const okTotal = !isNaN(userTotal) && Math.abs(userTotal - expTotal) < 0.01;
+
+            if (okNuevos && okTotal) {
+                mostrarFeedback('c2-feedback', 'Correcto. Proyectaste adecuadamente los nuevos hogares y el total general.', 'success');
+                state.answers.c2_nuevos = expNuevos;
+                state.answers.c2_total = expTotal;
+                state.currentStep = 3;
+                guardarEstadoLocal();
+                setTimeout(() => {
+                    actualizarPasosEInterfaz();
+                    actualizarHojaPlanificacion();
+                }, 1400);
+            } else {
+                if (state.attempts[2] === 1) {
+                    mostrarFeedback('c2-feedback', 'Revisá sobre qué cantidad debe calcularse el porcentaje de ampliación.', 'error');
+                } else if (state.attempts[2] === 2) {
+                    mostrarFeedback('c2-feedback', 'El porcentaje de incremento se calcula sobre la cantidad de hogares que actualmente participa.', 'warning');
+                } else {
+                    mostrarFeedback('c2-feedback', 'Calculá primero el porcentaje indicado de los hogares actuales. Después sumá esa cantidad al valor inicial.', 'warning');
+                    mostrarBotonAyuda(2);
+                }
+            }
+        }
+
+        function verificarDesafio3() {
+            state.attempts[3]++;
+            const uNorte = parseUserNumber(document.getElementById('c3-cnorte').value);
+            const uCentro = parseUserNumber(document.getElementById('c3-ccentro').value);
+            const uSur = parseUserNumber(document.getElementById('c3-csur').value);
+
+            const eNorte = state.caseData.contenedoresNorte;
+            const eCentro = state.caseData.contenedoresCentro;
+            const eSur = state.caseData.contenedoresSur;
+
+            const okN = !isNaN(uNorte) && Math.abs(uNorte - eNorte) < 0.01;
+            const okC = !isNaN(uCentro) && Math.abs(uCentro - eCentro) < 0.01;
+            const okS = !isNaN(uSur) && Math.abs(uSur - eSur) < 0.01;
+
+            if (okN && okC && okS) {
+                mostrarFeedback('c3-feedback', 'Correcto. Distribuiste proporcionalmente la totalidad de los contenedores.', 'success');
+                state.answers.c3_norte = eNorte;
+                state.answers.c3_centro = eCentro;
+                state.answers.c3_sur = eSur;
+                state.currentStep = 4;
+                guardarEstadoLocal();
+                setTimeout(() => {
+                    actualizarPasosEInterfaz();
+                    actualizarHojaPlanificacion();
+                }, 1400);
+            } else {
+                if (state.attempts[3] === 1) {
+                    mostrarFeedback('c3-feedback', 'Revisá si la cantidad de contenedores asignada a cada sector mantiene la misma relación que la cantidad de hogares.', 'error');
+                } else if (state.attempts[3] === 2) {
+                    mostrarFeedback('c3-feedback', 'Pensá qué proporción representan los hogares de cada sector sobre el total de hogares proyectados. Esa misma proporción es la que debe representar la cantidad de contenedores de ese sector sobre el total de contenedores.', 'warning');
+                } else {
+                    mostrarFeedback('c3-feedback', 'Podés plantear una regla de tres para cada sector: al total de hogares le corresponde el total de contenedores; a los hogares del sector le corresponde la cantidad que debés calcular.', 'warning');
+                    mostrarBotonAyuda(3);
+                }
+            }
+        }
+
+        function verificarDesafio4() {
+            state.attempts[4]++;
+            const uPrecio = parseUserNumber(document.getElementById('c4-precio').value);
+            const ePrecio = state.caseData.precioFinal;
+
+            if (!isNaN(uPrecio) && Math.abs(uPrecio - ePrecio) < 0.01) {
+                mostrarFeedback('c4-feedback', 'Correcto. Aplicaste correctamente los cambios porcentuales sucesivos.', 'success');
+                state.answers.c4 = ePrecio;
+                state.currentStep = 5;
+                guardarEstadoLocal();
+                setTimeout(() => {
+                    actualizarPasosEInterfaz();
+                    actualizarHojaPlanificacion();
+                }, 1400);
+            } else {
+                if (state.attempts[4] === 1) {
+                    mostrarFeedback('c4-feedback', 'Revisá sobre qué precio se aplica cada modificación porcentual.', 'error');
+                } else if (state.attempts[4] === 2) {
+                    mostrarFeedback('c4-feedback', 'El descuento se aplica sobre el precio que ya fue aumentado, no sobre el precio inicial.', 'warning');
+                } else {
+                    mostrarFeedback('c4-feedback', 'Calculá el factor correspondiente al aumento y el factor correspondiente a la disminución. Luego multiplicá el precio inicial por ambos factores.', 'warning');
+                    mostrarBotonAyuda(4);
+                }
+            }
+        }
+
+        function verificarDesafio5() {
+            state.attempts[5]++;
+            const uCosto = parseUserNumber(document.getElementById('c5-costo-total').value);
+            const uOpcion = document.getElementById('c5-opcion-resultado').value;
+            const uMonto = parseUserNumber(document.getElementById('c5-monto-diferencia').value);
+
+            const eCosto = state.caseData.costoTotal;
+            const eOpcion = state.caseData.resultadoTexto;
+            const eMonto = state.caseData.diferenciaAbs;
+
+            const okCosto = !isNaN(uCosto) && Math.abs(uCosto - eCosto) < 0.01;
+            const okOpcion = (uOpcion === eOpcion);
+            const okMonto = !isNaN(uMonto) && Math.abs(uMonto - eMonto) < 0.01;
+
+            if (okCosto && okOpcion && okMonto) {
+                mostrarFeedback('c5-feedback', 'Correcto. Análisis presupuestario finalizado con éxito.', 'success');
+                state.answers.c5_costo = eCosto;
+                state.answers.c5_opcion = eOpcion;
+                state.answers.c5_monto = eMonto;
+                state.currentStep = 6;
+                guardarEstadoLocal();
+                setTimeout(() => {
+                    actualizarPasosEInterfaz();
+                    actualizarHojaPlanificacion();
+                }, 1400);
+            } else {
+                if (state.attempts[5] === 1) {
+                    mostrarFeedback('c5-feedback', 'Revisá qué cantidad de contenedores se comprará y cuál es el precio final de cada uno. Después, compará el costo total con el presupuesto disponible.', 'error');
+                } else if (state.attempts[5] === 2) {
+                    mostrarFeedback('c5-feedback', 'El costo total se obtiene multiplicando la cantidad de contenedores por el precio final unitario. Si el costo supera al presupuesto, faltan fondos; si el presupuesto supera al costo, sobran fondos. La diferencia entre ambos valores es el monto que sobra o falta.', 'warning');
+                } else {
+                    if (!okCosto) {
+                        mostrarFeedback('c5-feedback', 'Multiplicá la cantidad total de contenedores por el precio final unitario para obtener el costo total. Luego compará ese valor con el presupuesto disponible.', 'warning');
+                    } else if (!okOpcion) {
+                        mostrarFeedback('c5-feedback', 'Ya tenés el costo total correcto. Compará ese valor con el presupuesto disponible e identificá cuál de los dos es mayor.', 'warning');
+                    } else {
+                        mostrarFeedback('c5-feedback', 'Calculá la diferencia entre el presupuesto disponible y el costo total, y expresala como un valor positivo (sin signo).', 'warning');
+                    }
+                    mostrarBotonAyuda(5);
+                }
+            }
+        }
+
+        function mostrarPantallaFinal() {
+            const headerResetBtn = document.getElementById('header-reset-btn');
+            if (headerResetBtn) headerResetBtn.classList.add('hidden');
+
+            document.getElementById('final-congratulations').innerHTML = 
+                `<strong>${state.nombre} ${state.apellido}</strong>, completaste la planificación del Programa Municipal de Gestión Diferenciada de Residuos.`;
+
+            const casoId = state.casoId;
+            const conAyuda = state.desafiosConAyuda.length;
+            const sinAyuda = 5 - conAyuda;
+            const porcentaje = ESCALA_DESEMPENO[conAyuda];
+            const codigo = (codigosValidacion[casoId] && codigosValidacion[casoId][porcentaje]) || '—';
+
+            document.getElementById('final-sin-ayuda').textContent = sinAyuda;
+            document.getElementById('final-con-ayuda').textContent = conAyuda;
+            document.getElementById('final-porcentaje').textContent = porcentaje + ' %';
+            document.getElementById('final-codigo-validacion').textContent = codigo;
+            document.getElementById('copy-confirm-msg').classList.remove('visible');
+        }
+
+        function copiarCodigo() {
+            const codigo = document.getElementById('final-codigo-validacion').textContent;
+            const msg = document.getElementById('copy-confirm-msg');
+            const showMsg = () => {
+                msg.classList.add('visible');
+                setTimeout(() => msg.classList.remove('visible'), 2500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(codigo).then(showMsg).catch(() => {
+                    fallbackCopiarCodigo(codigo, showMsg);
+                });
+            } else {
+                fallbackCopiarCodigo(codigo, showMsg);
+            }
+        }
+
+        function fallbackCopiarCodigo(texto, cb) {
+            try {
+                const temp = document.createElement('textarea');
+                temp.value = texto;
+                temp.style.position = 'fixed';
+                temp.style.opacity = '0';
+                document.body.appendChild(temp);
+                temp.focus();
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                cb();
+            } catch (e) {
+                console.warn('No se pudo copiar el código automáticamente:', e);
+            }
+        }
+
+        function revisarPlanificacion() {
+            const el = document.getElementById('planning-sheet-container');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        window.onload = function() {
+            try {
+                verificarConsistenciaMatematica(CASOS_BANCO);
+            } catch (err) {
+                console.error("Error crítico de consistencia en el banco de casos:", err);
+            }
+
+            if (cargarEstadoLocal()) {
+                document.getElementById('input-nombre').value = state.nombre;
+                document.getElementById('input-apellido').value = state.apellido;
+                renderizarApp();
+            }
+        };
+    </script>
+</body>
+</html>
