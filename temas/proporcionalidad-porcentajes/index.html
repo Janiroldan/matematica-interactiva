@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Proporcionalidad y porcentajes · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:2rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:720px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.55rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:24px}
+.muted{color:var(--slate-700)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.92rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:10px 12px;font-size:.88rem}
+.mini-table td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.95rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn span:last-child{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.93rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.93rem}
+.errores-titulo{font-size:.88rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px}
+
+.practica-titulo{font-size:1.1rem;font-weight:800;color:var(--navy-900);margin:24px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--teal-100)}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.vf-item{margin:0 0 8px;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.vf-block{background:#F7FCFC;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vf-block:last-child{margin-bottom:0}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.93rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.83rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+
+.drag-item{background:#fff;border:2px solid var(--teal-700);color:var(--teal-900);font-weight:700;padding:8px 16px;border-radius:10px;cursor:grab;user-select:none;transition:.15s;font-size:.92rem}
+.drag-item:active{cursor:grabbing;transform:scale(1.06);box-shadow:0 6px 18px rgba(10,79,83,.18)}
+.drag-item.dragging{opacity:.4}
+.drag-item.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green);cursor:default}
+.drag-item.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.drop-zones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px}
+.drop-zone{border:2px dashed var(--line);border-radius:14px;padding:12px;min-height:90px;transition:.15s;background:#FAFEFE}
+.drop-zone.over{border-color:var(--teal-700);background:#EAF7F7}
+.zone-label{display:block;font-weight:800;color:var(--teal-800);font-size:1rem;margin-bottom:8px;text-align:center}
+.zone-items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:36px}
+.btn-verificar{background:var(--teal-800);color:#fff;border:none;border-radius:8px;padding:9px 22px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:.15s}
+.btn-verificar:hover{background:var(--teal-700)}
+
+.antes-empezar{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:var(--violet-soft);color:#4F35B8;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.antes-empezar-sub{color:var(--slate-700);font-size:.88rem;margin-bottom:14px;max-width:800px}
+.activation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 18px}
+.activation-card{border:1px solid #E1D9F7;background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border-radius:14px;padding:14px;text-align:center}
+.activation-expr{font-size:.98rem;font-weight:600;color:var(--navy-900);margin-bottom:10px;text-align:left}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.teal{border-left:4px solid var(--teal-800)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.reveal-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px}
+.reveal-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.reveal-answer{display:none;margin-top:12px;padding:10px 13px;background:var(--green-soft);border:1px solid #BCE3CF;border-radius:10px;color:var(--green);font-weight:600;font-size:.9rem}
+.reveal-answer.show{display:block}
+.btn-revelar{margin-top:10px;font-size:.83rem;font-weight:700;color:var(--teal-800);cursor:pointer;background:#fff;border:1px solid var(--teal-800);border-radius:8px;padding:6px 14px;font-family:inherit}
+.btn-revelar:hover{background:var(--teal-100)}
+
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-card .steps li{background:#fff}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+
+@media(max-width:1020px){.grid-2,.grid-3{grid-template-columns:1fr}.activation-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.drop-zones{grid-template-columns:repeat(2,1fr)}body{font-size:15px}.capsula{margin:10px;border-radius:22px}.hero{padding:28px 18px 18px}.tabs-wrap,.content{padding-left:14px;padding-right:14px}.section{padding:22px 16px}.tab{flex:1 1 calc(50% - 8px);justify-content:center}h2{font-size:1.5rem}}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma">%</div>
+<h1>Proporcionalidad y porcentajes</h1>
+<h2>Razones, reparto y porcentajes para comparar, interpretar y decidir</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Proporcionalidad y porcentajes</h1>
+<p>Un recorrido corto con actividades para comparar, interpretar, repartir y decidir a partir de relaciones entre cantidades.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Razones y proporciones</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Proporcionalidad</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Reparto proporcional</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Porcentaje</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Aumentos y disminuciones</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+
+<!-- ============ PANEL 1: RAZONES Y PROPORCIONES ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Razones y proporciones</span>
+<h2>Comparar cantidades con sentido</h2>
+
+<div class="box teal">
+<p><strong>En una oficina trabajan \(8\) varones y \(12\) mujeres.</strong></p>
+</div>
+<div class="activity">
+<div class="question">¿Cuál de estas afirmaciones describe correctamente la situación?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a">Hay \(2\) varones cada \(3\) mujeres.</button>
+<button class="opt" data-value="b">Hay \(3\) mujeres cada \(2\) varones.</button>
+<button class="opt" data-value="c">Las dos afirmaciones son correctas, pero expresan comparaciones diferentes.</button>
+<button class="opt" data-value="d">Las dos expresan exactamente lo mismo.</button>
+</div>
+<div class="feedback" data-ok="Correcto: las dos son ciertas (\(8:12\) es \(2:3\)), pero cada una compara en un sentido distinto." data-no="Fijate: las dos afirmaciones son ciertas por separado. La pregunta es si dicen lo mismo o no."></div>
+</div>
+
+<h3 style="margin-top:20px">Razón</h3>
+<p class="muted">Mientras mirás el video, fijate por qué \(8/12\) y \(12/8\) expresan comparaciones diferentes.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/XCc6HtZBFk0" title="Razones" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="practica-titulo">Ahora probá vos</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">En un depósito hay \(15\) cajas grandes y \(45\) cajas chicas. Si queremos comparar cajas chicas respecto de cajas grandes, ¿qué razón corresponde?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(15/45\)</button>
+<button class="opt" data-value="b">\(45/15\)</button>
+</div>
+<div class="feedback" data-ok="Exacto. El orden de la razón sigue el orden de la comparación: cajas chicas respecto de cajas grandes → \(45/15=3\). Por cada caja grande hay \(3\) cajas chicas." data-no="Revisá el orden. Primero aparecen las cajas chicas y después las grandes, por eso la comparación es \(45/15\)."></div>
+</div>
+
+<div class="concept-card"><h3>Definición de razón</h3><p>Una razón es una comparación entre dos cantidades mediante un cociente. Se puede escribir \(a:b\) o \(a/b\).</p><p style="margin-top:6px">El orden de las cantidades es importante, porque determina qué comparación se está realizando.</p></div>
+
+<h3 style="margin-top:24px">¿Y si las cantidades tienen unidades diferentes?</h3>
+<p class="muted">Las razones también pueden comparar magnitudes diferentes.</p>
+<table class="mini-table">
+<thead><tr><th>Expresión</th><th>Se interpreta como</th></tr></thead>
+<tbody>
+<tr><td>\(60\ \text{km/h}\)</td><td>60 kilómetros por cada hora</td></tr>
+<tr><td>\(4\ \text{t/ha}\)</td><td>4 toneladas por cada hectárea</td></tr>
+<tr><td>\(120\ \text{\$/trámite}\)</td><td>\(\$120\) por cada trámite</td></tr>
+</tbody>
+</table>
+
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">¿Qué significa un rendimiento de \(3,2\) t/ha?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Que en total se obtuvieron \(3,2\) toneladas</button>
+<button class="opt" data-value="b">Que por cada hectárea se obtienen \(3,2\) toneladas</button>
+<button class="opt" data-value="c">Que la superficie es de \(3,2\) hectáreas</button>
+</div>
+<div class="feedback" data-ok="Correcto: es una razón que indica producción por unidad de superficie." data-no="Pensá qué representa cada parte de la razón: toneladas arriba, hectáreas abajo."></div>
+</div>
+
+<h3 style="margin-top:24px">De razones a proporciones</h3>
+<p class="antes-empezar-sub">Observá estas dos razones:</p>
+<div class="activity">
+<div class="question">\(2/3\) y \(8/12\), ¿expresan la misma relación?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto. Probá simplificar \(8/12\) dividiendo numerador y denominador por \(4\): ¿qué obtenés? Exacto, \(8/12=2/3\): son la misma relación." data-no="Probá simplificar \(8/12\) dividiendo numerador y denominador por \(4\). ¿A qué razón llegás?"></div>
+</div>
+
+<p class="muted" style="margin-top:16px">Mientras mirás el video, prestá atención a cómo se reconoce cuándo dos razones forman una proporción y qué propiedad permite verificarlo.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/8liYyQJ3PIE" title="¿Qué son las proporciones?" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="concept-card orange"><h3>Definición de proporción</h3><p>Una proporción es una igualdad entre dos razones:</p><div class="formula" style="margin-top:8px">\[ \frac{a}{b}=\frac{c}{d} \]</div><p style="margin-top:8px">En toda proporción se cumple la <strong>propiedad fundamental</strong>:</p><div class="formula" style="margin-top:8px">\[ a\cdot d=b\cdot c \]</div></div>
+
+<div class="practica-titulo">Ahora probá vos</div>
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">¿Forman una proporción? \(4/6=10/15\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(4\cdot15=60\) y \(6\cdot10=60\). Coinciden, así que forman una proporción." data-no="Multiplicá en cruz: \(4\cdot15\) y \(6\cdot10\). Si coinciden, es una proporción."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">Completá para que sea una proporción: \(3/5=?/20\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(12\)</button>
+<button class="opt" data-value="b">\(15\)</button>
+<button class="opt" data-value="c">\(8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3\cdot20=60\), y \(60\div5=12\). Verificá: \(5\cdot12=60\) también." data-no="Usá la propiedad fundamental: \(3\cdot20=5\cdot x\). Despejá \(x\)."></div>
+</div>
+
+<div class="sintesis-card" style="margin-top:18px">
+<h3>Antes de continuar</h3>
+<ul class="list">
+<li>Una razón compara dos cantidades.</li>
+<li>El orden de la comparación importa.</li>
+<li>Dos razones equivalentes forman una proporción.</li>
+<li>Una proporción puede verificarse comparando los productos de extremos y medios.</li>
+</ul>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: PROPORCIONALIDAD ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Proporcionalidad</span>
+<h2>¿Cómo reconozco qué tipo de relación hay?</h2>
+<p class="section-intro">Dos magnitudes proporcionales cambian juntas según una regla fija.</p>
+
+<p class="antes-empezar-sub">Observá estas dos situaciones.</p>
+
+<div class="grid-2">
+<table class="mini-table">
+<thead><tr><th colspan="2">Situación A</th></tr><tr><th>Cantidad</th><th>Costo</th></tr></thead>
+<tbody><tr><td>2</td><td>\(\$1800\)</td></tr><tr><td>4</td><td>\(\$3600\)</td></tr><tr><td>6</td><td>\(\$5400\)</td></tr></tbody>
+</table>
+<table class="mini-table">
+<thead><tr><th colspan="2">Situación B</th></tr><tr><th>Lado del cuadrado</th><th>Área</th></tr></thead>
+<tbody><tr><td>2</td><td>4</td></tr><tr><td>4</td><td>16</td></tr><tr><td>6</td><td>36</td></tr></tbody>
+</table>
+</div>
+
+<div class="activity">
+<div class="question">En los dos casos aumenta la segunda cantidad cuando aumenta la primera. ¿Eso alcanza para decir que las dos relaciones funcionan de la misma manera?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: que ambas aumenten juntas no alcanza. Miremos qué pasa con el cociente entre valores correspondientes en cada caso." data-no="Fijate en el cociente entre cada par de valores en A y en B: ¿se comportan igual?"></div>
+</div>
+
+<div class="grid-2">
+<div class="box teal"><h3>Situación A</h3><p>\(1800/2=900\)<br>\(3600/4=900\)<br>\(5400/6=900\)</p><p class="muted" style="margin-top:8px">El cociente se mantiene constante.</p></div>
+<div class="box orange"><h3>Situación B</h3><p>\(4/2=2\)<br>\(16/4=4\)<br>\(36/6=6\)</p><p class="muted" style="margin-top:8px">El cociente no se mantiene constante.</p></div>
+</div>
+
+<div class="sintesis-card">
+<p>En la primera relación el cociente se mantiene constante; en la segunda, no. Eso es lo que distingue una relación <strong>directamente proporcional</strong> de una que no lo es.</p>
+</div>
+
+<div class="concept-card"><h3>Idea clave: proporcionalidad directa</h3><p>Hay proporcionalidad directa cuando el cociente entre valores correspondientes permanece constante.</p><div class="formula teal" style="margin:8px 0">\[ \frac{y}{x}=k \]</div><p class="muted">Si una magnitud se duplica, la otra también se duplica; si se triplica, la otra también.</p></div>
+
+<div class="practica-titulo">Comprobación inmediata</div>
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">¿Cuál de estas relaciones es directamente proporcional?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">A. Cantidad de entradas compradas y precio total, si cada entrada cuesta lo mismo.</button>
+<button class="opt" data-value="b">B. Edad de una persona y su altura.</button>
+<button class="opt" data-value="c">C. Lado de un cuadrado y su área.</button>
+</div>
+<div class="feedback" data-ok="Correcto. En una relación directamente proporcional, multiplicar una magnitud por un número produce el mismo efecto en la otra, y el cociente entre valores correspondientes permanece constante." data-no="Pensá cuál de las tres mantiene siempre el mismo cociente entre sus valores."></div>
+</div>
+
+<h3 style="margin-top:24px">¿Y si una aumenta mientras la otra disminuye?</h3>
+<div class="antes-empezar">Una segunda situación para descubrir</div>
+<p class="antes-empezar-sub">Una tarea requiere siempre la misma cantidad total de trabajo.</p>
+<table class="mini-table">
+<thead><tr><th>Personas</th><th>Tiempo</th></tr></thead>
+<tbody><tr><td>2</td><td>\(12\) h</td></tr><tr><td>4</td><td>\(6\) h</td></tr><tr><td>8</td><td>\(3\) h</td></tr></tbody>
+</table>
+
+<div class="activity">
+<div class="question">Cuando se duplica la cantidad de personas, ¿qué ocurre con el tiempo?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Se duplica</button>
+<button class="opt" data-value="b">Se reduce a la mitad</button>
+<button class="opt" data-value="c">No cambia</button>
+</div>
+<div class="feedback" data-ok="Correcto: a más personas, menos tiempo, en una proporción inversa." data-no="Compará el tiempo con \(2\) personas y con \(4\): ¿aumenta o disminuye?"></div>
+</div>
+
+<div class="activity">
+<div class="question">¿Qué cálculo permanece igual en los tres casos?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(2\cdot12=24\), \(4\cdot6=24\), \(8\cdot3=24\)</button>
+<button class="opt" data-value="b">\(12-2=10\), \(6-4=2\), \(3-8=-5\)</button>
+<button class="opt" data-value="c">\(12/2=6\), \(6/4=1,5\), \(3/8=0,375\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el producto personas × tiempo se mantiene constante en los tres casos." data-no="Probá multiplicar, en vez de restar o dividir, cada par de valores."></div>
+</div>
+
+<div class="concept-card orange"><h3>Idea clave: proporcionalidad inversa</h3><p>Hay proporcionalidad inversa cuando el producto entre valores correspondientes permanece constante.</p><div class="formula" style="margin:8px 0">\[ x\cdot y=k \]</div><p class="muted">Si una magnitud se duplica, la otra se reduce a la mitad.</p></div>
+
+<div class="box orange">Ojo: que una magnitud aumente mientras la otra disminuye no alcanza para afirmar que existe proporcionalidad inversa. El producto debe permanecer constante.</div>
+
+<div class="practica-titulo">Ahora decidí vos: ¿qué relación hay?</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity" id="drag-activity-prop">
+<div class="question">Arrastrá cada situación a su tipo de relación.</div>
+<div class="drop-zones" style="grid-template-columns:repeat(3,1fr)">
+<div class="drop-zone" data-zone="directa"><span class="zone-label">Directa</span><div class="zone-items"></div></div>
+<div class="drop-zone" data-zone="inversa"><span class="zone-label">Inversa</span><div class="zone-items"></div></div>
+<div class="drop-zone" data-zone="no"><span class="zone-label">No proporcional</span><div class="zone-items"></div></div>
+</div>
+<div class="zone-items" id="drag-numbers-prop" style="justify-content:center;margin-top:14px">
+<span class="drag-item" draggable="true" data-correct="directa">Entradas y precio total, mismo valor c/u</span>
+<span class="drag-item" draggable="true" data-correct="inversa">Obreros y días para terminar una obra</span>
+<span class="drag-item" draggable="true" data-correct="no">Estacionamiento con tarifa fija + variable</span>
+<span class="drag-item" draggable="true" data-correct="directa">Lado de un cuadrado y su perímetro</span>
+<span class="drag-item" draggable="true" data-correct="no">Lado de un cuadrado y su área</span>
+</div>
+<div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+<button class="btn-verificar" id="btn-verificar-prop">Verificar</button>
+<button class="btn-reintentar" id="btn-reiniciar-prop">↺ Reiniciar</button>
+</div>
+<div class="feedback" id="drag-feedback-prop"></div>
+</div>
+
+<h3 style="margin-top:24px">¿Qué significa la constante?</h3>
+<p class="muted">Imprimir \(100\) formularios cuesta \(\$2500\).</p>
+<div class="formula teal">\[ k=\frac{2500}{100}=25 \]</div>
+<span class="ejercicio-badge b-violet">Ejercicio 7</span>
+<div class="activity">
+<div class="question">¿Qué representa el \(25\)?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a">El costo total</button>
+<button class="opt" data-value="b">La cantidad de formularios</button>
+<button class="opt" data-value="c">El costo por cada formulario</button>
+</div>
+<div class="feedback" data-ok="Exacto. La constante no es solamente un número: en este caso representa \(\$25\) por formulario." data-no="Pensá en las unidades: \(2500\) pesos dividido \(100\) formularios da pesos por formulario."></div>
+</div>
+
+<h3 style="margin-top:24px">Regla de tres simple</h3>
+<p class="muted">La regla de tres simple es un procedimiento que permite calcular un valor desconocido cuando se conocen otros tres valores relacionados proporcionalmente. Antes de aplicarla, es necesario identificar si la relación entre las magnitudes es directa o inversa, porque el procedimiento cambia. El apunte presenta justamente esas dos variantes.</p>
+
+<h3 style="margin-top:20px">Regla de tres simple directa</h3>
+<p class="muted">Se utiliza cuando las magnitudes son directamente proporcionales.</p>
+<p class="muted">Mientras mirás el video, prestá atención a cómo se organizan los datos, qué valores se multiplican y por cuál se divide.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/Xphb-tzJj24" title="Regla de tres simple directa" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="concept-card teal"><h3>Procedimiento</h3><p>Los datos pueden organizarse así: \(a\leftrightarrow b\), \(c\leftrightarrow x\), y el valor desconocido se calcula mediante:</p><div class="formula teal" style="margin-top:8px">\[ x=\frac{b\cdot c}{a} \]</div><p class="muted" style="margin-top:8px">En la regla de tres simple directa, se multiplican los valores en diagonal y se divide por el valor que queda solo.</p></div>
+
+<div class="practica-titulo">Ahora probá vos</div>
+<span class="ejercicio-badge b-pink">Ejercicio 8</span>
+<div class="activity">
+<div class="question">\(5\) bancos cuestan \(\$75000\). ¿Cuánto costarán \(8\) bancos si todos tienen el mismo precio?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(\$100000\)</button>
+<button class="opt" data-value="b">\(\$120000\)</button>
+<button class="opt" data-value="c">\(\$150000\)</button>
+</div>
+<div class="feedback" data-ok="Exacto: \(x=(75000\cdot8)\div5=120000\). Por lo tanto, \(8\) bancos cuestan \(\$120000\)." data-no="Multiplicá en diagonal (\(75000\cdot8\)) y dividí por el valor que queda solo (\(5\))."></div>
+</div>
+
+<h3 style="margin-top:24px">Regla de tres simple inversa</h3>
+<p class="muted">Se utiliza cuando las magnitudes son inversamente proporcionales.</p>
+<p class="muted">Mientras mirás el video, prestá atención a la diferencia con el procedimiento de la regla de tres directa.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/yPhxJO4Waw8" title="Regla de tres simple inversa" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="concept-card orange"><h3>Procedimiento</h3><p>Los datos pueden organizarse así: \(a\leftrightarrow b\), \(c\leftrightarrow x\), y el valor desconocido se calcula mediante:</p><div class="formula" style="margin-top:8px">\[ a\cdot b=c\cdot x \;\Rightarrow\; x=\frac{a\cdot b}{c} \]</div><p class="muted" style="margin-top:8px">En la regla de tres simple inversa, se multiplican los valores correspondientes entre sí y se divide por el otro dato.</p></div>
+
+<div class="practica-titulo">Ahora probá vos</div>
+<span class="ejercicio-badge b-orange">Ejercicio 9</span>
+<div class="activity">
+<div class="question">\(12\) grifos llenan un tanque en \(6\) horas. Con el mismo caudal cada uno, ¿cuánto tardarían \(8\) grifos?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(4\) horas</button>
+<button class="opt" data-value="b">\(9\) horas</button>
+<button class="opt" data-value="c">\(16\) horas</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((12\cdot6)\div8=9\) horas." data-no="Multiplicá los valores correspondientes (\(12\cdot6\)) y dividí por el otro dato (\(8\))."></div>
+</div>
+
+<div class="sintesis-card">
+<h3>Antes de continuar, preguntate siempre</h3>
+<ul class="list">
+<li>¿Las magnitudes son proporcionales?</li>
+<li>Si lo son, ¿la relación es directa o inversa?</li>
+<li>¿Qué permanece constante? Directa → \(y/x\). Inversa → \(x\cdot y\).</li>
+<li>Recién entonces elegí el procedimiento.</li>
+</ul>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: REPARTO PROPORCIONAL ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Reparto proporcional</span>
+<h2>Repartir según un criterio</h2>
+<p class="section-intro">En un reparto directamente proporcional, el total se distribuye según un criterio. A mayor valor en ese criterio, corresponde una parte mayor, manteniendo la misma relación.</p>
+
+<div class="antes-empezar">Un reparto que respeta una relación</div>
+<p class="antes-empezar-sub">Dos vendedores deben repartirse una comisión total de \(\$30000\). El vendedor A vendió el doble que el vendedor B. Si la comisión se distribuye proporcionalmente a las ventas, ¿qué reparto corresponde?</p>
+
+<div class="activity">
+<div class="question">¿Qué reparto corresponde?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">A: \(\$15000\) — B: \(\$15000\)</button>
+<button class="opt" data-value="b">A: \(\$20000\) — B: \(\$10000\)</button>
+<button class="opt" data-value="c">A: \(\$25000\) — B: \(\$5000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Si A vendió el doble que B, debe recibir el doble de comisión. La relación entre \(\$20000\) y \(\$10000\) es \(2:1\), igual que la relación entre sus ventas." data-no="Buscá el reparto que conserve la misma relación que las ventas: si A vendió el doble que B, también debe recibir el doble de comisión."></div>
+</div>
+
+<div class="concept-card"><h3>Definición de reparto proporcional</h3><p>En un reparto directamente proporcional, el total se distribuye respetando un criterio determinado: a mayor valor en ese criterio, corresponde una parte mayor, en la misma proporción. Por eso, repartir proporcionalmente no significa necesariamente repartir en partes iguales.</p></div>
+
+<h3 style="margin-top:24px;color:var(--teal-800)">Forma 1 · Resolver con regla de tres simple directa</h3>
+<p class="muted">Un reparto directamente proporcional puede resolverse calculando cada parte mediante una regla de tres simple directa.</p>
+
+<div class="antes-empezar">Mirá cómo se hace</div>
+<p class="antes-empezar-sub">Mientras mirás el video, prestá atención a cómo se relaciona el total con la parte que queremos calcular. ¿Por qué en este tipo de reparto podemos utilizar una regla de tres directa?</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/rciydPmCnRY" title="Reparto proporcional utilizando regla de tres" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<p class="muted">Para calcular lo que le corresponde a cada participante, relacionamos el total del criterio de reparto con el total a repartir, y el valor de una parte con la incógnita. Como es una relación directamente proporcional, se aplica una regla de tres simple directa.</p>
+<div class="guided teal">
+<div class="guided-title">Ejemplo: una ganancia de \(\$45000\) se reparte según capitales aportados (capital total \(\$100000\)). Ana aportó \(\$50000\).</div>
+<ol class="steps">
+<li><span class="step-num">1</span>Planteo: \(100000-45000\), \(50000-x\).</li>
+<li><span class="step-num">2</span>\(x=(45000\cdot50000)\div100000\).</li>
+</ol>
+<div class="result-line">Resultado: \(x=\$22500\)</div>
+</div>
+
+<h3 style="margin-top:24px;color:var(--orange)">Forma 2 · Resolver mediante índices de reparto</h3>
+<p class="muted">También podemos resolver un reparto proporcional trabajando con <strong>índices de reparto</strong>: el número que representa el peso relativo de cada participante según el criterio elegido. No tiene por qué ser \(1\), \(2\), \(3\)...: puede ser una cantidad aportada, horas trabajadas, unidades producidas, raciones servidas, etc.</p>
+
+<table class="mini-table">
+<thead><tr><th>Socio</th><th>Índice (capital aportado)</th><th>Ganancia</th></tr></thead>
+<tbody>
+<tr><td>Ana</td><td>\(50000\)</td><td>\(\$22500\)</td></tr>
+<tr><td>Beto</td><td>\(30000\)</td><td>\(\$13500\)</td></tr>
+<tr><td>Carla</td><td>\(20000\)</td><td>\(\$9000\)</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>\(100000\)</strong></td><td><strong>\(\$45000\)</strong></td></tr>
+</tbody>
+</table>
+<div class="guided orange">
+<div class="guided-title">¿Cómo se trabaja con los índices?</div>
+<ol class="steps">
+<li><span class="step-num">1</span>Sumar los índices: \(50000+30000+20000=100000\).</li>
+<li><span class="step-num">2</span>Calcular cuánto corresponde a una unidad de índice: \(45000\div100000=0,45\). Cada peso aportado genera \(\$0,45\) de ganancia.</li>
+<li><span class="step-num">3</span>Multiplicar por cada índice: \(0,45\cdot50000=22500\), \(0,45\cdot30000=13500\), \(0,45\cdot20000=9000\).</li>
+</ol>
+<div class="result-line">Verificación: \(22500+13500+9000=45000\) ✓ coincide con el total repartido.</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<p class="muted">Una comuna dispone de \(\$84000\) para repartir entre tres comedores comunitarios según la cantidad de raciones diarias que sirve cada uno: Comedor 1 sirve \(40\), Comedor 2 sirve \(60\), Comedor 3 sirve \(40\).</p>
+
+<div class="antes-empezar">Primero: comprendemos el reparto</div>
+<span class="ejercicio-badge">Ejercicio 10</span>
+<div class="activity">
+<div class="question">¿Qué comedor debe recibir una cantidad mayor?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Comedor 1</button>
+<button class="opt" data-value="b">Comedor 2</button>
+<button class="opt" data-value="c">Los tres deben recibir lo mismo</button>
+</div>
+<div class="feedback" data-ok="Correcto. Como el reparto es directamente proporcional a la cantidad de raciones servidas, el comedor que sirve más raciones debe recibir una parte mayor." data-no="Fijate cuál de los tres comedores sirve más raciones: a ese le corresponde la parte más grande."></div>
+</div>
+
+<div class="antes-empezar">Después: reconocemos los índices</div>
+<span class="ejercicio-badge b-orange">Ejercicio 11</span>
+<div class="activity">
+<div class="question">Si resolvemos mediante el método de los índices, ¿cuáles son los índices de reparto?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">\(3\), \(3\) y \(3\)</button>
+<button class="opt" data-value="b">\(40\), \(60\) y \(40\)</button>
+<button class="opt" data-value="c">\(84000\), \(84000\) y \(84000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el índice de cada comedor es la cantidad de raciones que sirve." data-no="El índice es el valor del criterio de reparto para cada participante: acá, las raciones diarias de cada comedor."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 12</span>
+<div class="activity">
+<div class="question">¿Cuánto recibe el Comedor 2?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$36000\)</button>
+<button class="opt" data-value="b">\(\$24000\)</button>
+<button class="opt" data-value="c">\(\$28000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el valor de una ración es \(84000\div140=600\), y \(60\cdot600=\$36000\). Verificación: \(24000+36000+24000=84000\) ✓." data-no="Primero calculá cuánto vale cada ración (\(84000\div140\)), y después multiplicalo por las raciones del Comedor 2."></div>
+</div>
+
+<div class="sintesis-card">
+<h3>Dos caminos, el mismo resultado</h3>
+<p><strong>Forma 1 · Regla de tres simple directa.</strong> Se calcula cada parte relacionando el total con el valor correspondiente a cada participante.</p>
+<p style="margin-top:8px"><strong>Forma 2 · Índices de reparto.</strong> Se suman los índices, se calcula cuánto corresponde a una unidad de índice, y ese valor se multiplica por cada índice.</p>
+<p style="margin-top:8px">Las dos formas producen el mismo reparto.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: PORCENTAJE ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Porcentaje</span>
+<h2>Una razón especial: comparar con 100</h2>
+<p class="section-intro">Un porcentaje permite expresar una relación tomando \(100\) como referencia.</p>
+
+<div class="antes-empezar">Comparar grupos de distinto tamaño</div>
+<p class="antes-empezar-sub">En un grupo de \(20\) estudiantes aprobaron \(10\). En otro grupo de \(200\) estudiantes aprobaron \(100\).</p>
+
+<div class="activity">
+<div class="question">¿En cuál de los dos grupos aprobó una mayor proporción de estudiantes?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a">En el primero</button>
+<button class="opt" data-value="b">En el segundo</button>
+<button class="opt" data-value="c">En ambos fue la misma proporción</button>
+</div>
+<div class="feedback" data-ok="Correcto. Aunque las cantidades son diferentes, en ambos casos aprobó la mitad del grupo." data-no="Compará qué parte del total representa cada aprobado: \(10\) de \(20\), y \(100\) de \(200\)."></div>
+</div>
+
+<div class="activity">
+<div class="question">Si expresáramos esa misma relación tomando \(100\) estudiantes como referencia, ¿cuántos habrían aprobado?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(25\)</button>
+<button class="opt" data-value="b">\(50\)</button>
+<button class="opt" data-value="c">\(75\)</button>
+</div>
+<div class="feedback" data-ok="Exacto: \(50\) de cada \(100\), es decir, \(50\%\)." data-no="Es la mitad del grupo: pensá cuánto es la mitad de \(100\)."></div>
+</div>
+
+<div class="antes-empezar">Mirá el video</div>
+<p class="antes-empezar-sub">Mientras mirás el video, fijate en estas equivalencias: ¿cómo podemos expresar un mismo porcentaje como fracción y como número decimal?</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/ETvdnLWIFhU" title="Porcentajes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="practica-titulo">Comprobamos lo que entendiste</div>
+<span class="ejercicio-badge">Ejercicio 13</span>
+<div class="activity" id="drag-activity-pct">
+<div class="question">Relacioná cada porcentaje con su expresión equivalente.</div>
+<div class="drop-zones" style="grid-template-columns:repeat(4,1fr)">
+<div class="drop-zone" data-zone="a"><span class="zone-label">\(1/2\)</span><div class="zone-items"></div></div>
+<div class="drop-zone" data-zone="b"><span class="zone-label">\(1/4\)</span><div class="zone-items"></div></div>
+<div class="drop-zone" data-zone="c"><span class="zone-label">\(1/10\)</span><div class="zone-items"></div></div>
+<div class="drop-zone" data-zone="d"><span class="zone-label">\(1/100\)</span><div class="zone-items"></div></div>
+</div>
+<div class="zone-items" id="drag-numbers-pct" style="justify-content:center;margin-top:14px">
+<span class="drag-item" draggable="true" data-correct="a">\(50\%\)</span>
+<span class="drag-item" draggable="true" data-correct="b">\(25\%\)</span>
+<span class="drag-item" draggable="true" data-correct="c">\(10\%\)</span>
+<span class="drag-item" draggable="true" data-correct="d">\(1\%\)</span>
+</div>
+<div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+<button class="btn-verificar" id="btn-verificar-pct">Verificar</button>
+<button class="btn-reintentar" id="btn-reiniciar-pct">↺ Reiniciar</button>
+</div>
+<div class="feedback" id="drag-feedback-pct"></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<div class="activity">
+<div class="question">¿Cuál es la expresión decimal de \(25\%\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(2,5\)</button>
+<button class="opt" data-value="b">\(0,25\)</button>
+<button class="opt" data-value="c">\(0,025\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(25\%=25/100=0,25\)." data-no="Dividí \(25\) por \(100\): corré la coma dos lugares a la izquierda."></div>
+</div>
+
+<h3 style="margin-top:20px">Porcentajes frecuentes</h3>
+<table class="mini-table">
+<thead><tr><th>Porcentaje</th><th>Fracción</th><th>Decimal</th><th>Interpretación</th></tr></thead>
+<tbody>
+<tr><td>\(50\%\)</td><td>\(1/2\)</td><td>\(0,5\)</td><td>mitad del total</td></tr>
+<tr><td>\(25\%\)</td><td>\(1/4\)</td><td>\(0,25\)</td><td>cuarta parte</td></tr>
+<tr><td>\(10\%\)</td><td>\(1/10\)</td><td>\(0,1\)</td><td>décima parte</td></tr>
+<tr><td>\(1\%\)</td><td>\(1/100\)</td><td>\(0,01\)</td><td>centésima parte</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:24px">Una idea fundamental: ¿porcentaje de qué?</h3>
+<div class="activity">
+<div class="question">¿El \(20\%\) de \(100\) y el \(20\%\) de \(500\) representan la misma cantidad?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Sí, porque en ambos casos es \(20\%\)</button>
+<button class="opt" data-value="b">No, porque cambia el valor de referencia</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(20\%\) de \(100=20\), y \(20\%\) de \(500=100\). Son cantidades distintas." data-no="Calculá cada una por separado: \(20\%\) de \(100\) y \(20\%\) de \(500\)."></div>
+</div>
+<div class="concept-card orange"><h3>Idea clave</h3><p>El porcentaje siempre necesita un valor de referencia. Antes de calcular, preguntate: ¿el porcentaje se está calculando sobre qué cantidad?</p></div>
+
+<h2 style="margin-top:32px">Cálculo porcentual</h2>
+
+<h3 style="margin-top:16px">Problema 1 · Conozco el total y el porcentaje</h3>
+<p class="muted">¿Cuánto es el \(15\%\) de \(\$800000\)?</p>
+<span class="ejercicio-badge b-violet">Ejercicio 15</span>
+<div class="activity">
+<div class="question">Sin hacer la cuenta exacta, ¿qué resultado te parece razonable? (pensá que el \(10\%\) de \(\$800000\) ya son \(\$80000\))</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(\$12000\)</button>
+<button class="opt" data-value="b">\(\$120000\)</button>
+<button class="opt" data-value="c">\(\$1200000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(15\%\) es un poco más que el \(10\%\), así que \(\$120000\) es razonable. \(0,15\cdot800000=\$120000\)." data-no="El \(10\%\) de \(800000\) es \(80000\); el \(15\%\) tiene que ser un poco más que eso, no diez veces más ni cien veces menos."></div>
+</div>
+<div class="sintesis-card" style="border-left-color:var(--orange)"><p><strong>Quedate con esta relación.</strong> Conozco: porcentaje + total. Busco: parte.</p><div class="formula" style="margin-top:8px">\[ \text{Parte}=\text{Porcentaje}\cdot\text{Total} \]</div></div>
+
+<h3 style="margin-top:20px">Problema 2 · Conozco la parte y el total</h3>
+<p class="muted">Un programa ejecutó \(\$593600\) de un presupuesto total de \(\$3200000\).</p>
+<span class="ejercicio-badge b-pink">Ejercicio 16</span>
+<div class="activity">
+<div class="question">¿Qué queremos averiguar ahora?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Cuánto dinero queda</button>
+<button class="opt" data-value="b">Qué porcentaje representa la parte ejecutada respecto del total</button>
+<button class="opt" data-value="c">Cuál era el presupuesto inicial</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((593600/3200000)\cdot100=18,55\%\)." data-no="Tenemos la parte y el total; lo que falta es el porcentaje que representa esa parte."></div>
+</div>
+<div class="sintesis-card"><p><strong>Quedate con esta relación.</strong> Conozco: parte + total. Busco: porcentaje.</p><div class="formula" style="margin-top:8px">\[ \text{Porcentaje}=\frac{\text{Parte}}{\text{Total}}\cdot100 \]</div></div>
+
+<h3 style="margin-top:20px">Problema 3 · Conozco la parte y el porcentaje</h3>
+<p class="muted">Una oficina ejecutó \(\$45000\), que representa el \(18\%\) de su presupuesto.</p>
+<span class="ejercicio-badge">Ejercicio 17</span>
+<div class="activity">
+<div class="question">¿Qué dato falta?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a">La parte</button>
+<button class="opt" data-value="b">El porcentaje</button>
+<button class="opt" data-value="c">El total</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(45000=0,18\cdot\text{Total}\), entonces \(\text{Total}=45000\div0,18=\$250000\). Verificación: \(18\%\) de \(250000=45000\) ✓." data-no="Tenemos la parte (\(45000\)) y el porcentaje (\(18\%\)); lo que falta es el total."></div>
+</div>
+<div class="sintesis-card"><p><strong>Quedate con esta relación.</strong> Conozco: parte + porcentaje. Busco: total.</p><div class="formula violet" style="margin-top:8px">\[ \text{Total}=\frac{\text{Parte}}{\text{Porcentaje}} \]</div></div>
+
+<h3 style="margin-top:24px">Los tres problemas del cálculo porcentual</h3>
+<table class="mini-table">
+<thead><tr><th>Si conozco...</th><th>Busco...</th><th>Relación</th></tr></thead>
+<tbody>
+<tr><td>porcentaje + total</td><td>parte</td><td>\(\text{Parte}=\text{Porcentaje}\cdot\text{Total}\)</td></tr>
+<tr><td>parte + total</td><td>porcentaje</td><td>\(\text{Porcentaje}=\dfrac{\text{Parte}}{\text{Total}}\cdot100\)</td></tr>
+<tr><td>parte + porcentaje</td><td>total</td><td>\(\text{Total}=\dfrac{\text{Parte}}{\text{Porcentaje}}\)</td></tr>
+</tbody>
+</table>
+<div class="box">En las fórmulas donde se multiplica o divide por el porcentaje, se utiliza su expresión decimal: por ejemplo, \(18\%=0,18\).</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: AUMENTOS Y DISMINUCIONES ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Aumentos y disminuciones</span>
+<h2>Cambiar un valor tomando como referencia el valor inicial</h2>
+<p class="section-intro">Cuando una cantidad aumenta o disminuye un porcentaje, ese porcentaje se calcula sobre el valor inicial de referencia.</p>
+
+<div class="antes-empezar">Un aumento del 20%</div>
+<p class="antes-empezar-sub">Un valor inicial es de \(\$1000\) y aumenta un \(20\%\).</p>
+
+<div class="activity">
+<div class="question">¿Cuál será el nuevo valor?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(\$1020\)</button>
+<button class="opt" data-value="b">\(\$1200\)</button>
+<button class="opt" data-value="c">\(\$2000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el \(20\%\) de \(1000\) es \(200\), y ese aumento se suma al valor inicial." data-no="Calculá primero cuánto es el \(20\%\) de \(1000\), y sumáselo al valor inicial."></div>
+</div>
+
+<div class="activity">
+<div class="question">Después del aumento, ¿qué porcentaje del valor inicial representa el nuevo valor?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a">\(20\%\)</button>
+<button class="opt" data-value="b">\(80\%\)</button>
+<button class="opt" data-value="c">\(120\%\)</button>
+</div>
+<div class="feedback" data-ok="Exacto. El valor inicial representa el \(100\%\), y al aumentar un \(20\%\), el nuevo valor representa el \(120\%\) del inicial." data-no="El valor inicial es el \(100\%\). Sumale el \(20\%\) que aumentó."></div>
+</div>
+
+<div class="concept-card"><h3>Definición de aumento porcentual</h3><p>\(120\%=1,20\). Por eso: \(1000\cdot1,20=1200\).</p><p style="margin-top:8px">Si una cantidad aumenta un \(x\%\), el valor final representa \(100\%+x\%\) del valor inicial:</p><div class="formula teal" style="margin-top:8px">\[ V_f=V_i\left(1+\frac{x}{100}\right) \]</div><p class="muted" style="margin-top:8px">\(1+\dfrac{x}{100}\) es el factor multiplicativo.</p></div>
+
+<h3 style="margin-top:24px">Ahora una disminución</h3>
+<p class="antes-empezar-sub">Un valor disminuye un \(25\%\).</p>
+
+<span class="ejercicio-badge">Ejercicio 18</span>
+<div class="activity">
+<div class="question">¿Qué porcentaje del valor inicial permanece?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(25\%\)</button>
+<button class="opt" data-value="b">\(75\%\)</button>
+<button class="opt" data-value="c">\(125\%\)</button>
+</div>
+<div class="feedback" data-ok="Exacto. Del \(100\%\) inicial se elimina un \(25\%\), por lo que queda el \(75\%\)." data-no="Al valor inicial completo (\(100\%\)) restale el \(25\%\) que disminuyó."></div>
+</div>
+
+<div class="concept-card orange"><h3>Definición de disminución porcentual</h3><p>\(75\%=0,75\). Por eso: \(V_f=V_i\cdot0,75\).</p><p style="margin-top:8px">Si una cantidad disminuye un \(x\%\):</p><div class="formula" style="margin-top:8px">\[ V_f=V_i\left(1-\frac{x}{100}\right) \]</div><p class="muted" style="margin-top:8px">\(1-\dfrac{x}{100}\) es el factor multiplicativo.</p></div>
+
+<h3 style="margin-top:24px">Antes de seguir: distinguir tres cantidades</h3>
+<p class="muted">No es lo mismo el cambio que el valor final. Por ejemplo, una cantidad de \(5000\) aumenta un \(12\%\): \(12\%\) de \(5000=600\).</p>
+
+<span class="ejercicio-badge b-orange">Ejercicio 19</span>
+<div class="activity">
+<div class="question">Si \(5000\) aumenta un \(12\%\), ¿qué representa el \(600\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">El valor final</button>
+<button class="opt" data-value="b">El aumento</button>
+<button class="opt" data-value="c">El valor inicial</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(600\) es cuánto aumentó, no el valor final." data-no="El valor final se obtiene sumando el aumento al valor inicial: \(600\) es solo la parte que se sumó."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 20</span>
+<div class="activity">
+<div class="question">¿Cuál es el valor final?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(5600\)</button>
+<button class="opt" data-value="b">\(600\)</button>
+<button class="opt" data-value="c">\(5060\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(5000+600=5600\)." data-no="Sumá el aumento (\(600\)) al valor inicial (\(5000\))."></div>
+</div>
+
+<h3 style="margin-top:24px">Una síntesis visual: aumento y disminución</h3>
+<table class="mini-table">
+<thead><tr><th>Cambio</th><th>Factor</th><th>Valor final</th></tr></thead>
+<tbody>
+<tr><td>Aumento del \(x\%\)</td><td>\(1+x/100\)</td><td>\(V_f=V_i(1+x/100)\)</td></tr>
+<tr><td>Disminución del \(x\%\)</td><td>\(1-x/100\)</td><td>\(V_f=V_i(1-x/100)\)</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:24px">Recuperar el valor inicial</h3>
+<p class="muted">Después de aumentar un \(25\%\), una partida quedó en \(\$7500\).</p>
+
+<span class="ejercicio-badge">Ejercicio 21</span>
+<div class="activity">
+<div class="question">¿Los \(\$7500\) representan el \(100\%\) del valor original?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No, representan el \(125\%\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(125\%=1,25\). Entonces \(V_i\cdot1,25=7500\), y para recuperar el original: \(V_i=7500\div1,25=\$6000\). Verificación: \(6000\cdot1,25=7500\) ✓." data-no="El \(\$7500\) ya incluye el aumento del \(25\%\): representa el \(125\%\) del valor original, no el \(100\%\)."></div>
+</div>
+
+<div class="concept-card"><h3>Definición: recuperar el valor inicial</h3><p>Si conocemos el valor final y qué cambio porcentual ocurrió, hay que deshacer el factor multiplicativo.</p><div class="formula teal" style="margin:8px 0">\[ V_i=\frac{V_f}{1+x/100} \quad\text{(tras un aumento)} \qquad V_i=\frac{V_f}{1-x/100} \quad\text{(tras una disminución)} \]</div><p class="muted">Para volver al valor inicial no se resta o suma directamente el mismo porcentaje al valor final: hay que dividir por el factor que produjo el cambio.</p></div>
+
+<h3 style="margin-top:24px">Cambios porcentuales sucesivos</h3>
+<p class="antes-empezar-sub">Una cantidad de \(\$1000\) aumenta un \(10\%\) y luego aumenta un \(20\%\).</p>
+
+<span class="ejercicio-badge b-orange">Ejercicio 22</span>
+<div class="activity">
+<div class="question">¿El aumento total será del \(30\%\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No necesariamente</button>
+</div>
+<div class="feedback" data-ok="Correcto: primer cambio \(1000\cdot1,10=1100\); segundo cambio \(1100\cdot1,20=1320\). El aumento total es \(320\), es decir \((320/1000)\cdot100=32\%\), no \(30\%\): el segundo \(20\%\) no se aplica sobre \(1000\), sino sobre \(1100\)." data-no="El segundo porcentaje se aplica sobre el valor ya modificado por el primero, no sobre el valor original."></div>
+</div>
+
+<div class="concept-card yellow"><h3>Definición: cambios porcentuales sucesivos</h3><p>Cuando hay varios cambios consecutivos:</p><div class="formula" style="margin:8px 0">\[ V_f=V_i\cdot F_1\cdot F_2\cdots F_n \]</div><p class="muted">Por ejemplo: \(1000\cdot1,10\cdot1,20=1320\). Los porcentajes no se suman: se multiplican los factores.</p></div>
+
+<h3 style="margin-top:24px">Un caso interesante: subir y bajar el mismo porcentaje</h3>
+<p class="antes-empezar-sub">Una cantidad de \(\$100\) aumenta un \(10\%\) y luego disminuye un \(10\%\).</p>
+
+<span class="ejercicio-badge b-violet">Ejercicio 23</span>
+<div class="activity">
+<div class="question">¿Volverá a \(\$100\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(100\cdot1,10=110\), y \(110\cdot0,90=99\). No vuelve a \(\$100\): un aumento y una disminución del mismo porcentaje no se cancelan, porque cada uno se aplica sobre una base diferente." data-no="Calculá paso a paso: \(100\cdot1,10=110\), y después \(110\cdot0,90\). ¿Da \(100\)?"></div>
+</div>
+
+<div class="practica-titulo">Práctica final</div>
+<span class="ejercicio-badge">Ejercicio 24</span>
+<div class="activity">
+<div class="question">Una partida de \(\$4800\) disminuye un \(25\%\). ¿Cuál es el valor final?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(\$1200\)</button>
+<button class="opt" data-value="b">\(\$3600\)</button>
+<button class="opt" data-value="c">\(\$6000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(4800\cdot0,75=\$3600\)." data-no="El factor de una disminución del \(25\%\) es \(0,75\): \(4800\cdot0,75\)."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 25</span>
+<div class="activity">
+<div class="question">Después de aumentar un \(20\%\), un monto es de \(\$6000\). ¿Cuál era el valor original?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$5000\)</button>
+<button class="opt" data-value="b">\(\$4800\)</button>
+<button class="opt" data-value="c">\(\$7200\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(6000\div1,20=\$5000\)." data-no="Dividí el valor final por el factor del aumento: \(6000\div1,20\)."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 26</span>
+<div class="activity">
+<div class="question">Un valor de \(\$2000\) aumenta \(10\%\) y luego disminuye \(10\%\). ¿Vuelve a \(\$2000\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a">Sí, vuelve a \(\$2000\)</button>
+<button class="opt" data-value="b">No, queda en \(\$1980\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2000\cdot1,10=2200\), y \(2200\cdot0,90=\$1980\)." data-no="Calculá paso a paso: \(2000\cdot1,10\), y después ese resultado \(\cdot0,90\)."></div>
+</div>
+
+<div class="sintesis-card">
+<h3>Antes de continuar</h3>
+<ul class="list">
+<li>Todo cambio porcentual se calcula sobre un valor de referencia.</li>
+<li>En un aumento usamos un factor mayor que \(1\).</li>
+<li>En una disminución usamos un factor menor que \(1\).</li>
+<li>Para recuperar el valor inicial, dividimos por el factor.</li>
+<li>En cambios sucesivos, multiplicamos los factores.</li>
+<li>Un aumento y una disminución del mismo porcentaje no se cancelan.</li>
+</ul>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 6: CIERRE ============ -->
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y aplicaciones</h2>
+<p class="section-intro">Una revisión rápida de los errores más comunes, y tres situaciones que integran lo trabajado.</p>
+
+<h3>Errores frecuentes: mini auditoría</h3>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Confundir razón con proporción <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ Usar "razón" y "proporción" como sinónimos.</div>
+<div class="error-correcto">✓ Una razón compara dos cantidades (\(a/b\)); una proporción es una igualdad entre dos razones (\(a/b=c/d\)).</div>
+</div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Cambiar el orden de una razón y creer que no importa <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ Pensar que \(8/12\) y \(12/8\) dicen lo mismo.</div>
+<div class="error-correcto">✓ El orden define qué se está comparando con qué. Cada una responde una pregunta distinta.</div>
+</div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Aplicar regla de tres directa a una relación inversa <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ Plantear una proporción directa entre obreros y días.</div>
+<div class="error-correcto">✓ Antes de armar la regla de tres, verificá si las magnitudes aumentan juntas (directa) o una sube cuando la otra baja (inversa).</div>
+</div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Olvidar el valor de referencia en porcentajes <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ Calcular un porcentaje sin aclarar sobre qué total.</div>
+<div class="error-correcto">✓ Si algo pasó de \(\$80\) a \(\$95\), el aumento es \((15/80)\cdot100=18,75\%\). El denominador siempre es el valor inicial, nunca el final.</div>
+</div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Sumar porcentajes sucesivos de forma lineal <span>+</span></button>
+<div class="acc-panel">
+<div class="error-incorrecto">✗ \(+10\%\) y \(+20\%\) = \(+30\%\).</div>
+<div class="error-correcto">✓ Hay que multiplicar los factores: \(1,10\cdot1,20=1,32\), un aumento del \(32\%\).</div>
+</div>
+</div>
+</div>
+
+<h3 style="margin-top:24px">Aplicaciones</h3>
+<div class="grid-3">
+<div class="reveal-card">
+<h3>Razón con unidades</h3>
+<p>Un informe indica una densidad de \(45\) habitantes/km² en una localidad de \(180\) km². ¿Cuántos habitantes tiene aproximadamente?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">\(45\cdot180=8100\) habitantes aproximadamente.</div>
+</div>
+<div class="reveal-card">
+<h3>Reparto institucional</h3>
+<p>Una subvención de \(\$90000\) se reparte entre \(3\) municipios según su población: X (\(6000\) hab.), Y (\(9000\) hab.), Z (\(15000\) hab.), total \(30000\). ¿Cuánto recibe el municipio Y?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">Valor por habitante: \(90000\div30000=3\). Municipio Y: \(9000\cdot3=\$27000\).</div>
+</div>
+<div class="reveal-card">
+<h3>Porcentaje en presupuesto</h3>
+<p>La ejecución presupuestaria de un organismo pasó de \(\$2400000\) a \(\$2760000\) en un año. ¿Qué porcentaje de aumento representa?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">Aumento: \(2760000-2400000=360000\). Porcentaje: \((360000/2400000)\cdot100=15\%\).</div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Síntesis</h3>
+<p>Comparar, repartir y calcular porcentajes son formas distintas de leer relaciones entre cantidades. En todos los casos conviene preguntarse: ¿qué se compara con qué, en qué orden, y respecto de qué valor de referencia?</p>
+<p class="sintesis-frase">Entender la relación es tan importante como resolver la cuenta.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const s=btn.querySelector('span:last-child');
+  if(s)s.textContent=item.classList.contains('open')?'−':'+';
+  setTimeout(()=>typeset(item),80);
+}
+
+function toggleReveal(btn){
+  const answer=btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent=answer.classList.contains('show')?'Ocultar resolución':'Ver resolución';
+  setTimeout(()=>typeset(answer),60);
+}
+
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:feedback.dataset.no;
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+function initDragDrop(scopeId,bankId,btnVerificarId,btnReiniciarId,feedbackId,okMsg){
+  const scope=document.getElementById(scopeId);
+  const items=scope.querySelectorAll('.drag-item');
+  const zones=scope.querySelectorAll('.drop-zone');
+  const bank=document.getElementById(bankId);
+  let dragged=null;
+  items.forEach(item=>{
+    item.addEventListener('dragstart',()=>{dragged=item;setTimeout(()=>item.classList.add('dragging'),0)});
+    item.addEventListener('dragend',()=>{item.classList.remove('dragging');dragged=null});
+  });
+  [...zones,bank].forEach(zone=>{
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over')});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('over');
+      if(!dragged)return;
+      const target=zone.classList.contains('drop-zone')?zone.querySelector('.zone-items'):zone;
+      target.appendChild(dragged);
+      dragged.classList.remove('correct','wrong');
+      setTimeout(()=>typeset(dragged),60);
+    });
+  });
+  document.getElementById(btnVerificarId).addEventListener('click',()=>{
+    let allPlaced=true;
+    items.forEach(item=>{
+      const parentZone=item.closest('.drop-zone');
+      if(!parentZone){allPlaced=false;return}
+      const correct=item.dataset.correct===parentZone.dataset.zone;
+      item.classList.remove('correct','wrong');
+      item.classList.add(correct?'correct':'wrong');
+    });
+    const fb=document.getElementById(feedbackId);
+    if(!allPlaced){fb.className='feedback show no';fb.textContent='Colocá todas las situaciones antes de verificar.';return}
+    const wrongs=scope.querySelectorAll('.drag-item.wrong');
+    if(wrongs.length===0){fb.className='feedback show ok';fb.textContent=okMsg}
+    else{fb.className='feedback show no';fb.textContent='Hay '+wrongs.length+' situación(es) en el tipo incorrecto. Revisalas y volvé a intentar.'}
+  });
+  document.getElementById(btnReiniciarId).addEventListener('click',()=>{
+    items.forEach(item=>{item.classList.remove('correct','wrong');bank.appendChild(item)});
+    document.getElementById(feedbackId).className='feedback';
+    document.getElementById(feedbackId).textContent='';
+  });
+}
+initDragDrop('drag-activity-prop','drag-numbers-prop','btn-verificar-prop','btn-reiniciar-prop','drag-feedback-prop','¡Perfecto! Clasificaste bien las cinco situaciones.');
+initDragDrop('drag-activity-pct','drag-numbers-pct','btn-verificar-pct','btn-reiniciar-pct','drag-feedback-pct','¡Perfecto! Relacionaste bien los cuatro porcentajes.');
+
+document.addEventListener('DOMContentLoaded',()=>typeset(document.body));
+</script>
+</body>
+</html>
