@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Expresiones algebraicas · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.6rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.select-exercise select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:.85rem;background:#fff;color:var(--navy-800);cursor:pointer}
+.select-exercise select.correct{border-color:#BCE3CF;background:var(--green-soft);color:var(--green)}
+.select-exercise select.wrong{border-color:#F1C0C0;background:var(--red-soft);color:var(--red)}
+.select-exercise{margin-bottom:10px}
+.btn-verificar{display:inline-flex;align-items:center;gap:7px;background:var(--teal-800);color:#fff;border:none;border-radius:10px;padding:10px 22px;font:inherit;font-weight:700;font-size:.88rem;cursor:pointer;box-shadow:0 6px 16px rgba(15,107,111,.22);transition:.18s}
+.btn-verificar::before{content:"✓";font-weight:800}
+.btn-verificar:hover{background:var(--teal-700);transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,107,111,.28)}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.antes-empezar{display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:999px;background:var(--violet-soft);color:#4F35B8;font-size:.74rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.antes-empezar-sub{color:var(--slate-700);font-size:.88rem;margin-bottom:10px;max-width:800px}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn span:last-child{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.reveal-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px}
+.reveal-answer{display:none;margin-top:12px;padding:10px 13px;background:var(--green-soft);border:1px solid #BCE3CF;border-radius:10px;color:var(--green);font-weight:600;font-size:.9rem}
+.reveal-answer.show{display:block}
+.btn-revelar{margin-top:10px;font-size:.83rem;font-weight:700;color:var(--teal-800);cursor:pointer;background:#fff;border:1px solid var(--teal-800);border-radius:8px;padding:6px 14px;font-family:inherit}
+.btn-revelar:hover{background:var(--teal-100)}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){body{font-size:15px}.capsula{margin:10px;border-radius:22px}.hero{padding:26px 18px 18px}.tabs-wrap,.content{padding-left:14px;padding-right:14px}.section{padding:20px 16px}.tab{flex:1 1 calc(50% - 8px);justify-content:center}h2{font-size:1.4rem}}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma">ax+b</div>
+<h1>Expresiones algebraicas</h1>
+<h2>Traducir, identificar, operar y factorizar</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Expresiones algebraicas</h1>
+<p>Un recorrido con videos breves y actividades cortas para traducir, identificar, operar y factorizar expresiones algebraicas. Podés recorrer las etapas en el orden que necesites.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Expresiones algebraicas</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Polinomios</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Operaciones</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Productos notables</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Factorización</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Expresiones algebraicas</span>
+<h2>Variables, constantes y traducción</h2>
+<p class="section-intro">Una expresión algebraica combina números y variables mediante operaciones. Antes de operar, hay que reconocer sus partes y poder traducirla desde el lenguaje cotidiano.</p>
+
+<div class="visual"><img src="partes-expresiones.png" alt="Partes de una expresión algebraica: coeficiente, variables, operadores y constante"></div>
+
+<div class="subbloque" id="sub1-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Variables y constantes</h3></div>
+<p class="muted">Una <strong>variable</strong> es una letra que representa un valor que puede cambiar o que todavía no conocemos. Una <strong>constante</strong> es un valor fijo. El <strong>coeficiente</strong> es la constante que multiplica a una variable: todo coeficiente es una constante, pero no toda constante es un coeficiente.</p>
+
+<div class="activity activacion">
+<div class="question">En \(3x+5\), ¿el \(5\) es un coeficiente?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: el 5 no multiplica a ninguna variable, aparece solo. Es una constante, pero no un coeficiente." data-no="Fijate si el 5 está multiplicando a alguna letra, o si aparece solo."></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Una oficina cobra una tasa fija de \(\$200\) por cada trámite, más \(\$50\) adicionales por cada día de demora.</p></div>
+<div class="ejemplo-desarrollo"><p>El costo total: \(200+50d\). Acá \(d\) es la variable; \(200\) y \(50\) son constantes, y \(50\) es además el coeficiente, porque multiplica a \(d\).</p></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">En \(2xy-3\), ¿cuál es el coeficiente?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(2\)</button>
+<button class="opt" data-value="b">\(-3\)</button>
+<button class="opt" data-value="c">\(xy\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: 2 multiplica a la parte literal \(xy\)." data-no="Buscá el número que multiplica a las variables, no el que aparece solo."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Evaluar una expresión algebraica</h3></div>
+<p class="muted">Evaluar significa reemplazar cada aparición de la variable por un valor numérico y calcular.</p>
+<div class="formula teal">\[ 3x+5,\ \text{con } x=4 \;\Rightarrow\; 3(4)+5=17 \]</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">Evaluá \(x^2-4x+7\) con \(x=2\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(3\)</button>
+<button class="opt" data-value="b">\(7\)</button>
+<button class="opt" data-value="c">\(11\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2^2-4(2)+7=4-8+7=3\)." data-no="Reemplazá cada \(x\) por \(2\) y resolvé paso a paso: \(2^2-4\cdot2+7\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Traducción entre lenguaje verbal y simbólico</h3></div>
+
+<div class="activity activacion">
+<div class="question">"El doble de un número" se escribe...</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(2x\)</button>
+<button class="opt" data-value="b">\(x+2\)</button>
+<button class="opt" data-value="c">\(x^2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el doble es multiplicar por 2." data-no="El doble de un número es multiplicarlo por 2, no sumarle 2."></div>
+</div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, prestá atención a cómo se usa la letra \(x\) para representar un número desconocido y cómo se traduce cada frase.</p>
+<div class="video-ficha">4:36</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/UNWFLuUfiX4" title="Lenguaje algebraico" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="concept-card yellow"><h3>Idea clave</h3><p>Sustantivos del lenguaje cotidiano — "doble", "cuadrado", "diferencia", "producto", "cociente" — se convierten en operaciones matemáticas.</p></div>
+
+<table class="mini-table">
+<thead><tr><th>Frase</th><th>Expresión</th></tr></thead>
+<tbody>
+<tr><td>El doble de un número</td><td>\(2x\)</td></tr>
+<tr><td>El triple de un número</td><td>\(3x\)</td></tr>
+<tr><td>La mitad de un número</td><td>\(x/2\)</td></tr>
+<tr><td>Un número aumentado en 5</td><td>\(x+5\)</td></tr>
+<tr><td>Un número disminuido en 3</td><td>\(x-3\)</td></tr>
+<tr><td>El cuadrado de un número</td><td>\(x^2\)</td></tr>
+<tr><td>Cinco menos que el triple de un número</td><td>\(3x-5\)</td></tr>
+<tr><td>La suma de dos números consecutivos</td><td>\(x+(x+1)\)</td></tr>
+<tr><td>El doble de la suma de dos números</td><td>\(2(x+y)\)</td></tr>
+</tbody>
+</table>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Cuidado con el orden:</strong> "5 menos que el triple de un número" (\(3x-5\)) no es lo mismo que "el triple de 5 menos que un número" (\(3(x-5)\)). El orden de las palabras cambia la expresión.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">"Un número disminuido en 4 unidades" se escribe...</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x-4\)</button>
+<button class="opt" data-value="b">\(4-x\)</button>
+<button class="opt" data-value="c">\(4x\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: 'disminuido en' significa restarle esa cantidad al número." data-no="El número va primero: es al número al que se le resta 4, no al revés."></div>
+</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">"El doble de un número, más 4" se escribe...</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(2x+4\)</button>
+<button class="opt" data-value="b">\(2(x+4)\)</button>
+<button class="opt" data-value="c">\(4x+2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: primero se duplica el número, y después se suma 4." data-no="Fijate qué se duplica: solo el número, no el número más 4 juntos."></div>
+</div>
+
+<div class="practica-titulo">Aplicación</div>
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">Un municipio cobra una tasa de habilitación de \(\$3000\) fijos, más \(\$150\) por cada m² del local. Si \(a\) es el área del local, en m², ¿cuál es la tasa para un local de \(40\) m² de área?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$9000\)</button>
+<button class="opt" data-value="b">\(\$6000\)</button>
+<button class="opt" data-value="c">\(\$3150\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la expresión es \(3000+150a\), con \(a\) el área en m². Reemplazando \(a=40\): \(3000+150(40)=3000+6000=\$9000\)." data-no="Armá la expresión \(3000+150a\) (donde \(a\) es el área en m²) y reemplazá \(a\) por \(40\)."></div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Polinomios</span>
+<h2>Qué es un polinomio y cómo se compone</h2>
+<p class="section-intro">Un polinomio es un caso particular de expresión algebraica: una suma de términos donde todos los exponentes de las variables son enteros no negativos.</p>
+
+<div class="box violet"><h3>¿Una variable o varias?</h3><p>Un polinomio puede tener una o más variables: por ejemplo, \(2xy-3\) es un polinomio de dos variables, porque intervienen \(x\) e \(y\). En este espacio trabajamos principalmente con polinomios de una sola variable, que son los más frecuentes en las situaciones que vamos a ver.</p></div>
+
+<div class="grid-2">
+<div class="box teal"><h3>Sí es polinomio</h3><p>\(3x^2-5x+7\)</p><p>\(x^5-1\)</p></div>
+<div class="box orange"><h3>No es polinomio</h3><p>\(3x^{-1}+5\) (exponente negativo)</p><p>\(\sqrt{x}+2\) (exponente fraccionario)</p></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 6</span>
+<div class="activity">
+<div class="question">\(3/x^2+5x\), ¿es un polinomio?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: hay una variable en el denominador, eso no está permitido en un polinomio." data-no="Fijate si alguna variable está dividiendo (en el denominador)."></div>
+</div>
+
+<div class="subbloque" id="sub2-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Notación \(P(x)\)</h3></div>
+<p class="muted">Un polinomio en una variable se puede nombrar con una letra mayúscula, como \(P(x)\). Escribir \(P(4)\) significa evaluar \(P(x)\) reemplazando cada \(x\) por \(4\).</p>
+<div class="formula teal">\[ P(x)=2x^2-3x+1 \;\Rightarrow\; P(4)=2(4)^2-3(4)+1=32-12+1=21 \]</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 7</span>
+<div class="activity">
+<div class="question">Si \(P(x)=x^2+2x\), ¿cuánto es \(P(3)\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(15\)</button>
+<button class="opt" data-value="b">\(9\)</button>
+<button class="opt" data-value="c">\(11\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3^2+2(3)=9+6=15\)." data-no="Reemplazá cada \(x\) por \(3\): \(3^2+2\cdot3\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Partes de un término</h3></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué elementos identifica en cada término.</p>
+<div class="video-ficha">5:56</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/0BxsA64gE4c" title="Término algebraico" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<h3 style="margin-top:16px">Resumen</h3>
+<table class="mini-table">
+<thead><tr><th>Parte</th><th>Qué es</th><th>Ejemplo en \(5x^3\)</th></tr></thead>
+<tbody>
+<tr><td>Coeficiente</td><td>El número que multiplica a la variable</td><td>\(5\)</td></tr>
+<tr><td>Parte literal</td><td>La variable con su exponente</td><td>\(x^3\)</td></tr>
+</tbody>
+</table>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> confundir coeficiente con exponente. En \(5x^3\), el \(5\) multiplica (coeficiente); el \(3\) indica cuántas veces se multiplica \(x\) por sí misma (exponente). No son lo mismo ni se combinan entre sí.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 8</span>
+<div class="activity">
+<div class="question">En \(-5x^2y\), ¿cuál es el coeficiente?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(-5\)</button>
+<button class="opt" data-value="b">\(2\)</button>
+<button class="opt" data-value="c">\(x^2y\)</button>
+</div>
+<div class="feedback" data-ok="Correcto." data-no="El coeficiente incluye el signo: es el número que multiplica a la parte literal."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Términos semejantes</h3></div>
+
+<p class="antes-empezar-sub">Observá estos dos términos: \(3x^2y\) y \(5x^2y\).</p>
+<div class="activity activacion">
+<div class="question">¿Qué tienen en común?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">La parte literal (\(x^2y\))</button>
+<button class="opt" data-value="b">El coeficiente</button>
+<button class="opt" data-value="c">El signo</button>
+</div>
+<div class="feedback" data-ok="Correcto: ambos tienen exactamente la misma parte literal." data-no="Compará las letras y los exponentes de cada término, no los números que los multiplican."></div>
+</div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate cómo se reconoce si dos términos son semejantes.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/_0vaN7XMUsg" title="Términos semejantes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="concept-card yellow"><h3>Idea clave</h3><p>Dos términos son semejantes cuando tienen exactamente la misma parte literal. Solo se pueden sumar o restar entre sí los términos semejantes.</p></div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> \(3x+2x^2\) no es \(5x^3\). Son términos no semejantes (distinto exponente): la suma queda expresada como \(3x+2x^2\).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 9</span>
+<div class="select-exercise" id="select-terminos">
+<table class="mini-table">
+<thead><tr><th>Términos</th><th>¿Semejantes?</th><th>Por qué</th></tr></thead>
+<tbody>
+<tr>
+<td>\(3x^2\) y \(-5x^2\)</td>
+<td><select data-correct="si"><option value="">Elegí...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+<td><select data-correct="a"><option value="">Elegí...</option><option value="a">Misma parte literal (x²)</option><option value="b">Mismo coeficiente</option><option value="c">Mismo signo</option></select></td>
+</tr>
+<tr>
+<td>\(4x\) y \(4x^2\)</td>
+<td><select data-correct="no"><option value="">Elegí...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+<td><select data-correct="a"><option value="">Elegí...</option><option value="a">Distinto exponente</option><option value="b">Distinto coeficiente</option><option value="c">Distinto signo</option></select></td>
+</tr>
+<tr>
+<td>\(2xy\) y \(-7xy\)</td>
+<td><select data-correct="si"><option value="">Elegí...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+<td><select data-correct="a"><option value="">Elegí...</option><option value="a">Misma parte literal (xy)</option><option value="b">Mismo coeficiente</option><option value="c">El orden de las letras es el mismo</option></select></td>
+</tr>
+</tbody>
+</table>
+<div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+<button class="btn-verificar" onclick="checkSelectTable(this)">Verificar</button>
+<button class="btn-reintentar" onclick="resetSelectTable(this)">↺ Reiniciar</button>
+</div>
+<div class="feedback"></div>
+</div>
+
+
+<div class="subbloque" id="sub2-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Clasificación según la cantidad de términos</h3></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué nombre recibe una expresión según cuántos términos tiene.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/YvpBCJQIrXY" title="Clasificación de polinomios" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<h3 style="margin-top:16px">Resumen</h3>
+<table class="mini-table">
+<thead><tr><th>Nombre</th><th>Cantidad de términos</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td>Monomio</td><td>1</td><td>\(7x^2\)</td></tr>
+<tr><td>Binomio</td><td>2</td><td>\(3x+5\)</td></tr>
+<tr><td>Trinomio</td><td>3</td><td>\(x^2-4x+7\)</td></tr>
+<tr><td>Polinomio</td><td>4 o más (también nombre general)</td><td>\(2x^3-x^2+5x-1\)</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 10</span>
+<div class="activity">
+<div class="question">\(x^2+3x-4\), ¿cómo se clasifica?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Binomio</button>
+<button class="opt" data-value="b">Trinomio</button>
+<button class="opt" data-value="c">Polinomio</button>
+</div>
+<div class="feedback" data-ok="Correcto: tiene tres términos." data-no="Contá los términos separados por + o −: son tres."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-5">
+<div class="sub-titulo"><div class="sub-num">5</div><h3>Elementos de un polinomio de una variable</h3></div>
+<p class="muted">Conviene ordenar el polinomio de mayor a menor exponente para distinguir sus elementos.</p>
+
+<div class="visual"><img src="partes-polinomios.png" alt="Elementos de un polinomio: coeficiente principal, grados, coeficientes no principales y término independiente"></div>
+
+<h3 style="margin-top:16px">Resumen, con ejemplo</h3>
+<table class="mini-table">
+<thead><tr><th>Elemento</th><th>Qué es</th><th>Ejemplo en \(3x^4-2x^2+x-8\)</th></tr></thead>
+<tbody>
+<tr><td>Grado del polinomio</td><td>El mayor exponente de la variable</td><td>\(4\)</td></tr>
+<tr><td>Coeficiente principal</td><td>El coeficiente del término de mayor grado</td><td>\(3\)</td></tr>
+<tr><td>Coeficientes no principales</td><td>Los coeficientes de los demás términos con variable</td><td>\(-2\) y \(1\)</td></tr>
+<tr><td>Término independiente</td><td>El término sin variable (grado 0)</td><td>\(-8\)</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 11</span>
+<div class="activity">
+<div class="question">En \(3x^4-2x^2+x-8\), ¿cuál es el coeficiente principal?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(3\)</button>
+<button class="opt" data-value="b">\(4\)</button>
+<button class="opt" data-value="c">\(-8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: es el coeficiente del término de mayor grado." data-no="Buscá el término con el exponente más alto, y mirá qué número lo multiplica."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-6">
+<div class="sub-titulo"><div class="sub-num">6</div><h3>Polinomio ordenado y completo</h3></div>
+<p class="muted">Un polinomio está <strong>ordenado</strong> cuando sus términos van de mayor a menor exponente. Está <strong>completo</strong> cuando no le falta ningún exponente intermedio (se puede completar agregando coeficiente \(0\)).</p>
+<div class="box orange"><p>\(P(x)=2x^3-5x+1\) está ordenado, pero no completo: falta el término con exponente \(2\).</p><p style="margin-top:6px">Completo: \(P(x)=2x^3+0x^2-5x+1\)</p></div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> confundir ordenado con completo. Son dos cosas distintas: un polinomio puede estar ordenado sin estar completo, y viceversa.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 12</span>
+<div class="activity">
+<div class="question">\(Q(x)=x^5+3\), ¿está completo?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: faltan los términos con exponente 4, 3, 2 y 1. Completo sería \(x^5+0x^4+0x^3+0x^2+0x+3\)." data-no="Contá los exponentes desde 5 hasta 0: ¿están todos presentes?"></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Operaciones con polinomios</span>
+<h2>Sumar, restar, multiplicar</h2>
+<p class="section-intro">Sumar, restar y multiplicar polinomios: cada operación tiene su propia regla, pero todas parten de la misma base.</p>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Suma y resta de polinomios</h3></div>
+<p class="muted">Se sacan los paréntesis, se agrupan los términos semejantes, y se combinan. Los no semejantes quedan sin combinar.</p>
+<div class="video-block">
+<span class="op-badge">Suma</span>
+<p class="muted">Mientras mirás el video, fijate qué hace primero: quitar paréntesis o agrupar.</p>
+<div class="video-ficha">3:20</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/wtf3RU1xdsM" title="Suma de polinomios" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="video-block">
+<span class="op-badge">Resta</span>
+<p class="muted">Mientras mirás el video, fijate qué le pasa al segundo polinomio cuando se quitan los paréntesis en una resta.</p>
+<div class="video-ficha">3:38</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/OkdN8lyw_JQ" title="Resta de polinomios" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Cuidado al restar:</strong> el signo menos delante de un paréntesis cambia el signo de <strong>todos</strong> los términos de adentro. \((5x-3)-(2x-7)=5x-3-2x+7=3x+4\).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 13</span>
+<div class="activity">
+<div class="question">\((8x^2-3y-4)-(4x^2+5y-2)=\)</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(4x^2-8y-2\)</button>
+<button class="opt" data-value="b">\(4x^2+2y-6\)</button>
+<button class="opt" data-value="c">\(12x^2+2y-6\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: cambiando todos los signos del segundo paréntesis y agrupando." data-no="Cambiá el signo de los tres términos del segundo paréntesis antes de agrupar."></div>
+</div>
+
+<div class="practica-titulo">Aplicación</div>
+<span class="ejercicio-badge b-pink">Ejercicio 14</span>
+<div class="activity">
+<div class="question">El costo mensual del área A es \((2x+300)\) y el del área B es \((x+150)\). Si \(x=10\) empleados en cada área, ¿cuál es el costo total?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$480\)</button>
+<button class="opt" data-value="b">\(\$450\)</button>
+<button class="opt" data-value="c">\(\$780\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((2x+300)+(x+150)=3x+450\), y con \(x=10\): \(30+450=\$480\)." data-no="Primero sumá los polinomios: \(3x+450\). Después reemplazá \(x=10\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-0a">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Multiplicación y división de monomios</h3></div>
+<p class="muted">Antes de multiplicar polinomios completos, conviene tener claras estas dos reglas: se usan todo el tiempo.</p>
+<div class="video-block">
+<span class="op-badge">Multiplicación de monomios</span>
+<p class="muted">Mientras mirás el video, fijate cómo se combinan los coeficientes y qué ocurre con los exponentes.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/epsasFCsJ9A" title="Multiplicación de monomios" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="concept-card yellow"><h3>Idea clave</h3><p>Al multiplicar monomios: se multiplican los coeficientes y se suman los exponentes de las mismas bases. Al dividir: se dividen los coeficientes y se restan los exponentes.</p></div>
+<div class="video-block">
+<span class="op-badge">División de monomios</span>
+<p class="muted">Ojo antes de mirar: si en el resultado aparece un exponente negativo, es correcto — significa que queda una variable en el denominador.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/Mu2IeTNa5ys" title="División de monomios" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> multiplicar en vez de sumar exponentes. \(x^2\cdot x^3=x^5\) (se suman), no \(x^6\): eso resultaría de \((x^2)^3\), que es otra operación.</div></div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 15</span>
+<div class="activity">
+<div class="question">\((-4x^2)(3x^3)=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(-12x^5\)</button>
+<button class="opt" data-value="b">\(-12x^6\)</button>
+<button class="opt" data-value="c">\(12x^5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(-4\cdot3=-12\), y \(x^2\cdot x^3=x^5\)." data-no="Multiplicá los coeficientes y sumá los exponentes de \(x\)."></div>
+</div>
+<span class="ejercicio-badge b-orange">Ejercicio 16</span>
+<div class="activity">
+<div class="question">\((-8x^4y^4)\div(2x^3y^2)=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(-4xy^2\)</button>
+<button class="opt" data-value="b">\(-4x^7y^6\)</button>
+<button class="opt" data-value="c">\(-4xy^{-2}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(-8\div2=-4\); \(x^4\div x^3=x^1\); \(y^4\div y^2=y^2\)." data-no="Dividí los coeficientes y restá los exponentes de cada base por separado."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Multiplicación de polinomios</h3></div>
+<div class="video-block">
+<span class="op-badge">Monomio por polinomio</span>
+<p class="muted">Mientras mirás el video, fijate qué propiedad se aplica una y otra vez.</p>
+<div class="video-ficha">8:02</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/QYRhhSrdxWY" title="Monomio por polinomio" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="video-block">
+<span class="op-badge">Polinomio por polinomio</span>
+<p class="muted">Mientras mirás el video, fijate cuántas multiplicaciones hay que hacer en total, y qué se hace después con los resultados.</p>
+<div class="video-ficha">7:48</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/swr3NAW3D5k" title="Polinomio por polinomio" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="concept-card yellow"><h3>Idea clave</h3><p><strong>Monomio por polinomio:</strong> propiedad distributiva, el monomio multiplica a cada término. <strong>Polinomio por polinomio:</strong> cada término del primero multiplica a cada término del segundo, y se reducen los semejantes.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 17</span>
+<div class="activity">
+<div class="question">\(3x(2x^2-5x+1)=\)</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(6x^3-15x^2+3x\)</button>
+<button class="opt" data-value="b">\(6x^3-15x^2\)</button>
+<button class="opt" data-value="c">\(6x^2-15x+3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el monomio multiplica a cada término." data-no="Multiplicá \(3x\) por cada uno de los tres términos, respetando el signo de cada uno."></div>
+</div>
+
+<div class="practica-titulo">Aplicación</div>
+<span class="ejercicio-badge b-orange">Ejercicio 18</span>
+<div class="activity">
+<div class="question">El precio de un producto es \((x+5)\) por unidad, y se venden \((x+2)\) unidades. Si \(x=10\), ¿cuál es el ingreso total?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$180\)</button>
+<button class="opt" data-value="b">\(\$170\)</button>
+<button class="opt" data-value="c">\(\$150\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((x+5)(x+2)=x^2+7x+10\), y con \(x=10\): \(100+70+10=\$180\). Coincide con \((10+5)(10+2)=15\cdot12=180\) ✓." data-no="Multiplicá los polinomios (\(x^2+7x+10\)) y después reemplazá \(x=10\), o multiplicá directamente \((10+5)\cdot(10+2)\)."></div>
+</div>
+</div>
+
+<div class="reveal-card" style="margin-top:22px">
+<h3 style="color:var(--teal-800);text-transform:uppercase;font-size:.85rem;letter-spacing:.06em;margin-bottom:8px">Antes de seguir</h3>
+<p>Multiplicá \((x+5)(x+2)\) y verificá tu resultado paso a paso. ¿En qué paso tuviste que reducir términos semejantes?</p>
+<button class="btn-revelar" onclick="toggleReveal(this)">Ver resolución</button>
+<div class="reveal-answer">\((x+5)(x+2)=x^2+2x+5x+10=x^2+7x+10\). El paso de reducir términos semejantes es cuando se suman \(2x+5x=7x\).</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Productos notables</span>
+<h2>Multiplicaciones con un patrón fijo</h2>
+<p class="section-intro">Los productos notables son multiplicaciones entre polinomios que siguen siempre el mismo patrón. Conocer el patrón evita tener que multiplicar término por término cada vez.</p>
+
+<div class="activity activacion">
+<div class="question">\((x+4)^2\), ¿es lo mismo que \(x^2+16\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: falta el término del medio. \((x+4)^2=x^2+8x+16\)." data-no="Probá desarrollar \((x+4)(x+4)\) término por término y compará con \(x^2+16\)."></div>
+</div>
+
+<table class="mini-table">
+<thead><tr><th>Producto notable</th><th>Ejemplo numérico</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>\((a+b)^2=a^2+2ab+b^2\)</td><td>\((x+4)^2\)</td><td>\(x^2+8x+16\)</td></tr>
+<tr><td>\((a-b)^2=a^2-2ab+b^2\)</td><td>\((x-3)^2\)</td><td>\(x^2-6x+9\)</td></tr>
+<tr><td>\((a+b)(a-b)=a^2-b^2\)</td><td>\((x+6)(x-6)\)</td><td>\(x^2-36\)</td></tr>
+</tbody>
+</table>
+
+<div class="guided">
+<div class="guided-title">Verificación: no es magia, sale de multiplicar término por término</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\((x+4)^2=(x+4)(x+4)\)</span></li>
+<li><span class="step-num">2</span><span>\(=x^2+4x+4x+16\)</span></li>
+<li><span class="step-num">3</span><span>\(=x^2+8x+16\)</span></li>
+</ol>
+</div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> creer que \((a+b)^2=a^2+b^2\). Falta el término del medio, \(2ab\). Ejemplo: \((x+3)^2=x^2+6x+9\), no \(x^2+9\).</div></div>
+
+<div class="practica-titulo">Aplicación</div>
+<span class="ejercicio-badge">Ejercicio 19</span>
+<div class="activity">
+<div class="question">El lado de un terreno cuadrado es \((x+7)\) metros. Si \(x=10\) m, ¿cuál es el área?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(289\ \text{m}^2\)</button>
+<button class="opt" data-value="b">\(149\ \text{m}^2\)</button>
+<button class="opt" data-value="c">\(170\ \text{m}^2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((x+7)^2=x^2+14x+49\), y con \(x=10\): \(100+140+49=289\ \text{m}^2\). Coincide con \((10+7)^2=17^2=289\) ✓." data-no="Desarrollá \((x+7)^2=x^2+14x+49\) y reemplazá \(x=10\), o calculá directamente \((10+7)^2\)."></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 20</span>
+<div class="activity">
+<div class="question">\((x+6)(x-6)=\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x^2-36\)</button>
+<button class="opt" data-value="b">\(x^2+36\)</button>
+<button class="opt" data-value="c">\(x^2-12x-36\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(a^2-b^2\), con \(a=x\) y \(b=6\)." data-no="Es una diferencia de cuadrados: \((a+b)(a-b)=a^2-b^2\)."></div>
+</div>
+<span class="ejercicio-badge b-violet">Ejercicio 21</span>
+<div class="activity">
+<div class="question">\((x-3)^2=\)</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(x^2-9\)</button>
+<button class="opt" data-value="b">\(x^2-6x+9\)</button>
+<button class="opt" data-value="c">\(x^2-3x+9\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(a^2-2ab+b^2\), con \(a=x\) y \(b=3\)." data-no="Usá \((a-b)^2=a^2-2ab+b^2\), con \(a=x\) y \(b=3\)."></div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Factorización</span>
+<h2>El camino inverso a multiplicar</h2>
+<p class="section-intro">Factorizar es expresar una suma o resta de términos como un producto de factores.</p>
+
+<div class="subbloque" id="sub5-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Factor común</h3></div>
+<div class="activity activacion">
+<div class="question">¿Cuál es el mayor factor común entre \(6x^3\) y \(9x^2\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(x\)</button>
+<button class="opt" data-value="b">\(3x^2\)</button>
+<button class="opt" data-value="c">\(6x^3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3\) es el mayor número que divide a \(6\) y \(9\), y \(x^2\) es la menor potencia de \(x\) presente en ambos términos." data-no="Buscá el mayor número que divida a \(6\) y a \(9\) a la vez, y la menor potencia de \(x\) que aparece en los dos términos."></div>
+</div>
+<div class="video-block">
+<div class="video-ficha">6:37</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/BygK11QxQnA" title="Factor común" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="concept-card yellow"><h3>Idea clave</h3><p>Se extrae lo que está repetido en todos los términos. Para verificar, se multiplica de vuelta: \(6x^3+9x^2=3x^2(2x+3)\).</p></div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Error frecuente:</strong> factorizar mal el factor común. En \(6x^3+9x^2\), el factor común es \(3x^2\) (no \(3x\), ni \(6x^2\), ni \(x^2\)).</div></div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 22</span>
+<div class="activity">
+<div class="question">Factorizá: \(8x^2+12x\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(4x(2x+3)\)</button>
+<button class="opt" data-value="b">\(4x(2x+12)\)</button>
+<button class="opt" data-value="c">\(2x(4x+6)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(4x\) es el mayor factor común." data-no="Buscá el mayor factor común posible y dividí cada término por él."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Factorización usando productos notables</h3></div>
+<p class="muted">Los productos notables también se pueden usar "al revés", para factorizar.</p>
+
+<h3 style="margin-top:16px">Diferencia de cuadrados</h3>
+<div class="video-block">
+<div class="video-ficha">6:35</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/esbREDCXTpM" title="Diferencia de cuadrados" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 23</span>
+<div class="activity">
+<div class="question">Factorizá: \(x^2-64\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((x+8)(x-8)\)</button>
+<button class="opt" data-value="b">\((x-64)(x+1)\)</button>
+<button class="opt" data-value="c">\((x-4)(x+16)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\sqrt{64}=8\)." data-no="Buscá la raíz cuadrada de \(64\): ese es el número que forma cada factor junto con \(x\)."></div>
+</div>
+
+<h3 style="margin-top:20px">Trinomio cuadrado perfecto</h3>
+<div class="video-block">
+<div class="video-ficha">7:38</div>
+<div class="video"><iframe src="https://www.youtube.com/embed/TKo7NtIilWM" title="Trinomio cuadrado perfecto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 24</span>
+<div class="activity">
+<div class="question">Factorizá: \(x^2+6x+9\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((x+3)^2\)</button>
+<button class="opt" data-value="b">\((x+6)(x+9)\)</button>
+<button class="opt" data-value="c">\((x+9)^2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: las raíces son \(x\) y \(3\), y \(2\cdot x\cdot3=6x\) coincide con el término medio." data-no="Buscá la raíz cuadrada del primer y el último término: \(x\) y \(3\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Factorización de un trinomio \(x^2+bx+c\)</h3></div>
+<p class="muted">No todo trinomio es un cuadrado perfecto. Cuando el coeficiente principal es \(1\), se buscan dos números \(p\) y \(q\) que, multiplicados, den \(c\), y que, sumados, den \(b\).</p>
+<div class="formula teal">\[ x^2+bx+c=(x+p)(x+q) \quad\text{con } p\cdot q=c,\ p+q=b \]</div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Factorizar \(x^2+5x+6\).</p></div>
+<div class="ejemplo-desarrollo"><p>Se buscan dos números que multiplicados den \(6\) y sumados den \(5\): el \(2\) y el \(3\).</p><p style="margin-top:6px">\(x^2+5x+6=(x+2)(x+3)\)</p></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Importante:</strong> este método solo funciona cuando el coeficiente principal es \(1\) (el término de mayor grado es \(x^2\), sin ningún número multiplicándolo).</div></div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 25</span>
+<div class="activity">
+<div class="question">Factorizá: \(x^2+7x+12\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((x+3)(x+4)\)</button>
+<button class="opt" data-value="b">\((x+2)(x+6)\)</button>
+<button class="opt" data-value="c">\((x+1)(x+12)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3\cdot4=12\) y \(3+4=7\)." data-no="Buscá dos números que multiplicados den \(12\) y sumados den \(7\)."></div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Cómo reconocer cada caso</h3>
+<table class="mini-table" style="margin-top:8px">
+<thead><tr><th>Se reconoce por...</th><th>Se factoriza como...</th></tr></thead>
+<tbody>
+<tr><td>Todos los términos comparten un factor</td><td>factor común: \(a(b+c)\)</td></tr>
+<tr><td>Dos cuadrados perfectos con una resta entre ellos</td><td>diferencia de cuadrados: \((a-b)(a+b)\)</td></tr>
+<tr><td>Trinomio donde el término medio es el doble producto de las raíces</td><td>cuadrado de un binomio: \((a+b)^2\)</td></tr>
+<tr><td>Trinomio con coeficiente principal 1</td><td>\((x+p)(x+q)\), con \(p\cdot q=c\), \(p+q=b\)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Simplificar, errores frecuentes y síntesis</h2>
+
+<div class="subbloque" id="sub6-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Simplificación de polinomios</h3></div>
+<p class="muted">Simplificar significa reescribir un polinomio de la forma más corta posible: distribuir, ordenar por grado y agrupar términos semejantes.</p>
+<div class="guided">
+<div class="guided-title">Ejemplo: simplificar \(3(x+2)-(x^2-4x)+2x^2\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Distribuir: \(3x+6-x^2+4x+2x^2\)</span></li>
+<li><span class="step-num">2</span><span>Ordenar por grado: \(-x^2+2x^2+3x+4x+6\)</span></li>
+<li><span class="step-num">3</span><span>Agrupar términos semejantes: \(x^2+7x+6\)</span></li>
+</ol>
+<div class="result-line">Resultado: \(x^2+7x+6\)</div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 26</span>
+<div class="activity">
+<div class="question">Simplificá: \(2(x-1)+(3x^2+x)-x^2\)</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(2x^2+3x-2\)</button>
+<button class="opt" data-value="b">\(2x^2+x-2\)</button>
+<button class="opt" data-value="c">\(4x^2+3x-2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: distribuyendo \(2x-2+3x^2+x-x^2\), y agrupando: \(2x^2+3x-2\)." data-no="Primero distribuí el \(2(x-1)\), después agrupá los términos con \(x^2\), los con \(x\), y los números solos."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Errores frecuentes: mini auditoría</h3></div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Confundir coeficiente con exponente <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ Tratar el \(5\) y el \(3\) de \(5x^3\) como si fueran lo mismo.</div><div class="error-correcto">✓ El \(5\) multiplica (coeficiente); el \(3\) indica cuántas veces se multiplica \(x\) por sí misma (exponente).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Confundir ordenado con completo <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ Pensar que si está ordenado, ya está completo.</div><div class="error-correcto">✓ \(P(x)=2x^3-5x+1\) está ordenado, pero no completo: falta el término con exponente \(2\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Sumar términos no semejantes <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ \(3x+2x^2=5x^3\)</div><div class="error-correcto">✓ Distinto exponente: no son semejantes. Queda expresado como \(3x+2x^2\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">No distribuir el signo menos <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ \((5x-3)-(2x-7)=5x-3-2x-7\)</div><div class="error-correcto">✓ El menos cambia el signo de TODOS los términos del segundo paréntesis: \(5x-3-2x+7=3x+4\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Multiplicar en vez de sumar exponentes <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ \(x^2\cdot x^3=x^6\)</div><div class="error-correcto">✓ Se suman los exponentes al multiplicar potencias de igual base: \(x^2\cdot x^3=x^5\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Creer que \((a+b)^2=a^2+b^2\) <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ \((x+3)^2=x^2+9\)</div><div class="error-correcto">✓ Falta el término del medio: \((x+3)^2=x^2+6x+9\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Factorizar mal el factor común <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ En \(6x^3+9x^2\), extraer \(3x\) o \(x^2\) como factor común.</div><div class="error-correcto">✓ El mayor factor común es \(3x^2\): el mayor número que divide a \(6\) y \(9\), y la menor potencia de \(x\) presente en ambos.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)">Usar \(p\cdot q=c\), \(p+q=b\) sin coeficiente principal 1 <span>+</span></button>
+<div class="acc-panel"><div class="error-incorrecto">✗ Aplicar ese método directo en \(2x^2+7x+3\).</div><div class="error-correcto">✓ Ese método solo funciona cuando el término de mayor grado es \(x^2\) (coeficiente 1). \(2x^2+7x+3\) requiere otra herramienta.</div></div>
+</div>
+</div>
+</div>
+
+<div class="sintesis-card" style="margin-top:24px">
+<h3>Síntesis del espacio</h3>
+<div class="grid-4" style="margin-top:10px">
+<div class="box teal"><p><strong>Traducir</strong><br>frase → expresión</p></div>
+<div class="box orange"><p><strong>Identificar</strong><br>partes de un término</p></div>
+<div class="box violet"><p><strong>Operar</strong><br>sumar, restar, multiplicar</p></div>
+<div class="box yellow"><p><strong>Factorizar</strong><br>el camino inverso</p></div>
+</div>
+<p class="sintesis-frase">Cada operación algebraica es una decisión: qué términos se pueden sumar, qué propiedad aplicar y cómo verificar el resultado.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const s=btn.querySelector('span:last-child');
+  if(s)s.textContent=item.classList.contains('open')?'−':'+';
+  setTimeout(()=>typeset(item),80);
+}
+function checkSelectTable(btn){
+  const container=btn.closest('.select-exercise');
+  const selects=[...container.querySelectorAll('select')];
+  const fb=container.querySelector('.feedback');
+  const allAnswered=selects.every(s=>s.value!=='');
+  if(!allAnswered){
+    fb.className='feedback show no';
+    fb.textContent='Completá todas las listas antes de verificar.';
+    return;
+  }
+  let allCorrect=true;
+  selects.forEach(s=>{
+    s.classList.remove('correct','wrong');
+    const correct=s.value===s.dataset.correct;
+    s.classList.add(correct?'correct':'wrong');
+    if(!correct)allCorrect=false;
+  });
+  if(allCorrect){
+    fb.className='feedback show ok';
+    fb.textContent='¡Perfecto! Identificaste bien si son semejantes y por qué.';
+  }else{
+    fb.className='feedback show no';
+    fb.textContent='Hay alguna respuesta incorrecta. Revisá las listas marcadas en rojo.';
+  }
+}
+function resetSelectTable(btn){
+  const container=btn.closest('.select-exercise');
+  container.querySelectorAll('select').forEach(s=>{s.value='';s.classList.remove('correct','wrong')});
+  const fb=container.querySelector('.feedback');
+  fb.className='feedback';fb.textContent='';
+}
+function toggleReveal(btn){
+  const answer=btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent=answer.classList.contains('show')?'Ocultar resolución':'Ver resolución';
+  setTimeout(()=>typeset(answer),60);
+}
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:feedback.dataset.no;
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+document.addEventListener('DOMContentLoaded',()=>typeset(document.body));
+</script>
+</body>
+</html>
