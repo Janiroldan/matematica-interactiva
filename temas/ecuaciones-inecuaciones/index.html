@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ecuaciones e inecuaciones · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.6rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.antes-empezar-sub{color:var(--slate-700);font-size:.88rem;margin-bottom:10px;max-width:800px}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn span:last-child{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.reveal-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px}
+.reveal-answer{display:none;margin-top:12px;padding:10px 13px;background:var(--green-soft);border:1px solid #BCE3CF;border-radius:10px;color:var(--green);font-weight:600;font-size:.9rem}
+.reveal-answer.show{display:block}
+.btn-revelar{margin-top:10px;font-size:.83rem;font-weight:700;color:var(--teal-800);cursor:pointer;background:#fff;border:1px solid var(--teal-800);border-radius:8px;padding:6px 14px;font-family:inherit}
+.btn-revelar:hover{background:var(--teal-100)}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.btn-verificar{display:inline-flex;align-items:center;gap:7px;background:var(--teal-800);color:#fff;border:none;border-radius:10px;padding:10px 22px;font:inherit;font-weight:700;font-size:.88rem;cursor:pointer;box-shadow:0 6px 16px rgba(15,107,111,.22);transition:.18s}
+.btn-verificar::before{content:"✓";font-weight:800}
+.btn-verificar:hover{background:var(--teal-700);transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,107,111,.28)}
+
+/* ---- Balanza interactiva ---- */
+.balanza-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:22px;margin:16px 0}
+.balanza-titulo{font-weight:800;color:var(--navy-900);text-align:center;margin-bottom:6px}
+.balanza-sub{text-align:center;color:var(--slate-700);font-size:.86rem;margin-bottom:18px}
+.balanza-escena{display:flex;flex-direction:column;align-items:center;padding:10px 0 26px}
+.balanza-brazo-wrap{width:340px;max-width:90%;transition:transform .55s cubic-bezier(.34,1.4,.64,1);transform-origin:center center}
+.balanza-brazo-wrap.tip-izq{transform:rotate(-7deg)}
+.balanza-brazo-wrap.tip-der{transform:rotate(7deg)}
+.balanza-brazo{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+.balanza-cuerda{width:2px;height:26px;background:var(--slate-700);margin:0 auto}
+.balanza-platillo{width:130px;min-height:56px;border:2px solid var(--teal-800);background:var(--teal-100);border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--teal-900);padding:8px;text-align:center;font-size:1rem}
+.balanza-col{display:flex;flex-direction:column;align-items:center}
+.balanza-igual{align-self:center;font-size:1.4rem;font-weight:800;color:var(--navy-900);margin:0 6px;padding-top:14px}
+.balanza-base{width:4px;height:34px;background:var(--slate-700);margin:0 auto}
+.balanza-pie{width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:44px solid var(--navy-800);margin:0 auto}
+.balanza-controles{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:12px}
+.btn-balanza{font:inherit;font-weight:700;font-size:.85rem;padding:9px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800);transition:.15s}
+.btn-balanza:hover:not(:disabled){background:var(--teal-100)}
+.btn-balanza:disabled{opacity:.4;cursor:default}
+.btn-balanza.trampa{border-color:var(--red);color:var(--red)}
+.btn-balanza.trampa:hover{background:var(--red-soft)}
+.btn-balanza.reset{border-color:var(--slate-700);color:var(--slate-700)}
+.balanza-mensaje{text-align:center;font-weight:700;padding:10px 14px;border-radius:10px;margin-top:6px;font-size:.88rem;min-height:0}
+.balanza-mensaje.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.balanza-mensaje.err{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+
+/* ---- Recta numérica interactiva ---- */
+.recta-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.recta-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.recta-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.recta-svg-wrap{overflow-x:auto;padding:6px 0 10px}
+.recta-svg{display:block;margin:0 auto;cursor:pointer;user-select:none}
+.recta-controles{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:6px;margin-bottom:10px}
+.recta-grupo{display:flex;gap:8px;align-items:center;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:6px}
+.recta-grupo button{font:inherit;font-weight:700;font-size:.82rem;padding:7px 13px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:var(--slate-700);transition:.15s}
+.recta-grupo button.active{background:var(--teal-800);color:#fff}
+.recta-lectura{text-align:center;font-weight:800;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:10px;font-size:1rem}
+.recta-lectura .interval{color:var(--teal-900);font-style:italic;font-weight:700}
+
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:15px}
+  .capsula{margin:10px;border-radius:22px}
+  .hero{padding:26px 18px 18px}
+  .tabs-wrap,.content{padding-left:14px;padding-right:14px}
+  .section{padding:20px 16px}
+  .tab{flex:1 1 calc(50% - 8px);justify-content:center}
+  h2{font-size:1.4rem}
+  .video-block p.muted{padding:0 2px}
+  .balanza-platillo{width:96px;font-size:.86rem}
+  .balanza-controles{gap:8px}
+  .btn-balanza{font-size:.8rem;padding:8px 12px}
+  .recta-controles{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma">x=a</div>
+<h1>Ecuaciones e inecuaciones</h1>
+<h2>Plantear, resolver, verificar e interpretar: un recorrido con videos y actividades</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Ecuaciones e inecuaciones de primer grado</h1>
+<p>Un recorrido con videos breves y actividades cortas para plantear, resolver, verificar e interpretar ecuaciones e inecuaciones. Podés recorrer las etapas en el orden que necesites.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Ecuaciones</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Desigualdades e intervalos</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Inecuaciones</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Aplicaciones</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+<!-- ============ PANEL 1: ECUACIONES ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Ecuaciones</span>
+<h2>Qué son y cómo se resuelven</h2>
+<p class="section-intro">Plantear, resolver, verificar e interpretar: los pasos para trabajar con una ecuación de primer grado.</p>
+
+<div class="subbloque" id="sub1-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>¿Qué es una ecuación?</h3></div>
+
+<div class="box violet"><p>Mirá estas dos expresiones: \(3x-5\) y \(2x+3=11\). La segunda tiene un signo \(=\) que compara dos partes entre sí; la primera no. Ese signo \(=\) es justamente lo que convierte a una expresión algebraica en una ecuación.</p></div>
+
+<div class="concept-card violet"><h3>Definición de ecuación</h3><p>Una ecuación es una igualdad entre dos expresiones algebraicas. La letra cuyo valor se busca es la <strong>incógnita</strong>. Al valor de la incógnita que hace verdadera la igualdad se lo llama <strong>solución</strong> de la ecuación. En una ecuación de primer grado, la incógnita no aparece elevada a potencias mayores que \(1\), ni dentro de raíces o denominadores.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">¿Cuál de estas es una ecuación de primer grado?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(2x+3=11\)</button>
+<button class="opt" data-value="b">\(x^2-4=0\)</button>
+<button class="opt" data-value="c">\(\sqrt{x}=3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la incógnita aparece con exponente 1, sin raíces ni denominadores." data-no="Buscá la opción donde la incógnita no esté elevada al cuadrado ni dentro de una raíz."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Planteo y resolución</h3></div>
+<p class="muted">Toda ecuación tiene dos partes, separadas por el signo \(=\): el <strong>miembro izquierdo (MI)</strong> y el <strong>miembro derecho (MD)</strong>.</p>
+<div class="formula teal">\[ \text{MI}=\text{MD} \]</div>
+
+<div class="balanza-widget">
+<div class="balanza-titulo">Antes de ver la regla: explorá con la balanza</div>
+<div class="balanza-sub" id="balSub">Partimos de \(2x+3=11\), representada como una balanza en equilibrio. Probá aplicar cada operación y mirá qué pasa.</div>
+<div class="balanza-escena">
+<div class="balanza-brazo-wrap" id="balBrazoWrap">
+<div class="balanza-brazo">
+<div class="balanza-col"><div class="balanza-platillo" id="balIzq" aria-live="polite">2x + 3</div><div class="balanza-cuerda"></div></div>
+<div class="balanza-igual">=</div>
+<div class="balanza-col"><div class="balanza-platillo" id="balDer" aria-live="polite">11</div><div class="balanza-cuerda"></div></div>
+</div>
+</div>
+<div class="balanza-base"></div>
+<div class="balanza-pie"></div>
+</div>
+<div class="balanza-controles">
+<button class="btn-balanza" id="balBtn1" onclick="balanzaPaso1()" aria-label="Restar 3 en ambos miembros de la balanza">Restar 3 en ambos miembros</button>
+<button class="btn-balanza" id="balBtn2" onclick="balanzaPaso2()" disabled aria-label="Dividir por 2 en ambos miembros de la balanza">Dividir por 2 en ambos miembros</button>
+</div>
+<div class="balanza-controles">
+<button class="btn-balanza trampa" onclick="balanzaTrampa()" aria-label="Probar qué pasa si se opera solo en el miembro izquierdo (esto desequilibra la balanza)">⚠ Probar: dividir por 2 solo a la izquierda</button>
+<button class="btn-balanza reset" onclick="balanzaReset()" aria-label="Reiniciar la balanza al ejemplo actual">↺ Reiniciar</button>
+<button class="btn-balanza" onclick="balanzaOtroEjemplo()" aria-label="Cargar otro ejemplo de ecuación en la balanza">🔀 Otro ejemplo</button>
+</div>
+<div class="balanza-mensaje" id="balMensaje" aria-live="polite"></div>
+</div>
+
+<p class="muted">Resolver una ecuación es transformarla, paso a paso, en ecuaciones equivalentes cada vez más simples — igual que hiciste recién con la balanza. Dos ecuaciones son <strong>equivalentes</strong> si tienen el mismo conjunto solución. Las operaciones que garantizan la equivalencia son estas dos:</p>
+
+<table class="mini-table">
+<thead><tr><th>Propiedad</th><th>Operación permitida</th></tr></thead>
+<tbody>
+<tr><td>Adición / Sustracción</td><td>sumar o restar el mismo valor en ambos miembros</td></tr>
+<tr><td>Multiplicación / División</td><td>multiplicar o dividir ambos miembros por el mismo valor, distinto de \(0\)</td></tr>
+</tbody>
+</table>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>¡Atención!</strong> El valor por el que se multiplica o se divide nunca puede ser \(0\): la división por cero no está definida.</div></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué regla se usa para "despejar" la incógnita (inverso aditivo e inverso multiplicativo).</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/JhJYxI4AHEM" title="Resolución de ecuaciones" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<h3 style="margin-top:18px">¿Por qué "se pasa cambiando de signo"?</h3>
+<p class="muted">En la práctica se suele decir que "un término pasa al otro miembro cambiando de signo". No es una regla nueva: es exactamente lo mismo que restar (o sumar) ese término en ambos miembros.</p>
+<div class="guided">
+<div class="guided-title">\(5x=10+3x\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Restamos \(3x\) en ambos miembros: \(5x-3x=10+3x-3x\)</span></li>
+<li><span class="step-num">2</span><span>\(5x-3x=10\) (es lo mismo que "pasar el \(3x\) restando")</span></li>
+</ol>
+</div>
+
+<div class="guided">
+<div class="guided-title">Resolver: \(2x+3=11\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Restamos \(3\) en ambos miembros: \(2x+3-3=11-3\;\Rightarrow\;2x=8\) (el \(3\) "pasó restando")</span></li>
+<li><span class="step-num">2</span><span>Dividimos ambos miembros por \(2\): \(2x/2=8/2\)</span></li>
+</ol>
+<div class="result-line">Resultado: \(x=4\) (el \(2\) "pasó dividiendo")</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">Resolvé: \(3x-2=13\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x=5\)</button>
+<button class="opt" data-value="b">\(x=3\)</button>
+<button class="opt" data-value="c">\(x=11\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3x=15\), y \(x=15\div3=5\)." data-no="Sumá 2 en ambos miembros primero, y después dividí por 3."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>La incógnita en los dos miembros</h3></div>
+<p class="muted">Cuando la incógnita aparece en el MI y en el MD, primero hay que agrupar todos los términos con \(x\) en un mismo miembro, y los términos independientes en el otro.</p>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, identificá qué término con \(x\) pasa primero al miembro izquierdo.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/LrtI1XnHj0U" title="Ecuaciones con la incógnita en ambos miembros" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Resolver: \(5x-3=2x+9\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Restamos \(2x\) en ambos miembros (para sacarla del MD): \(5x-2x-3=2x-2x+9\;\Rightarrow\;3x-3=9\)</span></li>
+<li><span class="step-num">2</span><span>Sumamos \(3\) en ambos miembros: \(3x=9+3\;\Rightarrow\;3x=12\)</span></li>
+<li><span class="step-num">3</span><span>Dividimos ambos miembros por \(3\): \(x=12/3\)</span></li>
+</ol>
+<div class="result-line">Resultado: \(x=4\)</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">Resolvé: \(4x+1=x+10\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x=3\)</button>
+<button class="opt" data-value="b">\(x=9\)</button>
+<button class="opt" data-value="c">\(x=11\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: agrupando, \(3x=9\), y \(x=3\)." data-no="Restá \(x\) en ambos miembros para agrupar la incógnita, y después restá \(1\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Cantidad de soluciones</h3></div>
+<p class="muted">Al simplificar una ecuación de primer grado pueden presentarse tres casos.</p>
+<table class="mini-table">
+<thead><tr><th>Se obtiene...</th><th>Significa</th></tr></thead>
+<tbody>
+<tr><td>\(x=a\)</td><td>una única solución</td></tr>
+<tr><td>Una igualdad falsa (ej. \(0=5\))</td><td>no tiene solución</td></tr>
+<tr><td>Una igualdad verdadera (ej. \(0=0\))</td><td>todos los números reales son solución</td></tr>
+</tbody>
+</table>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">Al resolver una ecuación, llegaste a \(7=7\). ¿Qué significa?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a">Que no tiene solución</button>
+<button class="opt" data-value="b">Que \(x=7\)</button>
+<button class="opt" data-value="c">Que todos los números reales son solución</button>
+</div>
+<div class="feedback" data-ok="Correcto: es una igualdad verdadera que no depende de \(x\), así que se cumple para cualquier valor." data-no="Fijate que \(7=7\) ya no tiene ninguna \(x\): es una igualdad siempre verdadera, no un valor puntual."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-5">
+<div class="sub-titulo"><div class="sub-num">5</div><h3>Verificación de soluciones</h3></div>
+<p class="muted">Verificar significa reemplazar el valor encontrado en la ecuación <strong>original</strong> y comprobar que la igualdad se cumple.</p>
+
+<div class="video-block">
+<p class="muted">El video verifica en un paso ya simplificado en vez de la ecuación original: mientras lo mirás, pensá por qué esa verificación sigue siendo válida en ese caso.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/mXAvVCTlfiY" title="Verificación de soluciones" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Verificar \(x=4\) en \(2x+3=11\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Reemplazamos \(x\) por \(4\): \(2(4)+3=8+3=11\)</span></li>
+</ol>
+<div class="result-line">\(11=11\) ✓ — la igualdad se cumple: \(x=4\) es correcto</div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Ojo:</strong> hay que verificar en la ecuación <strong>original</strong>, no en una versión ya simplificada a mitad de camino: ahí no se detectan errores de los primeros pasos.</div></div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">Para verificar la solución de \(5x-3=2x+9\) (cuya solución es \(x=4\)), ¿en qué ecuación hay que reemplazar \(x=4\)?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">En \(5x-3=2x+9\), la ecuación original</button>
+<button class="opt" data-value="b">En \(3x=12\), un paso intermedio</button>
+<button class="opt" data-value="c">En cualquiera de las dos, da igual</button>
+</div>
+<div class="feedback" data-ok="Correcto: siempre se verifica en la ecuación tal como estaba planteada al principio." data-no="Si verificás en un paso ya simplificado, no vas a detectar un error cometido antes de ese paso."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-6">
+<div class="sub-titulo"><div class="sub-num">6</div><h3>Interpretación de resultados</h3></div>
+<p class="muted">En un problema aplicado, encontrar el valor numérico no alcanza: hay que interpretar qué significa ese resultado en el contexto de la situación.</p>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un service técnico cobra \(\$8000\) fijos por la visita, más \(\$600\) por cada accesorio adicional que se instale. En una visita, la factura fue de \(\$12200\). ¿Cuántos accesorios adicionales se instalaron?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Planteo:</strong> si \(g\) es la cantidad de accesorios instalados, \(8000+600g=12200\).</p>
+<p style="margin-top:6px"><strong>Resolución:</strong> \(600g=4200\;\Rightarrow\;g=7\).</p>
+<p style="margin-top:6px"><strong>Verificación:</strong> \(8000+600(7)=8000+4200=12200\) ✓</p>
+<p style="margin-top:6px"><strong>Interpretación:</strong> como \(g\) representa una cantidad de accesorios, la respuesta se expresa con un número entero no negativo. Se instalaron \(7\) accesorios adicionales.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Aplicación</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity">
+<div class="question">Un plomero cobra \(\$5000\) fijos por la visita, más \(\$800\) por cada hora de trabajo. Si una factura fue de \(\$9400\), ¿cuántas horas trabajó?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(5\) horas</button>
+<button class="opt" data-value="b">\(5,5\) horas</button>
+<button class="opt" data-value="c">\(6\) horas</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(5000+800h=9400\;\Rightarrow\;800h=4400\;\Rightarrow\;h=5,5\). El tiempo admite decimales." data-no="Planteá \(5000+800h=9400\) y despejá \(h\). A diferencia de una cantidad de accesorios, el tiempo sí puede ser decimal."></div>
+</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: DESIGUALDADES E INTERVALOS ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Desigualdades e intervalos</span>
+<h2>Comparar sin igualar</h2>
+<p class="section-intro">Comparar dos valores no siempre es una igualdad: a veces uno es mayor, menor, o puede ser igual. Este lenguaje de comparación es la base para todo lo que sigue.</p>
+
+<div class="subbloque" id="sub2-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Desigualdades</h3></div>
+<p class="muted">Una desigualdad compara dos expresiones indicando cuál es mayor, menor, o si pueden ser iguales.</p>
+<table class="mini-table">
+<thead><tr><th>Símbolo</th><th>Significado</th></tr></thead>
+<tbody>
+<tr><td>\(\lt \)</td><td>"menor que"</td></tr>
+<tr><td>\(\gt \)</td><td>"mayor que"</td></tr>
+<tr><td>\(\le\)</td><td>"menor o igual que"</td></tr>
+<tr><td>\(\ge\)</td><td>"mayor o igual que"</td></tr>
+</tbody>
+</table>
+
+<div class="activity activacion">
+<div class="question">Partimos de \(2\lt 5\). Si multiplicamos los dos miembros por \(-1\), obtenemos \(-2\) y \(-5\). ¿Qué relación hay entre ellos?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(-2\lt -5\)</button>
+<button class="opt" data-value="b">\(-2\gt -5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: al multiplicar por un número negativo, el sentido de la desigualdad se invierte. Por eso \(2\lt5\) pasó a \(-2\gt-5\)." data-no="Probá ubicar \(-2\) y \(-5\) en la recta numérica: ¿cuál está más a la derecha?"></div>
+</div>
+
+<div class="concept-card yellow"><h3>Idea clave</h3><p>Al multiplicar o dividir ambos miembros de una desigualdad por un número <strong>negativo</strong>, el sentido de la desigualdad se invierte.</p></div>
+</div>
+
+<div class="subbloque" id="sub2-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Intervalos</h3></div>
+<p class="muted">Un intervalo es un subconjunto de los números reales formado por valores entre dos extremos (o a partir de un extremo). Los extremos pueden estar incluidos (corchetes) o excluidos (paréntesis).</p>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>Los símbolos \(+\infty\) y \(-\infty\) no son números reales y nunca pueden incluirse en el intervalo: junto a ellos siempre se usa paréntesis, nunca corchete.</div></div>
+
+<table class="mini-table">
+<thead><tr><th>Nombre</th><th>Notación</th><th>Desigualdad</th></tr></thead>
+<tbody>
+<tr><td>Intervalo abierto</td><td>\((a,b)\)</td><td>\(a\lt x\lt b\)</td></tr>
+<tr><td>Intervalo cerrado</td><td>\([a,b]\)</td><td>\(a\le x\le b\)</td></tr>
+<tr><td>Semiabierto por derecha</td><td>\([a,b)\)</td><td>\(a\le x\lt b\)</td></tr>
+<tr><td>Semiabierto por izquierda</td><td>\((a,b]\)</td><td>\(a\lt x\le b\)</td></tr>
+<tr><td>Infinito</td><td>\((-\infty,b]\)</td><td>\(x\le b\)</td></tr>
+<tr><td>Infinito</td><td>\((-\infty,b)\)</td><td>\(x\lt b\)</td></tr>
+<tr><td>Infinito</td><td>\([a,+\infty)\)</td><td>\(x\ge a\)</td></tr>
+<tr><td>Infinito</td><td>\((a,+\infty)\)</td><td>\(x\gt a\)</td></tr>
+</tbody>
+</table>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Una actividad recreativa está permitida para personas de entre \(12\) y \(17\) años, incluyendo ambos límites.</p></div>
+<div class="ejemplo-desarrollo"><p>Intervalo: \([12,17]\). Si en cambio fuera para mayores de \(12\) años y de hasta \(17\) inclusive, el intervalo sería \((12,17]\).</p></div>
+</div>
+
+<div class="recta-widget">
+<div class="recta-titulo">Explorá vos: armá un intervalo</div>
+<div class="recta-sub">Hacé clic sobre la recta para mover el punto, y probá los botones. Mirá cómo cambia la notación abajo.</div>
+<div class="recta-svg-wrap">
+<svg class="recta-svg" id="rectaExplorar" width="640" height="90" viewBox="0 0 640 90" role="img" aria-label="Recta numérica interactiva. Hacé clic sobre la recta para mover el punto que marca el extremo del intervalo."></svg>
+</div>
+<div class="recta-controles">
+<div class="recta-grupo" id="rectaExplorarTipo">
+<button data-v="abierto" onclick="rectaSetTipo('rectaExplorar','abierto')">○ Abierto</button>
+<button data-v="cerrado" onclick="rectaSetTipo('rectaExplorar','cerrado')">● Cerrado</button>
+</div>
+<div class="recta-grupo" id="rectaExplorarDir">
+<button data-v="izq" onclick="rectaSetDir('rectaExplorar','izq')">← Menores</button>
+<button data-v="der" onclick="rectaSetDir('rectaExplorar','der')">Mayores →</button>
+</div>
+</div>
+<div class="recta-lectura" id="rectaExplorarLectura" aria-live="polite"></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 7</span>
+<div class="activity">
+<div class="question">\((-\infty,3]\), ¿qué desigualdad representa?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(x\lt 3\)</button>
+<button class="opt" data-value="b">\(x\le3\)</button>
+<button class="opt" data-value="c">\(x\ge3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el corchete en el 3 indica que está incluido." data-no="Fijate si el símbolo junto al 3 es corchete (incluido) o paréntesis (excluido)."></div>
+</div>
+<span class="ejercicio-badge b-orange">Ejercicio 8</span>
+<div class="activity">
+<div class="question">La condición "mayor que \(-1\)", ¿cómo se escribe como intervalo?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((-1,+\infty)\)</button>
+<button class="opt" data-value="b">\([-1,+\infty)\)</button>
+<button class="opt" data-value="c">\((-\infty,-1)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(-1\) queda excluido (paréntesis), y hacia \(+\infty\) siempre paréntesis." data-no="\"Mayor que\" excluye el extremo: usá paréntesis en el \(-1\), y el intervalo va hacia \(+\infty\)."></div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: INECUACIONES ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Inecuaciones</span>
+<h2>Resolver desigualdades con incógnita</h2>
+<p class="section-intro">Una inecuación es una desigualdad entre expresiones algebraicas con la incógnita en grado 1. Se resuelve con transformaciones parecidas a las de una ecuación, pero con una diferencia clave.</p>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Resolución de inecuaciones</h3></div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>¡Atención!</strong> Si en algún paso se multiplican o dividen ambos miembros por un número negativo, hay que invertir el sentido de la desigualdad.</div></div>
+
+<table class="mini-table">
+<thead><tr><th>Operación en ambos miembros</th><th>Efecto</th></tr></thead>
+<tbody>
+<tr><td>Sumar o restar el mismo número</td><td>Se conserva el sentido</td></tr>
+<tr><td>Multiplicar o dividir por un número positivo</td><td>Se conserva el sentido</td></tr>
+<tr><td>Multiplicar o dividir por un número negativo</td><td><strong>Se invierte el sentido</strong></td></tr>
+</tbody>
+</table>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, prestá atención: ¿se invierte el sentido de la desigualdad en algún paso? ¿Por qué?</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/gMDAtLLW5lM" title="Resolución de inecuaciones" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Resolver sin invertir: \(2x+3\lt 11\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Restamos \(3\) en ambos miembros: \(2x\lt 8\) (el 3 "pasó restando")</span></li>
+<li><span class="step-num">2</span><span>Dividimos por \(2\) (positivo, no se invierte): \(x\lt 8/2\)</span></li>
+</ol>
+<div class="result-line">Resultado: \(x\lt 4\)</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 9</span>
+<div class="activity">
+<div class="question">Resolvé: \(3x-1\le8\)</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x\le3\)</button>
+<button class="opt" data-value="b">\(x\le2\)</button>
+<button class="opt" data-value="c">\(x\ge3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3x\le9\), y como dividimos por \(3\) (positivo), el sentido no cambia: \(x\le3\)." data-no="Sumá \(1\) en ambos miembros y dividí por \(3\). Como \(3\) es positivo, el sentido de la desigualdad no cambia."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Invirtiendo el sentido</h3></div>
+<div class="guided">
+<div class="guided-title">Resolver invirtiendo: \(-3x+6\ge0\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Restamos \(6\) en ambos miembros: \(-3x\ge-6\) (el 6 "pasó restando")</span></li>
+<li><span class="step-num">2</span><span>Dividimos por \(-3\) (negativo: se invierte el sentido): \(x\le-6/-3\)</span></li>
+</ol>
+<div class="result-line">Resultado: \(x\le2\)</div>
+</div>
+<p class="muted">Si no se invierte el signo, el resultado sería \(x\ge2\), que es incorrecto: probá con \(x=0\) en la inecuación original (\(-3(0)+6=6\ge0\), verdadero) y con \(x=5\) (\(-3(5)+6=-9\ge0\), falso). Los valores probados son coherentes con \(x\le2\), no con \(x\ge2\).</p>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 10</span>
+<div class="activity">
+<div class="question">Resolvé: \(-2x+4\gt 0\)</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(x\gt 2\)</button>
+<button class="opt" data-value="b">\(x\lt 2\)</button>
+<button class="opt" data-value="c">\(x\lt -2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(-2x\gt -4\), y al dividir por \(-2\) (negativo) el sentido se invierte: \(x\lt 2\)." data-no="Restá 4 en ambos miembros y dividí por \(-2\). Como es negativo, el sentido de la desigualdad se invierte."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Representación del conjunto solución mediante intervalos</h3></div>
+<p class="muted">Una inecuación suele tener infinitas soluciones: todos los valores que cumplen la desigualdad. Ese conjunto se expresa con un intervalo.</p>
+<table class="mini-table">
+<thead><tr><th>Solución de la inecuación</th><th>Conjunto solución (intervalo)</th></tr></thead>
+<tbody>
+<tr><td>\(x\lt 4\)</td><td>\((-\infty,4)\)</td></tr>
+<tr><td>\(x\le2\)</td><td>\((-\infty,2]\)</td></tr>
+<tr><td>\(x\gt -1\)</td><td>\((-1,+\infty)\)</td></tr>
+<tr><td>\(x\ge5\)</td><td>\([5,+\infty)\)</td></tr>
+</tbody>
+</table>
+
+<div class="video-block">
+<p class="muted">Este video resuelve una inecuación con denominadores. Mientras lo mirás, anotá en qué momento aparece la primera desigualdad con denominador y cómo se despeja.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/Uu5DD5gW8H0" title="Inecuación con denominadores" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>La inecuación \(2x+3\lt 11\) tiene como solución \(x\lt 4\).</p></div>
+<div class="ejemplo-desarrollo"><p>El conjunto solución, como intervalo, es \((-\infty,4)\).</p></div>
+</div>
+
+<div class="recta-widget">
+<div class="recta-titulo">Ahora probá vos</div>
+<div class="recta-sub" id="rectaPracticaSub">Representá en la recta la solución de \(x\lt 4\), y verificá.</div>
+<div class="recta-svg-wrap">
+<svg class="recta-svg" id="rectaPractica" width="640" height="90" viewBox="0 0 640 90" role="img" aria-label="Recta numérica interactiva. Hacé clic sobre la recta para mover el punto que marca el extremo del intervalo."></svg>
+</div>
+<div class="recta-controles">
+<div class="recta-grupo" id="rectaPracticaTipo">
+<button data-v="abierto" onclick="rectaSetTipo('rectaPractica','abierto')">○ Abierto</button>
+<button data-v="cerrado" onclick="rectaSetTipo('rectaPractica','cerrado')">● Cerrado</button>
+</div>
+<div class="recta-grupo" id="rectaPracticaDir">
+<button data-v="izq" onclick="rectaSetDir('rectaPractica','izq')">← Menores</button>
+<button data-v="der" onclick="rectaSetDir('rectaPractica','der')">Mayores →</button>
+</div>
+</div>
+<div style="text-align:center;margin-top:10px;display:flex;gap:10px;justify-content:center">
+<button class="btn-verificar" id="rectaPracticaBtnVerificar" onclick="rectaVerificarActual('rectaPractica')">Verificar</button>
+<button class="btn-balanza" onclick="rectaOtroEjemplo('rectaPractica')">🔀 Otro ejemplo</button>
+</div>
+<div class="recta-lectura" id="rectaPracticaLectura" aria-live="polite"></div>
+<div class="feedback" id="rectaPracticaFeedback"></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 11</span>
+<div class="activity">
+<div class="question">\(x\ge5\), ¿cómo se escribe como intervalo?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\([5,+\infty)\)</button>
+<button class="opt" data-value="b">\((5,+\infty)\)</button>
+<button class="opt" data-value="c">\((-\infty,5]\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: el \(5\) está incluido (corchete), y hacia \(+\infty\) siempre paréntesis." data-no="El símbolo \(\ge\) incluye al 5: usá corchete. Y la desigualdad va hacia los mayores."></div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: APLICACIONES ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Aplicaciones en gestión pública</span>
+<h2>Presupuestos, límites y reparto de recursos</h2>
+<p class="section-intro">Las ecuaciones y las inecuaciones permiten expresar y resolver condiciones y restricciones que aparecen todo el tiempo en la gestión pública.</p>
+
+<div class="guided">
+<div class="guided-title">Protocolo de planteo</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span><strong>Identificar la incógnita.</strong> Determinar qué cantidad se desconoce. Escribir "Sea \(x=\)…", aclarando las unidades y qué valores tiene sentido que tome.</span></li>
+<li><span class="step-num">2</span><span><strong>Plantear la ecuación o inecuación.</strong> Expresar la condición en lenguaje algebraico, identificando las palabras clave.</span></li>
+<li><span class="step-num">3</span><span><strong>Resolver, controlar e interpretar.</strong> En una ecuación, verificar reemplazando en la original. En una inecuación, probar un valor del conjunto solución (y uno que no pertenezca). Interpretar el resultado en el lenguaje del problema.</span></li>
+</ol>
+</div>
+
+<table class="mini-table">
+<thead><tr><th>Expresión del enunciado</th><th>Símbolo</th></tr></thead>
+<tbody>
+<tr><td>"no superar", "no exceder", "como máximo"</td><td>\(\le\)</td></tr>
+<tr><td>"al menos", "no menos de", "como mínimo"</td><td>\(\ge\)</td></tr>
+<tr><td>"más de", "superar", "mayor que"</td><td>\(\gt \)</td></tr>
+<tr><td>"menos de", "menor que", "por debajo de"</td><td>\(\lt \)</td></tr>
+<tr><td>"entre … y …" (extremos incluidos)</td><td>\(a\le x\le b\)</td></tr>
+<tr><td>"entre … y …" (extremos excluidos)</td><td>\(a\lt x\lt b\)</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 12</span>
+<div class="activity">
+<div class="question">"El gasto no puede superar los \(\$50000\)" se traduce como...</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">gasto \(\le50000\)</button>
+<button class="opt" data-value="b">gasto \(\ge50000\)</button>
+<button class="opt" data-value="c">gasto \(\lt 50000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: 'no superar' es 'como máximo', se traduce con \(\le\)." data-no="'No superar' significa 'como máximo': revisá la tabla de palabras clave."></div>
+</div>
+
+<div class="subbloque" id="sub4-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Restricciones presupuestarias</h3></div>
+<p class="muted">Una restricción presupuestaria establece que un gasto no puede superar un monto disponible: gasto \(\le\) presupuesto.</p>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un área tiene un presupuesto de \(\$500000\) para comprar equipos de \(\$25000\) cada uno. ¿Cuántos equipos puede comprar como máximo?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Incógnita:</strong> \(e=\) cantidad de equipos (entero no negativo).</p>
+<p style="margin-top:6px"><strong>Planteo:</strong> \(25000e\le500000\).</p>
+<p style="margin-top:6px"><strong>Resolución:</strong> \(e\le500000/25000\;\Rightarrow\;e\le20\).</p>
+<p style="margin-top:6px"><strong>Control:</strong> \(e=20\) cumple (\(25000\cdot20=500000\le500000\) ✓); \(e=21\) no cumple (\(525000\gt 500000\)).</p>
+<p style="margin-top:6px"><strong>Interpretación:</strong> puede comprar como máximo \(20\) equipos.</p>
+</div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 13</span>
+<div class="activity">
+<div class="question">Un área tiene \(\$180000\) para comprar sillas de \(\$9000\) cada una. ¿Cuántas puede comprar como máximo?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(20\)</button>
+<button class="opt" data-value="b">\(18\)</button>
+<button class="opt" data-value="c">\(22\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(9000s\le180000\;\Rightarrow\;s\le20\)." data-no="Planteá \(9000s\le180000\) y despejá \(s\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Valores mínimos y máximos permitidos</h3></div>
+<p class="muted">Muchas normativas fijan un valor mínimo o máximo que una condición debe cumplir.</p>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Para acceder a un subsidio, el ingreso familiar mensual no puede superar \(\$300000\). El ingreso es \(80000+15000h\), con \(h\) las horas semanales trabajadas. ¿Cuántas horas semanales puede trabajar como máximo sin perder el subsidio?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Planteo:</strong> \(80000+15000h\le300000\).</p>
+<p style="margin-top:6px"><strong>Resolución:</strong> \(15000h\le220000\;\Rightarrow\;h\le14,666\ldots\)</p>
+<p style="margin-top:6px"><strong>Interpretación:</strong> el tiempo admite decimales, pero como es un límite máximo, no se redondea hacia arriba a \(14,67\) (eso superaría el límite). Puede trabajar como máximo \(14\) horas y \(40\) minutos semanales.</p>
+</div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Ojo con el redondeo:</strong> si el resultado es un máximo permitido, se trunca hacia abajo. Si fuera un mínimo requerido, ahí sí se redondearía hacia arriba.</div></div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 14</span>
+<div class="activity">
+<div class="question">Para un beneficio, el gasto mensual en insumos no puede superar \(\$100000\). El gasto es \(20000+7000d\), con \(d\) los días de uso. ¿Cuántos días como máximo?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(11\) días</button>
+<button class="opt" data-value="b">\(11,42\) días (11 días y una fracción)</button>
+<button class="opt" data-value="c">\(12\) días</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(7000d\le80000\;\Rightarrow\;d\le11,428\ldots\). Es un máximo, así que se trunca hacia abajo, no se redondea a 12." data-no="Planteá \(20000+7000d\le100000\) y despejá \(d\). Como es un máximo permitido, no se redondea hacia arriba."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Condiciones de cumplimiento</h3></div>
+<p class="muted">Una condición de cumplimiento verifica si un valor puntual pertenece o no al intervalo permitido por una normativa.</p>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un trámite se considera resuelto "en término" si su tiempo de resolución está entre \(5\) y \(15\) días hábiles, ambos incluidos. Un trámite se resolvió en \(20\) días. ¿Está en término?</p></div>
+<div class="ejemplo-desarrollo"><p><strong>Condición:</strong> \(5\le d\le15\). Como \(20\notin[5,15]\), el trámite <strong>no</strong> está en término.</p></div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 15</span>
+<div class="activity">
+<div class="question">Con la misma condición (\(5\le d\le15\)), un trámite se resolvió en \(12\) días. ¿Está en término?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(12\in[5,15]\)." data-no="Fijate si \(12\) está entre \(5\) y \(15\), ambos incluidos."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Asignación de recursos</h3></div>
+<p class="muted">Al repartir un total entre distintos destinos, suelen aparecer restricciones sobre cómo se puede hacer el reparto.</p>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Se deben repartir \(200\) insumos entre dos áreas, A y B. El área A debe recibir al menos el doble de lo que recibe B. ¿Cuál es la máxima cantidad que puede recibir B?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Incógnita:</strong> \(x=\) insumos que recibe B (entero no negativo, \(x\le200\)). A recibe \((200-x)\).</p>
+<p style="margin-top:6px"><strong>Planteo:</strong> A recibe al menos el doble de B: \(200-x\ge2x\).</p>
+<p style="margin-top:6px"><strong>Resolución:</strong> \(200\ge3x\;\Rightarrow\;x\le200/3\;\Rightarrow\;x\le66,67\).</p>
+<p style="margin-top:6px"><strong>Interpretación:</strong> como \(x\) representa una cantidad de insumos, la respuesta se expresa con un entero. El área B puede recibir como máximo \(66\) insumos.</p>
+</div>
+</div>
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 16</span>
+<div class="activity">
+<div class="question">Se reparten \(90\) insumos entre dos áreas. El área A debe recibir al menos el doble que B. ¿Cuál es la máxima cantidad para B?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(30\)</button>
+<button class="opt" data-value="b">\(45\)</button>
+<button class="opt" data-value="c">\(60\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(90-x\ge2x\;\Rightarrow\;90\ge3x\;\Rightarrow\;x\le30\)." data-no="Planteá \(90-x\ge2x\) (A recibe \(90-x\), y debe ser al menos el doble de B) y despejá \(x\)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: CIERRE ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y síntesis</h2>
+
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel1">Verificar en un paso intermedio, no en la ecuación original <span>+</span></button>
+<div class="acc-panel" id="accPanel1"><div class="error-incorrecto">✗ Reemplazar la solución en una versión ya simplificada.</div><div class="error-correcto">✓ Hay que reemplazar en la ecuación tal como estaba planteada al principio: ahí no se detectan errores de los primeros pasos.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel2">No invertir el signo al multiplicar/dividir por un negativo <span>+</span></button>
+<div class="acc-panel" id="accPanel2"><div class="error-incorrecto">✗ En \(-3x\ge-6\), dividir por \(-3\) y dejar \(x\ge2\).</div><div class="error-correcto">✓ Al dividir por \(-3\) el signo se invierte: \(x\le2\). Esta es la diferencia clave entre resolver una ecuación y una inecuación.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel3">Creer que una inecuación tiene una única solución <span>+</span></button>
+<div class="acc-panel" id="accPanel3"><div class="error-incorrecto">✗ Pensar que la solución de \(x\lt 4\) es "\(x=4\)".</div><div class="error-correcto">✓ Una inecuación con solución da un intervalo completo, no un único valor: la solución de \(x\lt 4\) es todo el conjunto de números menores que \(4\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel4">Invertir corchetes y paréntesis al escribir el intervalo <span>+</span></button>
+<div class="acc-panel" id="accPanel4"><div class="error-incorrecto">✗ Escribir \(x\le2\) como \((-\infty,2)\).</div><div class="error-correcto">✓ Si es \(x\le2\), el intervalo es \((-\infty,2]\), con corchete (incluye el 2). Si es \(x\lt 2\), es \((-\infty,2)\), con paréntesis.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel5">Confundir "al menos" con "como máximo" <span>+</span></button>
+<div class="acc-panel" id="accPanel5"><div class="error-incorrecto">✗ Traducir "al menos 5" como \(\le5\).</div><div class="error-correcto">✓ "Al menos 5" significa \(\ge5\). "Como máximo 5" significa \(\le5\). Son condiciones opuestas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel6">No revisar si el resultado tiene sentido en el contexto <span>+</span></button>
+<div class="acc-panel" id="accPanel6"><div class="error-incorrecto">✗ Dar como respuesta "\(7,3\) personas".</div><div class="error-correcto">✓ Antes de responder, hay que mirar qué representa la variable: una cantidad de personas o equipos se expresa en enteros; el tiempo o una distancia pueden admitir decimales.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel7">Redondear un límite máximo hacia arriba <span>+</span></button>
+<div class="acc-panel" id="accPanel7"><div class="error-incorrecto">✗ Si \(h\le14,666\ldots\) es un máximo, redondear a \(14,67\).</div><div class="error-correcto">✓ Redondear hacia arriba superaría el límite: hay que truncar hacia abajo. El redondeo hacia arriba solo tiene sentido si el resultado es un mínimo requerido.</div></div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Referencia rápida</h3>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>Concepto</th><th>Idea</th></tr></thead>
+<tbody>
+<tr><td>Ecuación</td><td>Igualdad con incógnita. Solución: valor que la hace verdadera.</td></tr>
+<tr><td>Cantidad de soluciones</td><td>Una (\(x=a\)), ninguna (igualdad falsa) o infinitas (igualdad verdadera).</td></tr>
+<tr><td>Verificar</td><td>Reemplazar en la ecuación original, no en un paso intermedio.</td></tr>
+<tr><td>Multiplicar/dividir por negativo</td><td>Invierte el sentido de la desigualdad.</td></tr>
+<tr><td>Intervalo</td><td>\((\ )\) excluye el extremo · \([\ ]\) incluye el extremo. Con \(\pm\infty\) siempre paréntesis.</td></tr>
+<tr><td>Inecuación</td><td>Su solución es un conjunto (intervalo), no un único valor.</td></tr>
+<tr><td>Al menos / Como máximo</td><td>"Al menos \(n\)" → \(\ge n\) · "Como máximo \(n\)" → \(\le n\)</td></tr>
+</tbody>
+</table>
+<p class="sintesis-frase">Plantear es traducir el problema al lenguaje algebraico; resolver es aplicar las propiedades correctas; interpretar es volver del resultado numérico al contexto real.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+
+
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+/* ---------- Portada ---------- */
+document.body.style.overflow='hidden';
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  document.body.style.overflow='';
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+
+/* ---------- KaTeX ---------- */
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+
+/* ---------- Tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+/* ---------- Acordeón de errores frecuentes ---------- */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const abierto=item.classList.contains('open');
+  const s=btn.querySelector('span:last-child');
+  if(s)s.textContent=abierto?'−':'+';
+  btn.setAttribute('aria-expanded',abierto?'true':'false');
+  setTimeout(()=>typeset(item),80);
+}
+
+/* ---------- Actividades de opción múltiple ---------- */
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:feedback.dataset.no;
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+/* ============================================================
+   BALANZA INTERACTIVA (banco de 4 ejemplos)
+   ============================================================ */
+const balExamples=[
+  {tex:'2x+3=11', izq0:'2x + 3', der0:'11', op1:'Restar 3 en ambos miembros', izq1:'2x', der1:'8', op2:'Dividir por 2 en ambos miembros', izq2:'x', der2:'4'},
+  {tex:'3x-2=13', izq0:'3x − 2', der0:'13', op1:'Sumar 2 en ambos miembros', izq1:'3x', der1:'15', op2:'Dividir por 3 en ambos miembros', izq2:'x', der2:'5'},
+  {tex:'5x+4=19', izq0:'5x + 4', der0:'19', op1:'Restar 4 en ambos miembros', izq1:'5x', der1:'15', op2:'Dividir por 5 en ambos miembros', izq2:'x', der2:'3'},
+  {tex:'4x-1=15', izq0:'4x − 1', der0:'15', op1:'Sumar 1 en ambos miembros', izq1:'4x', der1:'16', op2:'Dividir por 4 en ambos miembros', izq2:'x', der2:'4'}
+];
+let balIndex=0;
+let balEstado=0; // 0: inicial, 1: tras 1° operación, 2: resuelto
+function balanzaSetContenido(izq,der){
+  document.getElementById('balIzq').textContent=izq;
+  document.getElementById('balDer').textContent=der;
+}
+function balanzaMensaje(texto,tipo){
+  const m=document.getElementById('balMensaje');
+  m.textContent=texto;
+  m.className='balanza-mensaje '+(tipo||'');
+}
+function balanzaCargarEjemplo(i){
+  balIndex=i;
+  balEstado=0;
+  const ej=balExamples[i];
+  balanzaSetContenido(ej.izq0,ej.der0);
+  const btn1=document.getElementById('balBtn1');
+  const btn2=document.getElementById('balBtn2');
+  btn1.textContent=ej.op1;btn1.disabled=false;
+  btn2.textContent=ej.op2;btn2.disabled=true;
+  document.getElementById('balBrazoWrap').classList.remove('tip-izq','tip-der');
+  balanzaMensaje('','');
+  const sub=document.getElementById('balSub');
+  sub.innerHTML='Partimos de \\('+ej.tex+'\\). Probá aplicar cada operación y mirá qué pasa con la balanza.';
+  typeset(sub);
+}
+function balanzaPaso1(){
+  if(balEstado!==0)return;
+  const ej=balExamples[balIndex];
+  balanzaSetContenido(ej.izq1,ej.der1);
+  balanzaMensaje('Aplicamos la operación en los dos platillos: la balanza sigue equilibrada, porque le hicimos lo mismo a ambos lados.','ok');
+  document.getElementById('balBtn1').disabled=true;
+  document.getElementById('balBtn2').disabled=false;
+  balEstado=1;
+}
+function balanzaPaso2(){
+  if(balEstado!==1)return;
+  const ej=balExamples[balIndex];
+  balanzaSetContenido(ej.izq2,ej.der2);
+  balanzaMensaje('Aplicamos la segunda operación en los dos platillos: sigue equilibrada. Ya despejamos la incógnita: x = '+ej.der2+'.','ok');
+  document.getElementById('balBtn2').disabled=true;
+  balEstado=2;
+}
+function balanzaTrampa(){
+  const wrap=document.getElementById('balBrazoWrap');
+  wrap.classList.add('tip-izq');
+  balanzaMensaje('¡Se desequilibró! Si operás solo un platillo, la igualdad deja de ser cierta: ya no representa la misma ecuación.','err');
+  setTimeout(()=>{wrap.classList.remove('tip-izq')},1600);
+}
+function balanzaReset(){
+  balanzaCargarEjemplo(balIndex);
+}
+function balanzaOtroEjemplo(){
+  balanzaCargarEjemplo((balIndex+1)%balExamples.length);
+  balanzaMensaje('','');
+}
+
+/* ============================================================
+   RECTA NUMÉRICA INTERACTIVA
+   ============================================================ */
+const rectaState={};
+const RECTA_MIN=-5, RECTA_MAX=10;
+function rectaValorAX(id,valor){
+  const margen=30, ancho=580;
+  return margen + (valor-RECTA_MIN)/(RECTA_MAX-RECTA_MIN)*ancho;
+}
+function rectaDibujar(id){
+  const st=rectaState[id];
+  const svg=document.getElementById(id);
+  const margen=30, ancho=580, y=45;
+  let ticks='';
+  for(let v=RECTA_MIN; v<=RECTA_MAX; v++){
+    const x=rectaValorAX(id,v);
+    ticks+=`<line x1="${x}" y1="${y-6}" x2="${x}" y2="${y+6}" stroke="#B9CFCF" stroke-width="1.5"/>`;
+    if(v%1===0){
+      ticks+=`<text x="${x}" y="${y+24}" font-size="11" text-anchor="middle" fill="#5D737C" font-family="Inter,sans-serif">${v}</text>`;
+    }
+  }
+  const xLinea1=margen, xLinea2=margen+ancho;
+  let sombreado='';
+  const xv=rectaValorAX(id,st.valor);
+  if(st.dir==='izq'){
+    sombreado=`<line x1="${xLinea1}" y1="${y}" x2="${xv}" y2="${y}" stroke="#0F6B6F" stroke-width="5" stroke-linecap="round"/>
+      <polygon points="${xLinea1-2},${y-7} ${xLinea1-14},${y} ${xLinea1-2},${y+7}" fill="#0F6B6F"/>`;
+  }else{
+    sombreado=`<line x1="${xv}" y1="${y}" x2="${xLinea2}" y2="${y}" stroke="#0F6B6F" stroke-width="5" stroke-linecap="round"/>
+      <polygon points="${xLinea2+2},${y-7} ${xLinea2+14},${y} ${xLinea2+2},${y+7}" fill="#0F6B6F"/>`;
+  }
+  const circulo=st.tipo==='cerrado'
+    ? `<circle cx="${xv}" cy="${y}" r="8" fill="#0F6B6F" stroke="#0A4F53" stroke-width="2"/>`
+    : `<circle cx="${xv}" cy="${y}" r="8" fill="#fff" stroke="#0F6B6F" stroke-width="3"/>`;
+  svg.innerHTML=`
+    <line x1="${xLinea1-16}" y1="${y}" x2="${xLinea2+16}" y2="${y}" stroke="#D7E7E8" stroke-width="3"/>
+    ${ticks}
+    ${sombreado}
+    ${circulo}
+  `;
+  const lecturaEl=document.getElementById(id+'Lectura');
+  if(lecturaEl){
+    const simb = st.tipo==='cerrado' ? (st.dir==='izq'?'\\le':'\\ge') : (st.dir==='izq'?'<':'>');
+    const intIzq = st.dir==='izq' ? '-\\infty' : (st.tipo==='cerrado'?'[':'(')+st.valor;
+    const intDer = st.dir==='izq' ? (st.tipo==='cerrado'?']':')') : '+\\infty';
+    let intervalo;
+    if(st.dir==='izq'){
+      intervalo = `(-\\infty,\\ ${st.valor}${st.tipo==='cerrado'?']':')'}`;
+    }else{
+      intervalo = `${st.tipo==='cerrado'?'[':'('}${st.valor},\\ +\\infty)`;
+    }
+    lecturaEl.innerHTML = `\\(x ${simb} ${st.valor}\\) &nbsp;·&nbsp; intervalo: <span class="interval">\\(${intervalo}\\)</span>`;
+    typeset(lecturaEl);
+  }
+}
+function rectaInit(id, valorInicial, tipoInicial, dirInicial){
+  rectaState[id]={valor:valorInicial, tipo:tipoInicial, dir:dirInicial};
+  const svg=document.getElementById(id);
+  svg.addEventListener('click', (e)=>{
+    const rect=svg.getBoundingClientRect();
+    const scaleX=svg.viewBox.baseVal.width/rect.width;
+    const xClic=(e.clientX-rect.left)*scaleX;
+    const margen=30, ancho=580;
+    let valor=Math.round(RECTA_MIN + (xClic-margen)/ancho*(RECTA_MAX-RECTA_MIN));
+    valor=Math.max(RECTA_MIN,Math.min(RECTA_MAX,valor));
+    rectaState[id].valor=valor;
+    rectaDibujar(id);
+  });
+  rectaActualizarBotones(id);
+  rectaDibujar(id);
+}
+function rectaSetTipo(id,tipo){
+  rectaState[id].tipo=tipo;
+  rectaActualizarBotones(id);
+  rectaDibujar(id);
+}
+function rectaSetDir(id,dir){
+  rectaState[id].dir=dir;
+  rectaActualizarBotones(id);
+  rectaDibujar(id);
+}
+function rectaActualizarBotones(id){
+  const st=rectaState[id];
+  const tipoWrap=document.getElementById(id+'Tipo');
+  const dirWrap=document.getElementById(id+'Dir');
+  if(tipoWrap)tipoWrap.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.v===st.tipo));
+  if(dirWrap)dirWrap.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.v===st.dir));
+}
+function rectaVerificar(id,valorCorrecto,tipoCorrecto,dirCorrecto){
+  const st=rectaState[id];
+  const fb=document.getElementById(id+'Feedback');
+  const correcto = st.valor===valorCorrecto && st.tipo===tipoCorrecto && st.dir===dirCorrecto;
+  if(correcto){
+    fb.className='feedback show ok';
+    fb.textContent='¡Correcto!';
+  }else{
+    fb.className='feedback show no';
+    let pista='Revisá: ';
+    if(st.valor!==valorCorrecto)pista+='el punto debería estar en '+valorCorrecto+'. ';
+    if(st.tipo!==tipoCorrecto)pista+='fijate si el círculo tiene que ser abierto o cerrado según el símbolo. ';
+    if(st.dir!==dirCorrecto)pista+='fijate hacia qué lado hay que sombrear. ';
+    fb.textContent=pista;
+  }
+}
+
+/* Banco de ejemplos para la recta de práctica */
+const rectaEjemplos=[
+  {texto:'x\\lt 4', sub:'Representá en la recta la solución de \\(x\\lt 4\\), y verificá.', valor:4, tipo:'abierto', dir:'izq'},
+  {texto:'x\\ge -1', sub:'Representá en la recta la solución de \\(x\\ge -1\\), y verificá.', valor:-1, tipo:'cerrado', dir:'der'},
+  {texto:'x\\le 2', sub:'Representá en la recta la solución de \\(x\\le 2\\), y verificá.', valor:2, tipo:'cerrado', dir:'izq'},
+  {texto:'x\\gt 0', sub:'Representá en la recta la solución de \\(x\\gt 0\\), y verificá.', valor:0, tipo:'abierto', dir:'der'}
+];
+const rectaEjemploIndex={};
+function rectaCargarEjemplo(id,i){
+  rectaEjemploIndex[id]=i;
+  const ej=rectaEjemplos[i];
+  const sub=document.getElementById(id+'Sub');
+  if(sub){sub.innerHTML=ej.sub;typeset(sub);}
+  const fb=document.getElementById(id+'Feedback');
+  if(fb){fb.className='feedback';fb.textContent='';}
+  rectaState[id].valor=2;
+  rectaState[id].tipo='cerrado';
+  rectaState[id].dir='der';
+  rectaActualizarBotones(id);
+  rectaDibujar(id);
+}
+function rectaOtroEjemplo(id){
+  const actual=rectaEjemploIndex[id]||0;
+  rectaCargarEjemplo(id,(actual+1)%rectaEjemplos.length);
+}
+function rectaVerificarActual(id){
+  const ej=rectaEjemplos[rectaEjemploIndex[id]||0];
+  rectaVerificar(id,ej.valor,ej.tipo,ej.dir);
+}
+
+/* Inicializar las rectas numéricas */
+document.addEventListener('DOMContentLoaded',()=>{
+  requestAnimationFrame(()=>{
+    rectaInit('rectaExplorar', 2, 'cerrado', 'der');
+    rectaInit('rectaPractica', 0, 'cerrado', 'der');
+    rectaCargarEjemplo('rectaPractica', 0);
+    typeset(document.body);
+  });
+});
+</script>
+</body>
+</html>
