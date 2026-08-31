@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad interactiva · Educación a distancia</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:#F6F9F7;
+    font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+    color:#263238;
+  }
+  .wrap{
+    max-width:980px;
+    margin:28px auto;
+    padding:0 18px 40px;
+  }
+  .hero{
+    background:#123F50;
+    color:#fff;
+    border-radius:16px 16px 0 0;
+    padding:26px 30px 24px;
+    border-bottom:5px solid #8FBF3F;
+  }
+  .eyebrow{
+    color:#B4D85A;
+    font-weight:700;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    font-size:12px;
+  }
+  h1{
+    margin:6px 0 6px;
+    font-size:30px;
+    line-height:1.2;
+  }
+  .subtitle{
+    margin:0;
+    color:#E7F0F2;
+    font-size:15px;
+    line-height:1.6;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid #D8E4EA;
+    border-top:0;
+    border-radius:0 0 16px 16px;
+    padding:26px 28px;
+  }
+  .intro{
+    background:#EEF6EF;
+    border-left:5px solid #8FBF3F;
+    border-radius:8px;
+    padding:16px 18px;
+    margin-bottom:22px;
+    line-height:1.65;
+    font-size:15px;
+  }
+  .progress{
+    display:flex;
+    gap:8px;
+    margin:0 0 22px;
+  }
+  .dot{
+    height:8px;
+    flex:1;
+    background:#DCE6E9;
+    border-radius:20px;
+  }
+  .dot.active{background:#8FBF3F}
+  .card{
+    display:none;
+    border:1px solid #D8E4EA;
+    border-radius:12px;
+    padding:22px;
+    background:#fff;
+  }
+  .card.active{display:block}
+  .qnum{
+    color:#1478D4;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    margin-bottom:8px;
+  }
+  .question{
+    font-size:20px;
+    line-height:1.35;
+    color:#123F50;
+    font-weight:700;
+    margin-bottom:18px;
+  }
+  .options{
+    display:grid;
+    gap:10px;
+  }
+  button.option{
+    width:100%;
+    text-align:left;
+    background:#F7FAFB;
+    border:1px solid #D8E4EA;
+    color:#263238;
+    border-radius:9px;
+    padding:14px 15px;
+    font-size:15px;
+    line-height:1.45;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  button.option:hover{
+    border-color:#1478D4;
+    background:#F1F7FB;
+  }
+  button.option.correct{
+    background:#EEF6EF;
+    border-color:#8FBF3F;
+  }
+  button.option.incorrect{
+    background:#FFF3F1;
+    border-color:#C88787;
+  }
+  button.option:disabled{cursor:default}
+  .feedback{
+    display:none;
+    margin-top:16px;
+    padding:14px 16px;
+    border-radius:8px;
+    line-height:1.6;
+    font-size:14px;
+  }
+  .feedback.show{display:block}
+  .feedback.good{
+    background:#EEF6EF;
+    border-left:5px solid #8FBF3F;
+  }
+  .feedback.bad{
+    background:#FFF7E6;
+    border-left:5px solid #D6A84A;
+  }
+  .next{
+    display:none;
+    margin-top:16px;
+    text-align:right;
+  }
+  .next.show{display:block}
+  .btn{
+    border:0;
+    background:#1478D4;
+    color:#fff;
+    border-radius:8px;
+    padding:11px 18px;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .result{
+    display:none;
+    text-align:center;
+    padding:16px 6px 4px;
+  }
+  .result.show{display:block}
+  .score{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:#EEF6EF;
+    border:8px solid #8FBF3F;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:8px auto 18px;
+    color:#123F50;
+    font-weight:800;
+    font-size:27px;
+  }
+  .result h2{
+    color:#123F50;
+    font-size:24px;
+    margin:0 0 8px;
+  }
+  .result p{
+    max-width:700px;
+    margin:0 auto 18px;
+    line-height:1.65;
+  }
+  .note{
+    margin-top:24px;
+    background:#F3F8FB;
+    border-left:5px solid #1478D4;
+    border-radius:8px;
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  @media (max-width:650px){
+    .hero{padding:22px 20px}
+    .panel{padding:20px 18px}
+    h1{font-size:25px}
+    .question{font-size:18px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Punto de partida</div>
+    <h1>Ideas para llegar al encuentro presencial</h1>
+    <p class="subtitle">Una breve actividad para recuperar la lectura sobre educación a distancia y el video de Cristóbal Cobo.</p>
+  </div>
+
+  <div class="panel">
+    <div class="intro">
+      Después de realizar la lectura y mirar el video, respondé estas <strong>4 preguntas breves</strong>.
+      En cada caso elegí una opción. Vas a recibir retroalimentación inmediata.
+      <strong>No es una evaluación ni requiere entrega.</strong>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div class="result" id="result">
+      <div class="score" id="score">0/4</div>
+      <h2>¡Listo!</h2>
+      <p>
+        Estas ideas serán retomadas en el encuentro presencial. El propósito es llegar con un lenguaje común
+        para conversar sobre qué implica diseñar una propuesta de enseñanza a distancia.
+      </p>
+      <button class="btn" onclick="restartQuiz()">↻ Volver a intentar</button>
+    </div>
+
+    <div class="note">
+      <strong>Para tener presente:</strong> no buscamos memorizar definiciones. Nos interesa reconocer algunas
+      ideas clave sobre mediación, tecnología, autonomía y presencia docente que después pondremos en discusión.
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Según la lectura, ¿qué caracteriza mejor a la educación a distancia en la actualidad?",
+    options: [
+      "Es principalmente una alternativa para superar distancias geográficas.",
+      "Es una opción pedagógica que requiere una estrategia institucional y mediaciones diseñadas para sostener el aprendizaje.",
+      "Es una modalidad basada en reemplazar la enseñanza presencial por recursos digitales."
+    ],
+    correct: 1,
+    good: "Correcto. La lectura señala que la EaD ya no se entiende solo como respuesta a la distancia geográfica: requiere una estrategia institucional y una mediación tecnológica y pedagógica intencional.",
+    bad: "Revisá la idea central de la lectura: la EaD no se reduce a la separación física ni a digitalizar la presencialidad. Se sostiene en una propuesta pedagógica e institucional mediada."
+  },
+  {
+    q: "En la lectura, ¿qué significa pensar la mediación como un puente?",
+    options: [
+      "Que la tecnología debe ocupar el centro de la propuesta de enseñanza.",
+      "Que la mediación ayuda a orientar el recorrido, hacer presente al docente y acercar al estudiante al conocimiento.",
+      "Que la interacción presencial debe ser reemplazada por herramientas automáticas."
+    ],
+    correct: 1,
+    good: "Exacto. La mediación organiza el recorrido y permite que la presencia docente se construya también en la distancia, mediante orientaciones, recursos, consignas e interacciones.",
+    bad: "La lectura no presenta la tecnología como protagonista. La mediación es el conjunto de decisiones que permite orientar y acompañar el aprendizaje."
+  },
+  {
+    q: "¿Qué idea del video de Cristóbal Cobo se relaciona mejor con el lugar de la tecnología en educación?",
+    options: [
+      "La incorporación de nuevas tecnologías mejora por sí sola la enseñanza.",
+      "La tecnología tiene sentido cuando posibilita nuevas formas de aprender y no cuando se usa solo para repetir prácticas de siempre.",
+      "Cuantas más herramientas digitales se incorporan, mayor es necesariamente la autonomía de los estudiantes."
+    ],
+    correct: 1,
+    good: "Correcto. Cobo cuestiona el uso de tecnología como fin en sí mismo: lo relevante es qué posibilidades de aprendizaje abre y qué relaciones pedagógicas permite transformar.",
+    bad: "La idea de Cobo no es sumar tecnología por sumar. El valor está en cómo se utiliza para generar otras posibilidades de aprendizaje."
+  },
+  {
+    q: "A partir de la lectura y el video, ¿qué opción representa mejor el rol docente en una propuesta a distancia?",
+    options: [
+      "Transmitir contenidos y dejar que cada estudiante organice por completo su propio aprendizaje.",
+      "Diseñar y acompañar un recorrido que promueva autonomía, ofreciendo orientación y apoyo cuando sea necesario.",
+      "Reducir al mínimo la intervención docente para favorecer la independencia."
+    ],
+    correct: 1,
+    good: "Muy bien. La autonomía no implica ausencia docente. Tanto la lectura como el video permiten pensar al docente como quien diseña, orienta y acompaña un recorrido sin resolver cada paso por el estudiante.",
+    bad: "La autonomía no equivale a soledad. En una propuesta a distancia, el rol docente sigue siendo central para diseñar, orientar y acompañar."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = [];
+
+function renderQuestion(){
+  const quiz = document.getElementById("quiz");
+  const q = questions[current];
+  quiz.innerHTML = `
+    <section class="card active">
+      <div class="qnum">Pregunta ${current+1} de ${questions.length}</div>
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt,i)=>`<button class="option" onclick="answer(${i}, this)">${opt}</button>`).join("")}
+      </div>
+      <div id="feedback" class="feedback"></div>
+      <div id="next" class="next">
+        <button class="btn" onclick="nextQuestion()">${current === questions.length-1 ? "Ver resultado" : "Continuar →"}</button>
+      </div>
+    </section>
+  `;
+  document.querySelectorAll(".dot").forEach((d,i)=>d.classList.toggle("active", i <= current));
+}
+
+function answer(index, btn){
+  if(answered[current] !== undefined) return;
+  const q = questions[current];
+  answered[current] = index;
+  const buttons = document.querySelectorAll("button.option");
+  buttons.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === q.correct) b.classList.add("correct");
+  });
+
+  const fb = document.getElementById("feedback");
+  if(index === q.correct){
+    score++;
+    fb.className = "feedback show good";
+    fb.innerHTML = "✓ " + q.good;
+  } else {
+    btn.classList.add("incorrect");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "💡 " + q.bad;
+  }
+  document.getElementById("next").classList.add("show");
+}
+
+function nextQuestion(){
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+  } else {
+    document.getElementById("quiz").style.display = "none";
+    document.querySelector(".progress").style.display = "none";
+    document.getElementById("score").textContent = score + "/4";
+    document.getElementById("result").classList.add("show");
+  }
+}
+
+function restartQuiz(){
+  current = 0;
+  score = 0;
+  answered = [];
+  document.getElementById("quiz").style.display = "block";
+  document.querySelector(".progress").style.display = "flex";
+  document.getElementById("result").classList.remove("show");
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
