@@ -132,6 +132,15 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 .steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
 .step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
 .guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.guided.violet{border-left:4px solid var(--violet)}
+.guided.violet .step-num{background:var(--violet)}
+.guided.violet .result-line{background:var(--violet-soft);color:#4F35B8}
+.guided.pink{border-left:4px solid #C2478A}
+.guided.pink .step-num{background:#C2478A}
+.guided.pink .result-line{background:#FFF1F8;color:#8B1A5E}
 .accordion{display:grid;gap:8px}
 .acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
 .acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
@@ -180,6 +189,21 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 .lector-puntos button:hover{background:var(--teal-100)}
 .lector-puntos button.active{background:var(--teal-800);color:#fff}
 .lector-lectura{text-align:center;font-weight:800;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:12px;font-size:1.05rem;min-height:20px}
+
+/* ---- Explorador de análisis gráfico completo ---- */
+.explorador-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.explorador-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.explorador-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.explorador-svg-wrap{overflow-x:auto;padding:6px 0 10px;text-align:center}
+.explorador-botones{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.explorador-botones button{font:inherit;font-weight:700;font-size:.83rem;padding:9px 15px;border-radius:10px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--navy-800);transition:.15s}
+.explorador-botones button:hover{background:#F8FCFC}
+.explorador-botones button.active-creciente{background:var(--teal-800);color:#fff;border-color:var(--teal-800)}
+.explorador-botones button.active-decreciente{background:var(--orange);color:#fff;border-color:var(--orange)}
+.explorador-botones button.active-maxmin{background:var(--violet);color:#fff;border-color:var(--violet)}
+.explorador-botones button.active-signo{background:#C2478A;color:#fff;border-color:#C2478A}
+.explorador-botones button.reset-btn{border-color:var(--slate-700);color:var(--slate-700)}
+.explorador-lectura{text-align:center;font-weight:700;color:var(--navy-900);background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;font-size:.95rem;min-height:20px}
 
 @media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
 @media(max-width:760px){
@@ -230,23 +254,8 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <h2>Una relación con una regla especial</h2>
 <p class="section-intro">En muchas situaciones, un dato se relaciona con otro siguiendo una regla: hay una entrada, una regla de asignación y una salida.</p>
 
-<div class="formula teal" style="text-align:center">entrada \(\longrightarrow\) regla \(\longrightarrow\) salida</div>
-
-<div class="box violet"><p><strong>Ejemplo:</strong> si la regla es "multiplicar por 2 y sumar 3", la entrada \(4\) da como salida \(2(4)+3=11\).</p></div>
-
-<p class="muted">Habitualmente no se trabaja con una sola entrada, sino con conjuntos de elementos: \(A\to B\). Los elementos de \(A\) son las entradas posibles, y los de \(B\), las salidas posibles.</p>
-
 <div class="subbloque" id="sub1-1">
 <div class="sub-titulo"><div class="sub-num">1</div><h3>La función como relación entre entradas y salidas</h3></div>
-
-<div class="activity activacion">
-<div class="question">En una relación, el valor \(1\) tiene asignados dos resultados distintos: \(1\to2\) y \(1\to5\). ¿Puede ser una función?</div>
-<div class="options compact" data-answer="b">
-<button class="opt" data-value="a">Sí</button>
-<button class="opt" data-value="b">No</button>
-</div>
-<div class="feedback" data-ok="Correcto: una función exige que cada entrada tenga una única salida. Acá el \(1\) tiene dos." data-no="Fijate cuántas salidas distintas tiene asignado el valor 1."></div>
-</div>
 
 <div class="video-block">
 <p class="muted">Este video explica qué es una función y sus elementos principales. Mientras lo mirás, prestá atención a la condición que tiene que cumplir cada entrada.</p>
@@ -255,10 +264,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 
 <div class="concept-card violet"><h3>Definición de función</h3><p>Una función es una relación entre dos conjuntos en la que a cada elemento del conjunto de partida le corresponde un <strong>único</strong> elemento del conjunto de llegada. Por lo tanto, cada entrada debe tener una y solo una salida.</p></div>
 
-<div class="grid-2">
-<div class="box teal"><h3>Sí es función</h3><p class="muted">A cada elemento de \(A\) le corresponde un único elemento de \(B\).</p><p style="margin-top:6px">Sueldos → RR.HH.<br>Insumos → Compras<br>Servicios → Mantenimiento<br>Obras → Inversión</p></div>
-<div class="box orange"><h3>No es función</h3><p class="muted">Algún elemento de \(A\) tiene asignadas dos salidas distintas.</p><p style="margin-top:6px">Sueldos → RR.HH. <strong>y</strong> Compras<br>Insumos → Mantenimiento<br>Servicios → Inversión<br>Obras → Auditoría</p></div>
-</div>
+<div class="visual"><img src="relaciones-funciones.png" alt="Comparación entre una relación que sí es función y una que no es función"></div>
 
 <div class="aviso"><span class="aviso-icon">⚠</span><div>Dos entradas distintas pueden ir a la misma salida; eso no es un problema. Lo que no puede ocurrir es que una misma entrada tenga más de una salida.</div></div>
 
@@ -286,11 +292,6 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="subbloque" id="sub1-2">
 <div class="sub-titulo"><div class="sub-num">2</div><h3>Dominio, codominio e imagen</h3></div>
 
-<div class="ejemplo-card">
-<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>A cada partida presupuestaria se le asigna la unidad ejecutora responsable: Sueldos, Insumos, Servicios y Obras van, cada una, a una única unidad entre RR.HH., Compras, Mantenimiento e Inversión. Auditoría es una unidad ejecutora posible que no recibe ninguna partida.</p></div>
-<div class="ejemplo-desarrollo"><p>El conjunto de partidas es el <strong>dominio</strong>; el conjunto de todas las unidades ejecutoras posibles (incluida Auditoría) es el <strong>codominio</strong>; las unidades que efectivamente reciben alguna partida (todas menos Auditoría) forman la <strong>imagen</strong>.</p></div>
-</div>
-
 <table class="mini-table">
 <thead><tr><th>Nombre</th><th>Qué es</th></tr></thead>
 <tbody>
@@ -300,6 +301,14 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </tbody>
 </table>
 
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>A cada partida presupuestaria se le asigna la unidad ejecutora responsable: Sueldos, Insumos, Servicios y Obras van, cada una, a una única unidad entre RR.HH., Compras, Mantenimiento e Inversión. Auditoría es una unidad ejecutora posible que no recibe ninguna partida.</p></div>
+<div class="ejemplo-desarrollo">
+<div class="visual"><img src="partida-presupuestaria.png" alt="Diagrama sagital: dominio (partidas presupuestarias), codominio (unidades ejecutoras posibles) e imagen (unidades que efectivamente reciben partida)"></div>
+<p>El conjunto de partidas es el <strong>dominio</strong>; el conjunto de todas las unidades ejecutoras posibles (incluida Auditoría) es el <strong>codominio</strong>; las unidades que efectivamente reciben alguna partida (todas menos Auditoría) forman la <strong>imagen</strong>.</p>
+</div>
+</div>
+
 <div class="concept-card"><h3>Idea clave</h3><p>\(\text{Imagen}\subseteq\text{Codominio}\). El codominio contiene todas las salidas posibles; la imagen contiene únicamente las salidas que la función efectivamente alcanza.</p></div>
 
 <div class="practica-titulo">Practicá</div>
@@ -308,8 +317,8 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="question">Una función asigna a cada trámite el área que lo resuelve. El codominio declarado son las 5 áreas de la oficina, pero solo 3 de ellas reciben trámites en la práctica. ¿Cómo se llama el conjunto de esas 3 áreas?</div>
 <div class="options compact" data-answer="a">
 <button class="opt" data-value="a">Imagen</button>
-<button class="opt" data-value="b">Codominio</button>
-<button class="opt" data-value="c">Dominio</button>
+<button class="opt" data-value="b" data-fb="El codominio son las 5 áreas declaradas como posibles, no solo las que reciben trámites en la práctica.">Codominio</button>
+<button class="opt" data-value="c" data-fb="El dominio serían los trámites (las entradas), no las áreas que los resuelven (las salidas).">Dominio</button>
 </div>
 <div class="feedback" data-ok="Correcto: son las salidas efectivamente alcanzadas, es decir, la imagen." data-no="El codominio son las 5 áreas declaradas; el conjunto de las que realmente reciben algo es la imagen."></div>
 </div>
@@ -349,13 +358,13 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="practica-titulo">Practicá</div>
 <span class="ejercicio-badge b-pink">Ejercicio 4</span>
 <div class="activity">
-<div class="question">En \(y=f(x)\), ¿cuál es la variable independiente?</div>
+<div class="question">Un municipio calcula el costo de un evento con \(C(n)=200+15n\), donde \(n\) es la cantidad de invitados. ¿Cuál es la variable independiente?</div>
 <div class="options compact" data-answer="a">
-<button class="opt" data-value="a">\(x\)</button>
-<button class="opt" data-value="b">\(y\)</button>
-<button class="opt" data-value="c">\(f\)</button>
+<button class="opt" data-value="a">\(n\)</button>
+<button class="opt" data-value="b" data-fb="\(C\) es el nombre de la variable dependiente: representa el costo, que es un resultado, no una entrada.">\(C\)</button>
+<button class="opt" data-value="c" data-fb="\(C(n)\) es la salida ya calculada a partir de \(n\): es el resultado, no la entrada que se elige.">\(C(n)\)</button>
 </div>
-<div class="feedback" data-ok="Correcto: \(x\) es la entrada, la que se elige." data-no="La variable independiente es la entrada: la que se elige libremente."></div>
+<div class="feedback" data-ok="Correcto: \(n\) es la entrada que se elige (la cantidad de invitados); el costo depende de ese valor." data-no="La variable independiente es la entrada que se elige libremente, no el resultado que se obtiene."></div>
 </div>
 </div>
 
@@ -379,8 +388,8 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="question">La regla es "elevar la entrada al cuadrado y restar 4". ¿Cuál es \(f(x)\)?</div>
 <div class="options compact" data-answer="a">
 <button class="opt" data-value="a">\(f(x)=x^2-4\)</button>
-<button class="opt" data-value="b">\(f(x)=(x-4)^2\)</button>
-<button class="opt" data-value="c">\(f(x)=4-x^2\)</button>
+<button class="opt" data-value="b" data-fb="Esa expresión resta 4 primero y después eleva al cuadrado: es el orden invertido de lo que pide la regla.">\(f(x)=(x-4)^2\)</button>
+<button class="opt" data-value="c" data-fb="Esa expresión calcula \(4\) menos el cuadrado, con el orden de la resta invertido.">\(f(x)=4-x^2\)</button>
 </div>
 <div class="feedback" data-ok="Correcto." data-no="Primero se eleva al cuadrado, y a ese resultado se le resta 4."></div>
 </div>
@@ -397,18 +406,20 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </tbody>
 </table>
 
-<div class="guided">
+<div class="guided orange">
 <div class="guided-title">a) \(f(x)=\dfrac{8x}{x+4}\)</div>
 <ol class="steps">
-<li><span class="step-num">1</span><span>El denominador debe ser distinto de cero. Resolvemos: \(x+4=0\;\Rightarrow\;x=-4\).</span></li>
+<li><span class="step-num">1</span><span>El denominador debe ser distinto de cero: \(x+4\neq0\).</span></li>
+<li><span class="step-num">2</span><span>Resolvemos la igualdad que hay que excluir: \(x+4=0\;\Rightarrow\;x=-4\).</span></li>
 </ol>
 <div class="result-line">\(\text{Dom}(f)=\mathbb{R}\setminus\{-4\}\) (todos los reales excepto \(-4\))</div>
 </div>
 
-<div class="guided">
+<div class="guided violet">
 <div class="guided-title">b) \(g(x)=\sqrt{2x-1}\)</div>
 <ol class="steps">
-<li><span class="step-num">1</span><span>El radicando debe ser \(\ge0\). Planteamos: \(2x-1\ge0\;\Rightarrow\;2x\ge1\;\Rightarrow\;x\ge1/2\).</span></li>
+<li><span class="step-num">1</span><span>El radicando debe ser mayor o igual que cero: \(2x-1\ge0\).</span></li>
+<li><span class="step-num">2</span><span>Despejamos \(x\): \(2x\ge1\;\Rightarrow\;x\ge1/2\).</span></li>
 </ol>
 <div class="result-line">\(\text{Dom}(g)=[1/2,+\infty)\)</div>
 </div>
@@ -420,9 +431,9 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="activity">
 <div class="question">¿Cuál es el dominio de \(h(x)=\dfrac{5}{x-3}\)?</div>
 <div class="options compact" data-answer="b">
-<button class="opt" data-value="a">\(\mathbb{R}\)</button>
+<button class="opt" data-value="a" data-fb="Hay una división, así que algún valor debe quedar excluido: no puede ser todo \(\mathbb{R}\).">\(\mathbb{R}\)</button>
 <button class="opt" data-value="b">\(\mathbb{R}\setminus\{3\}\)</button>
-<button class="opt" data-value="c">\(\mathbb{R}\setminus\{-3\}\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el signo: \(x-3=0\) da \(x=3\), no \(x=-3\).">\(\mathbb{R}\setminus\{-3\}\)</button>
 </div>
 <div class="feedback" data-ok="Correcto: el denominador se anula en \(x=3\)." data-no="Planteá \(x-3=0\) y despejá: ese valor queda excluido."></div>
 </div>
@@ -440,7 +451,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </table>
 
 <div class="ejemplo-card">
-<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>El precio \(p\) de un producto y la cantidad demandada \(q\) se relacionan mediante \(p(q)=100/q\).</p></div>
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>El precio \(p\) de un producto y la cantidad demandada \(q\) se relacionan mediante \(p(q)=\dfrac{100}{q}\).</p></div>
 <div class="ejemplo-desarrollo"><p>Por la expresión: \(q\neq0\) (no se puede dividir por cero). Por el contexto: \(q\) es una cantidad demandada, así que \(q\ge0\). Combinando ambas: \(\text{Dom}(p)=(0,+\infty)\).</p></div>
 </div>
 
@@ -450,8 +461,8 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="question">Una función modela el costo según la cantidad \(t\) de trámites resueltos. Por la expresión, \(t\) podría ser cualquier real. Por el contexto, ¿qué restricción hay que agregar?</div>
 <div class="options" data-answer="a">
 <button class="opt" data-value="a">\(t\) debe ser un entero no negativo (no hay trámites negativos ni fraccionados)</button>
-<button class="opt" data-value="b">\(t\) debe ser distinto de cero</button>
-<button class="opt" data-value="c">No hace falta ninguna restricción adicional</button>
+<button class="opt" data-value="b" data-fb="Esa sería una restricción de la expresión (evitar dividir por cero, por ejemplo), pero acá se pide una del contexto.">\(t\) debe ser distinto de cero</button>
+<button class="opt" data-value="c" data-fb="Sí hace falta: una cantidad de trámites no puede ser negativa ni tener decimales, aunque la fórmula lo permita.">No hace falta ninguna restricción adicional</button>
 </div>
 <div class="feedback" data-ok="Correcto: una cantidad de trámites es un entero no negativo." data-no="Pensá qué valores tiene sentido que tome una cantidad de trámites resueltos."></div>
 </div>
@@ -463,10 +474,11 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 
 <div class="grid-3">
 <div class="box teal"><p>\(f(x)=\sqrt{x+5}\)<br>\(f(4)=\sqrt{9}=3\)</p></div>
-<div class="box teal"><p>\(g(x)=12/x\)<br>\(g(3)=4\)</p></div>
+<div class="box teal"><p>\(g(x)=\dfrac{12}{x}\)<br>\(g(3)=4\)</p></div>
 <div class="box teal"><p>\(A(l)=l^2\)<br>\(A(6)=36\)</p></div>
 </div>
 
+<h3 style="margin-top:16px">Tabla de valores</h3>
 <p class="muted">Los resultados se pueden organizar en una <strong>tabla de valores</strong>: se eligen algunos valores del dominio, se evalúa la función en cada uno, y se registran los resultados. No hace falta usar todos los valores del dominio.</p>
 
 <div class="guided">
@@ -476,6 +488,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <li><span class="step-num">2</span><span>Elegimos \(x=-1,0,2,3\) y evaluamos.</span></li>
 </ol>
 </div>
+
 <table class="mini-table">
 <thead><tr><th>\(x\)</th><th>\(f(x)\)</th></tr></thead>
 <tbody>
@@ -512,6 +525,12 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 
 <div class="subbloque" id="sub3-1">
 <div class="sub-titulo"><div class="sub-num">1</div><h3>El plano cartesiano</h3></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate cómo se determina en qué dirección moverse para ubicar un punto a partir de sus coordenadas.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/0cUkAd2o1yw" title="El plano cartesiano" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
 <table class="mini-table">
 <thead><tr><th>Eje</th><th>Nombre</th><th>Dirección</th></tr></thead>
 <tbody>
@@ -534,7 +553,29 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 
 <div class="ejemplo-card">
 <div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Ubicar los puntos \(A(3;2)\), \(B(-2;4)\), \(C(-3;-2)\) y \(D(4;-3)\).</p></div>
-<div class="ejemplo-desarrollo"><p>\(A\): 3 a la derecha, 2 hacia arriba → cuadrante I. \(B\): 2 a la izquierda, 4 hacia arriba → cuadrante II. \(C\): 3 a la izquierda, 2 hacia abajo → cuadrante III. \(D\): 4 a la derecha, 3 hacia abajo → cuadrante IV.</p></div>
+<div class="ejemplo-desarrollo">
+<p>\(A\): 3 a la derecha, 2 hacia arriba → cuadrante I. \(B\): 2 a la izquierda, 4 hacia arriba → cuadrante II. \(C\): 3 a la izquierda, 2 hacia abajo → cuadrante III. \(D\): 4 a la derecha, 3 hacia abajo → cuadrante IV.</p>
+<div class="visual" style="margin-top:10px;padding:10px">
+<svg width="100%" height="auto" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" style="max-width:380px;display:block;margin:0 auto">
+<line x1="15" y1="190" x2="365" y2="190" stroke="#B9CFCF" stroke-width="1.5"/>
+<line x1="190" y1="15" x2="190" y2="365" stroke="#B9CFCF" stroke-width="1.5"/>
+<text x="360" y="203" font-size="12" fill="#5D737C" font-family="Inter,sans-serif">x</text>
+<text x="200" y="26" font-size="12" fill="#5D737C" font-family="Inter,sans-serif">y</text>
+<text x="20" y="30" font-size="13" font-weight="700" fill="#0F6B6F" font-family="Inter,sans-serif">II</text>
+<text x="340" y="30" font-size="13" font-weight="700" fill="#0F6B6F" font-family="Inter,sans-serif">I</text>
+<text x="20" y="360" font-size="13" font-weight="700" fill="#0F6B6F" font-family="Inter,sans-serif">III</text>
+<text x="335" y="360" font-size="13" font-weight="700" fill="#0F6B6F" font-family="Inter,sans-serif">IV</text>
+<circle cx="295" cy="120" r="6" fill="#C94848"/>
+<text x="304" y="118" font-size="13" font-weight="700" fill="#C94848" font-family="Inter,sans-serif">A(3;2)</text>
+<circle cx="120" cy="50" r="6" fill="#0F6B6F"/>
+<text x="129" y="48" font-size="13" font-weight="700" fill="#0F6B6F" font-family="Inter,sans-serif">B(-2;4)</text>
+<circle cx="85" cy="260" r="6" fill="#FF7A00"/>
+<text x="94" y="258" font-size="13" font-weight="700" fill="#FF7A00" font-family="Inter,sans-serif">C(-3;-2)</text>
+<circle cx="330" cy="295" r="6" fill="#7C5CE6"/>
+<text x="255" y="313" font-size="13" font-weight="700" fill="#7C5CE6" font-family="Inter,sans-serif">D(4;-3)</text>
+</svg>
+</div>
+</div>
 </div>
 
 <div class="practica-titulo">Practicá</div>
@@ -554,6 +595,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="sub-titulo"><div class="sub-num">2</div><h3>El gráfico de una función</h3></div>
 <div class="concept-card violet"><h3>Definición</h3><p>El gráfico de una función es el conjunto de todos los puntos \((x;f(x))\) que se obtienen al evaluar la función en cada valor de su dominio.</p></div>
 
+<h3 style="margin-top:16px">¿Cómo leer \(f(a)\) para un valor \(a\) del dominio?</h3>
 <table class="mini-table">
 <thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
 <tbody>
@@ -595,19 +637,29 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un reservorio de 4 metros de altura acumula agua según \(V(h)=0,5h^3+4h^2+10h\), con \(V\) en miles de litros y \(h\) la altura del agua en metros.</p></div>
 <div class="ejemplo-desarrollo">
 <p><strong>Dominio:</strong> por la expresión, \(h\in\mathbb{R}\); por el contexto, \(0\le h\le4\). \(\text{Dom}(V)=[0,4]\).</p>
-<p style="margin-top:6px"><strong>Tabla:</strong> \(V(0)=0\), \(V(1)=14,5\), \(V(2)=40\), \(V(3)=79,5\), \(V(4)=136\).</p>
-<p style="margin-top:6px">Como \(h\) toma cualquier valor entre \(0\) y \(4\), el gráfico se representa con una curva continua.</p>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>\(h\) (m)</th><th>\(V(h)\) (miles de litros)</th><th>Par ordenado</th></tr></thead>
+<tbody>
+<tr><td>\(0\)</td><td>\(0\)</td><td>\((0;0)\)</td></tr>
+<tr><td>\(1\)</td><td>\(14,5\)</td><td>\((1;14,5)\)</td></tr>
+<tr><td>\(2\)</td><td>\(40\)</td><td>\((2;40)\)</td></tr>
+<tr><td>\(3\)</td><td>\(79,5\)</td><td>\((3;79,5)\)</td></tr>
+<tr><td>\(4\)</td><td>\(136\)</td><td>\((4;136)\)</td></tr>
+</tbody>
+</table>
+<p style="margin-top:10px">Como \(h\) toma cualquier valor entre \(0\) y \(4\), el gráfico se representa con una curva continua.</p>
+<div class="visual" style="margin-top:10px"><img src="reservorio.png" alt="Gráfico de la función V(h), curva continua entre h=0 y h=4"></div>
 </div>
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-violet">Ejercicio 11</span>
+<span class="ejercicio-badge">Ejercicio 11</span>
 <div class="activity">
 <div class="question">Para el reservorio del ejemplo, \(V(2)=40\). ¿Qué significa este resultado?</div>
 <div class="options" data-answer="a">
 <button class="opt" data-value="a">Cuando el agua alcanza 2 metros de altura, hay 40 mil litros acumulados</button>
-<button class="opt" data-value="b">El reservorio tiene 40 metros de altura</button>
-<button class="opt" data-value="c">Hay 2 mil litros acumulados</button>
+<button class="opt" data-value="b" data-fb="El 40 no es la altura del reservorio: es el volumen (en miles de litros) que corresponde a esa altura.">El reservorio tiene 40 metros de altura</button>
+<button class="opt" data-value="c" data-fb="Invertiste los valores: 2 es la entrada (altura), y 40 es la salida (volumen en miles de litros).">Hay 2 mil litros acumulados</button>
 </div>
 <div class="feedback" data-ok="Correcto: 2 es la entrada (altura) y 40 es la salida (volumen en miles de litros)." data-no="Recordá cuál es la variable independiente (altura) y cuál la dependiente (volumen)."></div>
 </div>
@@ -618,10 +670,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <p class="muted">No toda curva del plano corresponde al gráfico de una función.</p>
 <div class="concept-card"><h3>Prueba de la recta vertical</h3><p>Si una recta vertical corta la gráfica en más de un punto, un mismo \(x\) tiene asociados dos o más valores de \(y\): esa gráfica <strong>no</strong> representa una función. Si toda recta vertical corta la gráfica a lo sumo una vez, sí es función.</p></div>
 
-<div class="grid-2">
-<div class="box teal"><h3>Sí es función</h3><p class="muted">Una parábola vertical (como \(y=x^2\)): cada recta vertical la corta una sola vez.</p></div>
-<div class="box orange"><h3>No es función</h3><p class="muted">Una parábola "acostada" (como \(x=y^2\)): hay rectas verticales que la cortan dos veces.</p></div>
-</div>
+<div class="visual"><img src="prueba-recta-vertical.png" alt="Comparación entre una gráfica que sí es función y una que no, aplicando la prueba de la recta vertical"></div>
 
 <div class="practica-titulo">Practicá</div>
 <span class="ejercicio-badge b-pink">Ejercicio 12</span>
@@ -650,10 +699,21 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="question">Un gráfico va desde un punto abierto en \(x=0\) hasta un punto cerrado en \(x=5\). ¿Cómo se escribe su dominio?</div>
 <div class="options compact" data-answer="a">
 <button class="opt" data-value="a">\((0,5]\)</button>
-<button class="opt" data-value="b">\([0,5)\)</button>
-<button class="opt" data-value="c">\([0,5]\)</button>
+<button class="opt" data-value="b" data-fb="Invertiste los símbolos: el 0 es abierto (paréntesis) y el 5 es cerrado (corchete), no al revés.">\([0,5)\)</button>
+<button class="opt" data-value="c" data-fb="Pusiste corchete en los dos extremos, pero el punto en x=0 es abierto: ahí va paréntesis.">\([0,5]\)</button>
 </div>
 <div class="feedback" data-ok="Correcto: paréntesis en el extremo abierto (0), corchete en el cerrado (5)." data-no="El punto abierto se excluye (paréntesis); el cerrado se incluye (corchete)."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<div class="activity">
+<div class="question">Retomando el reservorio: observá su gráfico. ¿Cuál es la imagen de \(V\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\([0,136]\)</button>
+<button class="opt" data-value="b" data-fb="Ese es el dominio (los valores de la altura h), no la imagen (los valores de V).">\([0,4]\)</button>
+<button class="opt" data-value="c" data-fb="El 0 y el 136 sí están incluidos: el reservorio empieza vacío y termina lleno, ambos extremos forman parte del gráfico.">\((0,136)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la imagen son los valores que toma V, entre 0 y 136, ambos incluidos." data-no="La imagen se lee sobre el eje vertical: son los valores que toma V(h), no los de h."></div>
 </div>
 </div>
 
@@ -678,7 +738,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </tbody>
 </table>
 
-<div class="guided">
+<div class="guided pink">
 <div class="guided-title">\(f(x)=2x+1\)</div>
 <ol class="steps">
 <li><span class="step-num">1</span><span>Intersección con el eje \(y\) (\(x=0\)): \(f(0)=2(0)+1=1\). Punto \((0;1)\), ordenada al origen \(=1\).</span></li>
@@ -687,8 +747,10 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="result-line">Como es una recta, con estos dos puntos alcanza para trazar el gráfico completo.</div>
 </div>
 
+<div class="visual"><img src="intersecciones.png" alt="Gráfico de f(x)=2x+1 con sus intersecciones marcadas: (0;1) con el eje y, (-1/2;0) con el eje x"></div>
+
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<span class="ejercicio-badge b-orange">Ejercicio 15</span>
 <div class="activity">
 <div class="question">Para \(f(x)=3x-6\), ¿cuál es su raíz?</div>
 <div class="options compact" data-answer="b">
@@ -704,7 +766,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="sub-titulo"><div class="sub-num">2</div><h3>Conjunto de positividad y negatividad</h3></div>
 <p class="muted">Además de dónde cruza los ejes, interesa saber en qué tramos el gráfico está por encima o por debajo del eje \(x\), es decir, dónde la función es positiva o negativa.</p>
 
-<div class="concept-card violet"><h3>Definición</h3><p>El <strong>conjunto de positividad</strong>, \(C^+\), son los valores de \(x\) del dominio para los cuales \(f(x)>0\) (el gráfico está por encima del eje \(x\)). El <strong>conjunto de negatividad</strong>, \(C^-\), son los valores para los cuales \(f(x)<0\) (el gráfico está por debajo del eje \(x\)).</p></div>
+<div class="concept-card violet"><h3>Definición</h3><p>El <strong>conjunto de positividad</strong>, \(C^+\), son los valores de \(x\) del dominio para los cuales \(f(x)>0\) (el gráfico está por encima del eje \(x\)).</p><p style="margin-top:8px">El <strong>conjunto de negatividad</strong>, \(C^-\), son los valores para los cuales \(f(x)<0\) (el gráfico está por debajo del eje \(x\)).</p></div>
 
 <div class="formula teal">\[ C^+=\{x\in\text{Dom}(f):f(x)>0\} \qquad C^-=\{x\in\text{Dom}(f):f(x)<0\} \]</div>
 
@@ -720,13 +782,13 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-violet">Ejercicio 15</span>
+<span class="ejercicio-badge b-violet">Ejercicio 16</span>
 <div class="activity">
 <div class="question">Un gráfico tiene una única raíz en \(x=4\); a la izquierda de esa raíz está por debajo del eje \(x\), y a la derecha, por encima. ¿Cuál es \(C^+\)?</div>
 <div class="options compact" data-answer="a">
 <button class="opt" data-value="a">\((4,+\infty)\)</button>
-<button class="opt" data-value="b">\((-\infty,4)\)</button>
-<button class="opt" data-value="c">\(\{4\}\)</button>
+<button class="opt" data-value="b" data-fb="Ese es \(C^-\): a la izquierda de la raíz el gráfico está por debajo del eje x, donde \(f(x)<0\).">\((-\infty,4)\)</button>
+<button class="opt" data-value="c" data-fb="En la raíz, \(f(x)=0\), no \(f(x)>0\): el punto \(x=4\) no forma parte de \(C^+\) ni de \(C^-\).">\(\{4\}\)</button>
 </div>
 <div class="feedback" data-ok="Correcto: a la derecha de la raíz el gráfico está por encima del eje \(x\), donde \(f(x)>0\)." data-no="\(C^+\) son los valores donde el gráfico está por encima del eje x: revisá de qué lado de la raíz ocurre eso."></div>
 </div>
@@ -754,7 +816,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-pink">Ejercicio 16</span>
+<span class="ejercicio-badge b-pink">Ejercicio 17</span>
 <div class="activity">
 <div class="question">Si al aumentar \(x\) de \(2\) a \(5\) los valores de \(f(x)\) van bajando, ¿cómo se clasifica la función en ese intervalo?</div>
 <div class="options compact" data-answer="b">
@@ -776,15 +838,36 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="aviso"><span class="aviso-icon">⚠</span><div>El término <strong>local</strong> indica que la comparación se hace con los valores cercanos al punto, no necesariamente con todos los valores de la función.</div></div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge">Ejercicio 17</span>
+<span class="ejercicio-badge">Ejercicio 18</span>
 <div class="activity">
 <div class="question">En un punto, la función pasa de ser decreciente a ser creciente. ¿Qué hay en ese punto?</div>
 <div class="options compact" data-answer="b">
-<button class="opt" data-value="a">Un máximo local</button>
+<button class="opt" data-value="a" data-fb="El máximo local es al revés: ocurre cuando la función pasa de creciente a decreciente.">Un máximo local</button>
 <button class="opt" data-value="b">Un mínimo local</button>
-<button class="opt" data-value="c">Una raíz</button>
+<button class="opt" data-value="c" data-fb="Una raíz es donde el gráfico cruza el eje x (f(x)=0); no tiene que ver con pasar de decreciente a creciente.">Una raíz</button>
 </div>
 <div class="feedback" data-ok="Correcto: el cambio de decreciente a creciente ocurre en un mínimo local." data-no="Recordá: decreciente → creciente es un mínimo; creciente → decreciente es un máximo."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-5">
+<div class="sub-titulo"><div class="sub-num">5</div><h3>Explorá: analizá un gráfico completo</h3></div>
+<p class="muted">Ahora que viste cada concepto por separado, probá identificarlos todos juntos sobre una misma curva.</p>
+
+<div class="explorador-widget">
+<div class="explorador-titulo">Tocá cada botón y mirá qué se resalta en el gráfico</div>
+<div class="explorador-sub">Los intervalos se marcan con color, y se muestran debajo del gráfico.</div>
+<div class="explorador-svg-wrap">
+<svg id="explSvg" width="540" height="320" viewBox="0 0 540 320" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<div class="explorador-botones">
+<button onclick="explModo('creciente')" id="explBtnCreciente">Intervalos de crecimiento</button>
+<button onclick="explModo('decreciente')" id="explBtnDecreciente">Intervalos de decrecimiento</button>
+<button onclick="explModo('maxmin')" id="explBtnMaxmin">Máximos y mínimos locales</button>
+<button onclick="explModo('signo')" id="explBtnSigno">Positividad y negatividad</button>
+<button onclick="explModo('reset')" class="reset-btn">↺ Reiniciar</button>
+</div>
+<div class="explorador-lectura" id="explLectura" aria-live="polite">Elegí qué querés identificar en el gráfico.</div>
 </div>
 </div>
 
@@ -823,7 +906,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-orange">Ejercicio 18</span>
+<span class="ejercicio-badge b-orange">Ejercicio 19</span>
 <div class="activity">
 <div class="question">Para el mismo programa, ¿cuánto presupuesto se necesita para 15 beneficiarios?</div>
 <div class="options compact" data-answer="a">
@@ -977,7 +1060,7 @@ function initActivity(group){
     const isCorrect=opt.dataset.value===correctAnswer;
     group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
     if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
-    const msg=isCorrect?feedback.dataset.ok:feedback.dataset.no;
+    const msg=isCorrect?feedback.dataset.ok:(opt.dataset.fb||feedback.dataset.no);
     feedback.className='feedback show '+(isCorrect?'ok':'no');
     feedback.innerHTML=msg;
     const btnR=document.createElement('button');
@@ -1034,10 +1117,96 @@ function lectorLeer(x){
   typeset(lectura);
 }
 
+/* ============================================================
+   EXPLORADOR: ANÁLISIS GRÁFICO COMPLETO
+   Curva fija con 2 raíces, 1 máximo local y 2 mínimos locales.
+   ============================================================ */
+const explPts=[
+  {x:0,y:-5},{x:1,y:-6},{x:2,y:-3},{x:2.5,y:0},{x:3,y:2},
+  {x:4,y:7},{x:5,y:4},{x:6,y:1},{x:6.5,y:0},{x:7,y:-3},
+  {x:8,y:-6},{x:9,y:-3},{x:10,y:-1}
+];
+const explMargen={left:46,right:14,top:16,bottom:34};
+const explAncho=540-explMargen.left-explMargen.right;
+const explAlto=320-explMargen.top-explMargen.bottom;
+const explXMax=10, explYMin=-8, explYMax=9;
+function explX(x){return explMargen.left + (x/explXMax)*explAncho;}
+function explY(y){return explMargen.top + explAlto - ((y-explYMin)/(explYMax-explYMin))*explAlto;}
+function explPtsStr(i0,i1){
+  return explPts.slice(i0,i1+1).map(p=>`${explX(p.x)},${explY(p.y)}`).join(' ');
+}
+function explDibujarBase(){
+  const svg=document.getElementById('explSvg');
+  let ejes=`<line x1="${explMargen.left}" y1="${explY(0)}" x2="${540-explMargen.right}" y2="${explY(0)}" stroke="#B9CFCF" stroke-width="1.5"/>
+  <line x1="${explMargen.left}" y1="${explMargen.top}" x2="${explMargen.left}" y2="${explMargen.top+explAlto}" stroke="#B9CFCF" stroke-width="1.5"/>`;
+  let ticksX='';
+  for(let x=0;x<=explXMax;x+=2){
+    ticksX+=`<text x="${explX(x)}" y="${explY(0)+18}" font-size="11" text-anchor="middle" fill="#5D737C" font-family="Inter,sans-serif">${x}</text>`;
+  }
+  let ticksY='';
+  for(let y=explYMin;y<=explYMax;y+=4){
+    ticksY+=`<text x="${explMargen.left-8}" y="${explY(y)+4}" font-size="11" text-anchor="end" fill="#5D737C" font-family="Inter,sans-serif">${y}</text>`;
+  }
+  const curvaBase=`<polyline points="${explPtsStr(0,explPts.length-1)}" fill="none" stroke="#C9D4D4" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+  svg.innerHTML=`${ejes}${ticksX}${ticksY}${curvaBase}<g id="explOverlay"></g>`;
+}
+function explBotonesReset(){
+  ['explBtnCreciente','explBtnDecreciente','explBtnMaxmin','explBtnSigno'].forEach(id=>{
+    document.getElementById(id).className='';
+  });
+}
+function explModo(modo){
+  const overlay=document.getElementById('explOverlay');
+  const lectura=document.getElementById('explLectura');
+  explBotonesReset();
+  if(modo==='reset'){
+    overlay.innerHTML='';
+    lectura.textContent='Elegí qué querés identificar en el gráfico.';
+    return;
+  }
+  if(modo==='creciente'){
+    document.getElementById('explBtnCreciente').className='active-creciente';
+    overlay.innerHTML=`
+      <polyline points="${explPtsStr(1,5)}" fill="none" stroke="#0F6B6F" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${explPtsStr(10,12)}" fill="none" stroke="#0F6B6F" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    `;
+    lectura.innerHTML='Creciente en \\((1,4)\\) y en \\((8,10)\\)';
+  }
+  if(modo==='decreciente'){
+    document.getElementById('explBtnDecreciente').className='active-decreciente';
+    overlay.innerHTML=`
+      <polyline points="${explPtsStr(0,1)}" fill="none" stroke="#FF7A00" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${explPtsStr(5,10)}" fill="none" stroke="#FF7A00" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    `;
+    lectura.innerHTML='Decreciente en \\((0,1)\\) y en \\((4,8)\\)';
+  }
+  if(modo==='maxmin'){
+    document.getElementById('explBtnMaxmin').className='active-maxmin';
+    const max=explPts[5], min1=explPts[1], min2=explPts[10];
+    overlay.innerHTML=`
+      <circle cx="${explX(max.x)}" cy="${explY(max.y)}" r="8" fill="#7C5CE6" stroke="#4F35B8" stroke-width="2"/>
+      <circle cx="${explX(min1.x)}" cy="${explY(min1.y)}" r="8" fill="#FF7A00" stroke="#8E4300" stroke-width="2"/>
+      <circle cx="${explX(min2.x)}" cy="${explY(min2.y)}" r="8" fill="#FF7A00" stroke="#8E4300" stroke-width="2"/>
+    `;
+    lectura.innerHTML='Máximo local en \\(x=4\\) · Mínimos locales en \\(x=1\\) y \\(x=8\\)';
+  }
+  if(modo==='signo'){
+    document.getElementById('explBtnSigno').className='active-signo';
+    overlay.innerHTML=`
+      <polyline points="${explPtsStr(0,3)}" fill="none" stroke="#C94848" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${explPtsStr(3,8)}" fill="none" stroke="#23865B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${explPtsStr(8,12)}" fill="none" stroke="#C94848" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    `;
+    lectura.innerHTML='\\(C^+=(2,5;\\ 6,5)\\) (verde) · \\(C^-=(0;\\ 2,5)\\cup(6,5;\\ 10)\\) (rojo)';
+  }
+  typeset(lectura);
+}
+
 /* Inicializar */
 document.addEventListener('DOMContentLoaded',()=>{
   requestAnimationFrame(()=>{
     lectorDibujarBase();
+    explDibujarBase();
     typeset(document.body);
   });
 });
