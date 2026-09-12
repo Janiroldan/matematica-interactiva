@@ -189,6 +189,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 .lector-puntos button:hover{background:var(--teal-100)}
 .lector-puntos button.active{background:var(--teal-800);color:#fff}
 .lector-lectura{text-align:center;font-weight:800;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:12px;font-size:1.05rem;min-height:20px}
+.circ-svg{cursor:pointer}
 
 /* ---- Explorador de análisis gráfico completo ---- */
 .explorador-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
@@ -482,20 +483,21 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <p class="muted">Los resultados se pueden organizar en una <strong>tabla de valores</strong>: se eligen algunos valores del dominio, se evalúa la función en cada uno, y se registran los resultados. No hace falta usar todos los valores del dominio.</p>
 
 <div class="guided">
-<div class="guided-title">Tabla de valores de \(f(x)=\dfrac{x^3+1}{x-1}\)</div>
+<div class="guided-title">Tabla de valores de \(f(x)=\dfrac{2x}{x+3}\)</div>
 <ol class="steps">
-<li><span class="step-num">1</span><span>Dominio: \(x-1=0\Rightarrow x=1\), así que \(\text{Dom}(f)=\mathbb{R}\setminus\{1\}\).</span></li>
-<li><span class="step-num">2</span><span>Elegimos \(x=-1,0,2,3\) y evaluamos.</span></li>
+<li><span class="step-num">1</span><span>Dominio: \(x+3=0\Rightarrow x=-3\), así que \(\text{Dom}(f)=\mathbb{R}\setminus\{-3\}\).</span></li>
+<li><span class="step-num">2</span><span>Elegimos \(x=-9,-6,-1,3,9\) y evaluamos.</span></li>
 </ol>
 </div>
 
 <table class="mini-table">
 <thead><tr><th>\(x\)</th><th>\(f(x)\)</th></tr></thead>
 <tbody>
-<tr><td>\(-1\)</td><td>\(0\)</td></tr>
-<tr><td>\(0\)</td><td>\(-1\)</td></tr>
-<tr><td>\(2\)</td><td>\(9\)</td></tr>
-<tr><td>\(3\)</td><td>\(14\)</td></tr>
+<tr><td>\(-9\)</td><td>\(3\)</td></tr>
+<tr><td>\(-6\)</td><td>\(4\)</td></tr>
+<tr><td>\(-1\)</td><td>\(-1\)</td></tr>
+<tr><td>\(3\)</td><td>\(1\)</td></tr>
+<tr><td>\(9\)</td><td>\(1,5\)</td></tr>
 </tbody>
 </table>
 
@@ -658,10 +660,10 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="question">Para el reservorio del ejemplo, \(V(2)=40\). ¿Qué significa este resultado?</div>
 <div class="options" data-answer="a">
 <button class="opt" data-value="a">Cuando el agua alcanza 2 metros de altura, hay 40 mil litros acumulados</button>
-<button class="opt" data-value="b" data-fb="El 40 no es la altura del reservorio: es el volumen (en miles de litros) que corresponde a esa altura.">El reservorio tiene 40 metros de altura</button>
-<button class="opt" data-value="c" data-fb="Invertiste los valores: 2 es la entrada (altura), y 40 es la salida (volumen en miles de litros).">Hay 2 mil litros acumulados</button>
+<button class="opt" data-value="b" data-fb="Revisá las unidades: V está expresado en miles de litros, no en litros. Son 40 mil litros, no 40.">Cuando el agua alcanza 2 metros de altura, hay 40 litros acumulados</button>
+<button class="opt" data-value="c" data-fb="Invertiste los valores: 2 es la entrada (la altura), y 40 es la salida (el volumen), no al revés.">Cuando hay 2 mil litros acumulados, el agua alcanza 40 metros de altura</button>
 </div>
-<div class="feedback" data-ok="Correcto: 2 es la entrada (altura) y 40 es la salida (volumen en miles de litros)." data-no="Recordá cuál es la variable independiente (altura) y cuál la dependiente (volumen)."></div>
+<div class="feedback" data-ok="Correcto: 2 es la entrada (altura) y 40 es la salida (volumen en miles de litros)." data-no="Recordá cuál es la variable independiente (altura) y cuál la dependiente (volumen), y prestá atención a las unidades."></div>
 </div>
 </div>
 
@@ -672,40 +674,32 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 
 <div class="visual"><img src="prueba-recta-vertical.png" alt="Comparación entre una gráfica que sí es función y una que no, aplicando la prueba de la recta vertical"></div>
 
-<div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-pink">Ejercicio 12</span>
-<div class="activity">
-<div class="question">Una circunferencia completa, ¿pasa la prueba de la recta vertical?</div>
-<div class="options compact" data-answer="b">
-<button class="opt" data-value="a">Sí</button>
-<button class="opt" data-value="b">No</button>
+<div class="lector-widget">
+<div class="lector-titulo">Explorá: movés la recta, ¿cuántas veces corta?</div>
+<div class="lector-sub">Hacé clic en distintos puntos del eje \(x\) para mover la recta vertical sobre esta circunferencia.</div>
+<div class="lector-svg-wrap">
+<svg id="circSvg" class="circ-svg" width="360" height="360" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"></svg>
 </div>
-<div class="feedback" data-ok="Correcto: una recta vertical que pase por el centro corta a la circunferencia en dos puntos." data-no="Pensá una recta vertical que atraviese el medio de la circunferencia: ¿la corta una vez o dos?"></div>
+<div class="lector-lectura" id="circLectura" aria-live="polite">Hacé clic sobre el gráfico para ubicar la recta.</div>
 </div>
 </div>
 
 <div class="subbloque" id="sub3-4">
 <div class="sub-titulo"><div class="sub-num">4</div><h3>Dominio e imagen desde el gráfico</h3></div>
-<p class="muted"><strong>Dominio:</strong> los valores de \(x\) efectivamente representados (la "sombra" del gráfico sobre el eje \(x\)). <strong>Imagen:</strong> lo mismo, pero sobre el eje \(y\).</p>
+<p class="muted"><strong>Dominio:</strong> los valores de \(x\) efectivamente representados (la "sombra" que el gráfico proyecta sobre el eje \(x\)).</p>
+<p class="muted" style="margin-top:8px"><strong>Imagen:</strong> los valores de \(y\) que el gráfico efectivamente alcanza (la "sombra" que proyecta sobre el eje \(y\)). Se observa de manera análoga al dominio, pero mirando verticalmente en vez de horizontalmente.</p>
+
+<div class="visual" style="margin-top:10px"><img src="dominio-imagen.png" alt="Gráfico con el dominio marcado sobre el eje x y la imagen marcada sobre el eje y"></div>
 
 <div class="ejemplo-card">
 <div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un gráfico empieza en un punto cerrado en \(x=-3\) y termina en un punto abierto en \(x=3\); alcanza como valor mínimo \(y=-1\) y como máximo \(y=4\).</p></div>
-<div class="ejemplo-desarrollo"><p>\(\text{Dom}(f)=[-3,3)\) (incluye \(-3\), excluye \(3\)). \(\text{Im}(f)=[-1,4]\) (ambos incluidos).</p></div>
+<div class="ejemplo-desarrollo">
+<div class="visual"><img src="ejemplo-dom-imagen.png" alt="Gráfico del ejemplo con el dominio [-3,3) marcado sobre el eje x y la imagen [-1,4] marcada sobre el eje y"></div>
+</div>
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge">Ejercicio 13</span>
-<div class="activity">
-<div class="question">Un gráfico va desde un punto abierto en \(x=0\) hasta un punto cerrado en \(x=5\). ¿Cómo se escribe su dominio?</div>
-<div class="options compact" data-answer="a">
-<button class="opt" data-value="a">\((0,5]\)</button>
-<button class="opt" data-value="b" data-fb="Invertiste los símbolos: el 0 es abierto (paréntesis) y el 5 es cerrado (corchete), no al revés.">\([0,5)\)</button>
-<button class="opt" data-value="c" data-fb="Pusiste corchete en los dos extremos, pero el punto en x=0 es abierto: ahí va paréntesis.">\([0,5]\)</button>
-</div>
-<div class="feedback" data-ok="Correcto: paréntesis en el extremo abierto (0), corchete en el cerrado (5)." data-no="El punto abierto se excluye (paréntesis); el cerrado se incluye (corchete)."></div>
-</div>
-
-<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<span class="ejercicio-badge b-orange">Ejercicio 12</span>
 <div class="activity">
 <div class="question">Retomando el reservorio: observá su gráfico. ¿Cuál es la imagen de \(V\)?</div>
 <div class="options compact" data-answer="a">
@@ -741,8 +735,10 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="guided pink">
 <div class="guided-title">\(f(x)=2x+1\)</div>
 <ol class="steps">
-<li><span class="step-num">1</span><span>Intersección con el eje \(y\) (\(x=0\)): \(f(0)=2(0)+1=1\). Punto \((0;1)\), ordenada al origen \(=1\).</span></li>
-<li><span class="step-num">2</span><span>Intersección con el eje \(x\) (\(y=0\)): \(2x+1=0\;\Rightarrow\;x=-1/2\). Punto \((-1/2;0)\), raíz \(=-1/2\).</span></li>
+<li><span class="step-num">1</span><span>Evaluamos en \(x=0\): \(f(0)=2(0)+1=1\).</span></li>
+<li><span class="step-num">2</span><span>Punto de intersección con el eje \(y\): \((0;1)\) — la <strong>ordenada al origen</strong> es \(1\).</span></li>
+<li><span class="step-num">3</span><span>Resolvemos \(f(x)=0\): \(2x+1=0\;\Rightarrow\;x=-1/2\).</span></li>
+<li><span class="step-num">4</span><span>Punto de intersección con el eje \(x\): \((-1/2;0)\) — la <strong>raíz</strong> es \(-1/2\).</span></li>
 </ol>
 <div class="result-line">Como es una recta, con estos dos puntos alcanza para trazar el gráfico completo.</div>
 </div>
@@ -750,15 +746,16 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="visual"><img src="intersecciones.png" alt="Gráfico de f(x)=2x+1 con sus intersecciones marcadas: (0;1) con el eje y, (-1/2;0) con el eje x"></div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-orange">Ejercicio 15</span>
+<span class="ejercicio-badge b-orange">Ejercicio 13</span>
 <div class="activity">
-<div class="question">Para \(f(x)=3x-6\), ¿cuál es su raíz?</div>
-<div class="options compact" data-answer="b">
-<button class="opt" data-value="a">\(-6\)</button>
-<button class="opt" data-value="b">\(2\)</button>
-<button class="opt" data-value="c">\(-2\)</button>
+<div class="question">Observá el gráfico de la función. ¿Cuáles son su raíz y su ordenada al origen?</div>
+<div class="visual" style="margin-bottom:12px"><img src="ejercicio-raiz-ordenada.png" alt="Gráfico de una función lineal que corta el eje x en x=2 y el eje y en y=4"></div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Raíz \(=2\), ordenada al origen \(=4\)</button>
+<button class="opt" data-value="b" data-fb="Invertiste los valores: la raíz es donde corta el eje x, y la ordenada al origen es donde corta el eje y.">Raíz \(=4\), ordenada al origen \(=2\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el signo de la raíz: fijate de qué lado del eje y está el punto donde el gráfico cruza el eje x.">Raíz \(=-2\), ordenada al origen \(=4\)</button>
 </div>
-<div class="feedback" data-ok="Correcto: \(3x-6=0\;\Rightarrow\;x=2\)." data-no="Planteá \(f(x)=0\): \(3x-6=0\), y despejá \(x\)."></div>
+<div class="feedback" data-ok="Correcto: el gráfico cruza el eje x en \(x=2\) (raíz) y el eje y en \(y=4\) (ordenada al origen)." data-no="La raíz es el punto donde el gráfico cruza el eje x; la ordenada al origen, donde cruza el eje y."></div>
 </div>
 </div>
 
@@ -767,6 +764,8 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <p class="muted">Además de dónde cruza los ejes, interesa saber en qué tramos el gráfico está por encima o por debajo del eje \(x\), es decir, dónde la función es positiva o negativa.</p>
 
 <div class="concept-card violet"><h3>Definición</h3><p>El <strong>conjunto de positividad</strong>, \(C^+\), son los valores de \(x\) del dominio para los cuales \(f(x)>0\) (el gráfico está por encima del eje \(x\)).</p><p style="margin-top:8px">El <strong>conjunto de negatividad</strong>, \(C^-\), son los valores para los cuales \(f(x)<0\) (el gráfico está por debajo del eje \(x\)).</p></div>
+
+<div class="visual"><img src="positividad-negatividad.png" alt="Gráfico general mostrando los tramos donde una función es positiva (C+, por encima del eje x) y negativa (C-, por debajo del eje x)"></div>
 
 <div class="formula teal">\[ C^+=\{x\in\text{Dom}(f):f(x)>0\} \qquad C^-=\{x\in\text{Dom}(f):f(x)<0\} \]</div>
 
@@ -782,7 +781,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-violet">Ejercicio 16</span>
+<span class="ejercicio-badge b-violet">Ejercicio 14</span>
 <div class="activity">
 <div class="question">Un gráfico tiene una única raíz en \(x=4\); a la izquierda de esa raíz está por debajo del eje \(x\), y a la derecha, por encima. ¿Cuál es \(C^+\)?</div>
 <div class="options compact" data-answer="a">
@@ -810,13 +809,10 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="video"><iframe src="https://www.youtube.com/embed/dcpst_xi8as" title="Crecimiento y decrecimiento de una función" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 </div>
 
-<div class="ejemplo-card">
-<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un gráfico definido entre \(x=a\) y \(x=e\) sube desde \(a\) hasta \(b\), se mantiene igual desde \(b\) hasta \(c\), baja desde \(c\) hasta \(d\), y vuelve a subir desde \(d\) hasta \(e\).</p></div>
-<div class="ejemplo-desarrollo"><p>Creciente en \((a,b)\); constante en \([b,c]\); decreciente en \((c,d)\); creciente en \((d,e)\).</p></div>
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-pink">Ejercicio 17</span>
+<span class="ejercicio-badge b-pink">Ejercicio 15</span>
 <div class="activity">
 <div class="question">Si al aumentar \(x\) de \(2\) a \(5\) los valores de \(f(x)\) van bajando, ¿cómo se clasifica la función en ese intervalo?</div>
 <div class="options compact" data-answer="b">
@@ -829,24 +825,26 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </div>
 
 <div class="subbloque" id="sub4-4">
-<div class="sub-titulo"><div class="sub-num">4</div><h3>Máximos y mínimos locales</h3></div>
-<p class="muted">En algunos puntos, la función alcanza valores mayores o menores que los valores cercanos. Suelen aparecer donde la función pasa de creciente a decreciente, o de decreciente a creciente.</p>
-<div class="grid-2">
-<div class="box violet"><h3>Máximo local</h3><p class="muted">La función alcanza un valor mayor que los valores cercanos. Ocurre en el paso de creciente a decreciente.</p></div>
-<div class="box orange"><h3>Mínimo local</h3><p class="muted">La función alcanza un valor menor que los valores cercanos. Ocurre en el paso de decreciente a creciente.</p></div>
-</div>
-<div class="aviso"><span class="aviso-icon">⚠</span><div>El término <strong>local</strong> indica que la comparación se hace con los valores cercanos al punto, no necesariamente con todos los valores de la función.</div></div>
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Máximos y mínimos</h3></div>
+<p class="muted">Al analizar una función, puede interesar identificar el mayor y el menor valor que alcanza en el dominio considerado.</p>
+
+<div class="concept-card violet"><h3>Definición</h3><p>Una función \(f\) alcanza un <strong>máximo absoluto</strong> en \(x=a\) si \(f(a)\ge f(x)\) para todo \(x\) del dominio considerado.</p><p style="margin-top:8px">De manera análoga, \(f\) alcanza un <strong>mínimo absoluto</strong> en \(x=b\) si \(f(b)\le f(x)\) para todo \(x\) del dominio considerado.</p></div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div>El máximo y el mínimo se determinan comparando <strong>todos</strong> los valores que toma la función en el dominio considerado. De acá en adelante, cuando hablemos de "máximo" o "mínimo" nos referimos siempre al absoluto.</div></div>
+
+<p class="muted">Veamos algunos casos posibles:</p>
+<div class="visual"><img src="max-min.png" alt="Cuatro casos de máximo y mínimo absoluto: por cambio de comportamiento, en los extremos del dominio, comparando todos los valores, y en un conjunto de puntos aislados"></div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge">Ejercicio 18</span>
+<span class="ejercicio-badge">Ejercicio 16</span>
 <div class="activity">
-<div class="question">En un punto, la función pasa de ser decreciente a ser creciente. ¿Qué hay en ese punto?</div>
-<div class="options compact" data-answer="b">
-<button class="opt" data-value="a" data-fb="El máximo local es al revés: ocurre cuando la función pasa de creciente a decreciente.">Un máximo local</button>
-<button class="opt" data-value="b">Un mínimo local</button>
-<button class="opt" data-value="c" data-fb="Una raíz es donde el gráfico cruza el eje x (f(x)=0); no tiene que ver con pasar de decreciente a creciente.">Una raíz</button>
+<div class="question">Una función es decreciente en todo su dominio, definido entre \(x=a\) y \(x=b\). ¿Dónde están su máximo y su mínimo?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Máximo en \(x=a\) (extremo izquierdo), mínimo en \(x=b\) (extremo derecho)</button>
+<button class="opt" data-value="b" data-fb="Si la función es decreciente en todo el dominio, no hay ningún cambio de comportamiento en el medio: los extremos son los que determinan el máximo y el mínimo.">No tiene máximo ni mínimo, porque no cambia de creciente a decreciente</button>
+<button class="opt" data-value="c" data-fb="Es al revés: como la función decrece, el valor más alto está al principio (x=a) y el más bajo al final (x=b).">Máximo en \(x=b\), mínimo en \(x=a\)</button>
 </div>
-<div class="feedback" data-ok="Correcto: el cambio de decreciente a creciente ocurre en un mínimo local." data-no="Recordá: decreciente → creciente es un mínimo; creciente → decreciente es un máximo."></div>
+<div class="feedback" data-ok="Correcto: aunque no cambie de comportamiento, el máximo y el mínimo pueden estar en los extremos del dominio." data-no="Pensá en una función que solo baja: ¿dónde toma su valor más alto? ¿Y el más bajo?"></div>
 </div>
 </div>
 
@@ -863,7 +861,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <div class="explorador-botones">
 <button onclick="explModo('creciente')" id="explBtnCreciente">Intervalos de crecimiento</button>
 <button onclick="explModo('decreciente')" id="explBtnDecreciente">Intervalos de decrecimiento</button>
-<button onclick="explModo('maxmin')" id="explBtnMaxmin">Máximos y mínimos locales</button>
+<button onclick="explModo('maxmin')" id="explBtnMaxmin">Máximo y mínimo</button>
 <button onclick="explModo('signo')" id="explBtnSigno">Positividad y negatividad</button>
 <button onclick="explModo('reset')" class="reset-btn">↺ Reiniciar</button>
 </div>
@@ -894,6 +892,26 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 </tbody>
 </table>
 
+<h3 style="margin-top:20px">Variables discretas y continuas</h3>
+<p class="muted">Las variables de una función, tanto la independiente como la dependiente, pueden clasificarse según los valores que pueden tomar.</p>
+<div class="grid-2">
+<div class="box teal"><h3>Variable discreta</h3><p class="muted">Toma valores aislados y contables. Suele aparecer cuando representa una cantidad: personas, vehículos, trámites, sectores inspeccionados.</p></div>
+<div class="box orange"><h3>Variable continua</h3><p class="muted">Puede tomar cualquier valor dentro de un intervalo. Suele aparecer cuando representa una magnitud que se mide: tiempo, longitud, altura, distancia, temperatura, masa.</p></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>En una magnitud continua, los valores dependen de la unidad de medida utilizada y pueden expresarse con distinta precisión (por ejemplo, longitud en m o en cm; tiempo en horas o en minutos).</div></div>
+<div class="concept-card"><h3>Efecto en el gráfico</h3><p>La clasificación de la variable independiente influye en cómo se representa la función. Si es <strong>discreta</strong>, el gráfico se representa mediante puntos aislados. Si es <strong>continua</strong>, se representa mediante una curva continua en el intervalo considerado.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 17</span>
+<div class="activity">
+<div class="question">La temperatura registrada a lo largo de un día, ¿es una variable discreta o continua?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Una variable discreta toma valores aislados y contables, como una cantidad de personas o trámites. La temperatura no funciona así.">Discreta</button>
+<button class="opt" data-value="b">Continua</button>
+</div>
+<div class="feedback" data-ok="Correcto: la temperatura es una magnitud que se mide y puede tomar cualquier valor dentro de un intervalo." data-no="Pensá si la temperatura salta entre valores aislados y contables, o si puede tomar cualquier valor intermedio."></div>
+</div>
+
 <div class="ejemplo-card">
 <div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Un programa social distribuye un subsidio de \(\$8000\) por cada beneficiario inscripto, más un monto fijo de \(\$50000\) para gastos administrativos.</p></div>
 <div class="ejemplo-desarrollo">
@@ -902,11 +920,12 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <p style="margin-top:6px"><strong>Tabular:</strong> \(P(0)=\$50000\), \(P(10)=\$130000\), \(P(20)=\$210000\).</p>
 <p style="margin-top:6px"><strong>Evaluación:</strong> \(P(35)=50000+8000(35)=\$330000\). Para atender a \(35\) beneficiarios, el programa necesita ese presupuesto.</p>
 <p style="margin-top:6px"><strong>Gráfica:</strong> al ser un dominio discreto, el gráfico está formado por puntos sueltos, no por una línea continua.</p>
+<div class="visual" style="margin-top:10px"><img src="ejemplo-presupuesto.png" alt="Gráfico de P(n)=50000+8000n formado por puntos aislados, ya que n es una variable discreta"></div>
 </div>
 </div>
 
 <div class="practica-titulo">Practicá</div>
-<span class="ejercicio-badge b-orange">Ejercicio 19</span>
+<span class="ejercicio-badge b-orange">Ejercicio 18</span>
 <div class="activity">
 <div class="question">Para el mismo programa, ¿cuánto presupuesto se necesita para 15 beneficiarios?</div>
 <div class="options compact" data-answer="a">
@@ -978,7 +997,7 @@ h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
 <tr><td>Intersecciones</td><td>eje \(y\): \(f(0)\) · eje \(x\): resolver \(f(x)=0\)</td></tr>
 <tr><td>\(C^+\) / \(C^-\)</td><td>tramos donde \(f(x)>0\) / \(f(x)<0\); cambian en las raíces</td></tr>
 <tr><td>Creciente / decreciente</td><td>\(x\) aumenta y \(f(x)\) aumenta / disminuye</td></tr>
-<tr><td>Máximo / mínimo local</td><td>valor mayor / menor que los valores cercanos</td></tr>
+<tr><td>Máximo / mínimo (absoluto)</td><td>\(f(a)\ge f(x)\) / \(f(b)\le f(x)\) para todo \(x\) del dominio</td></tr>
 </tbody>
 </table>
 <p class="sintesis-frase">Una función se puede describir con palabras, con una fórmula, con una tabla o con un gráfico: son cuatro formas de contar la misma historia.</p>
@@ -1119,7 +1138,7 @@ function lectorLeer(x){
 
 /* ============================================================
    EXPLORADOR: ANÁLISIS GRÁFICO COMPLETO
-   Curva fija con 2 raíces, 1 máximo local y 2 mínimos locales.
+   Curva fija con 2 raíces, 1 máximo absoluto y 2 puntos que alcanzan el mínimo absoluto.
    ============================================================ */
 const explPts=[
   {x:0,y:-5},{x:1,y:-6},{x:2,y:-3},{x:2.5,y:0},{x:3,y:2},
@@ -1188,7 +1207,7 @@ function explModo(modo){
       <circle cx="${explX(min1.x)}" cy="${explY(min1.y)}" r="8" fill="#FF7A00" stroke="#8E4300" stroke-width="2"/>
       <circle cx="${explX(min2.x)}" cy="${explY(min2.y)}" r="8" fill="#FF7A00" stroke="#8E4300" stroke-width="2"/>
     `;
-    lectura.innerHTML='Máximo local en \\(x=4\\) · Mínimos locales en \\(x=1\\) y \\(x=8\\)';
+    lectura.innerHTML='Máximo en \\(x=4\\) · Mínimo en \\(x=1\\) y en \\(x=8\\) (ambos alcanzan el valor más bajo de todo el dominio)';
   }
   if(modo==='signo'){
     document.getElementById('explBtnSigno').className='active-signo';
@@ -1202,11 +1221,63 @@ function explModo(modo){
   typeset(lectura);
 }
 
+/* ============================================================
+   CIRCUNFERENCIA CON RECTA VERTICAL MÓVIL
+   Circunferencia centrada en el origen, radio 4.
+   ============================================================ */
+const circCentro={x:0,y:0};
+const circRadio=4;
+const circEscala=28; // px por unidad
+const circCX=180, circCY=180; // centro en píxeles
+function circAX(x){return circCX + x*circEscala;}
+function circAY(y){return circCY - y*circEscala;}
+function circDibujar(lineaX){
+  const svg=document.getElementById('circSvg');
+  let ejes=`<line x1="10" y1="${circCY}" x2="350" y2="${circCY}" stroke="#B9CFCF" stroke-width="1.5"/>
+  <line x1="${circCX}" y1="10" x2="${circCX}" y2="350" stroke="#B9CFCF" stroke-width="1.5"/>`;
+  let circunferencia=`<circle cx="${circCX}" cy="${circCY}" r="${circRadio*circEscala}" fill="none" stroke="#0F6B6F" stroke-width="3"/>`;
+  let recta='', puntos='', mensaje='Hacé clic sobre el gráfico para ubicar la recta.';
+  if(lineaX!==null){
+    const px=circAX(lineaX);
+    recta=`<line x1="${px}" y1="10" x2="${px}" y2="350" stroke="#C94848" stroke-width="2.5" stroke-dasharray="6 4"/>`;
+    const dentro=Math.abs(lineaX)<circRadio;
+    const tangente=Math.abs(Math.abs(lineaX)-circRadio)<0.05;
+    if(tangente){
+      const y0=0;
+      puntos=`<circle cx="${px}" cy="${circAY(y0)}" r="6" fill="#7C5CE6" stroke="#4F35B8" stroke-width="2"/>`;
+      mensaje='La recta toca la circunferencia en <strong>1 punto</strong> (es tangente).';
+    }else if(dentro){
+      const y0=Math.sqrt(circRadio*circRadio-lineaX*lineaX);
+      puntos=`<circle cx="${px}" cy="${circAY(y0)}" r="6" fill="#7C5CE6" stroke="#4F35B8" stroke-width="2"/>
+      <circle cx="${px}" cy="${circAY(-y0)}" r="6" fill="#7C5CE6" stroke="#4F35B8" stroke-width="2"/>`;
+      mensaje='La recta corta la circunferencia en <strong>2 puntos</strong>: no pasa la prueba, no es función de \\(x\\).';
+    }else{
+      mensaje='La recta no toca la circunferencia (<strong>0 puntos</strong>).';
+    }
+  }
+  svg.innerHTML=`${ejes}${circunferencia}${recta}${puntos}`;
+  const lecturaEl=document.getElementById('circLectura');
+  lecturaEl.innerHTML=mensaje;
+  typeset(lecturaEl);
+}
+function circInit(){
+  const svg=document.getElementById('circSvg');
+  svg.addEventListener('click',(e)=>{
+    const rect=svg.getBoundingClientRect();
+    const scaleX=svg.viewBox.baseVal.width/rect.width;
+    const xClic=(e.clientX-rect.left)*scaleX;
+    const x=(xClic-circCX)/circEscala;
+    circDibujar(Math.round(x*10)/10);
+  });
+  circDibujar(null);
+}
+
 /* Inicializar */
 document.addEventListener('DOMContentLoaded',()=>{
   requestAnimationFrame(()=>{
     lectorDibujarBase();
     explDibujarBase();
+    circInit();
     typeset(document.body);
   });
 });
