@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Función lineal · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.3rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.guided.violet{border-left:4px solid var(--violet)}
+.guided.violet .step-num{background:var(--violet)}
+.guided.violet .result-line{background:var(--violet-soft);color:#4F35B8}
+.guided.pink{border-left:4px solid #C2478A}
+.guided.pink .step-num{background:#C2478A}
+.guided.pink .result-line{background:#FFF1F8;color:#8B1A5E}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn span:last-child{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.btn-verificar{display:inline-flex;align-items:center;gap:7px;background:var(--teal-800);color:#fff;border:none;border-radius:10px;padding:10px 22px;font:inherit;font-weight:700;font-size:.88rem;cursor:pointer;box-shadow:0 6px 16px rgba(15,107,111,.22);transition:.18s}
+.btn-verificar::before{content:"✓";font-weight:800}
+.btn-verificar:hover{background:var(--teal-700);transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,107,111,.28)}
+.btn-verificar.violet{background:var(--violet);box-shadow:0 6px 16px rgba(124,92,230,.28)}
+.btn-verificar.violet:hover{background:#6A4CD6;box-shadow:0 8px 20px rgba(124,92,230,.34)}
+.btn-chip{font:inherit;font-weight:700;font-size:.85rem;padding:9px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800);transition:.15s}
+.btn-chip:hover{background:var(--teal-100)}
+.btn-chip.reset-btn{border-color:var(--slate-700);color:var(--slate-700)}
+
+/* ---- Explorador m y b ---- */
+.mb-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.mb-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.mb-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.mb-svg-wrap{overflow-x:auto;padding:6px 0 10px;text-align:center}
+.mb-controles{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin-top:10px}
+.mb-grupo{display:flex;align-items:center;gap:10px;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+.mb-grupo .mb-label{font-weight:800;color:var(--teal-800);font-size:1rem;min-width:16px;text-align:center}
+.mb-grupo button{font:inherit;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:8px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800)}
+.mb-grupo button:hover{background:var(--teal-100)}
+.mb-grupo .mb-valor{font-weight:800;color:var(--navy-900);min-width:44px;text-align:center;font-size:.95rem}
+.mb-lectura{text-align:center;font-weight:700;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:14px;font-size:.95rem}
+.mb-lectura strong{color:var(--teal-900)}
+.mb-reset-wrap{text-align:center;margin-top:10px}
+
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:15px}
+  .capsula{margin:10px;border-radius:22px}
+  .hero{padding:26px 18px 18px}
+  .tabs-wrap,.content{padding-left:14px;padding-right:14px}
+  .section{padding:20px 16px}
+  .tab{flex:1 1 calc(50% - 8px);justify-content:center}
+  h2{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma" style="font-size:1.05rem">f(x)=mx+b</div>
+<h1>Función lineal</h1>
+<h2>Pendiente, ordenada al origen y modelos: un recorrido con videos y actividades</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Función lineal</h1>
+<p>Un recorrido con videos breves y actividades cortas para entender la función lineal, graficarla, encontrarla a partir de datos y usarla para modelizar situaciones. Te recomendamos recorrer las etapas en el orden propuesto.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Función lineal</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Pendiente y ordenada</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Graficar y verificar</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Encontrar la función</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Aplicaciones</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+<!-- ============ PANEL 1: FUNCIÓN LINEAL ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Función lineal</span>
+<h2>Funciones cuya gráfica es una recta</h2>
+<p class="section-intro">En muchas situaciones, dos cantidades se relacionan de manera tal que, cuando una cambia, la otra lo hace a un ritmo constante. Estas relaciones se representan mediante funciones cuya gráfica es una recta.</p>
+
+<div class="aviso"><span class="aviso-icon">📘</span><div><strong>Nota terminológica:</strong> en este material usamos "función lineal" para las funciones \(f(x)=mx+b\). En otros textos, estas se llaman funciones afines, reservando "función lineal" solo para el caso \(b=0\).</div></div>
+
+<div class="subbloque" id="sub1-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Definición y forma general</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Una función lineal es una función \(f:\mathbb{R}\to\mathbb{R}\), definida por \(f(x)=mx+b\), donde \(m\) y \(b\) son números reales. Su gráfico es una recta no vertical de ecuación \(y=mx+b\).</p></div>
+<table class="mini-table">
+<thead><tr><th>Elemento</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td>Dominio</td><td>\(\text{Dom}(f)=\mathbb{R}\)</td></tr>
+<tr><td>Codominio</td><td>\(\mathbb{R}\)</td></tr>
+</tbody>
+</table>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=3x-2\) y \(g(x)=6-x\).</p></div>
+<div class="ejemplo-desarrollo"><p>\(f\) es función lineal, con \(m=3\) y \(b=-2\). Reescribiendo \(g(x)=-1x+6\), también es función lineal, con \(m=-1\) y \(b=6\).</p></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">\(h(x)=8-5x\), reescrita en la forma \(mx+b\). ¿Cuáles son \(m\) y \(b\)?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(m=-5\), \(b=8\)</button>
+<button class="opt" data-value="b" data-fb="Invertiste los valores: el coeficiente que acompaña a x es m, y el término suelto es b.">\(m=8\), \(b=-5\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el signo de m: el término con x es -5x, no 5x.">\(m=5\), \(b=8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: reescribiendo, \(h(x)=-5x+8\)." data-no="Reescribí la función como \(mx+b\): el coeficiente de x es m, el término suelto es b."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Casos según el valor de \(m\)</h3></div>
+<div class="visual"><img src="casos-segun-m.png" alt="Casos según el valor de m: m≠0 recta oblicua, m=0 y b≠0 función constante, m=0 y b=0 función nula"></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">\(f(x)=7\). ¿Cómo es su gráfico?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Una recta horizontal que no coincide con el eje \(x\)</button>
+<button class="opt" data-value="b" data-fb="Una recta oblicua ocurre cuando m≠0. Acá no hay ningún término con x: m=0.">Una recta oblicua</button>
+<button class="opt" data-value="c" data-fb="Para coincidir con el eje x hace falta b=0. Acá b=7, no 0.">Una recta horizontal que coincide con el eje \(x\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: como m=0 y b=7≠0, es una recta horizontal, pero no coincide con el eje x (para eso b debería ser 0)." data-no="Fijate si hay término con x (¿m=0 o m≠0?), y si b es 0 o no."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Función de proporcionalidad directa (\(b=0\))</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Cuando en \(f(x)=mx+b\) se cumple \(b=0\), queda \(f(x)=m\cdot x\).</p></div>
+<div class="grid-2">
+<div class="box teal"><p>Su gráfico pasa por el origen \((0;0)\).</p><p style="margin-top:6px">La ordenada al origen es \(0\).</p></div>
+<div class="box teal"><p>\(x\) e \(y\) son directamente proporcionales.</p><p style="margin-top:6px">\(m\) es la constante de proporcionalidad.</p></div>
+</div>
+
+<div class="visual"><img src="funcion-proporcionalidad.png" alt="Comparación entre función lineal (f(x)=mx+b) y función de proporcionalidad directa (f(x)=mx, con b=0)"></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">¿Cuál de estas funciones es de proporcionalidad directa?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Tiene b=4, distinto de 0: no pasa por el origen.">\(f(x)=3x+4\)</button>
+<button class="opt" data-value="b">\(f(x)=-2x\)</button>
+<button class="opt" data-value="c" data-fb="Tiene m=0: es una función constante, no de proporcionalidad directa.">\(f(x)=5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: tiene la forma \(mx\) sin término independiente, con \(m=-2\)." data-no="Buscá la que no tiene término independiente (b=0): solo queda mx."></div>
+</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: PENDIENTE Y ORDENADA ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Pendiente y ordenada al origen</span>
+<h2>Los dos parámetros de la recta</h2>
+<p class="section-intro">Los parámetros \(m\) y \(b\) determinan completamente cómo se ve la recta. Antes de ver las fórmulas, explorá cómo cambia el gráfico al modificarlos.</p>
+
+<div class="mb-widget">
+<div class="mb-titulo">Explorá: \(f(x)=mx+b\)</div>
+<div class="mb-sub">Usá los botones para cambiar \(m\) y \(b\), y mirá cómo cambia la recta.</div>
+<div class="mb-svg-wrap">
+<svg id="mbSvg" width="480" height="380" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<div class="mb-controles">
+<div class="mb-grupo">
+<span class="mb-label">m</span>
+<button onclick="mbAdjust('m',-0.5)" aria-label="Disminuir m">−</button>
+<span class="mb-valor" id="mbValM">1</span>
+<button onclick="mbAdjust('m',0.5)" aria-label="Aumentar m">+</button>
+</div>
+<div class="mb-grupo">
+<span class="mb-label">b</span>
+<button onclick="mbAdjust('b',-1)" aria-label="Disminuir b">−</button>
+<span class="mb-valor" id="mbValB">0</span>
+<button onclick="mbAdjust('b',1)" aria-label="Aumentar b">+</button>
+</div>
+</div>
+<div class="mb-reset-wrap"><button class="btn-chip reset-btn" onclick="mbReset()">↺ Reiniciar</button></div>
+<div class="mb-lectura" id="mbLectura" aria-live="polite"></div>
+</div>
+
+<div class="subbloque" id="sub2-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Pendiente</h3></div>
+<p class="muted">La pendiente de una recta no vertical mide su inclinación: compara la variación de \(y\) con la variación de \(x\).</p>
+<div class="visual"><img src="pendiente.png" alt="Pendiente de una recta: fórmula m=Δy/Δx=(y2-y1)/(x2-x1), qué representan Δx y Δy, y que si Δx=1 entonces Δy=m"></div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>El valor de la pendiente es el mismo cualquiera sean los dos puntos distintos que se elijan sobre la misma recta.</div></div>
+
+<div class="guided">
+<div class="guided-title">Calcular la pendiente entre \(A(1;3)\) y \(B(4;9)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(\Delta y=9-3=6\)</span></li>
+<li><span class="step-num">2</span><span>\(\Delta x=4-1=3\)</span></li>
+</ol>
+<div class="result-line">\(m=6/3=2\). Por cada unidad que aumenta \(x\), \(y\) aumenta \(2\) unidades.</div>
+</div>
+
+<p class="muted">Como \(m=\Delta y/\Delta x\), si \(x\) aumenta \(1\) unidad (\(\Delta x=1\)), entonces \(\Delta y=m\). Esto permite interpretar directamente el valor de la pendiente:</p>
+<table class="mini-table">
+<thead><tr><th>Pendiente</th><th>Significado</th></tr></thead>
+<tbody>
+<tr><td>\(m=2\)</td><td>cuando \(x\) aumenta \(1\), \(y\) aumenta \(2\)</td></tr>
+<tr><td>\(m=0,5\)</td><td>cuando \(x\) aumenta \(1\), \(y\) aumenta \(0,5\)</td></tr>
+<tr><td>\(m=-1\)</td><td>cuando \(x\) aumenta \(1\), \(y\) disminuye \(1\)</td></tr>
+</tbody>
+</table>
+
+<div class="box violet"><p><strong>Unidades de la pendiente:</strong> si \(x\) e \(y\) tienen unidades, \(m\) también: unidades de \(m=\) unidades de \(y\) / unidades de \(x\). Por ejemplo, si \(x\) está en horas e \(y\) en km, \(m\) se expresa en km/h.</p></div>
+
+<h3 style="margin-top:18px">Comportamiento según el signo</h3>
+<p class="muted">El comportamiento de la función depende de si la pendiente es positiva, negativa o nula.</p>
+<div class="visual"><img src="signo-pendiente.png" alt="Comportamiento de la función según el signo de la pendiente: positiva (creciente), negativa (decreciente) o nula (constante)"></div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Caso especial — rectas verticales:</strong> \(x=a\) tiene \(\Delta x=0\) entre dos puntos cualquiera, así que su pendiente no está definida (dividiría por cero). Además, no representa una función: para un mismo \(x\) hay distintos valores de \(y\).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">Calculá la pendiente entre \(A(2;5)\) y \(B(6;13)\).</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(1\)</button>
+<button class="opt" data-value="b">\(2\)</button>
+<button class="opt" data-value="c">\(4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\Delta y=13-5=8\), \(\Delta x=6-2=4\), \(m=8/4=2\)." data-no="Calculá \(\Delta y=13-5\) y \(\Delta x=6-2\), y dividí."></div>
+</div>
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">Si \(m=-3\), ¿qué pasa con \(y\) cuando \(x\) aumenta \(1\) unidad?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="El signo negativo indica que y disminuye, no que aumenta.">Aumenta 3 unidades</button>
+<button class="opt" data-value="b">Disminuye 3 unidades</button>
+<button class="opt" data-value="c" data-fb="Una pendiente negativa no significa que la función sea constante: sigue cambiando, solo que decreciendo.">No cambia</button>
+</div>
+<div class="feedback" data-ok="Correcto: con \(m=-3\), por cada unidad que aumenta x, y disminuye 3." data-no="Recordá: si Δx=1, entonces Δy=m. Revisá el signo de m."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Ordenada al origen</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>En \(f(x)=mx+b\), el número \(b\) se llama <strong>ordenada al origen</strong>: es el valor de la función cuando \(x=0\), \(b=f(0)\). El punto donde la gráfica interseca al eje \(y\) es \((0;b)\).</p></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=-4x+7\)</p></div>
+<div class="ejemplo-desarrollo"><p>Pendiente: \(m=-4\) (decreciente). Ordenada al origen: \(b=7\). Punto de intersección con el eje \(y\): \((0;7)\).</p></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity">
+<div class="question">Para \(f(x)=6x-9\), ¿cuál es la ordenada al origen?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Ese es el valor de m, no de b.">\(6\)</button>
+<button class="opt" data-value="b">\(-9\)</button>
+<button class="opt" data-value="c" data-fb="El signo importa: el término independiente es -9, no 9.">\(9\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(b=f(0)=-9\)." data-no="La ordenada al origen es el término independiente, con su signo."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Raíz de una función lineal</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>La <strong>raíz</strong> (o cero) es la coordenada \(x\) donde la función interseca al eje \(x\). Se obtiene resolviendo \(f(x)=0\):</p></div>
+<div class="formula teal">\[ mx+b=0\ \Rightarrow\ x_0=-\dfrac{b}{m}\ \ (\text{si } m\neq0) \]</div>
+
+<div class="guided">
+<div class="guided-title">\(f(x)=5x-20\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Planteamos \(0=5x-20\).</span></li>
+<li><span class="step-num">2</span><span>Despejamos: \(20=5x\;\Rightarrow\;x=4\).</span></li>
+</ol>
+<div class="result-line">La raíz es \(x_0=4\). Punto de intersección con el eje \(x\): \((4;0)\).</div>
+</div>
+
+<table class="mini-table">
+<thead><tr><th>Caso</th><th>Qué ocurre</th></tr></thead>
+<tbody>
+<tr><td>\(m=0\), \(b\neq0\)</td><td>\(f(x)=b\) nunca es \(0\): no tiene raíces</td></tr>
+<tr><td>\(m=0\), \(b=0\)</td><td>\(f(x)=0\) siempre: todos los reales son raíces</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 7</span>
+<div class="activity">
+<div class="question">¿Cuál es la raíz de \(f(x)=4x-12\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(3\)</button>
+<button class="opt" data-value="b">\(-3\)</button>
+<button class="opt" data-value="c">\(12\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(4x-12=0\;\Rightarrow\;x=3\)." data-no="Planteá \(f(x)=0\): \(4x-12=0\), y despejá x."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: GRAFICAR Y VERIFICAR ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Graficar y verificar</span>
+<h2>De la fórmula al gráfico, y al revés</h2>
+<p class="section-intro">Una recta queda determinada por dos puntos distintos. Vamos a ver cómo conseguir esos puntos, y cómo comprobar si un punto dado pertenece a la función.</p>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Determinar si un punto pertenece a una función</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Un punto \(P(x;y)\) pertenece a la función \(f\) si, al reemplazar \(x\) en la función, se obtiene el valor \(y\): \(f(x)=y\).</p></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, prestá atención a qué hay que reemplazar y qué hay que comparar para decidir si un punto pertenece a la función.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/djLAXFlvct8" title="Cuándo un punto pertenece a una función" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Sea \(f(x)=2x+3\). ¿Pertenecen \(P(4;11)\) y \(Q(5;8)\)?</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(f(4)=2(4)+3=11\). Como \(f(4)=11\), \(P\) pertenece a la función.</span></li>
+<li><span class="step-num">2</span><span>\(f(5)=2(5)+3=13\neq8\). Como \(f(5)\neq8\), \(Q\) no pertenece a la función.</span></li>
+</ol>
+</div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div>No alcanza con mirar solo uno de los dos datos del punto: hay que evaluar la función en el valor de \(x\) y comparar el resultado con el valor de \(y\).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 8</span>
+<div class="activity">
+<div class="question">Sea \(f(x)=3x-1\). ¿El punto \(P(2;5)\) pertenece a la función?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(f(2)=3(2)-1=5\), coincide con el valor de \(y\) del punto." data-no="Evaluá \(f(2)\) y compará el resultado con \(5\)."></div>
+</div>
+<span class="ejercicio-badge b-orange">Ejercicio 9</span>
+<div class="activity">
+<div class="question">Sea \(g(x)=-x+6\). ¿El punto \(Q(3;2)\) pertenece a la función?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">Sí</button>
+<button class="opt" data-value="b">No</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(g(3)=-3+6=3\neq2\), así que Q no pertenece." data-no="Evaluá \(g(3)\) y compará el resultado con \(2\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Graficar una función lineal</h3></div>
+<p class="muted">Como la función está definida para todos los reales, alcanza con conseguir dos puntos de su gráfico y trazar la recta que pasa por ellos.</p>
+
+<table class="mini-table">
+<thead><tr><th>Forma</th><th>Idea</th></tr></thead>
+<tbody>
+<tr><td>Con una tabla de valores</td><td>elegir dos o más valores de \(x\), calcular \(f(x)\), ubicar los puntos y trazar la recta</td></tr>
+<tr><td>Con \(b\) y la pendiente</td><td>ubicar \((0;b)\); desde ahí, moverse según \(m\) (como fracción): denominador = unidades horizontales (a la derecha), numerador = unidades verticales (arriba si es positivo, abajo si es negativo)</td></tr>
+<tr><td>Con las intersecciones</td><td>ubicar \((0;b)\) y la raíz \((x_0;0)\), y trazar la recta que pasa por ambos</td></tr>
+</tbody>
+</table>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Importante:</strong> el método de las intersecciones sirve solo cuando da dos puntos distintos. Si \(b=0\), ambos coinciden en \((0;0)\); si \(m=0\) con \(b\neq0\), no existe raíz. En esos casos hay que conseguir otro punto por alguno de los otros métodos.</div></div>
+
+<div class="video-block">
+<p class="muted">Este video muestra cómo graficar con una tabla de valores. Mientras lo mirás, fijate cómo se eligen los valores de \(x\) y cómo se traza la recta a partir de los puntos.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/LE4Hb7mDuVM" title="Graficar con tabla de valores" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="box violet"><p><strong>Tip para avanzar según la pendiente:</strong> si \(m=3\) → avanzar 1 a la derecha y subir 3. Si \(m=-2\) → avanzar 1 a la derecha y bajar 2. Si \(m=2/3\) → avanzar 3 a la derecha y subir 2.</p></div>
+
+<div class="video-block">
+<p class="muted">Este video repasa distintas formas de graficar una función. Mientras lo mirás, fijate qué datos necesita cada método para conseguir los dos puntos.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/8XprxtcVfPM" title="Formas de graficar una función" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 10</span>
+<div class="activity">
+<div class="question">Para graficar \(f(x)=3x-6\) con el método de las intersecciones, ¿cuáles son los dos puntos?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\((0;-6)\) y \((2;0)\)</button>
+<button class="opt" data-value="b" data-fb="Invertiste las coordenadas de ambos puntos: la ordenada al origen va en (0;b), y la raíz en (x₀;0).">\((-6;0)\) y \((0;2)\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el cálculo de la raíz: 3x-6=0 no da x=6.">\((0;-6)\) y \((6;0)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(b=-6\) da el punto \((0;-6)\), y la raíz \(3x-6=0\Rightarrow x=2\) da el punto \((2;0)\)." data-no="Calculá b (el término independiente) y la raíz (resolviendo f(x)=0), y armá los puntos (0;b) y (x₀;0)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: ENCONTRAR LA FUNCIÓN ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Encontrar la función</span>
+<h2>De los datos a la expresión, y posición relativa entre rectas</h2>
+<p class="section-intro">En algunas situaciones se dispone de información parcial sobre una función lineal, y hay que encontrar su expresión completa. Siempre se parte de \(f(x)=mx+b\).</p>
+
+<div class="subbloque" id="sub4-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Cuatro casos según los datos disponibles</h3></div>
+
+<h3 style="margin-top:4px">Caso 1 — se conocen \(m\) y \(b\)</h3>
+<p class="muted">Es el caso más simple: con los dos parámetros conocidos, la función queda determinada.</p>
+<div class="box teal"><p>Pendiente \(3\), ordenada al origen \(7\) → \(f(x)=3x+7\). No hay nada que calcular.</p></div>
+
+<h3 style="margin-top:18px">Caso 2 — se conoce \(m\) y un punto</h3>
+<p class="muted">Se reemplaza el punto en \(f(x)=mx+b\), y se despeja \(b\).</p>
+<div class="guided orange">
+<div class="guided-title">Pendiente \(3\), pasa por \((2;5)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Reemplazamos en \(f(x)=3x+b\): \(5=3(2)+b\;\Rightarrow\;5=6+b\).</span></li>
+<li><span class="step-num">2</span><span>Despejamos: \(b=-1\).</span></li>
+</ol>
+<div class="result-line">\(f(x)=3x-1\). Verificación: \(f(2)=3(2)-1=5\) ✓</div>
+</div>
+
+<h3 style="margin-top:18px">Caso 3 — se conoce \(b\) y un punto</h3>
+<p class="muted">Se reemplaza el punto y el valor de \(b\) en \(f(x)=mx+b\), y se despeja \(m\).</p>
+<div class="guided violet">
+<div class="guided-title">Ordenada al origen \(10\), pasa por \((4;18)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Reemplazamos en \(f(x)=4m+10\): \(18=4m+10\).</span></li>
+<li><span class="step-num">2</span><span>Despejamos: \(8=4m\;\Rightarrow\;m=2\).</span></li>
+</ol>
+<div class="result-line">\(f(x)=2x+10\). Verificación: \(f(4)=2(4)+10=18\) ✓</div>
+</div>
+
+<h3 style="margin-top:18px">Caso 4 — se conocen dos puntos</h3>
+<p class="muted">El caso más completo: no se conoce ni \(m\) ni \(b\), hay que calcular ambos.</p>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Calcular la pendiente</td><td>\(m=\dfrac{y_2-y_1}{x_2-x_1}\)</td></tr>
+<tr><td>2. Calcular \(b\)</td><td>se reemplaza cualquiera de los puntos en \(f(x)=mx+b\), y se despeja \(b\)</td></tr>
+</tbody>
+</table>
+<div class="guided pink">
+<div class="guided-title">Pasa por \((1;4)\) y \((4;13)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Pendiente: \(m=\dfrac{13-4}{4-1}=\dfrac{9}{3}=3\).</span></li>
+<li><span class="step-num">2</span><span>Con \((1;4)\): \(4=3(1)+b\;\Rightarrow\;b=1\).</span></li>
+</ol>
+<div class="result-line">\(f(x)=3x+1\). Verificación con \((4;13)\): \(f(4)=3(4)+1=13\) ✓</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 11</span>
+<div class="activity">
+<div class="question">Una función tiene pendiente \(-2\) y pasa por el punto \((3;1)\). ¿Cuál es \(f(x)\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(f(x)=-2x+7\)</button>
+<button class="opt" data-value="b" data-fb="Revisá el signo al despejar b: 1=-2(3)+b da b=7, no b=-7.">\(f(x)=-2x-7\)</button>
+<button class="opt" data-value="c" data-fb="La pendiente ya está dada, es -2: no hay que recalcularla.">\(f(x)=2x+7\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(1=-2(3)+b\;\Rightarrow\;1=-6+b\;\Rightarrow\;b=7\)." data-no="Reemplazá el punto en \(f(x)=-2x+b\) y despejá b."></div>
+</div>
+<span class="ejercicio-badge b-orange">Ejercicio 12</span>
+<div class="activity">
+<div class="question">Una función pasa por los puntos \((2;3)\) y \((5;12)\). ¿Cuál es su pendiente?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a">\(2\)</button>
+<button class="opt" data-value="b">\(3\)</button>
+<button class="opt" data-value="c">\(9\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(m=(12-3)/(5-2)=9/3=3\)." data-no="Calculá \(\Delta y=12-3\) y \(\Delta x=5-2\), y dividí."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Posición relativa de dos rectas</h3></div>
+<p class="muted">Dos rectas no verticales (de la forma \(y=mx+b\)) pueden relacionarse de tres formas, según cómo se comparen sus pendientes y ordenadas al origen.</p>
+
+<div class="visual"><img src="posicion-relativa.png" alt="Posición relativa de dos rectas: secantes (pendientes distintas), paralelas (misma pendiente, distinta ordenada) y coincidentes (misma pendiente y ordenada)"></div>
+
+<div class="concept-card"><h3>Caso particular: rectas perpendiculares</h3><p>Dos rectas no verticales son perpendiculares si el producto de sus pendientes es \(-1\): \(r\perp s\iff m_r\cdot m_s=-1\). Es decir, si una recta tiene pendiente \(m\), la perpendicular tiene pendiente \(-1/m\) (inversa y de signo opuesto).</p></div>
+<div class="guided">
+<div class="guided-title">\(r:y=4x+1\), \(s:y=-\dfrac{1}{4}x+6\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(m_r\cdot m_s=4\cdot(-1/4)=-1\).</span></li>
+</ol>
+<div class="result-line">\(r\) y \(s\) son perpendiculares.</div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>La fórmula supone pendientes definidas. Una recta vertical (\(x=a\)) y una horizontal (\(y=b\)) también son perpendiculares, aunque no se les pueda aplicar la fórmula, porque la vertical no tiene pendiente definida.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 13</span>
+<div class="activity">
+<div class="question">\(r:y=5x-2\), \(s:y=5x+4\). ¿Cómo es la posición relativa entre \(r\) y \(s\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Secantes es cuando las pendientes son distintas. Acá ambas son 5.">Secantes</button>
+<button class="opt" data-value="b">Paralelas</button>
+<button class="opt" data-value="c" data-fb="Coincidentes sería la misma recta: acá tienen distinta ordenada al origen (-2 y 4), así que no se superponen.">Coincidentes</button>
+</div>
+<div class="feedback" data-ok="Correcto: misma pendiente (5) y distinta ordenada al origen (-2 y 4): son paralelas." data-no="Compará las pendientes primero, y si son iguales, compará las ordenadas al origen."></div>
+</div>
+<span class="ejercicio-badge">Ejercicio 14</span>
+<div class="activity">
+<div class="question">Una recta tiene pendiente \(2/3\). ¿Cuál es la pendiente de la recta perpendicular a ella?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(-3/2\)</button>
+<button class="opt" data-value="b" data-fb="Falta cambiar el signo: solo invertir la fracción no alcanza.">\(3/2\)</button>
+<button class="opt" data-value="c" data-fb="Falta invertir la fracción: solo cambiar el signo no alcanza.">\(-2/3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: se invierte la fracción y se cambia el signo: de 2/3 a -3/2." data-no="La pendiente perpendicular es la inversa y de signo opuesto: invertí la fracción y cambiá el signo."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: APLICACIONES ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Aplicaciones</span>
+<h2>Modelizar con función lineal</h2>
+<p class="section-intro">Muchas situaciones reales se modelizan con una función lineal cuando una cantidad varía a un ritmo constante respecto de otra. \(m\) es la tasa de variación; \(b\) es el valor inicial, fijo o de referencia, según el contexto.</p>
+
+<div class="subbloque" id="sub5-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>El dominio en un modelo</h3></div>
+<p class="muted">Una misma expresión algebraica puede dar lugar a gráficos distintos según el dominio considerado, porque el gráfico está formado únicamente por los puntos que pertenecen a ese dominio.</p>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>La misma expresión \(f(x)=2x+1\), con cuatro dominios distintos.</p></div>
+<div class="ejemplo-desarrollo">
+<table class="mini-table">
+<thead><tr><th>Caso</th><th>Dominio</th><th>Gráfico</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>\(\mathbb{R}\)</td><td>la recta completa</td></tr>
+<tr><td>2</td><td>\([0,+\infty)\)</td><td>una semirrecta desde \((0;1)\) hacia la derecha</td></tr>
+<tr><td>3</td><td>\([0,5]\)</td><td>un segmento entre \((0;1)\) y \((5;11)\)</td></tr>
+<tr><td>4</td><td>\(\{0,1,2,3,4,5\}\)</td><td>puntos aislados y alineados</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Variable continua</strong> (tiempo, cantidad de líquido): el gráfico es un tramo continuo de recta (completa, semirrecta o segmento). <strong>Variable discreta</strong> (personas, trámites, unidades): el gráfico son puntos aislados y alineados; los puntos intermedios no forman parte del gráfico aunque pertenezcan a la misma recta.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 15</span>
+<div class="activity">
+<div class="question">Un modelo usa \(f(x)=2x+1\) con \(x=\) cantidad de sectores inspeccionados. ¿Cómo se representa su gráfico?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Una recta completa correspondería a un dominio de todos los reales, sin restricción de contexto.">Una recta completa</button>
+<button class="opt" data-value="b">Puntos aislados y alineados</button>
+<button class="opt" data-value="c" data-fb="Un segmento continuo correspondería a una variable continua, no a una cantidad de sectores (que es discreta).">Un segmento continuo</button>
+</div>
+<div class="feedback" data-ok="Correcto: una cantidad de sectores es una variable discreta, así que el gráfico son puntos aislados." data-no="Pensá si x representa algo que se cuenta (discreto) o algo que se mide (continuo)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Modelo con variable continua: depreciación de un vehículo</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Una organización adquiere un vehículo por \(\$12000000\). Se deprecia linealmente \(\$800000\) por año.</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(t=\) tiempo transcurrido (años, continua); \(V(t)=\) valor estimado (pesos).</p>
+<p style="margin-top:6px"><strong>Tasa de variación:</strong> \(m=-800000\) pesos/año (decreciente).</p>
+<p style="margin-top:6px"><strong>Valor inicial:</strong> \(V(0)=12000000\;\Rightarrow\;b=12000000\).</p>
+<p style="margin-top:6px"><strong>Función:</strong> \(V(t)=-800000t+12000000\).</p>
+<p style="margin-top:6px"><strong>Raíz:</strong> \(12000000-800000t=0\;\Rightarrow\;t=15\). Al cabo de 15 años, el valor llega a \(\$0\).</p>
+<p style="margin-top:6px"><strong>Dominio:</strong> \(t\) no puede ser negativo, y el modelo se usa hasta que \(V=0\): \(\text{Dom}(V)=[0,15]\). Como es continua, \(\text{Im}(V)=[0,12000000]\), y el gráfico es un segmento de recta.</p>
+<p style="margin-top:6px"><strong>Evaluación:</strong> \(V(5)=12000000-800000(5)=\$8000000\). Después de 5 años, el vehículo vale \(\$8000000\).</p>
+<div class="visual" style="margin-top:10px"><img src="ejemplo-depreciacion.png" alt="Gráfico de V(t)=-800000t+12000000, segmento de recta decreciente entre (0;12000000) y (15;0)"></div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 16</span>
+<div class="activity">
+<div class="question">Con el mismo modelo \(V(t)=-800000t+12000000\), ¿cuánto vale el vehículo después de 10 años?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$4000000\)</button>
+<button class="opt" data-value="b" data-fb="Revisá el signo: la pendiente es negativa, así que el valor disminuye, no aumenta.">\(\$20000000\)</button>
+<button class="opt" data-value="c" data-fb="Ese sería el valor a los 5 años, no a los 10.">\(\$8000000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(V(10)=12000000-800000(10)=\$4000000\)." data-no="Evaluá \(V(10)=-800000(10)+12000000\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Modelo con variable discreta: costo de una capacitación</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Una capacitación tiene un costo fijo de \(\$180000\). Con \(200\) participantes, el costo total es de \(\$270000\).</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) cantidad de participantes (discreta); \(C(x)=\) costo total (pesos).</p>
+<p style="margin-top:6px"><strong>Ordenada al origen:</strong> el costo fijo no depende de \(x\), así que \(C(0)=180000\;\Rightarrow\;b=180000\).</p>
+<p style="margin-top:6px"><strong>Pendiente:</strong> con el punto \((200;270000)\): \(270000=200m+180000\;\Rightarrow\;m=450\) pesos/participante.</p>
+<p style="margin-top:6px"><strong>Función:</strong> \(C(x)=450x+180000\).</p>
+<p style="margin-top:6px"><strong>Dominio:</strong> \(x\) es una cantidad de personas, así que \(\text{Dom}(C)=\{0,1,2,3,\ldots\}\): el gráfico son puntos aislados y alineados.</p>
+<p style="margin-top:6px"><strong>Evaluación:</strong> \(C(150)=450(150)+180000=\$247500\).</p>
+<div class="visual" style="margin-top:10px"><img src="ejemplo-costo.png" alt="Gráfico de C(x)=450x+180000, puntos aislados y alineados ya que x es una cantidad discreta de participantes"></div>
+</div>
+</div>
+
+<div class="concept-card violet"><h3>Usar el modelo para responder una condición</h3><p>Si el presupuesto máximo es \(\$300000\), ¿cuántos participantes como máximo? Se plantea \(C(x)\le300000\): \(450x\le120000\;\Rightarrow\;x\le266,67\ldots\)</p></div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>Como \(x\) es discreta, el resultado no se puede interpretar directamente. Se comprueban los enteros cercanos: \(C(266)=\$299700\) (cumple), \(C(267)=\$300150\) (no cumple). La respuesta es \(266\) participantes.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 17</span>
+<div class="activity">
+<div class="question">Con el mismo modelo \(C(x)=450x+180000\), si se inscriben \(80\) participantes, ¿cuál es el costo total?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$216000\)</button>
+<button class="opt" data-value="b" data-fb="Ese es solo el costo variable (450×80); falta sumar el costo fijo de $180000.">\(\$36000\)</button>
+<button class="opt" data-value="c" data-fb="Ese es el costo para 200 participantes, no para 80.">\(\$270000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(C(80)=450(80)+180000=36000+180000=\$216000\)." data-no="Evaluá \(C(80)=450(80)+180000\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Más modelos para practicar</h3></div>
+<p class="muted">Estos dos casos se resuelven con las mismas herramientas que ya usaste: encontrar la función a partir de dos puntos, o a partir de la tasa de variación y un valor inicial.</p>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 18</span>
+<div class="activity">
+<div class="question">Un vehículo se desplaza a velocidad constante. A las \(2\) horas está a \(150\) km de un punto de referencia; a las \(5\) horas, a \(330\) km. ¿Cuál es la función \(D(t)\) (distancia en km, según el tiempo \(t\) en horas)?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(D(t)=60t+30\)</button>
+<button class="opt" data-value="b" data-fb="Revisá el cálculo de la pendiente: (330-150)/(5-2) no da 90.">\(D(t)=90t+30\)</button>
+<button class="opt" data-value="c" data-fb="Esa pendiente está bien, pero revisá b: con el punto (2;150), 150=60(2)+b no da b=90.">\(D(t)=60t+90\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(m=(330-150)/(5-2)=60\); con \((2;150)\): \(150=60(2)+b\Rightarrow b=30\)." data-no="Calculá la pendiente con los dos puntos, y después despejá b reemplazando uno de ellos."></div>
+</div>
+<span class="ejercicio-badge b-pink">Ejercicio 19</span>
+<div class="activity">
+<div class="question">Un producto se vende a \(\$2500\) por unidad, sin costo fijo. ¿Qué tipo de función lineal es \(I(x)\) (ingreso según cantidad vendida), y cuál es su dominio?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Proporcionalidad directa (\(b=0\)); \(\text{Dom}(I)=\{0,1,2,3,\ldots\}\)</button>
+<button class="opt" data-value="b" data-fb="Sin costo fijo, b=0: no es una función lineal general con b≠0.">Función lineal general (\(b\neq0\)); \(\text{Dom}(I)=\mathbb{R}\)</button>
+<button class="opt" data-value="c" data-fb="x representa una cantidad de unidades vendidas: es discreta, no continua.">Proporcionalidad directa (\(b=0\)); \(\text{Dom}(I)=[0,+\infty)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: sin costo fijo, I(0)=0, así que b=0 (proporcionalidad directa); y x es una cantidad de unidades, discreta." data-no="Pensá cuánto vale I(0) (¿hay costo fijo?), y si x representa algo que se cuenta o algo que se mide."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 6: CIERRE ============ -->
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y síntesis</h2>
+
+<div class="subbloque" id="sub6-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Errores frecuentes: mini auditoría</h3></div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel1">Confundir la pendiente con la ordenada al origen <span>+</span></button>
+<div class="acc-panel" id="accPanel1"><div class="error-incorrecto">✗ Usar m y b como si fueran intercambiables.</div><div class="error-correcto">✓ En \(f(x)=mx+b\), \(m\) es la pendiente (cuánto varía \(y\) por unidad de \(x\)) y \(b\) es la ordenada al origen (\(f(0)\)). No son lo mismo.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel2">Invertir el orden al calcular la pendiente <span>+</span></button>
+<div class="acc-panel" id="accPanel2"><div class="error-incorrecto">✗ Restar \(y_2-y_1\) arriba pero \(x_1-x_2\) abajo.</div><div class="error-correcto">✓ Hay que usar el mismo orden en numerador y denominador: \(m=(y_2-y_1)/(x_2-x_1)\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel3">Creer que una pendiente negativa es un error <span>+</span></button>
+<div class="acc-panel" id="accPanel3"><div class="error-incorrecto">✗ Pensar que \(m\lt0\) significa que algo está mal calculado.</div><div class="error-correcto">✓ Una pendiente negativa es perfectamente válida: solo indica que la función es decreciente.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel4">Creer que toda función lineal pasa por el origen <span>+</span></button>
+<div class="acc-panel" id="accPanel4"><div class="error-incorrecto">✗ Asumir que cualquier \(f(x)=mx+b\) pasa por \((0;0)\).</div><div class="error-correcto">✓ Solo la función de proporcionalidad directa (\(b=0\)) pasa por el origen. Con \(b\neq0\), no pasa por \((0;0)\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel5">Confundir evaluar con verificar si un punto pertenece <span>+</span></button>
+<div class="acc-panel" id="accPanel5"><div class="error-incorrecto">✗ Mirar solo uno de los dos datos del punto.</div><div class="error-correcto">✓ Para ver si \(P(x;y)\) pertenece a \(f\), hay que evaluar \(f\) en el \(x\) del punto y comparar con el \(y\) del punto: \(f(x)=y\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel6">Creer que la recta vertical es una función <span>+</span></button>
+<div class="acc-panel" id="accPanel6"><div class="error-incorrecto">✗ Tratar \(x=a\) como una función de \(x\).</div><div class="error-correcto">✓ \(x=a\) no es función: a un mismo \(x\) le corresponden infinitos valores de \(y\). La horizontal \(y=b\) sí es función (con \(m=0\)).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel7">Confundir paralelas con coincidentes <span>+</span></button>
+<div class="acc-panel" id="accPanel7"><div class="error-incorrecto">✗ Usar las dos condiciones como si fueran la misma.</div><div class="error-correcto">✓ Paralelas: misma pendiente, distinta ordenada (\(m_r=m_s\), \(b_r\neq b_s\)). Coincidentes: misma pendiente y misma ordenada (son la misma recta).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel8">Olvidar invertir y cambiar el signo en la pendiente perpendicular <span>+</span></button>
+<div class="acc-panel" id="accPanel8"><div class="error-incorrecto">✗ Cambiar solo el signo, sin invertir la fracción.</div><div class="error-correcto">✓ Si una recta tiene pendiente \(m\), la perpendicular tiene \(-1/m\): se invierte y se cambia el signo, las dos cosas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel9">Asumir que el gráfico de una aplicación real es siempre una recta completa <span>+</span></button>
+<div class="acc-panel" id="accPanel9"><div class="error-incorrecto">✗ Graficar como recta completa sin mirar el contexto.</div><div class="error-correcto">✓ El gráfico depende del dominio. Si la variable independiente es discreta (personas, trámites), el gráfico son puntos aislados, no una recta continua.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel10">Dar como respuesta un valor que no pertenece al dominio <span>+</span></button>
+<div class="acc-panel" id="accPanel10"><div class="error-incorrecto">✗ Responder "266,67 participantes".</div><div class="error-correcto">✓ Si \(x\) debe ser entero, ese valor no es la respuesta final: hay que comprobar los enteros más cercanos y elegir el que corresponda según la pregunta.</div></div>
+</div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Referencia rápida</h3>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>Concepto</th><th>Fórmula / Idea</th></tr></thead>
+<tbody>
+<tr><td>Función lineal</td><td>\(f(x)=mx+b\). Si \(\text{Dom}(f)=\mathbb{R}\), su gráfico es una recta no vertical</td></tr>
+<tr><td>Pendiente</td><td>\(m=\Delta y/\Delta x\) · \(m\gt0\) creciente · \(m\lt0\) decreciente · \(m=0\) constante</td></tr>
+<tr><td>Ordenada al origen</td><td>\(b=f(0)\): punto \((0;b)\)</td></tr>
+<tr><td>Raíz</td><td>\(x_0=-b/m\) (si \(m\neq0\))</td></tr>
+<tr><td>Proporcionalidad directa</td><td>\(f(x)=mx\) (\(b=0\)): pasa por el origen</td></tr>
+<tr><td>Punto pertenece a la función</td><td>\(P(x;y)\) pertenece a \(f\) si \(f(x)=y\)</td></tr>
+<tr><td>Encontrar la función</td><td>(1) \(m\) y \(b\) · (2) \(m\) y un punto · (3) \(b\) y un punto · (4) dos puntos</td></tr>
+<tr><td>Posición relativa</td><td>Secantes: \(m_r\neq m_s\) · Paralelas: \(m_r=m_s\), \(b_r\neq b_s\) · Coincidentes: \(m_r=m_s\), \(b_r=b_s\) · Perpendiculares: \(m_r\cdot m_s=-1\)</td></tr>
+<tr><td>Dominio en una aplicación</td><td>variable continua → recta, semirrecta o segmento · variable discreta → puntos aislados alineados</td></tr>
+</tbody>
+</table>
+<p class="sintesis-frase">Una misma fórmula puede dar gráficos muy distintos: lo que cambia todo es el dominio que el contexto le permite tener.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+
+<!-- PLACEHOLDER_PANELS -->
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+/* ---------- Portada ---------- */
+document.body.style.overflow='hidden';
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  document.body.style.overflow='';
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+
+/* ---------- KaTeX ---------- */
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+
+/* ---------- Tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+/* ---------- Acordeón de errores frecuentes ---------- */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const abierto=item.classList.contains('open');
+  const s=btn.querySelector('span:last-child');
+  if(s)s.textContent=abierto?'−':'+';
+  btn.setAttribute('aria-expanded',abierto?'true':'false');
+  setTimeout(()=>typeset(item),80);
+}
+
+/* ---------- Actividades de opción múltiple ---------- */
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:(opt.dataset.fb||feedback.dataset.no);
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+/* ============================================================
+   EXPLORADOR m Y b
+   ============================================================ */
+const mbState={m:1,b:0};
+const mbMargen={left:44,right:14,top:14,bottom:34};
+const mbAncho=480-mbMargen.left-mbMargen.right;
+const mbAlto=380-mbMargen.top-mbMargen.bottom;
+const mbXMin=-6, mbXMax=6, mbYMin=-8, mbYMax=8;
+function mbX(x){return mbMargen.left + (x-mbXMin)/(mbXMax-mbXMin)*mbAncho;}
+function mbY(y){return mbMargen.top + mbAlto - (y-mbYMin)/(mbYMax-mbYMin)*mbAlto;}
+function mbClip(m,b){
+  const pts=[];
+  const y1=m*mbXMin+b; if(y1>=mbYMin&&y1<=mbYMax)pts.push([mbXMin,y1]);
+  const y2=m*mbXMax+b; if(y2>=mbYMin&&y2<=mbYMax)pts.push([mbXMax,y2]);
+  if(m!==0){
+    const x1=(mbYMin-b)/m; if(x1>=mbXMin&&x1<=mbXMax)pts.push([x1,mbYMin]);
+    const x2=(mbYMax-b)/m; if(x2>=mbXMin&&x2<=mbXMax)pts.push([x2,mbYMax]);
+  }
+  if(pts.length<2)return null;
+  pts.sort((a,c)=>a[0]-c[0]);
+  return [pts[0],pts[pts.length-1]];
+}
+function mbDibujar(){
+  const svg=document.getElementById('mbSvg');
+  const {m,b}=mbState;
+  let ejes=`<line x1="${mbMargen.left}" y1="${mbY(0)}" x2="${480-mbMargen.right}" y2="${mbY(0)}" stroke="#B9CFCF" stroke-width="1.5"/>
+  <line x1="${mbX(0)}" y1="${mbMargen.top}" x2="${mbX(0)}" y2="${mbMargen.top+mbAlto}" stroke="#B9CFCF" stroke-width="1.5"/>`;
+  let ticks='';
+  for(let x=mbXMin;x<=mbXMax;x+=2){
+    if(x===0)continue;
+    ticks+=`<text x="${mbX(x)}" y="${mbY(0)+16}" font-size="10" text-anchor="middle" fill="#5D737C" font-family="Inter,sans-serif">${x}</text>`;
+  }
+  for(let y=mbYMin;y<=mbYMax;y+=2){
+    if(y===0)continue;
+    ticks+=`<text x="${mbX(0)-7}" y="${mbY(y)+3}" font-size="10" text-anchor="end" fill="#5D737C" font-family="Inter,sans-serif">${y}</text>`;
+  }
+  const seg=mbClip(m,b);
+  let recta='';
+  if(seg){
+    recta=`<line x1="${mbX(seg[0][0])}" y1="${mbY(seg[0][1])}" x2="${mbX(seg[1][0])}" y2="${mbY(seg[1][1])}" stroke="#0F6B6F" stroke-width="3.5" stroke-linecap="round"/>`;
+  }
+  let triangulo='';
+  const yTri1=b, yTri2=m+b;
+  if(m!==0 && yTri1>=mbYMin&&yTri1<=mbYMax&&yTri2>=mbYMin&&yTri2<=mbYMax){
+    const px0=mbX(0), px1=mbX(1), py1=mbY(yTri1), py2=mbY(yTri2);
+    triangulo=`
+      <polygon points="${px0},${py1} ${px1},${py1} ${px1},${py2}" fill="#FF7A00" fill-opacity="0.15" stroke="#FF7A00" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="${(px0+px1)/2}" y="${py1-4}" font-size="11" text-anchor="middle" fill="#8E4300" font-family="Inter,sans-serif" font-weight="700">1</text>
+      <text x="${px1+7}" y="${(py1+py2)/2+4}" font-size="11" text-anchor="start" fill="#8E4300" font-family="Inter,sans-serif" font-weight="700">${(m%1===0)?m:m.toFixed(1)}</text>
+    `;
+  }
+  let ordenada='';
+  if(b>=mbYMin&&b<=mbYMax){
+    ordenada=`<circle cx="${mbX(0)}" cy="${mbY(b)}" r="6" fill="#7C5CE6" stroke="#4F35B8" stroke-width="2"/>
+    <text x="${mbX(0)-9}" y="${mbY(b)-9}" font-size="11" text-anchor="end" fill="#4F35B8" font-family="Inter,sans-serif" font-weight="700">(0;${b})</text>`;
+  }
+  let raiz='';
+  if(m!==0){
+    const x0=-b/m;
+    if(x0>=mbXMin&&x0<=mbXMax){
+      const x0r=Math.round(x0*100)/100;
+      raiz=`<circle cx="${mbX(x0)}" cy="${mbY(0)}" r="6" fill="#FF7A00" stroke="#8E4300" stroke-width="2"/>
+      <text x="${mbX(x0)+9}" y="${mbY(0)+16}" font-size="11" text-anchor="start" fill="#8E4300" font-family="Inter,sans-serif" font-weight="700">(${x0r};0)</text>`;
+    }
+  }
+  svg.innerHTML=`${ejes}${ticks}${recta}${triangulo}${ordenada}${raiz}`;
+
+  document.getElementById('mbValM').textContent=(m%1===0)?m:m.toFixed(1);
+  document.getElementById('mbValB').textContent=b;
+  const lectura=document.getElementById('mbLectura');
+  let comportamiento = m>0?'creciente':(m<0?'decreciente':'constante');
+  let raizTxt;
+  if(m!==0){
+    const x0=-b/m;
+    const x0r=Math.round(x0*100)/100;
+    raizTxt=`raíz en \\(x=${x0r}\\)`;
+  }else if(b!==0){
+    raizTxt='no tiene raíz';
+  }else{
+    raizTxt='todos los reales son raíz';
+  }
+  lectura.innerHTML=`\\(f(x)=${(m%1===0)?m:m.toFixed(1)}x${b>=0?'+':''}${b}\\) — la función es <strong>${comportamiento}</strong>. Ordenada al origen: \\((0;${b})\\). ${raizTxt}.`;
+  typeset(lectura);
+}
+function mbAdjust(cual,delta){
+  mbState[cual]=Math.round((mbState[cual]+delta)*10)/10;
+  if(cual==='m')mbState.m=Math.max(-4,Math.min(4,mbState.m));
+  if(cual==='b')mbState.b=Math.max(-6,Math.min(6,mbState.b));
+  mbDibujar();
+}
+function mbReset(){
+  mbState.m=1;mbState.b=0;
+  mbDibujar();
+}
+
+/* Inicializar */
+document.addEventListener('DOMContentLoaded',()=>{
+  requestAnimationFrame(()=>{
+    mbDibujar();
+    typeset(document.body);
+  });
+});
+</script>
+</body>
+</html>
