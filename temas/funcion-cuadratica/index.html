@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Función cuadrática · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{min-width:76px;height:76px;padding:0 18px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.3rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:14.3%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.aviso ul{padding-left:18px;margin-top:6px}.aviso li+li{margin-top:4px}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.nobr{white-space:nowrap}
+.linea{display:block;margin-top:7px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.guided.violet{border-left:4px solid var(--violet)}
+.guided.violet .step-num{background:var(--violet)}
+.guided.violet .result-line{background:var(--violet-soft);color:#4F35B8}
+.guided.pink{border-left:4px solid #C2478A}
+.guided.pink .step-num{background:#C2478A}
+.guided.pink .result-line{background:#FFF1F8;color:#8B1A5E}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn .acc-icon{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.calc{margin:8px 0 2px 4px;overflow-x:auto}
+.ejemplo-card .ejemplo-desarrollo p+p{margin-top:6px}
+.btn-chip{font:inherit;font-weight:700;font-size:.85rem;padding:9px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800);transition:.15s}
+.btn-chip:hover{background:var(--teal-100)}
+.btn-chip.reset-btn{border-color:var(--slate-700);color:var(--slate-700)}
+
+/* ---- Explorador a, b, c ---- */
+.mb-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.mb-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.mb-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.mb-svg-wrap{padding:6px 0 10px;text-align:center}
+.mb-svg-wrap svg{width:100%;max-width:520px;height:auto}
+.mb-controles{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:10px}
+.mb-grupo{display:flex;align-items:center;gap:10px;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+.mb-grupo .mb-label{font-weight:800;color:var(--teal-800);font-size:1rem;min-width:16px;text-align:center}
+.mb-grupo button{font:inherit;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:8px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800)}
+.mb-grupo button:hover{background:var(--teal-100)}
+.mb-grupo .mb-valor{font-weight:800;color:var(--navy-900);min-width:44px;text-align:center;font-size:.95rem}
+.mb-lectura{text-align:center;font-weight:700;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:14px;font-size:.95rem}
+.mb-reset-wrap{text-align:center;margin-top:10px}
+.qx-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.qx-dato{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:.86rem}
+.qx-dato .qx-lab{display:block;font-size:.74rem;font-weight:700;color:var(--slate-700);margin-bottom:2px}
+.qx-nota{font-size:.8rem;color:var(--slate-700);text-align:center;margin-top:8px}
+
+/* ---- Gráficos generados ---- */
+.plot{margin:14px 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 10px 12px;text-align:center}
+.plot svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.plot figcaption{color:var(--slate-700);font-size:.8rem;margin-top:8px;line-height:1.5}
+.plot-mini{margin:0}
+.plot-mini svg{max-width:300px}
+.plot-mini h4{font-size:.86rem;color:var(--navy-900);margin-bottom:4px}
+.plot-grid{margin:14px 0}
+.rel{font-family:'Times New Roman',serif;font-size:1.21em;margin:0 .28em;line-height:1}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:4px}
+
+/* ---- Repaso: intersección de intervalos ---- */
+.repaso{margin-top:24px;border:1px dashed #CDBFF5;background:#FCFBFF;border-radius:18px;padding:18px}
+.repaso h3{font-size:1.02rem;margin:6px 0 6px}
+.repaso-badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;background:var(--violet-soft);color:#4F35B8}
+.repaso .mb-widget{margin:12px 0}
+.int-tipo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px}
+.int-dato{display:block;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-res{display:block;margin-top:8px;font-size:1.02rem}
+.int-concl{display:block;margin-top:4px;color:var(--teal-900)}
+.int-com{display:block;margin-top:6px;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-btn.activo{background:var(--teal-800);color:#fff}
+.int-btn.activo:hover{background:var(--teal-700)}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){.qx-datos{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:15px}
+  .capsula{margin:10px;border-radius:22px}
+  .hero{padding:26px 18px 18px}
+  .tabs-wrap,.content{padding-left:14px;padding-right:14px}
+  .section{padding:20px 16px}
+  .tab{flex:1 1 calc(50% - 8px);justify-content:center}
+  h2{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma" style="font-size:1.05rem">f(x)=ax²+bx+c</div>
+<h1>Función cuadrática</h1>
+<h2>Parábola, elementos característicos, formas y modelos: un recorrido con un explorador, un video y actividades</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Función cuadrática</h1>
+<p>Un recorrido con un explorador de parábolas, un video y actividades cortas para reconocer la función cuadrática, calcular sus elementos, escribirla en distintas formas, graficarla y usarla para analizar situaciones donde interesa un valor máximo o mínimo. Te recomendamos recorrer las etapas en el orden propuesto.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Función cuadrática</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>La parábola</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Elementos</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Extremos y signo</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Formas y gráfico</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Aplicaciones</button>
+<button class="tab" data-tab="p7"><span class="tab-num">7</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+<!-- ============ PANEL 1: FUNCIÓN CUADRÁTICA ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Función cuadrática</span>
+<h2>Una función cuyo gráfico ya no es una recta</h2>
+<p class="section-intro">En este bloque estudiamos un nuevo tipo de función numérica. Su expresión tiene un término con \(x^2\), y su gráfico deja de ser una recta para convertirse en una curva.</p>
+
+<div class="subbloque" id="sub1-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Definición y forma general</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Una función cuadrática es una función \(f:\mathbb{R}\to\mathbb{R}\), definida por \(f(x)=ax^2+bx+c\), donde \(a\), \(b\) y \(c\) son números reales constantes, y \(a\)<span class="rel">≠</span>\(0\).</p></div>
+
+<table class="mini-table">
+<thead><tr><th>Término</th><th>Nombre</th><th>Coeficiente</th></tr></thead>
+<tbody>
+<tr><td>\(ax^2\)</td><td>término cuadrático</td><td>\(a\): coeficiente principal</td></tr>
+<tr><td>\(bx\)</td><td>término lineal</td><td>\(b\)</td></tr>
+<tr><td>\(c\)</td><td>término independiente</td><td>—</td></tr>
+</tbody>
+</table>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Identificar los coeficientes de \(f(x)=3x^2-5x+2\) y de \(g(x)=-x^2+4\).</p></div>
+<div class="ejemplo-desarrollo"><p>En \(f\): \(a=3\), \(b=-5\), \(c=2\).</p><p>Reescribiendo \(g(x)=-1x^2+0x+4\): \(a=-1\), \(b=0\), \(c=4\).</p></div>
+</div>
+
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>El coeficiente principal no puede ser 0.</strong> Si \(a=0\), desaparece el término cuadrático y queda \(f(x)=bx+c\): se obtiene una función lineal, no una función cuadrática. Por eso la condición \(a\)<span class="rel">≠</span>\(0\) forma parte de la definición.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">\(h(x)=4+3x-x^2\). ¿Cuáles son sus coeficientes?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="El coeficiente principal no es el primer número que aparece escrito: es el que acompaña a x². Conviene reordenar la expresión.">\(a=4\), \(b=3\), \(c=-1\)</button>
+<button class="opt" data-value="b">\(a=-1\), \(b=3\), \(c=4\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el signo del término cuadrático: es -x², así que a=-1, no 1.">\(a=1\), \(b=3\), \(c=4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: reordenando, \(h(x)=-x^2+3x+4\)." data-no="Reordená la expresión como \(ax^2+bx+c\) y leé cada coeficiente con su signo."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">¿Cuál de estas expresiones <strong>no</strong> define una función cuadrática?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Tiene a=-1≠0. Que falten el término lineal y el independiente (b=0, c=0) no importa: sigue siendo cuadrática.">\(g(x)=-x^2\)</button>
+<button class="opt" data-value="b" data-fb="Tiene a=1≠0 y c=0. Sigue siendo cuadrática.">\(h(x)=x^2-9x\)</button>
+<button class="opt" data-value="c">\(f(x)=0x^2+5x-1\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: con \(a=0\) la expresión se reduce a \(5x-1\), que es una función lineal." data-no="Buscá la expresión en la que el coeficiente principal vale 0."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Dominio de la función cuadrática</h3></div>
+<p class="muted">La expresión \(ax^2+bx+c\) puede calcularse para cualquier número real \(x\): no hay ninguna operación (como una división o una raíz) que restrinja los valores posibles.</p>
+<div class="formula violet">\[ \text{Dom}(f)=\mathbb{R} \]</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>El dominio en una situación real:</strong> cuando una función cuadrática se usa para modelizar una situación, el contexto puede restringir el dominio, aunque la expresión esté definida en todo \(\mathbb{R}\). En ese caso se dice que hay una <strong>regla cuadrática con un dominio restringido</strong>.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">Una función cuadrática da el costo de producción según la cantidad \(x\) de kilos producidos. ¿Por qué su dominio, en esa situación, no es \(\mathbb{R}\)?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Porque en el contexto no tiene sentido producir una cantidad negativa de kilos</button>
+<button class="opt" data-value="b" data-fb="La expresión se puede calcular para cualquier número real, también para los negativos. Lo que restringe el dominio es el contexto, no el cálculo.">Porque la expresión \(ax^2+bx+c\) no se puede calcular para valores negativos</button>
+<button class="opt" data-value="c" data-fb="Sin contexto, el dominio de una función cuadrática es ℝ. El intervalo [0;+∞) aparece solo si la situación lo exige.">Porque toda función cuadrática tiene dominio \([0;+\infty)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la expresión está definida en todo \(\mathbb{R}\), pero el contexto excluye las cantidades negativas." data-no="Distinguí entre lo que permite la expresión algebraica y lo que permite la situación."></div>
+</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: LA PARÁBOLA ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">La parábola</span>
+<h2>El gráfico de una función cuadrática</h2>
+
+<div class="subbloque" id="sub2-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>La parábola y su eje de simetría</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>El gráfico de una función cuadrática es una curva llamada <strong>parábola</strong>: una curva simétrica respecto de una recta vertical, llamada <strong>eje de simetría</strong>.</p></div>
+<p class="muted">En el explorador que sigue, el eje de simetría es la línea discontinua: si doblaras el gráfico por esa recta, las dos ramas de la parábola coincidirían. Usalo para ver cómo cambia la curva al modificar \(a\), \(b\) y \(c\).</p>
+</div>
+
+<div class="mb-widget">
+<div class="mb-titulo">Explorá: \(f(x)=ax^2+bx+c\)</div>
+<div class="mb-sub">Usá los botones para cambiar los coeficientes y observá qué pasa con la concavidad, la abertura, el vértice y las raíces.</div>
+<div class="mb-svg-wrap">
+<svg id="qxSvg" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de la parábola según los coeficientes elegidos"></svg>
+</div>
+<div class="mb-controles">
+<div class="mb-grupo">
+<span class="mb-label">a</span>
+<button onclick="qxAdjust('a',-0.5)" aria-label="Disminuir a">−</button>
+<span class="mb-valor" id="qxValA">1</span>
+<button onclick="qxAdjust('a',0.5)" aria-label="Aumentar a">+</button>
+</div>
+<div class="mb-grupo">
+<span class="mb-label">b</span>
+<button onclick="qxAdjust('b',-1)" aria-label="Disminuir b">−</button>
+<span class="mb-valor" id="qxValB">-2</span>
+<button onclick="qxAdjust('b',1)" aria-label="Aumentar b">+</button>
+</div>
+<div class="mb-grupo">
+<span class="mb-label">c</span>
+<button onclick="qxAdjust('c',-1)" aria-label="Disminuir c">−</button>
+<span class="mb-valor" id="qxValC">-3</span>
+<button onclick="qxAdjust('c',1)" aria-label="Aumentar c">+</button>
+</div>
+</div>
+<p class="qx-nota">El coeficiente \(a\) salta de \(0{,}5\) a \(-0{,}5\): con \(a=0\) la función dejaría de ser cuadrática.</p>
+<div class="mb-reset-wrap"><button class="btn-chip reset-btn" onclick="qxReset()">↺ Reiniciar</button></div>
+<div class="mb-lectura" id="qxFormula" aria-live="polite"></div>
+<div class="qx-datos" id="qxDatos" aria-live="polite"></div>
+<p class="qx-nota"><span class="dot" style="background:#7C5CE6"></span>ordenada al origen &nbsp; <span class="dot" style="background:#23865B"></span>raíces &nbsp; <span class="dot" style="background:#C94848"></span>vértice &nbsp; línea discontinua: eje de simetría</p>
+</div>
+
+<div class="subbloque" id="sub2-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Concavidad</h3></div>
+<p class="muted">La <strong>concavidad</strong> indica hacia dónde se abre la parábola, y queda determinada por el signo del coeficiente principal \(a\).</p>
+<table class="mini-table">
+<thead><tr><th>Signo de \(a\)</th><th>Concavidad</th><th>Se dice que la función tiene</th></tr></thead>
+<tbody>
+<tr><td>\(a\gt0\) (positivo)</td><td>cóncava hacia arriba</td><td>un mínimo</td></tr>
+<tr><td>\(a\lt0\) (negativo)</td><td>cóncava hacia abajo</td><td>un máximo</td></tr>
+</tbody>
+</table>
+<p class="muted">Además, cuanto <strong>menor</strong> es \(|a|\), más abierta (más "ancha") es la parábola; cuanto <strong>mayor</strong> es \(|a|\), más cerrada.</p>
+
+<div class="grid-2 plot-grid">
+<figure class="plot plot-mini"><h4>\(a\gt0\): cóncavas hacia arriba</h4><svg id="plotConcArriba" role="img" aria-label="Parábolas con a igual a 0,5 y a igual a 1"></svg>
+<figcaption><span class="dot" style="background:#FF7A00"></span>\(a=0{,}5\): más abierta &nbsp; <span class="dot" style="background:#0F6B6F"></span>\(a=1\): más cerrada</figcaption></figure>
+<figure class="plot plot-mini"><h4>\(a\lt0\): cóncavas hacia abajo</h4><svg id="plotConcAbajo" role="img" aria-label="Parábolas con a igual a -0,5 y a igual a -1"></svg>
+<figcaption><span class="dot" style="background:#FF7A00"></span>\(a=-0{,}5\): más abierta &nbsp; <span class="dot" style="background:#0F6B6F"></span>\(a=-1\): más cerrada</figcaption></figure>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Determinar la concavidad de \(f(x)=2x^2-3x+1\) y de \(g(x)=-0{,}5x^2+x\).</p></div>
+<div class="ejemplo-desarrollo"><p>\(f\): \(a=2\gt0\) → cóncava hacia arriba (tiene un mínimo).</p><p>\(g\): \(a=-0{,}5\lt0\) → cóncava hacia abajo (tiene un máximo).</p></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">\(g(x)=3-2x^2\). ¿Cómo es su concavidad?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="El 3 es el término independiente c. La concavidad la decide el coeficiente de x², que es -2.">Cóncava hacia arriba: tiene un mínimo</button>
+<button class="opt" data-value="b">Cóncava hacia abajo: tiene un máximo</button>
+<button class="opt" data-value="c" data-fb="La concavidad está bien, pero si la parábola se abre hacia abajo, el vértice es su punto más alto: un máximo.">Cóncava hacia abajo: tiene un mínimo</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(a=-2\lt0\), así que la parábola se abre hacia abajo y el vértice es un máximo." data-no="Identificá el coeficiente de \(x^2\) y fijate su signo."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">¿Cuál de estas parábolas es la más cerrada?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="0,5 es el coeficiente de menor valor absoluto: esa es la más abierta.">\(f(x)=0{,}5x^2\)</button>
+<button class="opt" data-value="b">\(g(x)=-3x^2\)</button>
+<button class="opt" data-value="c" data-fb="2 es mayor que -3, pero la abertura depende de |a|, no de a: |-3|=3 es mayor que |2|=2.">\(h(x)=2x^2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(|-3|=3\) es el mayor valor absoluto, así que es la más cerrada (aunque se abra hacia abajo)." data-no="Compará los valores absolutos de los coeficientes principales: cuanto mayor es \(|a|\), más cerrada."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: ELEMENTOS ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Elementos característicos</span>
+<h2>Ordenada al origen, raíces, eje de simetría y vértice</h2>
+<p class="section-intro">Para representar y analizar una parábola conviene identificar algunos puntos y rectas que la caracterizan.</p>
+
+<figure class="plot"><svg id="plotElementos" role="img" aria-label="Parábola con sus elementos característicos señalados: raíces, ordenada al origen, eje de simetría y vértice"></svg>
+<figcaption>Raíces \(x_1\) y \(x_2\): intersecciones con el eje \(x\), \((x_1;0)\) y \((x_2;0)\). Ordenada al origen: \(f(0)\), intersección con el eje \(y\) en \((0;f(0))\). Vértice \(V(x_v;y_v)\), sobre el eje de simetría \(x=x_v\).</figcaption></figure>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Ordenada al origen</h3></div>
+<p class="muted">La <strong>ordenada al origen</strong> es el valor que toma la función cuando \(x=0\):</p>
+<div class="formula violet">\[ f(0)=a\cdot0^2+b\cdot0+c=c \]</div>
+<p class="muted">La ordenada al origen coincide siempre con el término independiente \(c\). Por lo tanto, el gráfico interseca al eje \(y\) en el punto \((0;c)\).</p>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity">
+<div class="question">\(f(x)=-2x^2+x-7\). ¿En qué punto su gráfico interseca al eje \(y\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((0;-7)\)</button>
+<button class="opt" data-value="b" data-fb="Sobre el eje y, la coordenada x vale 0: el punto es (0;c), no (c;0).">\((-7;0)\)</button>
+<button class="opt" data-value="c" data-fb="-2 es el coeficiente principal a, no la ordenada al origen.">\((0;-2)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(f(0)=c=-7\), así que el punto es \((0;-7)\)." data-no="Calculá \(f(0)\): todos los términos con \(x\) se anulan."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Raíces</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Las <strong>raíces</strong> (o ceros) de una función cuadrática son los valores de \(x\) para los cuales \(f(x)=0\). Para hallarlas se resuelve la <strong>ecuación de segundo grado</strong> \(ax^2+bx+c=0\).</p></div>
+<div class="box teal"><p>Si \(x_1\) y \(x_2\) son raíces de la función, las intersecciones de la parábola con el eje \(x\) son los puntos \((x_1;0)\) y \((x_2;0)\).</p></div>
+
+<h3 style="margin-top:18px">Por factorización</h3>
+<p class="muted">Cuando la expresión permite aplicar directamente algún procedimiento conocido, se factoriza y se usa que <strong>si un producto es igual a cero, al menos uno de sus factores debe ser cero</strong>.</p>
+<div class="grid-2">
+<div class="guided">
+<div class="guided-title">Factor común: \(x^2-4x=0\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Extraemos el factor común \(x\): \(x(x-4)=0\).</span></li>
+<li><span class="step-num">2</span><span>Igualamos cada factor a cero: \(x=0\) o \(x-4=0\).</span></li>
+<li><span class="step-num">3</span><span>Despejamos \(x\) en cada ecuación: \(x=0\) o \(x=4\).</span></li>
+</ol>
+<div class="result-line">Raíces: \(x_1=0\) y \(x_2=4\).</div>
+</div>
+<div class="guided orange">
+<div class="guided-title">Diferencia de cuadrados: \(x^2-9=0\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Reconocemos que \(9=3^2\): \(x^2-3^2=0\).</span></li>
+<li><span class="step-num">2</span><span>Factorizamos e igualamos cada factor a cero: \((x-3)(x+3)=0\), entonces \(x-3=0\) o \(x+3=0\).</span></li>
+<li><span class="step-num">3</span><span>Despejamos \(x\) en cada ecuación: \(x=3\) o \(x=-3\).</span></li>
+</ol>
+<div class="result-line">Raíces: \(x_1=-3\) y \(x_2=3\).</div>
+</div>
+</div>
+
+<h3 style="margin-top:18px">Con la fórmula general</h3>
+<p class="muted">Cuando la expresión no se factoriza fácilmente, se usa la fórmula general, válida para cualquier ecuación de segundo grado:</p>
+<div class="formula">\[ x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a} \]</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 7</span>
+<div class="activity">
+<div class="question">¿Cuáles son las raíces de \(f(x)=x^2-16\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x_1=-4\) y \(x_2=4\)</button>
+<button class="opt" data-value="b" data-fb="Falta una raíz: (x-4)(x+4)=0 tiene dos factores, y cada uno aporta una solución.">solo \(x=4\)</button>
+<button class="opt" data-value="c" data-fb="16 es el cuadrado de la raíz, no la raíz: 4²=16.">\(x=16\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x^2-4^2=(x-4)(x+4)=0\), entonces \(x-4=0\) o \(x+4=0\); despejando, \(x=4\) o \(x=-4\)." data-no="Reconocé una diferencia de cuadrados: \(16=4^2\)."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 8</span>
+<div class="activity">
+<div class="question">¿Cuáles son las raíces de \(g(x)=3x^2+6x\)?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Revisá el signo: 3x(x+2)=0 da x+2=0, es decir, x=-2.">\(x_1=0\) y \(x_2=2\)</button>
+<button class="opt" data-value="b" data-fb="Si dividís ambos miembros por x, se pierde la raíz x=0. Conviene extraer factor común 3x.">solo \(x=-2\)</button>
+<button class="opt" data-value="c">\(x_1=-2\) y \(x_2=0\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3x(x+2)=0\), entonces \(3x=0\) o \(x+2=0\); despejando, \(x=0\) o \(x=-2\)." data-no="Extraé factor común \(3x\), igualá cada factor a cero y despejá \(x\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>El discriminante y la cantidad de raíces</h3></div>
+<p class="muted">En la fórmula general, la expresión que está dentro de la raíz se llama <strong>discriminante</strong> y se representa con la letra griega \(\Delta\):</p>
+<div class="formula violet">\[ \Delta=b^2-4ac \]</div>
+<table class="mini-table">
+<thead><tr><th>Discriminante</th><th>¿Qué ocurre en la fórmula?</th><th>Cantidad de raíces</th></tr></thead>
+<tbody>
+<tr><td>\(\Delta\gt0\)</td><td>\(\sqrt{\Delta}\) es un número real positivo: los signos \(+\) y \(-\) producen dos resultados diferentes</td><td>dos raíces reales distintas</td></tr>
+<tr><td>\(\Delta=0\)</td><td>\(\sqrt{\Delta}=0\): sumar o restar \(0\) produce el mismo resultado</td><td>una raíz real doble</td></tr>
+<tr><td>\(\Delta\lt0\)</td><td>\(\sqrt{\Delta}\) no puede calcularse dentro de los números reales</td><td>ninguna raíz real</td></tr>
+</tbody>
+</table>
+
+<div class="grid-3 plot-grid">
+<figure class="plot plot-mini"><h4>\(\Delta\gt0\): dos raíces reales distintas</h4><svg id="plotD1" role="img" aria-label="Parábola que corta al eje x en dos puntos"></svg><figcaption>La parábola corta al eje \(x\) en dos puntos.</figcaption></figure>
+<figure class="plot plot-mini"><h4>\(\Delta=0\): una raíz real doble</h4><svg id="plotD2" role="img" aria-label="Parábola que toca al eje x en un solo punto"></svg><figcaption>La parábola toca al eje \(x\) en un solo punto.</figcaption></figure>
+<figure class="plot plot-mini"><h4>\(\Delta\lt0\): ninguna raíz real</h4><svg id="plotD3" role="img" aria-label="Parábola que no corta al eje x"></svg><figcaption>La parábola no corta al eje \(x\).</figcaption></figure>
+</div>
+
+<div class="guided">
+<div class="guided-title">Caso \(\Delta\gt0\): \(f(x)=x^2-5x+6\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(\Delta=(-5)^2-4\cdot1\cdot6=25-24=1\gt0\): dos raíces reales distintas.</span></li>
+<li><span class="step-num">2</span><span>Aplicamos la fórmula general: \(x=\dfrac{5\pm\sqrt{1}}{2}=\dfrac{5\pm1}{2}\).</span></li>
+<li><span class="step-num">3</span><span>Con el signo \(-\): \(x_1=\dfrac{5-1}{2}=\dfrac{4}{2}=2\).</span></li>
+<li><span class="step-num">4</span><span>Con el signo \(+\): \(x_2=\dfrac{5+1}{2}=\dfrac{6}{2}=3\).</span></li>
+</ol>
+<div class="result-line">Las raíces son \(x_1=2\) y \(x_2=3\).</div>
+</div>
+<div class="guided orange">
+<div class="guided-title">Caso \(\Delta=0\): \(f(x)=0{,}5x^2-2x+2\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(\Delta=(-2)^2-4\cdot0{,}5\cdot2=4-4=0\): una raíz real doble.</span></li>
+<li><span class="step-num">2</span><span>\(x=-\dfrac{b}{2a}=\dfrac{2}{2\cdot0{,}5}=\dfrac{2}{1}=2\).</span></li>
+</ol>
+<div class="result-line">Raíz doble \(x=2\). El vértice es \(V(2;0)\): la parábola toca al eje \(x\) exactamente en el vértice.</div>
+</div>
+<div class="guided violet">
+<div class="guided-title">Caso \(\Delta\lt0\): \(g(x)=2x^2+4x+6\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(\Delta=4^2-4\cdot2\cdot6=16-48=-32\lt0\): no tiene raíces reales.</span></li>
+<li><span class="step-num">2</span><span>Su vértice es \(V(-1;4)\). Como \(a\gt0\), ese valor es un mínimo, y es positivo.</span></li>
+</ol>
+<div class="result-line">La parábola queda completamente por encima del eje \(x\): no lo interseca.</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 9</span>
+<div class="activity">
+<div class="question">\(f(x)=x^2+2x+5\). ¿Cuántas raíces reales tiene?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Revisá el cálculo: Δ=2²-4·1·5=4-20, que es negativo.">Dos raíces reales distintas</button>
+<button class="opt" data-value="b">Ninguna raíz real</button>
+<button class="opt" data-value="c" data-fb="Para una raíz doble, Δ debería ser 0. Acá Δ=4-20=-16.">Una raíz real doble</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\Delta=2^2-4\cdot1\cdot5=4-20=-16\lt0\)." data-no="Calculá \(\Delta=b^2-4ac\) y fijate su signo."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 10</span>
+<div class="activity">
+<div class="question">\(f(x)=x^2-6x+9\). ¿Qué se puede afirmar sobre sus raíces?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Revisá el signo: x=-b/(2a) con b=-6 da -(-6)/2=6/2=3.">Tiene una raíz real doble, \(x=-3\)</button>
+<button class="opt" data-value="b" data-fb="Δ=(-6)²-4·1·9=36-36=0, no es positivo.">Tiene dos raíces reales distintas</button>
+<button class="opt" data-value="c">Tiene una raíz real doble, \(x=3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\Delta=36-36=0\) y \(x=-\dfrac{(-6)}{2\cdot1}=\dfrac{6}{2}=3\)." data-no="Calculá el discriminante; si da 0, la raíz doble es \(x=-\dfrac{b}{2a}\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Eje de simetría y vértice</h3></div>
+<p class="muted">El <strong>eje de simetría</strong> es la recta vertical que divide a la parábola en dos ramas simétricas. Se calcula a partir de los coeficientes:</p>
+<div class="formula teal">\[ x=-\dfrac{b}{2a} \]</div>
+<div class="concept-card violet"><h3>Definición</h3><p>El <strong>vértice</strong> es el punto donde la parábola corta a su eje de simetría. Es el punto más bajo de la parábola (si es cóncava hacia arriba) o el más alto (si es cóncava hacia abajo).</p></div>
+<div class="formula violet">\[ V=(x_v;y_v),\quad\text{con } x_v=-\dfrac{b}{2a}\ \text{ e }\ y_v=f(x_v) \]</div>
+<p class="muted">Cuando la función tiene dos raíces reales \(x_1\) y \(x_2\), el eje de simetría pasa por el punto medio entre ellas, así que también:</p>
+<div class="formula teal">\[ x_v=\dfrac{x_1+x_2}{2} \]</div>
+
+<div class="guided pink">
+<div class="guided-title">Eje de simetría y vértice de \(f(x)=x^2-6x+5\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>\(x_v=-\dfrac{(-6)}{2\cdot1}=\dfrac{6}{2}=3\). El eje de simetría es \(x=3\).</span></li>
+<li><span class="step-num">2</span><span>\(y_v=f(3)=3^2-6\cdot3+5=-4\).</span></li>
+</ol>
+<div class="result-line">\(V(3;-4)\). Como \(a=1\gt0\), el vértice es el punto mínimo de la función.</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 11</span>
+<div class="activity">
+<div class="question">¿Cuál es el vértice de \(f(x)=x^2+4x+1\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Revisá el signo de x_v: con b=4, -b/(2a)=-4/2=-2, no 2.">\(V(2;13)\)</button>
+<button class="opt" data-value="b">\(V(-2;-3)\)</button>
+<button class="opt" data-value="c" data-fb="x_v está bien, pero revisá f(-2): (-2)²=4, no -4. Queda 4-8+1.">\(V(-2;-11)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x_v=-\dfrac{4}{2}=-2\) e \(y_v=f(-2)=4-8+1=-3\)." data-no="Calculá \(x_v=-\dfrac{b}{2a}\) con cuidado del signo, y después evaluá \(f(x_v)\)."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 12</span>
+<div class="activity">
+<div class="question">Una función cuadrática tiene raíces \(x_1=1\) y \(x_2=7\). ¿Cuál es su eje de simetría?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(x=4\)</button>
+<button class="opt" data-value="b" data-fb="3 es la mitad de la distancia entre las raíces (7-1)/2, no el punto medio. Hay que sumar las raíces.">\(x=3\)</button>
+<button class="opt" data-value="c" data-fb="8 es la suma de las raíces: falta dividir por 2.">\(x=8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x_v=\dfrac{1+7}{2}=4\)." data-no="El eje pasa por el punto medio entre las raíces: \(x_v=\dfrac{x_1+x_2}{2}\)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: EXTREMOS Y SIGNO ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Extremos, imagen y signo</span>
+<h2>Lo que el vértice y las raíces dicen de la función</h2>
+<p class="section-intro">Con el vértice, las raíces y la concavidad se puede describir el comportamiento completo de la función: su extremo, su imagen, dónde es positiva o negativa, y dónde crece o decrece.</p>
+
+<div class="subbloque" id="sub4-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Máximos y mínimos</h3></div>
+<p class="muted">El máximo y el mínimo absoluto de una función son el mayor y el menor valor que alcanza en su dominio. Cuando \(\text{Dom}(f)=\mathbb{R}\), ese extremo de la función cuadrática coincide siempre con el vértice:</p>
+<table class="mini-table">
+<thead><tr><th>Concavidad</th><th>El vértice es</th><th>Interpretación</th></tr></thead>
+<tbody>
+<tr><td>\(a\gt0\) (cóncava hacia arriba)</td><td>un mínimo</td><td>\(f(x_v)\le f(x)\) para todo \(x\in\text{Dom}(f)\)</td></tr>
+<tr><td>\(a\lt0\) (cóncava hacia abajo)</td><td>un máximo</td><td>\(f(x_v)\ge f(x)\) para todo \(x\in\text{Dom}(f)\)</td></tr>
+</tbody>
+</table>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>¿Y si el dominio está restringido?</strong> Cuando la función proviene de una situación real, el vértice no siempre da el extremo del modelo. Conviene revisar cada caso:
+<ul>
+<li>Antes que nada, verificar si la abscisa del vértice \(x_v\) pertenece al dominio considerado.</li>
+<li>Si el dominio es un intervalo cerrado \([p;q]\), además del vértice (cuando pertenece al intervalo) hay que evaluar la función en los extremos \(p\) y \(q\): el mayor o el menor valor puede alcanzarse ahí.</li>
+<li>Si la variable es discreta y \(x_v\) no es uno de los valores permitidos, hay que comparar los valores admisibles más próximos a \(x_v\).</li>
+</ul></div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 13</span>
+<div class="activity">
+<div class="question">\(f(x)=-x^2+6x-2\), con \(\text{Dom}(f)=\mathbb{R}\). ¿Cuál es su extremo?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="El vértice está bien calculado, pero a=-1<0: la parábola se abre hacia abajo y el vértice es el punto más alto.">Un mínimo, que vale \(7\) y se alcanza en \(x=3\)</button>
+<button class="opt" data-value="b" data-fb="Invertiste las coordenadas: el valor del extremo es y_v y se alcanza en x_v.">Un máximo, que vale \(3\) y se alcanza en \(x=7\)</button>
+<button class="opt" data-value="c">Un máximo, que vale \(7\) y se alcanza en \(x=3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x_v=-\dfrac{6}{2\cdot(-1)}=3\), \(y_v=-9+18-2=7\), y como \(a\lt0\) es un máximo." data-no="Calculá el vértice y mirá el signo de \(a\) para decidir si es máximo o mínimo."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Imagen</h3></div>
+<p class="muted">La imagen queda determinada por la concavidad y por la coordenada \(y_v\) del vértice: como el vértice es un extremo absoluto, todos los demás valores de la función son mayores o menores que \(y_v\).</p>
+<table class="mini-table">
+<thead><tr><th>Concavidad</th><th>Imagen (si \(\text{Dom}(f)=\mathbb{R}\))</th></tr></thead>
+<tbody>
+<tr><td>\(a\gt0\)</td><td>\(\text{Im}(f)=[y_v;+\infty)\)</td></tr>
+<tr><td>\(a\lt0\)</td><td>\(\text{Im}(f)=(-\infty;y_v]\)</td></tr>
+</tbody>
+</table>
+<div class="visual"><img src="imagen.png" alt="Imagen de la función cuadrática según la concavidad: con a mayor que 0 va desde y sub v hasta más infinito; con a menor que 0, desde menos infinito hasta y sub v"></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=2x^2-4x+5\), con \(\text{Dom}(f)=\mathbb{R}\) y vértice \(V(1;3)\).</p></div>
+<div class="ejemplo-desarrollo"><p>Como \(a=2\gt0\), la parábola es cóncava hacia arriba y el vértice es un mínimo: \(\text{Im}(f)=[3;+\infty)\).</p></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Cuando el dominio está restringido</strong>, estas fórmulas no se aplican directamente: la imagen se determina con los valores que la función alcanza en ese dominio, con el mismo criterio que para el extremo (vértice, extremos del intervalo o valores discretos más próximos).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<div class="activity">
+<div class="question">\(f(x)=-x^2+2x+3\), con \(\text{Dom}(f)=\mathbb{R}\), tiene vértice \(V(1;4)\). ¿Cuál es su imagen?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((-\infty;4]\)</button>
+<button class="opt" data-value="b" data-fb="Con a=-1<0 la parábola se abre hacia abajo: los valores de la función están por debajo de y_v, no por encima.">\([4;+\infty)\)</button>
+<button class="opt" data-value="c" data-fb="La imagen se arma con y_v, no con x_v: son valores de la función.">\((-\infty;1]\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: como \(a\lt0\), el vértice es un máximo y la función toma todos los valores menores o iguales que \(4\)." data-no="Mirá el signo de \(a\) y usá la coordenada \(y_v\) del vértice."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Conjuntos de positividad y negatividad</h3></div>
+<p class="muted">Para saber dónde la función es positiva o negativa se observa la posición del gráfico respecto del eje \(x\): por encima, \(f(x)\gt0\); por debajo, \(f(x)\lt0\); sobre el eje, \(f(x)=0\).</p>
+<div class="concept-card violet"><h3>Definición</h3><p>El <strong>conjunto de positividad</strong> \(C^+(f)\) es el conjunto de valores de \(x\) donde \(f(x)\gt0\). El <strong>conjunto de negatividad</strong> \(C^-(f)\) es el conjunto de valores de \(x\) donde \(f(x)\lt0\).</p></div>
+<p class="muted">Las raíces separan los intervalos en los que la función puede cambiar de signo; la concavidad indica cuáles son positivos y cuáles negativos.</p>
+
+<div class="grid-2 plot-grid">
+<figure class="plot plot-mini"><h4>Dos raíces, \(a\gt0\)</h4><svg id="plotS1" role="img" aria-label="Dos raíces con a positivo"></svg><figcaption>\(C^+=(-\infty;x_1)\cup(x_2;+\infty)\) · \(C^-=(x_1;x_2)\)</figcaption></figure>
+<figure class="plot plot-mini"><h4>Dos raíces, \(a\lt0\)</h4><svg id="plotS2" role="img" aria-label="Dos raíces con a negativo"></svg><figcaption>\(C^+=(x_1;x_2)\) · \(C^-=(-\infty;x_1)\cup(x_2;+\infty)\)</figcaption></figure>
+<figure class="plot plot-mini"><h4>Raíz doble, \(a\gt0\)</h4><svg id="plotS3" role="img" aria-label="Raíz doble con a positivo"></svg><figcaption>\(C^+=\mathbb{R}-\{x_0\}\) · \(C^-=\varnothing\)</figcaption></figure>
+<figure class="plot plot-mini"><h4>Raíz doble, \(a\lt0\)</h4><svg id="plotS4" role="img" aria-label="Raíz doble con a negativo"></svg><figcaption>\(C^+=\varnothing\) · \(C^-=\mathbb{R}-\{x_0\}\)</figcaption></figure>
+<figure class="plot plot-mini"><h4>Sin raíces reales, \(a\gt0\)</h4><svg id="plotS5" role="img" aria-label="Sin raíces reales con a positivo"></svg><figcaption>\(C^+=\mathbb{R}\) · \(C^-=\varnothing\)</figcaption></figure>
+<figure class="plot plot-mini"><h4>Sin raíces reales, \(a\lt0\)</h4><svg id="plotS6" role="img" aria-label="Sin raíces reales con a negativo"></svg><figcaption>\(C^+=\varnothing\) · \(C^-=\mathbb{R}\)</figcaption></figure>
+</div>
+<p class="qx-nota"><span class="dot" style="background:#23865B"></span>tramos del eje \(x\) donde \(f(x)\gt0\) &nbsp; <span class="dot" style="background:#E0735F"></span>tramos donde \(f(x)\lt0\)</p>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=x^2-5x+6\), con raíces \(x_1=2\) y \(x_2=3\), y \(a=1\gt0\).</p></div>
+<div class="ejemplo-desarrollo"><p>Entre las raíces el gráfico queda por debajo del eje \(x\), y fuera de ese tramo, por encima:</p><p>\(C^+(f)=(-\infty;2)\cup(3;+\infty)\) &nbsp;&nbsp; \(C^-(f)=(2;3)\)</p><p>Las raíces no pertenecen a ninguno de los dos conjuntos, porque en ellas la función vale exactamente \(0\).</p></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Cuando el dominio está restringido</strong>, los conjuntos de positividad y negatividad se determinan considerando solamente los valores de \(x\) que pertenecen al dominio de la situación.</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 15</span>
+<div class="activity">
+<div class="question">\(f(x)=-x^2+4\) tiene raíces \(x_1=-2\) y \(x_2=2\). ¿Cuál es su conjunto de positividad?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(C^+=(-2;2)\)</button>
+<button class="opt" data-value="b" data-fb="Ese sería el caso a>0. Con a=-1 la parábola se abre hacia abajo: queda por encima del eje entre las raíces.">\(C^+=(-\infty;-2)\cup(2;+\infty)\)</button>
+<button class="opt" data-value="c" data-fb="En las raíces la función vale 0, que no es positivo: los extremos del intervalo no se incluyen.">\(C^+=[-2;2]\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: con \(a\lt0\) la parábola está por encima del eje \(x\) entre las raíces, sin incluirlas." data-no="Combiná las raíces con la concavidad: ¿la parábola se abre hacia arriba o hacia abajo?"></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 16</span>
+<div class="activity">
+<div class="question">\(f(x)=x^2-6x+9\) tiene una raíz doble \(x_0=3\) y \(a=1\gt0\). ¿Cuál es su conjunto de negatividad?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Ese es el conjunto de positividad: fuera de la raíz doble, la parábola está por encima del eje.">\(C^-=\mathbb{R}-\{3\}\)</button>
+<button class="opt" data-value="b">\(C^-=\varnothing\)</button>
+<button class="opt" data-value="c" data-fb="La parábola solo toca al eje en x=3; a la izquierda de 3 sigue estando por encima del eje.">\(C^-=(-\infty;3)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la parábola toca al eje \(x\) en \(x=3\) y en todo el resto queda por encima: nunca es negativa." data-no="Imaginá la parábola: se abre hacia arriba y solo toca al eje en su vértice."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>Crecimiento y decrecimiento</h3></div>
+<p class="muted">El vértice también marca el cambio de comportamiento: a un lado de \(x_v\) la función crece, y al otro decrece.</p>
+<table class="mini-table">
+<thead><tr><th>Concavidad</th><th>Comportamiento (si \(\text{Dom}(f)=\mathbb{R}\))</th></tr></thead>
+<tbody>
+<tr><td>\(a\gt0\) (mínimo en el vértice)</td><td>decreciente en \((-\infty;x_v)\) y creciente en \((x_v;+\infty)\)</td></tr>
+<tr><td>\(a\lt0\) (máximo en el vértice)</td><td>creciente en \((-\infty;x_v)\) y decreciente en \((x_v;+\infty)\)</td></tr>
+</tbody>
+</table>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=x^2-4x-5\), con vértice \(V(2;-9)\) y \(a=1\gt0\).</p></div>
+<div class="ejemplo-desarrollo"><p>Intervalo de crecimiento: \(IC=(2;+\infty)\). Intervalo de decrecimiento: \(ID=(-\infty;2)\).</p></div>
+</div>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Cuando el dominio está restringido</strong>, se conservan solo las partes de los intervalos que pertenecen al dominio: se hace la <strong>intersección de intervalos</strong> (\(\cap\)). Por ejemplo, si la función es creciente en \((-\infty;5)\) y el dominio es \([0;10]\): \((-\infty;5)\cap[0;10]=[0;5)\).</div></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 17</span>
+<div class="activity">
+<div class="question">\(f(x)=-x^2+6x-2\) tiene vértice \(V(3;7)\). ¿Cuál es su intervalo de crecimiento?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Ese sería el caso a>0. Con a=-1 la función sube hasta el máximo y después baja.">\(IC=(3;+\infty)\)</button>
+<button class="opt" data-value="b" data-fb="Los intervalos de crecimiento se escriben con valores de x: se usa x_v=3, no y_v=7.">\(IC=(-\infty;7)\)</button>
+<button class="opt" data-value="c">\(IC=(-\infty;3)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: con \(a\lt0\), la función crece hasta \(x_v=3\) y después decrece." data-no="Mirá el signo de \(a\) y usá la abscisa del vértice."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 18</span>
+<div class="activity">
+<div class="question">Una función cuadrática es decreciente en \((4;+\infty)\), pero en la situación que modeliza \(\text{Dom}=[0;10]\). ¿En qué intervalo es decreciente dentro de la situación?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\((4;10]\)</button>
+<button class="opt" data-value="b" data-fb="Falta intersecar con el dominio: los valores mayores que 10 no pertenecen a la situación.">\((4;+\infty)\)</button>
+<button class="opt" data-value="c" data-fb="Esa es la parte del dominio que queda antes del vértice, no la que está en el intervalo de decrecimiento.">\([0;4)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((4;+\infty)\cap[0;10]=(4;10]\). El 10 se incluye porque pertenece al dominio." data-no="Buscá los valores que están a la vez en \((4;+\infty)\) y en \([0;10]\)."></div>
+</div>
+<div class="repaso" id="repasoInterseccion">
+<span class="repaso-badge">Repaso opcional</span>
+<h3>¿No te quedó clara la intersección de intervalos?</h3>
+<p class="muted">La intersección \(A\cap B\) está formada por los valores que pertenecen <strong>a la vez</strong> a los dos intervalos. En una aplicación, uno de ellos es el intervalo de crecimiento o decrecimiento de la función, y el otro es el dominio de la situación: nos quedamos solo con la parte que tienen en común.</p>
+
+<div class="mb-widget">
+<div class="mb-titulo">Visualizá la intersección</div>
+<div class="mb-sub">Elegí si la función crece o decrece, mové la abscisa del vértice \(x_v\) y los extremos del dominio \([p;q]\), y mirá qué parte queda en común.</div>
+<div class="int-tipo" role="group" aria-label="Tipo de intervalo">
+<button class="btn-chip int-btn activo" id="intBtnC" onclick="intTipo('C')">Creciente en \((-\infty;x_v)\)</button>
+<button class="btn-chip int-btn" id="intBtnD" onclick="intTipo('D')">Decreciente en \((x_v;+\infty)\)</button>
+</div>
+<div class="mb-svg-wrap"><svg id="intSvg" viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Recta numérica con el intervalo de la función, el dominio y su intersección"></svg></div>
+<div class="mb-controles">
+<div class="mb-grupo"><span class="mb-label">\(x_v\)</span><button onclick="intAdjust('xv',-1)" aria-label="Disminuir x sub v">−</button><span class="mb-valor" id="intValXv">5</span><button onclick="intAdjust('xv',1)" aria-label="Aumentar x sub v">+</button></div>
+<div class="mb-grupo"><span class="mb-label">\(p\)</span><button onclick="intAdjust('p',-1)" aria-label="Disminuir p">−</button><span class="mb-valor" id="intValP">0</span><button onclick="intAdjust('p',1)" aria-label="Aumentar p">+</button></div>
+<div class="mb-grupo"><span class="mb-label">\(q\)</span><button onclick="intAdjust('q',-1)" aria-label="Disminuir q">−</button><span class="mb-valor" id="intValQ">10</span><button onclick="intAdjust('q',1)" aria-label="Aumentar q">+</button></div>
+</div>
+<div class="mb-reset-wrap"><button class="btn-chip reset-btn" onclick="intReset()">↺ Volver al ejemplo de la teoría</button></div>
+<div class="mb-lectura" id="intLectura" aria-live="polite"></div>
+</div>
+<div class="box violet"><p><strong>Probá:</strong> reproducí el ejercicio 18 (decreciente, \(x_v=4\), dominio \([0;10]\)). Después llevá \(x_v\) fuera del dominio, por ejemplo a \(12\) o a \(-2\): ¿qué pasa con la intersección en cada caso?</p></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: FORMAS Y GRÁFICO ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Formas y gráfico</span>
+<h2>Tres formas de escribir la misma función, y cómo graficarla</h2>
+<p class="section-intro">Una misma función cuadrática puede escribirse de distintas formas algebraicas. Cada una deja "a la vista" información diferente, y resulta más cómoda según qué datos se conocen.</p>
+
+<div class="subbloque" id="sub5-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Formas de la función cuadrática</h3></div>
+<table class="mini-table">
+<thead><tr><th>Forma</th><th>Expresión</th><th>¿Cuándo puede escribirse?</th></tr></thead>
+<tbody>
+<tr><td>Polinómica</td><td>\(f(x)=ax^2+bx+c\)</td><td>siempre</td></tr>
+<tr><td>Factorizada</td><td>\(f(x)=a(x-x_1)(x-x_2)\)<br>\(f(x)=a(x-x_0)^2\) (caso \(\Delta=0\), raíz doble \(x_0\))</td><td>cuando existen raíces reales</td></tr>
+<tr><td>Canónica</td><td>\(f(x)=a(x-x_v)^2+y_v\)</td><td>siempre; especialmente conveniente cuando se conoce el vértice</td></tr>
+</tbody>
+</table>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>Si \(\Delta\lt0\)</strong>, la función no tiene raíces reales y no puede expresarse como producto de factores lineales reales: solo están disponibles la forma polinómica y la canónica.</div></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>\(f(x)=2x^2-4x-6\) tiene \(a=2\), raíces \(x_1=-1\) y \(x_2=3\), y vértice \(V(1;-8)\).</p></div>
+<div class="ejemplo-desarrollo"><p>Polinómica: \(f(x)=2x^2-4x-6\)</p><p>Factorizada: \(f(x)=2(x+1)(x-3)\)</p><p>Canónica: \(f(x)=2(x-1)^2-8\)</p></div>
+</div>
+
+<p class="muted">Para pasar de la forma canónica a la polinómica se desarrolla el cuadrado del binomio; para pasar de la factorizada, se aplica la propiedad distributiva. En los dos casos, al final se aplica la propiedad distributiva con \(a\) y se agrupan los términos semejantes. Ojo: en ambas formas, el signo de \(x_v\) o de las raíces aparece cambiado.</p>
+<div class="grid-2">
+<div class="guided violet">
+<div class="guided-title">De canónica a polinómica: \(f(x)=2(x+1)^2-3\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Identificamos los datos: \(a=2\), \(x_v=-1\), \(y_v=-3\).</span></li>
+<li><span class="step-num">2</span><span>Desarrollamos el cuadrado del binomio: \((x+1)^2=x^2+2x+1\), entonces \(f(x)=2(x^2+2x+1)-3\).</span></li>
+<li><span class="step-num">3</span><span>Aplicamos la propiedad distributiva: \(f(x)=2x^2+4x+2-3\).</span></li>
+<li><span class="step-num">4</span><span>Agrupamos los términos semejantes: \(2-3=-1\).</span></li>
+</ol>
+<div class="result-line">\(f(x)=2x^2+4x-1\)</div>
+</div>
+<div class="guided orange">
+<div class="guided-title">De factorizada a polinómica: \(f(x)=3(x-2)(x+5)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Identificamos los datos: \(a=3\), \(x_1=2\), \(x_2=-5\).</span></li>
+<li><span class="step-num">2</span><span>Aplicamos la propiedad distributiva entre los binomios: \((x-2)(x+5)=x^2+5x-2x-10\).</span></li>
+<li><span class="step-num">3</span><span>Agrupamos los términos semejantes: \(x^2+3x-10\), entonces \(f(x)=3(x^2+3x-10)\).</span></li>
+<li><span class="step-num">4</span><span>Aplicamos la propiedad distributiva con el \(3\): \(f(x)=3x^2+9x-30\).</span></li>
+</ol>
+<div class="result-line">\(f(x)=3x^2+9x-30\)</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 19</span>
+<div class="activity">
+<div class="question">\(f(x)=3(x-2)^2+1\). ¿Cuál es su vértice?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="En la forma canónica el signo de x_v aparece cambiado: (x-2) corresponde a x_v=2.">\(V(-2;1)\)</button>
+<button class="opt" data-value="b" data-fb="3 es el coeficiente principal a. La coordenada y_v es el número que se suma al final.">\(V(2;3)\)</button>
+<button class="opt" data-value="c">\(V(2;1)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: comparando con \(a(x-x_v)^2+y_v\): \(x_v=2\) e \(y_v=1\)." data-no="Compará con \(a(x-x_v)^2+y_v\) y leé cada dato."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 20</span>
+<div class="activity">
+<div class="question">¿Cuál de estas funciones <strong>no</strong> puede escribirse en forma factorizada con factores lineales reales?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="x²-1=(x-1)(x+1): tiene dos raíces reales.">\(g(x)=x^2-1\)</button>
+<button class="opt" data-value="b">\(f(x)=x^2+1\)</button>
+<button class="opt" data-value="c" data-fb="Tiene Δ=4-4=0: una raíz doble, x=1. Se escribe (x-1)².">\(h(x)=x^2-2x+1\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(\Delta=0-4=-4\lt0\), no tiene raíces reales." data-no="Calculá el discriminante de cada una: la forma factorizada necesita \(\Delta\ge0\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Encontrar la función a partir de datos</h3></div>
+<p class="muted">Las formas factorizada y canónica sirven para encontrar la función cuando no se conoce \(a\), pero sí las raíces (o el vértice) y un punto adicional por el que pasa.</p>
+<div class="grid-2">
+<div class="guided pink">
+<div class="guided-title">Raíces \(-2\) y \(1\); pasa por \((2;8)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Forma factorizada con \(a\) desconocido: <span class="nobr">\(f(x)=a(x+2)(x-1)\)</span>.</span></li>
+<li><span class="step-num">2</span><span>Reemplazamos con el punto \((2;8)\): \(x=2\), \(f(x)=8\), y despejamos \(a\):<div class="calc">\(\begin{aligned}8&=a(2+2)(2-1)\\8&=a\cdot4\cdot1\\8&=4a\\8:4&=a\\2&=a\end{aligned}\)</div></span></li>
+</ol>
+<div class="result-line">La función es \(f(x)=2(x+2)(x-1)\), que en forma polinómica es \(f(x)=2x^2+2x-4\).</div>
+</div>
+<div class="guided">
+<div class="guided-title">Vértice \(V(-1;-4)\); pasa por \((0;-2)\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Forma canónica con \(a\) desconocido: <span class="nobr">\(f(x)=a(x+1)^2-4\)</span>.</span></li>
+<li><span class="step-num">2</span><span>Reemplazamos con el punto \((0;-2)\): \(x=0\), \(f(x)=-2\), y despejamos \(a\):<div class="calc">\(\begin{aligned}-2&=a(0+1)^2-4\\-2&=a\cdot1-4\\-2+4&=a\\2&=a\end{aligned}\)</div></span></li>
+</ol>
+<div class="result-line">La función es \(f(x)=2(x+1)^2-4\), que en forma polinómica es \(f(x)=2x^2+4x-2\).</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 21</span>
+<div class="activity">
+<div class="question">Una función cuadrática tiene raíces \(1\) y \(3\), y pasa por el punto \((0;6)\). ¿Cuál es?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(f(x)=2(x-1)(x-3)\)</button>
+<button class="opt" data-value="b" data-fb="6 es el valor de f(0), no el de a. Reemplazá el punto (0;6) en f(x)=a(x-1)(x-3) y despejá a: queda 6=3a.">\(f(x)=6(x-1)(x-3)\)</button>
+<button class="opt" data-value="c" data-fb="En la forma factorizada el signo de las raíces aparece cambiado: la raíz 1 corresponde al factor (x-1).">\(f(x)=2(x+1)(x+3)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto:<div class='calc'>\(\begin{aligned}6&=a(0-1)(0-3)\\6&=a\cdot(-1)\cdot(-3)\\6&=3a\\6:3&=a\\2&=a\end{aligned}\)</div>" data-no="Partí de \(f(x)=a(x-1)(x-3)\), reemplazá el punto \((0;6)\) y despejá \(a\)."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 22</span>
+<div class="activity">
+<div class="question">Una función cuadrática tiene vértice \(V(2;-1)\) y pasa por el punto \((0;3)\). ¿Cuál es?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="3 es f(0), no a. Reemplazá el punto (0;3) en f(x)=a(x-2)²-1 y despejá a: queda 3=4a-1.">\(f(x)=3(x-2)^2-1\)</button>
+<button class="opt" data-value="b">\(f(x)=(x-2)^2-1\)</button>
+<button class="opt" data-value="c" data-fb="Con x_v=2, el factor es (x-2), no (x+2).">\(f(x)=(x+2)^2-1\)</button>
+</div>
+<div class="feedback" data-ok="Correcto:<div class='calc'>\(\begin{aligned}3&=a(0-2)^2-1\\3&=a\cdot4-1\\3+1&=4a\\4:4&=a\\1&=a\end{aligned}\)</div>" data-no="Partí de \(f(x)=a(x-2)^2-1\), reemplazá el punto y despejá \(a\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Graficar una función cuadrática, paso a paso</h3></div>
+<p class="muted">Para graficar una parábola conviene reunir los elementos que ya sabemos calcular: ordenada al origen, raíces (si existen), eje de simetría y vértice. A diferencia de una recta, que queda determinada con dos puntos, esos elementos a veces no alcanzan para orientar bien el trazado, y conviene ubicar algún punto adicional.</p>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate en qué orden se calculan los elementos de la parábola y cuántos puntos hacen falta para trazarla con precisión.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/gnAdna_tLK0" title="Cómo graficar una función cuadrática" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Graficar \(f(x)=x^2-4x-5\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span><strong>Coeficientes:</strong> \(a=1\), \(b=-4\), \(c=-5\). Como \(a\gt0\), la parábola es cóncava hacia arriba.</span></li>
+<li><span class="step-num">2</span><span><strong>Ordenada al origen:</strong> \(f(0)=c=-5\) → intersección con el eje \(y\) en \((0;-5)\).</span></li>
+<li><span class="step-num">3</span><span><strong>Raíces:</strong><span class="linea">Calculamos el discriminante: \(\Delta=(-4)^2-4\cdot1\cdot(-5)=16+20=36\). Como \(\Delta\gt0\), hay dos raíces reales distintas.</span><span class="linea">Aplicamos la fórmula general: \(x=\dfrac{4\pm\sqrt{36}}{2}=\dfrac{4\pm6}{2}\)</span><span class="linea">Con el signo \(-\): \(x_1=\dfrac{4-6}{2}=\dfrac{-2}{2}=-1\)</span><span class="linea">Con el signo \(+\): \(x_2=\dfrac{4+6}{2}=\dfrac{10}{2}=5\)</span></span></li>
+<li><span class="step-num">4</span><span><strong>Eje de simetría:</strong> \(x=-\dfrac{b}{2a}=-\dfrac{(-4)}{2\cdot1}=\dfrac{4}{2}=2\).</span></li>
+<li><span class="step-num">5</span><span><strong>Vértice:</strong><span class="linea">\(x_v=2\)</span><span class="linea">\(y_v=f(2)=2^2-4\cdot2-5=4-8-5=-9\)</span><span class="linea">Por lo tanto, \(V(2;-9)\).</span></span></li>
+<li><span class="step-num">6</span><span><strong>Punto auxiliar:</strong> \((0;-5)\) está 2 unidades a la izquierda del eje \(x=2\); su simétrico está 2 unidades a la derecha, en \(x=4\):<span class="linea">\(f(4)=4^2-4\cdot4-5=16-16-5=-5\) → punto \((4;-5)\)</span></span></li>
+<li><span class="step-num">7</span><span><strong>Imagen:</strong> como \(a\gt0\), \(\text{Im}(f)=[-9;+\infty)\).</span></li>
+</ol>
+</div>
+<figure class="plot"><svg id="plotGraficar" role="img" aria-label="Gráfico de f(x)=x²-4x-5 con raíces, ordenada al origen, punto simétrico y vértice"></svg>
+<figcaption>\(f(x)=x^2-4x-5\): raíces \((-1;0)\) y \((5;0)\), ordenada al origen \((0;-5)\), punto simétrico \((4;-5)\) y vértice \(V(2;-9)\).</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 23</span>
+<div class="activity">
+<div class="question">\(f(x)=x^2-2x-3\) tiene eje de simetría \(x=1\) y ordenada al origen \(-3\). ¿Cuál es el punto simétrico de \((0;-3)\) respecto del eje?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="La distancia se mide desde el eje x=1, no desde el eje y: 0 está 1 unidad a la izquierda de 1, así que el simétrico está en 1+1=2.">\((-2;-3)\)</button>
+<button class="opt" data-value="b" data-fb="La simetría es respecto de una recta vertical: cambia la coordenada x y se mantiene la coordenada y.">\((0;3)\)</button>
+<button class="opt" data-value="c">\((2;-3)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x=0\) está 1 unidad a la izquierda del eje, así que el simétrico está en \(x=2\). Se verifica: \(f(2)=4-4-3=-3\)." data-no="Medí la distancia horizontal entre \(x=0\) y el eje \(x=1\), y trasladala al otro lado."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 6: APLICACIONES ============ -->
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Aplicaciones</span>
+<h2>Modelizar con función cuadrática</h2>
+<p class="section-intro">La función cuadrática permite analizar situaciones en las que una cantidad aumenta y después disminuye, o disminuye y después aumenta, y en las que interesa encontrar un valor máximo o mínimo. El vértice representa ese valor óptimo, siempre que su abscisa pertenezca al dominio de la situación.</p>
+
+<div class="subbloque" id="sub6-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Variable discreta: optimización de un ingreso</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Los ingresos mensuales de una organización, en pesos, dependen de la cantidad de unidades vendidas según \(I(x)=1000x-2x^2\), con \(x\) entre \(0\) y \(500\) unidades. El modelo supone que, para vender más, es necesario reducir progresivamente el precio por unidad.</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) cantidad de unidades vendidas (discreta: solo enteros no negativos); \(I(x)=\) ingreso mensual, en pesos.</p>
+<p><strong>Dominio:</strong> \(\text{Dom}(I)=\{0;1;2;\ldots;500\}\).</p>
+<p><strong>Raíces:</strong> por factor común, \(I(x)=-2x(x-500)\) → \(x_1=0\) y \(x_2=500\).</p>
+<p><strong>Vértice:</strong> \(x_v=\dfrac{0+500}{2}=250\) e \(y_v=I(250)=1000\cdot250-2\cdot250^2=125000\). Como \(250\) es un entero entre \(0\) y \(500\), pertenece al dominio.</p>
+<p><strong>Concavidad:</strong> \(a=-2\lt0\) → el vértice es un máximo.</p>
+<p><strong>Interpretación:</strong> el ingreso máximo se obtiene al vender \(250\) unidades y es de \(\$125000\). A partir de esa cantidad, el ingreso disminuye: la reducción del precio por unidad termina superando el efecto del aumento en la cantidad vendida.</p>
+</div>
+</div>
+<figure class="plot"><svg id="plotIngreso" role="img" aria-label="Gráfico de puntos aislados de I(x)=1000x-2x² con máximo en (250;125000)"></svg>
+<figcaption>Como \(x\) es discreta, el gráfico está formado por puntos aislados (acá se muestra uno cada 10 unidades). La línea discontinua es solo una guía para ver la forma parabólica.</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 24</span>
+<div class="activity">
+<div class="question">Con el modelo \(I(x)=1000x-2x^2\), ¿cuál es el ingreso al vender \(100\) unidades?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\$80000\)</button>
+<button class="opt" data-value="b" data-fb="Falta restar el término cuadrático: 2·100²=20000.">\(\$100000\)</button>
+<button class="opt" data-value="c" data-fb="Ese es el ingreso máximo, que se alcanza con 250 unidades, no con 100.">\(\$125000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(I(100)=100000-2\cdot10000=100000-20000=\$80000\)." data-no="Evaluá \(I(100)=1000\cdot100-2\cdot100^2\)."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 25</span>
+<div class="activity">
+<div class="question">En otro modelo con variable discreta (cantidad de unidades), la parábola es cóncava hacia abajo y su vértice tiene abscisa \(x_v=12{,}5\). ¿Cómo se determina la cantidad que da el valor máximo?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="No alcanza con redondear: hay que comparar los valores admisibles más próximos a x_v.">Se redondea: la cantidad es \(13\)</button>
+<button class="opt" data-value="b" data-fb="12,5 no es un valor permitido: la variable solo toma valores enteros.">La cantidad es \(12{,}5\)</button>
+<button class="opt" data-value="c">Se evalúa la función en \(12\) y en \(13\), y se comparan los resultados</button>
+</div>
+<div class="feedback" data-ok="Correcto: si \(x_v\) no es un valor permitido, se comparan los valores admisibles más próximos. (Por la simetría, en este caso \(12\) y \(13\) dan el mismo valor: los dos son respuesta.)" data-no="Recordá qué hay que hacer cuando la variable es discreta y \(x_v\) no es uno de los valores permitidos."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Vértice fuera del dominio: costo de mantenimiento de una red vial</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>El costo mensual estimado, en miles de pesos, del mantenimiento de una red de caminos es \(C(k)=0{,}5k^2+20k+300\), donde \(k\) es la longitud total de los caminos mantenidos en el mes, en km (variable continua).</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Dominio:</strong> la longitud no puede ser negativa, y no hay una extensión máxima: \(\text{Dom}(C)=[0;+\infty)\).</p>
+<p><strong>Concavidad:</strong> \(a=0{,}5\gt0\) → la función tiene un mínimo.</p>
+<p><strong>Vértice:</strong> \(k_v=-\dfrac{20}{2\cdot0{,}5}=-20\). Como \(-20\notin[0;+\infty)\), el vértice no representa una longitud posible y no determina el mínimo en esta situación.</p>
+<p><strong>Mínimo en el dominio:</strong> el menor valor permitido es \(k=0\): \(C(0)=300\). El costo mensual mínimo es de \(\$300000\), que corresponde a los costos fijos antes de incorporar kilómetros.</p>
+<p><strong>Crecimiento:</strong> todo el dominio está a la derecha del eje \(k=-20\), así que la función es creciente en \([0;+\infty)\): más kilómetros, más costo.</p>
+<p><strong>Imagen:</strong> \(\text{Im}(C)=[300;+\infty)\).</p>
+<p><strong>Evaluación:</strong> \(C(10)=0{,}5\cdot10^2+20\cdot10+300=50+200+300=550\): mantener \(10\) km cuesta \(550\) mil pesos.</p>
+</div>
+</div>
+<figure class="plot"><svg id="plotCosto" role="img" aria-label="Gráfico de C(k)=0,5k²+20k+300 en [0;+∞), con el vértice (-20;100) fuera del dominio"></svg>
+<figcaption>El tramo continuo corresponde al dominio de la situación. La prolongación discontinua permite ubicar el vértice \(V(-20;100)\), que queda fuera del dominio.</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 26</span>
+<div class="activity">
+<div class="question">Con el modelo \(C(k)=0{,}5k^2+20k+300\), ¿cuál es el costo mensual estimado de mantener \(20\) km?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Primero se eleva al cuadrado: 20²=400, y 0,5·400=200 (no 0,5·20=10).">\(710\) mil pesos</button>
+<button class="opt" data-value="b" data-fb="Falta sumar el término independiente: los 300 mil pesos de costos fijos.">\(600\) mil pesos</button>
+<button class="opt" data-value="c">\(900\) mil pesos</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(C(20)=0{,}5\cdot400+400+300=200+400+300=900\)." data-no="Evaluá \(C(20)=0{,}5\cdot20^2+20\cdot20+300\), respetando el orden de las operaciones."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>A partir de la forma factorizada: rendimiento de un cultivo</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>La variación estimada del rendimiento de un cultivo respecto de un valor de referencia, en t/ha, según la cantidad \(x\) de fertilizante aplicada (en kg/ha, variable continua), es \(P(x)=-0{,}0002(x-50)(x-150)\), con \(x\) entre \(40\) y \(160\) kg/ha.</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Dominio:</strong> \(\text{Dom}(P)=[40;160]\).</p>
+<p><strong>Raíces:</strong> se identifican en la forma factorizada: \(x_1=50\) y \(x_2=150\). Con esas cantidades, el rendimiento coincide con el valor de referencia.</p>
+<p><strong>Vértice:</strong> \(x_v=\dfrac{50+150}{2}=100\) y \(P(100)=-0{,}0002\cdot50\cdot(-50)=0{,}5\) → \(V(100;0{,}5)\).</p>
+<p><strong>Concavidad:</strong> \(-0{,}0002\lt0\) → el vértice es un máximo.</p>
+<p><strong>Crecimiento en el dominio:</strong> \(IC=[40;100)\) e \(ID=(100;160]\).</p>
+<p><strong>Signo en el dominio:</strong> \(C^+=(50;150)\) y \(C^-=[40;50)\cup(150;160]\).</p>
+<p><strong>Interpretación:</strong> entre \(50\) y \(150\) kg/ha el rendimiento supera el valor de referencia; fuera de ese tramo (dentro del rango analizado), queda por debajo. La mayor variación se obtiene con \(100\) kg/ha: el rendimiento supera en \(0{,}5\) t/ha al de referencia.</p>
+</div>
+</div>
+<figure class="plot"><svg id="plotCultivo" role="img" aria-label="Gráfico de P(x)=-0,0002(x-50)(x-150) en [40;160], con máximo en (100;0,5)"></svg>
+<figcaption>\(P(x)=-0{,}0002(x-50)(x-150)\), \(x\in[40;160]\). En los extremos del dominio, \(P(40)=P(160)=-0{,}22\).</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 27</span>
+<div class="activity">
+<div class="question">Con el modelo \(P(x)\), ¿con cuál de estas cantidades de fertilizante el rendimiento queda por debajo del valor de referencia?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="120 está entre las raíces 50 y 150: ahí la variación es positiva.">\(120\) kg/ha</button>
+<button class="opt" data-value="b">\(45\) kg/ha</button>
+<button class="opt" data-value="c" data-fb="100 es donde la variación es máxima (0,5 t/ha): el rendimiento supera la referencia.">\(100\) kg/ha</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(45\in C^-=[40;50)\cup(150;160]\). Se verifica: \(P(45)=-0{,}0002\cdot(-5)\cdot(-105)=-0{,}105\lt0\)." data-no="Buscá la cantidad que pertenece al conjunto de negatividad dentro del dominio."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-4">
+<div class="sub-titulo"><div class="sub-num">4</div><h3>A partir de la forma canónica: ganancia mensual de un proyecto</h3></div>
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>La ganancia mensual de un proyecto, en miles de pesos, es \(G(t)=-2(t-3)^2+50\), donde \(t\) es el tiempo transcurrido, en meses, con \(t\in[0;8]\).</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Vértice:</strong> en la forma canónica se identifica directamente: \(V(3;50)\). Como \(a=-2\lt0\), es un máximo, y \(t_v=3\in[0;8]\).</p>
+<p><strong>Extremos del dominio:</strong> \(G(0)=-2\cdot9+50=32\) (ordenada al origen) y \(G(8)=-2\cdot25+50=0\).</p>
+<p><strong>Imagen:</strong> el menor valor es \(0\) y el mayor, \(50\): \(\text{Im}(G)=[0;50]\).</p>
+<p><strong>Crecimiento:</strong> \(IC=[0;3)\) e \(ID=(3;8]\).</p>
+<p><strong>Signo:</strong> \(C^+=[0;8)\). El \(8\) no se incluye porque \(G(8)=0\); en el dominio, la función no toma valores negativos.</p>
+<p><strong>Interpretación:</strong> la ganancia empieza en \(\$32000\), crece hasta su máximo de \(\$50000\) a los \(3\) meses, y después disminuye hasta hacerse nula a los \(8\) meses. El modelo no prevé pérdidas en ese período.</p>
+</div>
+</div>
+<figure class="plot"><svg id="plotGanancia" role="img" aria-label="Gráfico de G(t)=-2(t-3)²+50 en [0;8], con máximo en (3;50)"></svg>
+<figcaption>\(G(t)=-2(t-3)^2+50\), \(t\in[0;8]\).</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 28</span>
+<div class="activity">
+<div class="question">Con el modelo \(G(t)=-2(t-3)^2+50\), ¿cuál es la ganancia mensual estimada a los \(5\) meses?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Falta elevar al cuadrado: (5-3)²=4, y -2·4=-8.">\(46\) mil pesos</button>
+<button class="opt" data-value="b">\(42\) mil pesos</button>
+<button class="opt" data-value="c" data-fb="El -2 multiplica al cuadrado: el término resta, no suma.">\(58\) mil pesos</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(G(5)=-2\cdot(5-3)^2+50=-2\cdot4+50=42\)." data-no="Evaluá respetando el orden: primero el paréntesis, después el cuadrado, después el producto por \(-2\)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 7: CIERRE ============ -->
+<section class="panel" id="p7">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y síntesis</h2>
+
+<div class="subbloque" id="sub7-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Errores frecuentes: mini auditoría</h3></div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel1"><span class="acc-tit">Confundir la ordenada al origen con el punto de intersección con el eje \(y\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel1"><div class="error-incorrecto">✗ Decir que la ordenada al origen es "el punto \(c\)".</div><div class="error-correcto">✓ La ordenada al origen es el valor \(f(0)=c\). La intersección con el eje \(y\) es el punto \((0;c)\). Están relacionados, pero uno es un valor de la función y el otro es un punto del gráfico.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel2"><span class="acc-tit">Olvidar la condición \(a\)<span class="rel">≠</span>\(0\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel2"><div class="error-incorrecto">✗ Aplicar las fórmulas del bloque a una expresión con \(a=0\).</div><div class="error-correcto">✓ Si \(a=0\), la expresión se reduce a \(bx+c\): es una función lineal. Antes de aplicar cualquier fórmula, conviene verificar que \(a\)<span class="rel">≠</span>\(0\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel3"><span class="acc-tit">Confundir el vértice con una raíz</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel3"><div class="error-incorrecto">✗ Usar el vértice como si fuera una intersección con el eje \(x\).</div><div class="error-correcto">✓ El vértice es un punto del gráfico, \(V(x_v;y_v)\); las raíces son los valores de \(x\) con \(f(x)=0\). Solo en el caso \(\Delta=0\) la abscisa del vértice coincide con la raíz y el vértice está sobre el eje \(x\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel4"><span class="acc-tit">Aplicar mal el signo en \(x_v=-\dfrac{b}{2a}\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel4"><div class="error-incorrecto">✗ Con \(b=-4\), escribir \(-b=-4\).</div><div class="error-correcto">✓ Si \(b=-4\), entonces \(-b=4\). Conviene reemplazar con paréntesis: \(-\dfrac{(-4)}{2\cdot1}=2\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel5"><span class="acc-tit">Dividir por \(x\) al resolver y perder la raíz \(x=0\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel5"><div class="error-incorrecto">✗ De \(3x^2+6x=0\), dividir por \(x\) y concluir que la única raíz es \(x=-2\).</div><div class="error-correcto">✓ Se extrae factor común: \(3x(x+2)=0\); se iguala cada factor a cero (\(3x=0\) o \(x+2=0\)) y se despeja \(x\) en cada ecuación: \(x=0\) o \(x=-2\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel6"><span class="acc-tit">Asumir que el dominio matemático es siempre el dominio del problema</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel6"><div class="error-incorrecto">✗ Tomar el vértice como extremo del modelo sin mirar el contexto.</div><div class="error-correcto">✓ El contexto puede restringir el dominio. Hay que verificar si \(x_v\) pertenece a ese dominio: el vértice no siempre da el extremo del modelo.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel7"><span class="acc-tit">Aplicar las fórmulas de imagen sin considerar el dominio</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel7"><div class="error-incorrecto">✗ Escribir \(\text{Im}(f)=[y_v;+\infty)\) en un modelo con dominio restringido.</div><div class="error-correcto">✓ Esas fórmulas valen para \(\text{Dom}(f)=\mathbb{R}\). Con dominio restringido, se analizan solo los valores que la función alcanza en ese dominio.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel8"><span class="acc-tit">Incluir las raíces en \(C^+\) o en \(C^-\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel8"><div class="error-incorrecto">✗ Escribir \(C^+=[-2;2]\) cuando las raíces son \(-2\) y \(2\).</div><div class="error-correcto">✓ En las raíces la función vale \(0\), que no es ni positivo ni negativo: los intervalos van abiertos en las raíces.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel9"><span class="acc-tit">Escribir la forma factorizada cuando no existen raíces reales</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel9"><div class="error-incorrecto">✗ Intentar escribir \(a(x-x_1)(x-x_2)\) con \(\Delta\lt0\).</div><div class="error-correcto">✓ La forma factorizada con factores lineales reales solo existe cuando \(\Delta\ge0\). Si \(\Delta\lt0\), quedan la polinómica y la canónica.</div></div>
+</div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Referencia rápida</h3>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>Concepto</th><th>Fórmula / Idea</th></tr></thead>
+<tbody>
+<tr><td>Función cuadrática</td><td>\(f(x)=ax^2+bx+c\), con \(a,b,c\in\mathbb{R}\) y \(a\)<span class="rel">≠</span>\(0\). \(\text{Dom}(f)=\mathbb{R}\), salvo restricción del contexto</td></tr>
+<tr><td>Gráfico</td><td>parábola, simétrica respecto de un eje vertical</td></tr>
+<tr><td>Concavidad</td><td>\(a\gt0\): hacia arriba (mínimo) · \(a\lt0\): hacia abajo (máximo)</td></tr>
+<tr><td>Ordenada al origen</td><td>\(f(0)=c\): punto \((0;c)\)</td></tr>
+<tr><td>Raíces</td><td>soluciones de \(ax^2+bx+c=0\): \(x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}\)</td></tr>
+<tr><td>Discriminante</td><td>\(\Delta=b^2-4ac\) · \(\Delta\gt0\): dos raíces · \(\Delta=0\): raíz doble · \(\Delta\lt0\): ninguna raíz real</td></tr>
+<tr><td>Eje y vértice</td><td>\(x_v=-\dfrac{b}{2a}\) (o \(\dfrac{x_1+x_2}{2}\)), \(y_v=f(x_v)\)</td></tr>
+<tr><td>Imagen (\(\text{Dom}=\mathbb{R}\))</td><td>\([y_v;+\infty)\) si \(a\gt0\) · \((-\infty;y_v]\) si \(a\lt0\)</td></tr>
+<tr><td>Crecimiento (\(\text{Dom}=\mathbb{R}\))</td><td>\(a\gt0\): decrece en \((-\infty;x_v)\), crece en \((x_v;+\infty)\) · \(a\lt0\): al revés</td></tr>
+<tr><td>Formas</td><td>polinómica \(ax^2+bx+c\) · factorizada \(a(x-x_1)(x-x_2)\) (si \(\Delta\ge0\)) · canónica \(a(x-x_v)^2+y_v\)</td></tr>
+<tr><td>Dominio restringido</td><td>verificar si \(x_v\) pertenece; evaluar extremos del intervalo o valores discretos más próximos</td></tr>
+</tbody>
+</table>
+<p class="sintesis-frase">El vértice organiza casi todo: el eje, el extremo, la imagen y el crecimiento. Pero en un modelo, lo que decide si el vértice cuenta es el dominio.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+/* ---------- Portada ---------- */
+document.body.style.overflow='hidden';
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  document.body.style.overflow='';
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+
+/* ---------- KaTeX ---------- */
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+
+/* ---------- Tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+/* ---------- Acordeón de errores frecuentes ---------- */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const abierto=item.classList.contains('open');
+  const s=btn.querySelector('.acc-icon');
+  if(s)s.textContent=abierto?'−':'+';
+  btn.setAttribute('aria-expanded',abierto?'true':'false');
+  setTimeout(()=>typeset(item),80);
+}
+
+/* ---------- Actividades de opción múltiple ---------- */
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:(opt.dataset.fb||feedback.dataset.no);
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+/* ============================================================
+   FORMATO DE NÚMEROS
+   ============================================================ */
+function redondear(n,d){const p=Math.pow(10,d==null?2:d);const r=Math.round(n*p)/p;return Object.is(r,-0)?0:r;}
+function fmtT(n,d){ // texto plano (SVG): coma decimal, signo menos tipográfico
+  const r=redondear(n,d);
+  let s=String(Math.abs(r)).replace('.',',');
+  return (r<0?'−':'')+s;
+}
+function fmtMiles(n){ // 125000 → 125.000
+  const r=Math.round(n);
+  const s=String(Math.abs(r)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return (r<0?'−':'')+s;
+}
+function fmtK(n,d){ // KaTeX: coma decimal
+  const r=redondear(n,d);
+  return String(r).replace('.','{,}');
+}
+function esExacto(n){return Math.abs(n*100-Math.round(n*100))<1e-9;}
+
+/* ============================================================
+   MOTOR DE GRÁFICOS SVG
+   ============================================================ */
+let plotSeq=0;
+const C={teal:'#0F6B6F',tealL:'#1F8C91',green:'#23865B',coral:'#E0735F',red:'#C94848',violet:'#7C5CE6',
+  orange:'#FF7A00',navy:'#223740',slate:'#5D737C',axis:'#9FB8BA',grid:'#EDF4F4',guide:'#A7B6BB'};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function plot(svg,cfg){
+  if(typeof svg==='string')svg=document.getElementById(svg);
+  if(!svg)return;
+  const W=cfg.w||520,H=cfg.h||400;
+  const m=Object.assign({l:44,r:18,t:18,b:32},cfg.margin||{});
+  const pw=W-m.l-m.r, ph=H-m.t-m.b;
+  const {xMin,xMax,yMin,yMax}=cfg;
+  const X=x=>m.l+(x-xMin)/(xMax-xMin)*pw;
+  const Y=y=>m.t+ph-(y-yMin)/(yMax-yMin)*ph;
+  const inside=(x,y)=>x>=xMin-1e-9&&x<=xMax+1e-9&&y>=yMin-1e-9&&y<=yMax+1e-9;
+  const fs=cfg.fs||11;
+  const font=`font-family="Inter,sans-serif"`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const id='clip'+(++plotSeq);
+  let s=`<defs><clipPath id="${id}"><rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}"/></clipPath></defs>`;
+  // cuadrícula
+  if(cfg.grid){
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep)s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${m.t+ph}" stroke="${C.grid}"/>`;
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep)s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${m.l+pw}" y2="${Y(y)}" stroke="${C.grid}"/>`;
+  }
+  // ejes
+  const ax=(yMin<=0&&yMax>=0)?Y(0):Y(yMin);
+  const ay=(xMin<=0&&xMax>=0)?X(0):X(xMin);
+  s+=`<line x1="${m.l}" y1="${ax}" x2="${m.l+pw}" y2="${ax}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  s+=`<line x1="${ay}" y1="${m.t}" x2="${ay}" y2="${m.t+ph}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  // marcas
+  if(!cfg.noTicks){
+    const fx=cfg.fmtX||(v=>fmtT(v)), fy=cfg.fmtY||(v=>fmtT(v));
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep){
+      const xr=redondear(x,6); if(xr===0&&!cfg.showZeroX)continue;
+      s+=`<line x1="${X(xr)}" y1="${ax-3}" x2="${X(xr)}" y2="${ax+3}" stroke="${C.axis}"/>`;
+      s+=`<text x="${X(xr)}" y="${ax+15}" font-size="${fs-1}" text-anchor="middle" fill="${C.slate}" ${font}>${fx(xr)}</text>`;
+    }
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep){
+      const yr=redondear(y,6); if(yr===0&&!cfg.showZeroY)continue;
+      s+=`<line x1="${ay-3}" y1="${Y(yr)}" x2="${ay+3}" y2="${Y(yr)}" stroke="${C.axis}"/>`;
+      s+=`<text x="${ay-7}" y="${Y(yr)+3.5}" font-size="${fs-1}" text-anchor="end" fill="${C.slate}" ${font}>${fy(yr)}</text>`;
+    }
+  }
+  if(cfg.xName&&cfg.xNameBelow)s+=`<text x="${m.l+pw/2}" y="${H-6}" font-size="${fs}" text-anchor="middle" fill="${C.slate}" font-weight="600" ${font}>${esc(cfg.xName)}</text>`;
+  else if(cfg.xName)s+=`<text x="${m.l+pw-2}" y="${ax-7}" font-size="${fs}" text-anchor="end" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.xName)}</text>`;
+  if(cfg.yName)s+=`<text x="${ay+7}" y="${m.t+11}" font-size="${fs}" text-anchor="start" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.yName)}</text>`;
+
+  let g='';
+  // tramos del eje x (signo)
+  (cfg.bands||[]).forEach(b=>{
+    const x1=X(Math.max(b.from,xMin)), x2=X(Math.min(b.to,xMax));
+    g+=`<line x1="${x1}" y1="${ax}" x2="${x2}" y2="${ax}" stroke="${b.color}" stroke-width="6" stroke-linecap="butt" opacity=".85"/>`;
+  });
+  // rectas verticales
+  (cfg.vlines||[]).forEach(v=>{
+    g+=`<line x1="${X(v.x)}" y1="${m.t}" x2="${X(v.x)}" y2="${m.t+ph}" stroke="${v.color||C.guide}" stroke-width="1.4" stroke-dasharray="${v.dash||'5 4'}"/>`;
+  });
+  // segmentos auxiliares
+  (cfg.segs||[]).forEach(q=>{
+    g+=`<line x1="${X(q.x1)}" y1="${Y(q.y1)}" x2="${X(q.x2)}" y2="${Y(q.y2)}" stroke="${q.color||C.guide}" stroke-width="1.2" stroke-dasharray="${q.dash||'4 4'}"/>`;
+  });
+  // curvas
+  (cfg.curves||[]).forEach(c=>{
+    const from=c.from!=null?c.from:xMin, to=c.to!=null?c.to:xMax;
+    if(c.discrete){
+      for(let x=from;x<=to+1e-9;x+=c.discrete){
+        const y=c.f(x);
+        g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="${c.r||2.4}" fill="${c.color||C.teal}"/>`;
+      }
+      return;
+    }
+    const N=c.n||300, span=(yMax-yMin);
+    let d='';
+    for(let i=0;i<=N;i++){
+      const x=from+(to-from)*i/N;
+      let y=c.f(x);
+      y=Math.max(yMin-span,Math.min(yMax+span,y));
+      d+=(i?'L':'M')+X(x).toFixed(2)+' '+Y(y).toFixed(2);
+    }
+    g+=`<path d="${d}" fill="none" stroke="${c.color||C.teal}" stroke-width="${c.width||3}" stroke-linecap="round" stroke-linejoin="round"${c.dash?` stroke-dasharray="${c.dash}"`:''}/>`;
+  });
+  s+=`<g clip-path="url(#${id})">${g}</g>`;
+  // puntos y etiquetas (fuera del recorte, solo si el punto está en la ventana)
+  (cfg.points||[]).forEach(p=>{
+    if(!inside(p.x,p.y))return;
+    const px=X(p.x), py=Y(p.y);
+    s+=p.hollow
+      ?`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="#fff" stroke="${p.color}" stroke-width="2"/>`
+      :`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="${p.color}" stroke="#fff" stroke-width="1.5"/>`;
+    if(p.label){
+      const lx=px+(p.dx!=null?p.dx:8), ly=py+(p.dy!=null?p.dy:-8);
+      const lines=String(p.label).split('\n');
+      lines.forEach((ln,i)=>{
+        s+=`<text x="${lx}" y="${ly+i*(fs+2)}" font-size="${p.fs||fs}" text-anchor="${p.anchor||'start'}" fill="${p.lc||p.color}" font-weight="700" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(ln)}</text>`;
+      });
+    }
+  });
+  (cfg.labels||[]).forEach(t=>{
+    s+=`<text x="${X(t.x)}" y="${Y(t.y)}" font-size="${t.fs||fs}" text-anchor="${t.anchor||'start'}" fill="${t.color||C.slate}" font-weight="${t.bold?700:500}" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(t.text)}</text>`;
+  });
+  svg.innerHTML=s;
+}
+
+/* ============================================================
+   EXPLORADOR a, b, c
+   ============================================================ */
+const qxInicial={a:1,b:-2,c:-3};
+const qxState=Object.assign({},qxInicial);
+function qxPoli(a,b,c){ // expresión polinómica en KaTeX
+  let t='';
+  t+= a===1?'x^2':(a===-1?'-x^2':fmtK(a)+'x^2');
+  if(b!==0) t+= (b>0?'+':'-')+(Math.abs(b)===1?'':fmtK(Math.abs(b)))+'x';
+  if(c!==0) t+= (c>0?'+':'-')+fmtK(Math.abs(c));
+  return t;
+}
+function qxDibujar(){
+  const {a,b,c}=qxState;
+  const f=x=>a*x*x+b*x+c;
+  const xv=-b/(2*a), yv=f(xv), D=b*b-4*a*c;
+  const pts=[];
+  pts.push({x:0,y:c,color:C.violet,label:`(0;${fmtT(c)})`,dx:-9,dy:a>0?18:-10,anchor:'end'});
+  let raices=[];
+  if(D>1e-12){const r=Math.sqrt(D);raices=[(-b-r)/(2*a),(-b+r)/(2*a)].sort((p,q)=>p-q);}
+  else if(Math.abs(D)<=1e-12){raices=[xv];}
+  raices.forEach((r,i)=>pts.push({x:r,y:0,color:C.green,label:(esExacto(r)?'':'≈')+fmtT(r),dx:raices.length===2?(i===0?-8:8):8,dy:a>0?-9:17,anchor:raices.length===2&&i===0?'end':'start'}));
+  pts.push({x:xv,y:yv,color:C.red,label:`V(${fmtT(xv)};${fmtT(yv)})`,dx:8,dy:a>0?18:-10});
+  plot('qxSvg',{w:520,h:420,fs:13,xMin:-6,xMax:6,yMin:-8,yMax:8,xStep:1,yStep:1,grid:true,
+    fmtX:v=>v%2===0?fmtT(v):'',fmtY:v=>v%2===0?fmtT(v):'',xName:'x',yName:'y',
+    vlines:[{x:xv}],curves:[{f,color:C.teal,width:3.5}],points:pts});
+
+  document.getElementById('qxValA').textContent=fmtT(a).replace('−','-');
+  document.getElementById('qxValB').textContent=fmtT(b).replace('−','-');
+  document.getElementById('qxValC').textContent=fmtT(c).replace('−','-');
+
+  const formula=document.getElementById('qxFormula');
+  formula.innerHTML=`\\(f(x)=${qxPoli(a,b,c)}\\)`;
+
+  const conc=a>0?'hacia arriba: el vértice es un <strong>mínimo</strong>':'hacia abajo: el vértice es un <strong>máximo</strong>';
+  let txtRaices;
+  const aprox=r=>(esExacto(r)?'=':'\\approx')+fmtK(r);
+  if(D>1e-12)txtRaices=`Dos raíces reales: \\(x_1${aprox(raices[0])}\\) y \\(x_2${aprox(raices[1])}\\)`;
+  else if(Math.abs(D)<=1e-12)txtRaices=`Una raíz real doble: \\(x_0=${fmtK(xv)}\\)`;
+  else txtRaices=`Ninguna raíz real`;
+  const im=a>0?`[${fmtK(yv)};+\\infty)`:`(-\\infty;${fmtK(yv)}]`;
+  const abertura=Math.abs(a)<1?'más abierta que \\(y=x^2\\)':(Math.abs(a)>1?'más cerrada que \\(y=x^2\\)':'igual abertura que \\(y=x^2\\)');
+  document.getElementById('qxDatos').innerHTML=`
+    <div class="qx-dato"><span class="qx-lab">Concavidad</span>Cóncava ${conc}</div>
+    <div class="qx-dato"><span class="qx-lab">Abertura</span>\\(|a|=${fmtK(Math.abs(a))}\\): ${abertura}</div>
+    <div class="qx-dato"><span class="qx-lab">Ordenada al origen</span>\\(f(0)=${fmtK(c)}\\), punto \\((0;${fmtK(c)})\\)</div>
+    <div class="qx-dato"><span class="qx-lab">Raíces</span>${txtRaices}</div>
+    <div class="qx-dato"><span class="qx-lab">Vértice y eje</span>\\(V(${fmtK(xv)};${fmtK(yv)})\\), eje \\(x=${fmtK(xv)}\\)</div>
+    <div class="qx-dato"><span class="qx-lab">Imagen</span>\\(\\text{Im}(f)=${im}\\)</div>`;
+  typeset(formula);typeset(document.getElementById('qxDatos'));
+}
+function qxAdjust(cual,delta){
+  let v=Math.round((qxState[cual]+delta)*10)/10;
+  if(cual==='a'){
+    if(v===0)v=Math.round((v+delta)*10)/10; // a no puede ser 0
+    v=Math.max(-3,Math.min(3,v));
+  }else{
+    v=Math.max(-6,Math.min(6,v));
+  }
+  qxState[cual]=v;
+  qxDibujar();
+}
+function qxReset(){Object.assign(qxState,qxInicial);qxDibujar();}
+
+/* ============================================================
+   GRÁFICOS FIJOS
+   ============================================================ */
+function graficosFijos(){
+  // Concavidad y abertura
+  plot('plotConcArriba',{w:300,h:240,margin:{l:30,r:12,t:14,b:26},xMin:-3,xMax:3,yMin:-1,yMax:5,xStep:1,yStep:1,grid:true,
+    fmtX:v=>v%2===0?fmtT(v):'',fmtY:v=>v%2===0?fmtT(v):'',xName:'x',yName:'y',fs:10,
+    curves:[{f:x=>0.5*x*x,color:C.orange},{f:x=>x*x,color:C.teal}],
+    points:[{x:-2,y:2,color:C.orange,r:4},{x:2,y:2,color:C.orange,r:4},{x:-2,y:4,color:C.teal,r:4},{x:2,y:4,color:C.teal,r:4}]});
+  plot('plotConcAbajo',{w:300,h:240,margin:{l:30,r:12,t:14,b:26},xMin:-3,xMax:3,yMin:-5,yMax:1,xStep:1,yStep:1,grid:true,
+    fmtX:v=>v%2===0?fmtT(v):'',fmtY:v=>v%2===0?fmtT(v):'',xName:'x',yName:'y',fs:10,
+    curves:[{f:x=>-0.5*x*x,color:C.orange},{f:x=>-x*x,color:C.teal}],
+    points:[{x:-2,y:-2,color:C.orange,r:4},{x:2,y:-2,color:C.orange,r:4},{x:-2,y:-4,color:C.teal,r:4},{x:2,y:-4,color:C.teal,r:4}]});
+
+  // Elementos característicos
+  const fe=x=>0.5*x*x-2*x-2.5;
+  plot('plotElementos',{w:560,h:380,xMin:-3.5,xMax:7.5,yMin:-6,yMax:6,noTicks:true,xName:'x',yName:'y',
+    vlines:[{x:2}],curves:[{f:fe,color:C.tealL,width:3.5}],
+    points:[
+      {x:-1,y:0,color:C.green,label:'Raíz x₁\n(x₁;0)',dx:-10,dy:-22,anchor:'end'},
+      {x:5,y:0,color:C.green,label:'Raíz x₂\n(x₂;0)',dx:10,dy:-22},
+      {x:0,y:-2.5,color:C.violet,label:'Ordenada al origen\n(0;f(0))',dx:-10,dy:20,anchor:'end'},
+      {x:2,y:-4.5,color:C.red,label:'Vértice V(xᵥ;yᵥ)',dx:10,dy:22}],
+    labels:[{x:2.15,y:5,text:'Eje de simetría x = xᵥ',bold:true,color:C.navy}]});
+
+  // Discriminante
+  const mini={w:300,h:210,margin:{l:14,r:14,t:14,b:14},xMin:-3.5,xMax:3.5,yMin:-2.5,yMax:4,noTicks:true,xName:'x',yName:'y',fs:10};
+  plot('plotD1',Object.assign({},mini,{curves:[{f:x=>0.5*x*x-1.5,color:C.tealL}],points:[{x:-Math.sqrt(3),y:0,color:C.green,r:4.5},{x:Math.sqrt(3),y:0,color:C.green,r:4.5}]}));
+  plot('plotD2',Object.assign({},mini,{curves:[{f:x=>0.5*x*x,color:C.tealL}],points:[{x:0,y:0,color:C.red,r:4.5}]}));
+  plot('plotD3',Object.assign({},mini,{curves:[{f:x=>0.5*x*x+1,color:C.tealL}]}));
+
+  // Signo: seis casos
+  const sg={w:300,h:190,margin:{l:14,r:14,t:14,b:14},xMin:-3.5,xMax:3.5,yMin:-3,yMax:3,noTicks:true,xName:'x',yName:'y',fs:10};
+  const inf=99, r2=2;
+  const casos=[
+    {id:'plotS1',f:x=>0.5*(x*x-4),bands:[[-inf,-r2,C.green],[-r2,r2,C.coral],[r2,inf,C.green]],roots:[-2,2]},
+    {id:'plotS2',f:x=>-0.5*(x*x-4),bands:[[-inf,-r2,C.coral],[-r2,r2,C.green],[r2,inf,C.coral]],roots:[-2,2]},
+    {id:'plotS3',f:x=>0.5*x*x,bands:[[-inf,0,C.green],[0,inf,C.green]],roots:[0]},
+    {id:'plotS4',f:x=>-0.5*x*x,bands:[[-inf,0,C.coral],[0,inf,C.coral]],roots:[0]},
+    {id:'plotS5',f:x=>0.5*x*x+1,bands:[[-inf,inf,C.green]],roots:[]},
+    {id:'plotS6',f:x=>-0.5*x*x-1,bands:[[-inf,inf,C.coral]],roots:[]}
+  ];
+  casos.forEach(k=>{
+    const pts=k.roots.map((r,i)=>({x:r,y:0,color:C.navy,r:4.5,
+      label:k.roots.length===1?'x₀':(i===0?'x₁':'x₂'),dx:k.roots.length===1?6:(i===0?-6:6),dy:-8,anchor:k.roots.length===1?'start':(i===0?'end':'start'),lc:C.navy}));
+    plot(k.id,Object.assign({},sg,{bands:k.bands.map(b=>({from:b[0],to:b[1],color:b[2]})),curves:[{f:k.f,color:C.tealL}],points:pts}));
+  });
+
+  // Graficar paso a paso: f(x)=x²-4x-5
+  plot('plotGraficar',{w:520,h:440,xMin:-2.5,xMax:6.5,yMin:-10.5,yMax:8.5,xStep:1,yStep:1,grid:true,
+    fmtY:v=>v%2===0?fmtT(v):'',xName:'x',yName:'y',
+    vlines:[{x:2}],segs:[{x1:0,y1:-5,x2:4,y2:-5}],
+    curves:[{f:x=>x*x-4*x-5,color:C.teal,width:3.5}],
+    points:[
+      {x:-1,y:0,color:C.green,label:'x₁ = −1',dx:-8,dy:-9,anchor:'end'},
+      {x:5,y:0,color:C.green,label:'x₂ = 5',dx:8,dy:-9},
+      {x:0,y:-5,color:C.violet,label:'(0;−5)',dx:-9,dy:-8,anchor:'end'},
+      {x:4,y:-5,color:C.violet,label:'(4;−5)',dx:9,dy:-8},
+      {x:2,y:-9,color:C.red,label:'V(2;−9)',dx:10,dy:16}],
+    labels:[{x:2.12,y:7.6,text:'x = 2',color:C.slate,bold:true}]});
+
+  // Ingreso (variable discreta)
+  plot('plotIngreso',{w:560,h:360,margin:{l:62,r:20,t:24,b:46},xMin:0,xMax:520,yMin:0,yMax:140000,xStep:100,yStep:25000,grid:true,
+    showZeroX:true,fmtY:v=>fmtMiles(v),fmtX:v=>fmtT(v),xNameBelow:true,xName:'cantidad de unidades, x',yName:'ingreso, I(x)',
+    vlines:[{x:250}],
+    curves:[{f:x=>1000*x-2*x*x,from:0,to:500,color:C.guide,width:1.2,dash:'4 4'},{f:x=>1000*x-2*x*x,from:0,to:500,discrete:10,color:C.teal,r:2.6}],
+    points:[
+      {x:250,y:125000,color:C.red,label:'V(250;125.000) máximo',dx:10,dy:-6},
+      {x:0,y:0,color:C.green,label:'(0;0)',dx:8,dy:-8},
+      {x:500,y:0,color:C.green,label:'(500;0)',dx:-8,dy:-8,anchor:'end'}]});
+
+  // Costo (vértice fuera del dominio)
+  const fc=k=>0.5*k*k+20*k+300;
+  plot('plotCosto',{w:560,h:360,margin:{l:48,r:20,t:24,b:46},xMin:-32,xMax:24,yMin:-40,yMax:900,xStep:10,yStep:200,grid:true,
+    fmtX:v=>fmtT(v),xNameBelow:true,xName:'distancia, k (km)',yName:'costo, C(k)',
+    curves:[{f:fc,from:-32,to:0,color:C.guide,width:2,dash:'6 5'},{f:fc,from:0,to:24,color:C.teal,width:3.5}],
+    points:[
+      {x:-20,y:100,color:C.slate,hollow:true,label:'V(−20;100)\nfuera del dominio',dx:0,dy:22,anchor:'middle',lc:C.slate},
+      {x:0,y:300,color:C.green,label:'(0;300) mínimo en el dominio',dx:8,dy:16},
+      {x:10,y:550,color:C.violet,label:'(10;550)',dx:9,dy:-6}]});
+
+  // Cultivo (forma factorizada)
+  const fp=x=>-0.0002*(x-50)*(x-150);
+  plot('plotCultivo',{w:560,h:360,margin:{l:48,r:20,t:24,b:46},xMin:0,xMax:175,yMin:-0.3,yMax:0.62,xStep:25,yStep:0.1,grid:true,
+    fmtX:v=>fmtT(v),fmtY:v=>fmtT(v,1),xNameBelow:true,xName:'fertilizante, x (kg/ha)',yName:'variación, P(x) (t/ha)',
+    vlines:[{x:100}],
+    curves:[{f:fp,from:40,to:160,color:C.teal,width:3.5}],
+    points:[
+      {x:100,y:0.5,color:C.red,label:'V(100;0,5) máximo',dx:0,dy:-12,anchor:'middle'},
+      {x:50,y:0,color:C.green,label:'(50;0)',dx:-8,dy:-9,anchor:'end'},
+      {x:150,y:0,color:C.green,label:'(150;0)',dx:8,dy:-9},
+      {x:40,y:-0.22,color:C.navy,label:'(40;−0,22)',dx:8,dy:16},
+      {x:160,y:-0.22,color:C.navy,label:'(160;−0,22)',dx:-8,dy:16,anchor:'end'}]});
+
+  // Ganancia (forma canónica)
+  plot('plotGanancia',{w:560,h:360,margin:{l:44,r:20,t:24,b:46},xMin:0,xMax:8.6,yMin:-4,yMax:58,xStep:1,yStep:10,grid:true,
+    showZeroX:true,fmtX:v=>fmtT(v),xNameBelow:true,xName:'tiempo, t (meses)',yName:'G(t)',
+    vlines:[{x:3}],
+    curves:[{f:t=>-2*(t-3)*(t-3)+50,from:0,to:8,color:C.teal,width:3.5}],
+    points:[
+      {x:3,y:50,color:C.red,label:'V(3;50) máximo',dx:0,dy:-12,anchor:'middle'},
+      {x:0,y:32,color:C.green,label:'(0;32)',dx:9,dy:-6},
+      {x:8,y:0,color:C.green,label:'(8;0)',dx:-9,dy:-9,anchor:'end'}]});
+}
+
+
+/* ============================================================
+   REPASO: INTERSECCIÓN DE INTERVALOS
+   ============================================================ */
+const intInicial={tipo:'C',xv:5,p:0,q:10};
+const intState=Object.assign({},intInicial);
+const INT={xMin:-4,xMax:14,l:40,r:40};
+function intX(x){return INT.l+(x-INT.xMin)/(INT.xMax-INT.xMin)*(560-INT.l-INT.r);}
+function intTramo(y,a,aC,b,bC,color){
+  // a o b pueden ser ±Infinity
+  const x1=a===-Infinity?INT.l-18:intX(a), x2=b===Infinity?560-INT.r+18:intX(b);
+  let s=`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${color}" stroke-width="6" stroke-linecap="butt"/>`;
+  if(a===-Infinity)s+=`<polygon points="${x1-8},${y} ${x1+2},${y-7} ${x1+2},${y+7}" fill="${color}"/>`;
+  else s+=`<circle cx="${x1}" cy="${y}" r="6.5" fill="${aC?color:'#fff'}" stroke="${color}" stroke-width="2.5"/>`;
+  if(b===Infinity)s+=`<polygon points="${x2+8},${y} ${x2-2},${y-7} ${x2-2},${y+7}" fill="${color}"/>`;
+  else s+=`<circle cx="${x2}" cy="${y}" r="6.5" fill="${bC?color:'#fff'}" stroke="${color}" stroke-width="2.5"/>`;
+  return s;
+}
+function intRecta(y){
+  let s=`<line x1="${INT.l-24}" y1="${y}" x2="${560-INT.r+24}" y2="${y}" stroke="#C9D8DA" stroke-width="1.5"/>`;
+  for(let x=INT.xMin;x<=INT.xMax;x++){
+    s+=`<line x1="${intX(x)}" y1="${y-4}" x2="${intX(x)}" y2="${y+4}" stroke="#C9D8DA"/>`;
+    if(x%2===0)s+=`<text x="${intX(x)}" y="${y+19}" font-size="10" text-anchor="middle" fill="#5D737C" font-family="Inter,sans-serif">${fmtT(x)}</text>`;
+  }
+  return s;
+}
+function intTxt(y,t,color){return `<text x="12" y="${y}" font-size="12" font-weight="700" fill="${color}" font-family="Inter,sans-serif">${t}</text>`;}
+function intCalcular(){
+  const {tipo,xv,p,q}=intState;
+  if(tipo==='C'){ // (-inf;xv) ∩ [p;q]
+    if(xv<=p)return null;
+    if(xv>q)return {a:p,aC:true,b:q,bC:true};
+    return {a:p,aC:true,b:xv,bC:false};
+  }else{ // (xv;+inf) ∩ [p;q]
+    if(xv>=q)return null;
+    if(xv<p)return {a:p,aC:true,b:q,bC:true};
+    return {a:xv,aC:false,b:q,bC:true};
+  }
+}
+function intK(r){return `${r.aC?'[':'('}${fmtK(r.a)};${fmtK(r.b)}${r.bC?']':')'}`;}
+function intDibujar(){
+  const {tipo,xv,p,q}=intState;
+  const yF=48,yD=122,yI=196;
+  const nomF=tipo==='C'?'Creciente en (−∞; xᵥ)':'Decreciente en (xᵥ; +∞)';
+  let s='';
+  // guías verticales en xv, p, q
+  [[xv,'#0F6B6F'],[p,'#7C5CE6'],[q,'#7C5CE6']].forEach(([v,c])=>{
+    s+=`<line x1="${intX(v)}" y1="${yF-12}" x2="${intX(v)}" y2="${yI+8}" stroke="${c}" stroke-opacity=".35" stroke-dasharray="3 4"/>`;
+  });
+  s+=intTxt(yF-16,nomF,'#0F6B6F')+intRecta(yF);
+  s+= tipo==='C'?intTramo(yF,-Infinity,false,xv,false,'#0F6B6F'):intTramo(yF,xv,false,Infinity,false,'#0F6B6F');
+  s+=intTxt(yD-16,'Dominio de la situación [p; q]','#7C5CE6')+intRecta(yD)+intTramo(yD,p,true,q,true,'#7C5CE6');
+  const r=intCalcular();
+  s+=intTxt(yI-16,'Intersección: lo que está en los dos','#C25E00')+intRecta(yI);
+  if(r)s+=intTramo(yI,r.a,r.aC,r.b,r.bC,'#FF7A00');
+  else s+=`<text x="${intX((INT.xMin+INT.xMax)/2)}" y="${yI-6}" font-size="12" font-weight="700" text-anchor="middle" fill="#C25E00" font-family="Inter,sans-serif">∅ (no hay valores en común)</text>`;
+  document.getElementById('intSvg').innerHTML=s;
+  document.getElementById('intValXv').textContent=fmtT(xv).replace('−','-');
+  document.getElementById('intValP').textContent=fmtT(p).replace('−','-');
+  document.getElementById('intValQ').textContent=fmtT(q).replace('−','-');
+  const iF=tipo==='C'?`(-\\infty;${fmtK(xv)})`:`(${fmtK(xv)};+\\infty)`;
+  const res=r?intK(r):'\\varnothing';
+  let com;
+  if(!r)com=`<br>La abscisa del vértice, \\(x_v=${fmtK(xv)}\\), queda fuera del dominio: el tramo ${tipo==='C'?'creciente':'decreciente'} de la parábola no tiene valores en común con él.`;
+  else if((tipo==='C'&&xv>q)||(tipo==='D'&&xv<p))com=`<br>La abscisa del vértice, \\(x_v=${fmtK(xv)}\\), queda fuera del dominio: todo el dominio está dentro del tramo ${tipo==='C'?'creciente':'decreciente'}.`;
+  else com=`<br>El extremo \\(${fmtK(xv)}\\) queda abierto porque viene del intervalo de la función; ${tipo==='C'?`\\(${fmtK(p)}\\)`:`\\(${fmtK(q)}\\)`} queda cerrado porque pertenece al dominio.`;
+  const L=document.getElementById('intLectura');
+  const nomI=tipo==='C'?'Intervalo de crecimiento de la función':'Intervalo de decrecimiento de la función';
+  const conc=r?`En la situación, la función es ${tipo==='C'?'creciente':'decreciente'} en \\(${res}\\).`:`En la situación, la función no es ${tipo==='C'?'creciente':'decreciente'} en ningún valor del dominio.`;
+  L.innerHTML=`<span class="int-dato">${nomI}: \\(${iF}\\)</span>`+
+    `<span class="int-dato">Dominio en el contexto de la situación: \\([${fmtK(p)};${fmtK(q)}]\\)</span>`+
+    `<span class="int-res">\\(${iF}\\cap[${fmtK(p)};${fmtK(q)}]=${res}\\)</span>`+
+    `<span class="int-concl">${conc}</span>`+
+    `<span class="int-com">${com.replace('<br>','')}</span>`;
+  typeset(L);
+}
+function intTipo(t){
+  intState.tipo=t;
+  document.getElementById('intBtnC').classList.toggle('activo',t==='C');
+  document.getElementById('intBtnD').classList.toggle('activo',t==='D');
+  intDibujar();
+}
+function intAdjust(k,d){
+  const v=intState[k]+d;
+  if(v<INT.xMin+1||v>INT.xMax-1)return;
+  if(k==='p'&&v>=intState.q)return;
+  if(k==='q'&&v<=intState.p)return;
+  intState[k]=v;intDibujar();
+}
+function intReset(){Object.assign(intState,intInicial);intTipo('C');}
+
+/* Inicializar */
+document.addEventListener('DOMContentLoaded',()=>{
+  requestAnimationFrame(()=>{
+    graficosFijos();
+    qxDibujar();
+    intDibujar();
+    typeset(document.body);
+  });
+});
+</script>
+</body>
+</html>
