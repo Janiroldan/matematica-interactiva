@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sistemas de ecuaciones lineales · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{min-width:76px;height:76px;padding:0 18px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.3rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:14.3%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.aviso ul{padding-left:18px;margin-top:6px}.aviso li+li{margin-top:4px}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.nobr{white-space:nowrap}
+.linea{display:block;margin-top:7px}
+.question .katex-display,.guided-title .katex-display,.ejemplo-card .katex-display,.steps .katex-display,.feedback .katex-display{text-align:left;margin:.45em 0 .45em 1.2em}
+.question .katex-display>.katex,.guided-title .katex-display>.katex,.ejemplo-card .katex-display>.katex,.steps .katex-display>.katex,.feedback .katex-display>.katex{text-align:left}
+
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.guided.violet{border-left:4px solid var(--violet)}
+.guided.violet .step-num{background:var(--violet)}
+.guided.violet .result-line{background:var(--violet-soft);color:#4F35B8}
+.guided.pink{border-left:4px solid #C2478A}
+.guided.pink .step-num{background:#C2478A}
+.guided.pink .result-line{background:#FFF1F8;color:#8B1A5E}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn .acc-icon{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.calc{margin:8px 0 2px 4px;overflow-x:auto}
+.ejemplo-card .ejemplo-desarrollo p+p{margin-top:6px}
+.btn-chip{font:inherit;font-weight:700;font-size:.85rem;padding:9px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800);transition:.15s}
+.btn-chip:hover{background:var(--teal-100)}
+.btn-chip.reset-btn{border-color:var(--slate-700);color:var(--slate-700)}
+
+/* ---- Explorador a, b, c ---- */
+.mb-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.mb-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.mb-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.mb-svg-wrap{padding:6px 0 10px;text-align:center}
+.mb-svg-wrap svg{width:100%;max-width:520px;height:auto}
+.mb-controles{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:10px}
+.mb-grupo{display:flex;align-items:center;gap:10px;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+.mb-grupo .mb-label{font-weight:800;color:var(--teal-800);font-size:1rem;min-width:16px;text-align:center}
+.mb-grupo button{font:inherit;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:8px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800)}
+.mb-grupo button:hover{background:var(--teal-100)}
+.mb-grupo .mb-valor{font-weight:800;color:var(--navy-900);min-width:44px;text-align:center;font-size:.95rem}
+.mb-lectura{text-align:center;font-weight:700;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:14px;font-size:.95rem}
+.mb-reset-wrap{text-align:center;margin-top:10px}
+.qx-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.qx-dato{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:.86rem}
+.qx-dato .qx-lab{display:block;font-size:.74rem;font-weight:700;color:var(--slate-700);margin-bottom:2px}
+.qx-nota{font-size:.8rem;color:var(--slate-700);text-align:center;margin-top:8px}
+
+/* ---- Gráficos generados ---- */
+.plot{margin:14px 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 10px 12px;text-align:center}
+.plot svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.plot figcaption{color:var(--slate-700);font-size:.8rem;margin-top:8px;line-height:1.5}
+.plot-mini{margin:0}
+.plot-mini svg{max-width:300px}
+.plot-mini h4{font-size:.86rem;color:var(--navy-900);margin-bottom:4px}
+.plot-grid{margin:14px 0}
+.rel{font-family:'Times New Roman',serif;font-size:1.21em;margin:0 .28em;line-height:1}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:4px}
+
+/* ---- Repaso: intersección de intervalos ---- */
+.repaso{margin-top:24px;border:1px dashed #CDBFF5;background:#FCFBFF;border-radius:18px;padding:18px}
+.repaso h3{font-size:1.02rem;margin:6px 0 6px}
+.repaso-badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;background:var(--violet-soft);color:#4F35B8}
+.repaso .mb-widget{margin:12px 0}
+.int-tipo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px}
+.int-dato{display:block;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-res{display:block;margin-top:8px;font-size:1.02rem}
+.int-concl{display:block;margin-top:4px;color:var(--teal-900)}
+.int-com{display:block;margin-top:6px;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-btn.activo{background:var(--teal-800);color:#fff}
+.int-btn.activo:hover{background:var(--teal-700)}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){.qx-datos{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:15px}
+  .capsula{margin:10px;border-radius:22px}
+  .hero{padding:26px 18px 18px}
+  .tabs-wrap,.content{padding-left:14px;padding-right:14px}
+  .section{padding:20px 16px}
+  .tab{flex:1 1 calc(50% - 8px);justify-content:center}
+  h2{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma" style="font-size:1.05rem">ax+by=c</div>
+<h1>Sistemas de ecuaciones lineales</h1>
+<h2>Sistemas de 2×2 y de 3×3: interpretación gráfica, método de sustitución y aplicaciones, con un explorador, un video y actividades</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Sistemas de ecuaciones lineales</h1>
+<p>Un recorrido con un explorador de rectas, un video y actividades cortas para reconocer las soluciones de una ecuación y de un sistema, interpretarlas gráficamente, resolver sistemas por sustitución, clasificarlos y usarlos para resolver situaciones. Te recomendamos recorrer las etapas en el orden propuesto.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Ecuaciones lineales</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Sistemas de 2×2</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Sustitución</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Sistemas de 3×3</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Sustitución en 3×3</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Aplicaciones</button>
+<button class="tab" data-tab="p7"><span class="tab-num">7</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+
+<main class="content">
+<!-- ============ PANEL 1: ECUACIONES LINEALES ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Ecuaciones lineales</span>
+<h2>De una a varias incógnitas</h2>
+<p class="section-intro">Ya trabajamos con ecuaciones lineales de una incógnita, como \(2x+3=11\). Se llaman de primer grado porque la incógnita aparece con exponente \(1\): no hay productos entre incógnitas ni potencias mayores que \(1\). Una ecuación lineal también puede tener dos o tres incógnitas; lo que cambia es el tipo de objeto que es cada solución.</p>
+
+<table class="mini-table">
+<thead><tr><th>Cantidad de incógnitas</th><th>Cada solución es…</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td>una (\(x\))</td><td>un número</td><td>\(2x+3=11\) → \(x=4\)</td></tr>
+<tr><td>dos (\(x\); \(y\))</td><td>un par ordenado</td><td>\(2x+y=6\) → \((1;4)\)</td></tr>
+<tr><td>tres (\(x\); \(y\); \(z\))</td><td>una terna ordenada</td><td>\(x+y+z=6\) → \((1;2;3)\)</td></tr>
+</tbody>
+</table>
+
+<div class="subbloque" id="sub1-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Ecuación lineal de dos incógnitas</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Una ecuación lineal de dos incógnitas puede escribirse como \(ax+by=c\), donde \(a\), \(b\) y \(c\) son números reales, y \(a\) y \(b\) no son ambos cero. Una <strong>solución</strong> es un par ordenado \((x;y)\) que hace verdadera la igualdad.</p></div>
+<p class="muted">Una ecuación lineal de dos incógnitas tiene infinitas soluciones en los números reales. Para saber si un par es solución, se reemplazan los valores de \(x\) y de \(y\) y se controla si se verifica la igualdad.</p>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>¿Cuáles de estos pares son soluciones de \(2x+y=6\): \((0;6)\), \((1;4)\), \((3;0)\) y \((2;3)\)?</p></div>
+<div class="ejemplo-desarrollo">
+<p>\((0;6)\): \(2\cdot0+6=6\) ✓</p>
+<p>\((1;4)\): \(2\cdot1+4=6\) ✓</p>
+<p>\((3;0)\): \(2\cdot3+0=6\) ✓</p>
+<p>\((2;3)\): \(2\cdot2+3=7\), y \(7\) no es igual a \(6\) ✗. Este par no es solución.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">¿Cuál de estos pares es solución de \(x+2y=8\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="En un par ordenado, el primer valor corresponde a x y el segundo a y: 3+2·2=7, no 8.">\((3;2)\)</button>
+<button class="opt" data-value="b">\((2;3)\)</button>
+<button class="opt" data-value="c" data-fb="Reemplazá los dos valores: 8+2·1=10, no 8.">\((8;1)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2+2\cdot3=2+6=8\) ✓." data-no="Reemplazá \(x\) por el primer valor del par e \(y\) por el segundo, y controlá si da \(8\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Representación gráfica</h3></div>
+<p class="muted">Al representar todos los pares solución de una ecuación lineal de dos incógnitas en el plano cartesiano, se obtiene una <strong>recta</strong>: cada punto de esa recta representa una solución de la ecuación.</p>
+<p class="muted">Al despejar \(y\) en \(2x+y=6\) se obtiene \(y=-2x+6\): una función lineal como las estudiadas previamente, porque a cada valor de \(x\) le corresponde un único valor de \(y\).</p>
+<div class="aviso"><span class="aviso-icon">⚠</span><div><strong>No todas las rectas representan funciones de \(x\).</strong> La ecuación \(x=3\) tiene como soluciones los pares \((3;0)\), \((3;2)\), \((3;-1)\) y todos los demás pares cuya primera coordenada es \(3\). Su gráfica es una <strong>recta vertical</strong> y no representa una función de \(x\), porque a un mismo valor de \(x\) le corresponden distintos valores de \(y\).</div></div>
+
+<div class="guided">
+<div class="guided-title">Graficar \(2x+y=6\)</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(y\): \(y=-2x+6\) (pendiente \(-2\) y ordenada al origen \(6\)).</span></li>
+<li><span class="step-num">2</span><span>Alcanzan dos puntos:<span class="linea">si \(x=0\), entonces \(y=6\) → \((0;6)\)</span><span class="linea">si \(y=0\), entonces \(x=3\) → \((3;0)\)</span></span></li>
+<li><span class="step-num">3</span><span>Un tercer punto, \((1;4)\), sirve de control.</span></li>
+</ol>
+</div>
+<figure class="plot"><svg id="plotRecta" role="img" aria-label="Recta 2x+y=6 con los puntos (0;6), (1;4) y (3;0)"></svg>
+<figcaption>Las soluciones de \(2x+y=6\) forman una recta. Cada punto de la recta es un par solución.</figcaption></figure>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">¿Cómo es la gráfica de las soluciones de \(x=-2\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="La recta horizontal sería y=-2. Acá lo que queda fijo es x: todos los pares son de la forma (-2;y).">Una recta horizontal, que representa una función constante</button>
+<button class="opt" data-value="b">Una recta vertical, que no representa una función de \(x\)</button>
+<button class="opt" data-value="c" data-fb="La y puede tomar cualquier valor: hay infinitos pares (-2;y), no uno solo.">Un único punto, \((-2;0)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: las soluciones son todos los pares \((-2;y)\), que forman una recta vertical. A \(x=-2\) le corresponden infinitos valores de \(y\)." data-no="Pensá qué pares cumplen la ecuación: ¿qué coordenada queda fija y cuál puede variar?"></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">Para graficar \(3x+y=6\), ¿qué puntos se obtienen con \(x=0\) y con \(y=0\)?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Invertiste las coordenadas: con x=0 el punto es (0;y), y con y=0 es (x;0).">\((6;0)\) y \((0;2)\)</button>
+<button class="opt" data-value="b" data-fb="Con y=0 queda 3x=6, así que x=2, no 3.">\((0;6)\) y \((3;0)\)</button>
+<button class="opt" data-value="c">\((0;6)\) y \((2;0)\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: con \(x=0\), \(y=6\); con \(y=0\), \(3x=6\) y \(x=2\)." data-no="Reemplazá \(x=0\) y despejá \(y\); después reemplazá \(y=0\) y despejá \(x\)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: SISTEMAS DE 2×2 ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Sistemas de 2×2</span>
+<h2>Dos ecuaciones que deben cumplirse a la vez</h2>
+
+<div class="subbloque" id="sub2-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Definición y notación</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Un sistema de dos ecuaciones lineales con dos incógnitas, también llamado <strong>sistema de 2×2</strong>, está formado por dos ecuaciones que deben cumplirse al mismo tiempo. Una <strong>solución del sistema</strong> es un par ordenado \((x;y)\) que verifica ambas ecuaciones. Resolver el sistema consiste en encontrar todos los pares que cumplen esta condición.</p></div>
+<div class="formula violet">\[ \left\{\begin{aligned}a_{11}x+a_{12}y&=b_1\\a_{21}x+a_{22}y&=b_2\end{aligned}\right. \]</div>
+<p class="muted">Los coeficientes \(a_{ij}\) llevan dos subíndices: el primero indica la ecuación a la que pertenece; el segundo, la variable a la que acompaña. Por ejemplo, \(a_{12}\) es el coeficiente de \(y\) (segunda variable) en la primera ecuación.</p>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Verificar si los pares \((3;1)\) y \((4;3)\) son soluciones de \[\left\{\begin{aligned}2x-y&=5\\x+4y&=7\end{aligned}\right.\]</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Par \((3;1)\):</strong> \(2\cdot3-1=5\) ✓ y \(3+4\cdot1=7\) ✓. Cumple las dos ecuaciones: es una solución del sistema. La verificación demuestra que es una solución, pero no que sea la única.</p>
+<p><strong>Par \((4;3)\):</strong> \(2\cdot4-3=5\) ✓, pero \(4+4\cdot3=16\), y \(16\) no es igual a \(7\) ✗. Cumple solo la primera ecuación: no es solución del sistema, porque debe cumplir ambas a la vez.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">¿El par \((1;2)\) es solución de este sistema?\[\left\{\begin{aligned}x+y&=3\\2x-y&=1\end{aligned}\right.\]</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">No, porque no cumple la segunda ecuación</button>
+<button class="opt" data-value="b" data-fb="Cumplir la primera no alcanza: una solución del sistema debe cumplir las dos ecuaciones a la vez.">Sí, porque cumple la primera ecuación</button>
+<button class="opt" data-value="c" data-fb="Revisá la segunda: 2·1-2=0, y 0 no es igual a 1.">Sí, porque cumple las dos ecuaciones</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(1+2=3\) ✓, pero \(2\cdot1-2=0\), que no es igual a \(1\) ✗." data-no="Reemplazá el par en las dos ecuaciones: tiene que cumplir ambas."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">¿Cuánto vale \(a_{12}\) en este sistema?\[\left\{\begin{aligned}3x-5y&=2\\-x+4y&=7\end{aligned}\right.\]</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="3 es a₁₁: el coeficiente de x (variable 1) en la ecuación 1.">\(3\)</button>
+<button class="opt" data-value="b" data-fb="4 es a₂₂: el coeficiente de y en la ecuación 2. El primer subíndice indica la ecuación.">\(4\)</button>
+<button class="opt" data-value="c">\(-5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(a_{12}\) es el coeficiente de \(y\) (variable 2) en la primera ecuación: \(-5\), con su signo." data-no="El primer subíndice indica la ecuación y el segundo, la variable."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Interpretación gráfica</h3></div>
+<p class="muted">Cada ecuación de un sistema de 2×2 se representa con una recta, y las soluciones del sistema son los <strong>puntos que pertenecen a las dos rectas a la vez</strong>. Este criterio de puntos en común vale para cualquier par de rectas, sean o no verticales.</p>
+<table class="mini-table">
+<thead><tr><th>Posición de las rectas</th><th>Puntos en común</th><th>Soluciones del sistema</th></tr></thead>
+<tbody>
+<tr><td>Secantes (se cortan)</td><td>uno solo</td><td>una única solución</td></tr>
+<tr><td>Paralelas (distintas)</td><td>ninguno</td><td>no hay solución</td></tr>
+<tr><td>Coincidentes</td><td>todos</td><td>infinitas soluciones</td></tr>
+</tbody>
+</table>
+
+<div class="grid-3 plot-grid">
+<figure class="plot plot-mini"><h4>Rectas secantes</h4><svg id="plotSec" role="img" aria-label="Rectas x+y=3 y 2x-y=3 que se cortan en (2;1)"></svg><figcaption>\(x+y=3\) y \(2x-y=3\): una única solución, \((2;1)\).</figcaption></figure>
+<figure class="plot plot-mini"><h4>Rectas paralelas</h4><svg id="plotPar" role="img" aria-label="Rectas paralelas x+y=3 y 2x+2y=10"></svg><figcaption>\(x+y=3\) y \(2x+2y=10\): ninguna solución.</figcaption></figure>
+<figure class="plot plot-mini"><h4>Rectas coincidentes</h4><svg id="plotCoi" role="img" aria-label="Rectas coincidentes x+y=3 y 2x+2y=6"></svg><figcaption>\(x+y=3\) y \(2x+2y=6\): infinitas soluciones.</figcaption></figure>
+</div>
+
+<p class="muted">Cuando las dos rectas son <strong>no verticales</strong>, se pueden escribir en la forma \(y=mx+b\), y la posición también puede determinarse comparando pendientes y ordenadas al origen: pendientes distintas → secantes; misma pendiente y distinta ordenada → paralelas; misma pendiente y misma ordenada → coincidentes.</p>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>El criterio de pendientes no se puede aplicar si alguna de las rectas es vertical, porque su pendiente no está definida. En ese caso, la posición se determina directamente por los puntos en común: dos rectas verticales distintas (\(x=2\) y \(x=5\)) son paralelas, y una recta vertical y una no vertical siempre son secantes: se cortan en un único punto.</div></div>
+
+<div class="mb-widget">
+<div class="mb-titulo">Explorá: dos rectas, un sistema</div>
+<div class="mb-sub">Cambiá la pendiente \(m\) y la ordenada al origen \(b\) de cada recta, y observá cuántos puntos en común tienen y cómo se clasifica el sistema.</div>
+<div class="mb-svg-wrap"><svg id="srSvg" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de las dos rectas del sistema"></svg></div>
+<div class="mb-controles">
+<div class="mb-grupo"><span class="mb-label" style="color:#0F6B6F">\(m_1\)</span><button onclick="srAdjust('m1',-0.5)" aria-label="Disminuir m1">−</button><span class="mb-valor" id="srM1">-1</span><button onclick="srAdjust('m1',0.5)" aria-label="Aumentar m1">+</button></div>
+<div class="mb-grupo"><span class="mb-label" style="color:#0F6B6F">\(b_1\)</span><button onclick="srAdjust('b1',-1)" aria-label="Disminuir b1">−</button><span class="mb-valor" id="srB1">3</span><button onclick="srAdjust('b1',1)" aria-label="Aumentar b1">+</button></div>
+</div>
+<div class="mb-controles">
+<div class="mb-grupo"><span class="mb-label" style="color:#C94848">\(m_2\)</span><button onclick="srAdjust('m2',-0.5)" aria-label="Disminuir m2">−</button><span class="mb-valor" id="srM2">2</span><button onclick="srAdjust('m2',0.5)" aria-label="Aumentar m2">+</button></div>
+<div class="mb-grupo"><span class="mb-label" style="color:#C94848">\(b_2\)</span><button onclick="srAdjust('b2',-1)" aria-label="Disminuir b2">−</button><span class="mb-valor" id="srB2">-3</span><button onclick="srAdjust('b2',1)" aria-label="Aumentar b2">+</button></div>
+</div>
+<div class="mb-reset-wrap"><button class="btn-chip reset-btn" onclick="srReset()">↺ Reiniciar</button></div>
+<div class="mb-lectura" id="srSistema" aria-live="polite"></div>
+<div class="qx-datos" id="srDatos" aria-live="polite"></div>
+</div>
+<div class="box violet"><p><strong>Probá:</strong> dejá la primera recta como está y buscá valores para la segunda que hagan el sistema incompatible. Después, buscá valores que lo hagan compatible indeterminado.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity">
+<div class="question">Las ecuaciones de un sistema corresponden a las rectas \(y=2x+1\) e \(y=2x-3\). ¿Cuántas soluciones tiene el sistema?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Para ser secantes, las pendientes deberían ser distintas. Acá las dos valen 2.">Una única solución: las rectas son secantes</button>
+<button class="opt" data-value="b" data-fb="Para ser coincidentes, también deberían tener la misma ordenada al origen. Acá son 1 y -3.">Infinitas: las rectas son coincidentes</button>
+<button class="opt" data-value="c">Ninguna: las rectas son paralelas</button>
+</div>
+<div class="feedback" data-ok="Correcto: misma pendiente (\(2\)) y distinta ordenada al origen (\(1\) y \(-3\)): son paralelas y no tienen puntos en común." data-no="Compará primero las pendientes y, si son iguales, las ordenadas al origen."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 7</span>
+<div class="activity">
+<div class="question">Un sistema está formado por las ecuaciones \(x=4\) e \(y=x+1\). ¿Cuántas soluciones tiene?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Una recta vertical y una no vertical nunca son paralelas: siempre se cortan en un punto.">Ninguna, porque las rectas son paralelas</button>
+<button class="opt" data-value="b">Una única solución</button>
+<button class="opt" data-value="c" data-fb="El criterio de pendientes no se puede usar, pero la posición se determina igual mirando los puntos en común.">No se puede saber, porque \(x=4\) no tiene pendiente</button>
+</div>
+<div class="feedback" data-ok="Correcto: una recta vertical y una no vertical siempre son secantes. Se cortan en \((4;5)\)." data-no="Usá el criterio general: ¿cuántos puntos en común tienen una recta vertical y una no vertical?"></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub2-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Clasificación según la cantidad de soluciones</h3></div>
+<p class="muted">Según su cantidad de soluciones, un sistema es <strong>compatible</strong> (tiene al menos una solución) o <strong>incompatible</strong> (no tiene ninguna). Los compatibles, a su vez, pueden ser determinados o indeterminados:</p>
+<table class="mini-table">
+<thead><tr><th>Clasificación</th><th>Soluciones</th><th>Posición de las rectas</th></tr></thead>
+<tbody>
+<tr><td>Compatible determinado</td><td>una única solución</td><td>secantes</td></tr>
+<tr><td>Compatible indeterminado</td><td>infinitas soluciones</td><td>coincidentes</td></tr>
+<tr><td>Incompatible</td><td>ninguna solución</td><td>paralelas distintas</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 8</span>
+<div class="activity">
+<div class="question">Un sistema de 2×2 es compatible indeterminado. ¿Qué se puede afirmar?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Un sistema sin soluciones es incompatible. Compatible significa que tiene al menos una.">No tiene solución, y sus rectas son paralelas</button>
+<button class="opt" data-value="b">Tiene infinitas soluciones, y sus rectas son coincidentes</button>
+<button class="opt" data-value="c" data-fb="Una única solución corresponde a un sistema compatible determinado.">Tiene una única solución, y sus rectas son secantes</button>
+</div>
+<div class="feedback" data-ok="Correcto: compatible (tiene soluciones) e indeterminado (no queda determinada una única): infinitas soluciones, rectas coincidentes." data-no="Separá las dos palabras: ¿qué indica «compatible»? ¿y «indeterminado»?"></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: SUSTITUCIÓN ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Método de sustitución</span>
+<h2>Resolver un sistema de 2×2 por sustitución</h2>
+<p class="section-intro">El método de sustitución transforma el sistema en una ecuación de una sola incógnita, que ya sabemos resolver.</p>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Los cuatro pasos del método</h3></div>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Despejar</td><td>una incógnita en una de las ecuaciones (conviene elegir la más simple)</td></tr>
+<tr><td>2. Sustituir</td><td>esa expresión en la otra ecuación, y resolver la ecuación de una incógnita que resulta</td></tr>
+<tr><td>3. Reemplazar</td><td>el valor obtenido en la expresión despejada, para hallar la otra incógnita</td></tr>
+<tr><td>4. Verificar</td><td>la solución en las dos ecuaciones</td></tr>
+</tbody>
+</table>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué incógnita se despeja, en qué ecuación se sustituye y cómo se obtiene el valor de la otra incógnita.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/L0QuX9RpEoM" title="Método de sustitución en sistemas de 2×2" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="guided">
+<div class="guided-title">Resolver \[\left\{\begin{aligned}x+y&=3\\2x-y&=3\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(y\) en la primera ecuación: \(y=3-x\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda ecuación y resolvemos:<div class="calc">\(\begin{aligned}2x-y&=3\\2x-(3-x)&=3\\2x-3+x&=3\\3x&=6\\x&=2\end{aligned}\)</div></span></li>
+<li><span class="step-num">3</span><span>Reemplazamos \(x=2\) en \(y=3-x\):<div class="calc">\(\begin{aligned}y&=3-2\\y&=1\end{aligned}\)</div></span></li>
+<li><span class="step-num">4</span><span>Verificamos en las dos ecuaciones:<span class="linea">\(2+1=3\) ✓</span><span class="linea">\(2\cdot2-1=3\) ✓</span></span></li>
+</ol>
+<div class="result-line">La única solución es el par \((2;1)\): \(S=\{(2;1)\}\). Es el punto donde se cortan las rectas secantes del gráfico de la pestaña anterior.</div>
+</div>
+
+<div class="guided violet">
+<div class="guided-title">Coeficientes distintos de 1: \[\left\{\begin{aligned}y+2&=3x\\4&=2x+y\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(x\) en la primera ecuación:<div class="calc">\(\begin{aligned}y+2&=3x\\\dfrac{y+2}{3}&=x\\\dfrac{1}{3}y+\dfrac{2}{3}&=x\end{aligned}\)</div></span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda ecuación y resolvemos:<div class="calc">\(\begin{aligned}4&=2x+y\\4&=2\cdot\left(\dfrac{1}{3}y+\dfrac{2}{3}\right)+y\\4&=\dfrac{2}{3}y+\dfrac{4}{3}+y\\4-\dfrac{4}{3}&=\dfrac{5}{3}y\\\dfrac{8}{3}&=\dfrac{5}{3}y\\\dfrac{8}{5}&=y\end{aligned}\)</div></span></li>
+<li><span class="step-num">3</span><span>Reemplazamos \(y=\dfrac{8}{5}\) en \(x=\dfrac{1}{3}y+\dfrac{2}{3}\):<div class="calc">\(\begin{aligned}x&=\dfrac{1}{3}\cdot\dfrac{8}{5}+\dfrac{2}{3}\\x&=\dfrac{8}{15}+\dfrac{2}{3}\\x&=\dfrac{8}{15}+\dfrac{10}{15}\\x&=\dfrac{18}{15}\\x&=\dfrac{6}{5}\end{aligned}\)</div></span></li>
+<li><span class="step-num">4</span><span>Verificamos en los dos miembros de cada ecuación:<span class="linea"><strong>Primera, \(y+2=3x\):</strong> miembro izquierdo \(\dfrac{8}{5}+2=\dfrac{18}{5}\); miembro derecho \(3\cdot\dfrac{6}{5}=\dfrac{18}{5}\) ✓</span><span class="linea"><strong>Segunda, \(4=2x+y\):</strong> miembro izquierdo \(4\); miembro derecho \(2\cdot\dfrac{6}{5}+\dfrac{8}{5}=\dfrac{20}{5}=4\) ✓</span></span></li>
+</ol>
+<div class="result-line">\(S=\left\{\left(\dfrac{6}{5};\dfrac{8}{5}\right)\right\}=\{(1{,}2;1{,}6)\}\)</div>
+</div>
+
+<div class="box yellow"><p><strong>Para tener en cuenta:</strong> conviene despejar la incógnita que tiene coeficiente \(1\) o \(-1\), para evitar trabajar con fracciones. Y si una ecuación tiene coeficientes que pueden simplificarse, conviene simplificarla antes de resolver.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 9</span>
+<div class="activity">
+<div class="question">Para resolver este sistema por sustitución, ¿qué conviene despejar?\[\left\{\begin{aligned}2x+y&=7\\3x-4y&=5\end{aligned}\right.\]</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(y\) en la primera ecuación</button>
+<button class="opt" data-value="b" data-fb="x tiene coeficiente 3 en la segunda: al despejarla aparecen fracciones.">\(x\) en la segunda ecuación</button>
+<button class="opt" data-value="c" data-fb="y tiene coeficiente -4 en la segunda: al despejarla aparecen fracciones.">\(y\) en la segunda ecuación</button>
+</div>
+<div class="feedback" data-ok="Correcto: en la primera ecuación \(y\) tiene coeficiente \(1\), y se despeja sin fracciones: \(y=7-2x\)." data-no="Buscá la incógnita que tiene coeficiente \(1\) o \(-1\)."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 10</span>
+<div class="activity">
+<div class="question">Se despejó \(y=3-x\) y se sustituye en \(2x-y=3\). ¿Cuál es el renglón correcto después de sustituir?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Falta distribuir el signo menos: -(3-x)=-3+x, no -3-x.">\(2x-3-x=3\)</button>
+<button class="opt" data-value="b" data-fb="Al sustituir, la expresión reemplaza a y: no se agrega a la ecuación.">\(2x-y-3+x=3\)</button>
+<button class="opt" data-value="c">\(2x-3+x=3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(2x-(3-x)=3\), y al distribuir el signo menos queda \(2x-3+x=3\)." data-no="Reemplazá \(y\) por \((3-x)\), entre paréntesis, y distribuí el signo menos."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 11</span>
+<div class="activity">
+<div class="question">¿Cuál es la solución de este sistema?\[\left\{\begin{aligned}x+y&=5\\x-y&=1\end{aligned}\right.\]</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Verificá en la segunda ecuación: 2-3=-1, no 1. Revisá el orden del par.">\(S=\{(2;3)\}\)</button>
+<button class="opt" data-value="b" data-fb="Cumple la primera, pero no la segunda: 4-1=3, no 1.">\(S=\{(4;1)\}\)</button>
+<button class="opt" data-value="c">\(S=\{(3;2)\}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Despejando \(y=5-x\) y sustituyendo en la segunda:<div class='calc'>\(\begin{aligned}x-(5-x)&=1\\x-5+x&=1\\2x-5&=1\\2x&=6\\x&=3\end{aligned}\)</div>Y \(y=5-3=2\). Verificación: \(3+2=5\) ✓ y \(3-2=1\) ✓." data-no="Despejá \(y\) en la primera ecuación, sustituí en la segunda y verificá en las dos."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Clasificar el sistema al resolverlo</h3></div>
+<p class="muted">Al resolver por sustitución, el resultado permite reconocer algebraicamente a qué tipo de sistema corresponde:</p>
+<table class="mini-table">
+<thead><tr><th>Clasificación</th><th>Al resolver por sustitución</th></tr></thead>
+<tbody>
+<tr><td>Compatible determinado</td><td>se obtiene un valor para cada incógnita</td></tr>
+<tr><td>Compatible indeterminado</td><td>aparece una igualdad siempre verdadera (\(0=0\)): la segunda ecuación no aporta una condición nueva, y el sistema tiene infinitas soluciones</td></tr>
+<tr><td>Incompatible</td><td>aparece una igualdad falsa (\(0=k\), con \(k\) distinto de \(0\)): el sistema no tiene solución</td></tr>
+</tbody>
+</table>
+
+<div class="grid-2">
+<div class="guided orange">
+<div class="guided-title">Incompatible: \[\left\{\begin{aligned}x+y&=3\\2x+2y&=10\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(y\) en la primera ecuación: \(y=3-x\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda y resolvemos:<div class="calc">\(\begin{aligned}2x+2(3-x)&=10\\2x+6-2x&=10\\6&=10\end{aligned}\)</div></span></li>
+</ol>
+<div class="result-line">\(6\) no es igual a \(10\): la igualdad es falsa para cualquier valor de \(x\). El sistema es incompatible y \(S=\varnothing\). Gráficamente, las rectas son paralelas.</div>
+</div>
+<div class="guided pink">
+<div class="guided-title">Compatible indeterminado: \[\left\{\begin{aligned}x+y&=3\\2x+2y&=6\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(y\) en la primera ecuación: \(y=3-x\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda y resolvemos:<div class="calc">\(\begin{aligned}2x+2(3-x)&=6\\2x+6-2x&=6\\6&=6\end{aligned}\)</div></span></li>
+</ol>
+<div class="result-line">La igualdad es verdadera para cualquier valor de \(x\): toda solución de la primera ecuación también lo es de la segunda. Las soluciones son todos los pares \((x;3-x)\), por ejemplo \((0;3)\), \((1;2)\) y \((5;-2)\): \(S=\{(x;3-x):x\in\mathbb{R}\}\). Gráficamente, las dos ecuaciones representan la misma recta.</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 12</span>
+<div class="activity">
+<div class="question">Al resolver un sistema de 2×2 por sustitución se llega a \(0=0\). ¿Cómo se clasifica el sistema?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="0=0 es una igualdad verdadera, no falsa: la segunda ecuación no contradice a la primera, solo repite su condición.">Incompatible</button>
+<button class="opt" data-value="b">Compatible indeterminado</button>
+<button class="opt" data-value="c" data-fb="No se obtuvo un valor para cada incógnita: la igualdad vale para cualquier x.">Compatible determinado</button>
+</div>
+<div class="feedback" data-ok="Correcto: la igualdad siempre verdadera indica que la segunda ecuación no aporta una condición nueva. En un 2×2, eso alcanza para concluir que hay infinitas soluciones." data-no="Pensá si \(0=0\) es verdadera o falsa, y qué significa eso."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 13</span>
+<div class="activity">
+<div class="question">¿Cuál es el conjunto solución de este sistema?\[\left\{\begin{aligned}x+y&=4\\3x+3y&=12\end{aligned}\right.\]</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(S=\{(x;4-x):x\in\mathbb{R}\}\)</button>
+<button class="opt" data-value="b" data-fb="Al sustituir se llega a 12=12, que es verdadera: el sistema tiene soluciones.">\(S=\varnothing\)</button>
+<button class="opt" data-value="c" data-fb="(0;4) es una de las soluciones, pero no la única: hay infinitas.">\(S=\{(0;4)\}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Despejando \(y=4-x\) y sustituyendo:<div class='calc'>\(\begin{aligned}3x+3(4-x)&=12\\3x+12-3x&=12\\12&=12\end{aligned}\)</div>Es compatible indeterminado: todos los pares \((x;4-x)\) son solución." data-no="Despejá \(y\), sustituí y fijate qué igualdad se obtiene."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: SISTEMAS DE 3×3 ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Sistemas de 3×3</span>
+<h2>Tres ecuaciones con tres incógnitas</h2>
+
+<div class="subbloque" id="sub4-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Ecuación lineal de tres incógnitas</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Una ecuación lineal de tres incógnitas se escribe \(ax+by+cz=d\), donde \(a\), \(b\), \(c\) y \(d\) son números reales, y \(a\), \(b\) y \(c\) no son todos nulos. Una <strong>solución</strong> es una terna ordenada \((x;y;z)\) que, al reemplazarla en la ecuación, la convierte en una igualdad verdadera.</p></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo</h3><p>Hallar soluciones de \(x+y+z=6\).</p></div>
+<div class="ejemplo-desarrollo">
+<p>Despejamos \(z\): \(z=6-x-y\). Se pueden elegir libremente los valores de \(x\) e \(y\), y calcular \(z\) a partir de ellos:</p>
+<p>Con \(x=1\) e \(y=2\): \(z=6-1-2=3\) → terna \((1;2;3)\).</p>
+<p>Con \(x=0\) e \(y=0\): \(z=6-0-0=6\) → terna \((0;0;6)\).</p>
+<p>Como hay dos incógnitas que pueden elegirse libremente, la ecuación tiene infinitas soluciones, todas ellas ternas ordenadas.</p>
+</div>
+</div>
+<div class="box teal"><p>Así como las soluciones de una ecuación de dos incógnitas forman una <strong>recta</strong> en el plano, las soluciones de una ecuación de tres incógnitas forman un <strong>plano</strong> en el espacio de tres dimensiones.</p></div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 14</span>
+<div class="activity">
+<div class="question">En la ecuación \(x+y+z=10\), si se elige \(x=2\) e \(y=3\), ¿cuánto vale \(z\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(5\)</button>
+<button class="opt" data-value="b" data-fb="Despejá z: z=10-x-y. Hay que restar x e y, no sumarlos.">\(15\)</button>
+<button class="opt" data-value="c" data-fb="Falta restar los valores elegidos: z=10-2-3.">\(10\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(z=10-2-3=5\), y la terna \((2;3;5)\) es una solución." data-no="Despejá \(z\) y reemplazá los valores elegidos."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Sistema de 3×3</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Un sistema de tres ecuaciones lineales con tres incógnitas, también llamado <strong>sistema de 3×3</strong>, está formado por tres ecuaciones que deben cumplirse al mismo tiempo. Una <strong>solución del sistema</strong> es una terna ordenada \((x;y;z)\) que verifica las tres ecuaciones. Resolver el sistema consiste en encontrar todas las ternas que cumplen esta condición.</p></div>
+<div class="formula violet">\[ \left\{\begin{aligned}a_{11}x+a_{12}y+a_{13}z&=d_1\\a_{21}x+a_{22}y+a_{23}z&=d_2\\a_{31}x+a_{32}y+a_{33}z&=d_3\end{aligned}\right. \]</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 15</span>
+<div class="activity">
+<div class="question">¿La terna \((1;1;1)\) es solución de este sistema?\[\left\{\begin{aligned}x+y+z&=3\\x-y+z&=1\\2x+y-z&=3\end{aligned}\right.\]</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Cumplir dos ecuaciones no alcanza: una solución del sistema debe cumplir las tres.">Sí, porque cumple las dos primeras ecuaciones</button>
+<button class="opt" data-value="b" data-fb="Revisá la tercera: 2·1+1-1=2, y 2 no es igual a 3.">Sí, porque cumple las tres ecuaciones</button>
+<button class="opt" data-value="c">No, porque no cumple la tercera ecuación</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(1+1+1=3\) ✓ y \(1-1+1=1\) ✓, pero \(2\cdot1+1-1=2\), que no es igual a \(3\) ✗." data-no="Reemplazá la terna en las tres ecuaciones."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub4-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Interpretación gráfica y clasificación</h3></div>
+<p class="muted">Cada ecuación de un sistema de 3×3 se representa con un <strong>plano</strong> en el espacio, y las soluciones del sistema son los puntos que pertenecen a <strong>los tres planos a la vez</strong>.</p>
+<div class="grid-3 plot-grid">
+<figure class="plot plot-mini"><h4>Un único punto en común</h4><svg id="planos1" role="img" aria-label="Tres planos que se cortan en un solo punto"></svg><figcaption>Los tres planos se cortan en un solo punto: una única solución.</figcaption></figure>
+<figure class="plot plot-mini"><h4>Una recta en común</h4><svg id="planos2" role="img" aria-label="Tres planos que comparten una recta"></svg><figcaption>Los tres planos comparten una recta: infinitas soluciones.</figcaption></figure>
+<figure class="plot plot-mini"><h4>Ningún punto en común</h4><svg id="planos3" role="img" aria-label="Tres planos que se cortan de a dos sin un punto común a los tres"></svg><figcaption>Se cortan de a dos, pero ningún punto está en los tres: ninguna solución.</figcaption></figure>
+</div>
+<p class="muted">Cuando hay infinitas soluciones, los puntos comunes pueden formar una recta o un plano.</p>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>No alcanza con que los planos se corten de a dos: una solución debe pertenecer a <strong>los tres planos simultáneamente</strong>. En el tercer gráfico, cada par de planos se corta en una recta, y sin embargo no hay ningún punto común a los tres.</div></div>
+
+<p class="muted">Los tres casos gráficos corresponden a la misma clasificación que en los sistemas de 2×2:</p>
+<table class="mini-table">
+<thead><tr><th>Planos</th><th>Soluciones</th><th>Clasificación</th></tr></thead>
+<tbody>
+<tr><td>Un único punto común</td><td>una única solución</td><td>compatible determinado</td></tr>
+<tr><td>Una recta o un plano en común</td><td>infinitas soluciones</td><td>compatible indeterminado</td></tr>
+<tr><td>Ningún punto común a los tres planos</td><td>ninguna solución</td><td>incompatible</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 16</span>
+<div class="activity">
+<div class="question">En un sistema de 3×3, los planos se cortan de a dos, pero no hay ningún punto que pertenezca a los tres. ¿Cómo se clasifica el sistema?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Que se corten de a dos no alcanza: la solución debe estar en los tres planos a la vez.">Compatible indeterminado, porque los planos se cortan</button>
+<button class="opt" data-value="b">Incompatible</button>
+<button class="opt" data-value="c" data-fb="Para una única solución, los tres planos deberían compartir exactamente un punto.">Compatible determinado</button>
+</div>
+<div class="feedback" data-ok="Correcto: si ningún punto está en los tres planos, el sistema no tiene solución: \(S=\varnothing\)." data-no="Recordá que una solución del sistema debe pertenecer a los tres planos simultáneamente."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: SUSTITUCIÓN EN 3×3 ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Sustitución en 3×3</span>
+<h2>El mismo método, en dos etapas</h2>
+<p class="section-intro">El método es el mismo que en los sistemas de 2×2, aplicado en dos etapas: primero se elimina una incógnita, obteniendo un sistema de 2×2, y luego se resuelve ese sistema.</p>
+
+<div class="subbloque" id="sub5-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Los pasos del método</h3></div>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Despejar</td><td>una incógnita en una de las ecuaciones</td></tr>
+<tr><td>2. Sustituir</td><td>en las otras dos ecuaciones: se obtiene un sistema de 2×2</td></tr>
+<tr><td>3. Resolver</td><td>ese sistema de 2×2 por sustitución</td></tr>
+<tr><td>4. Reemplazar</td><td>los valores obtenidos en la expresión despejada, para hallar la tercera incógnita</td></tr>
+<tr><td>5. Verificar</td><td>la solución en las tres ecuaciones</td></tr>
+</tbody>
+</table>
+
+<div class="guided">
+<div class="guided-title">Resolver \[\left\{\begin{aligned}x+y+z&=6\\2x-y+z&=3\\x+2y-z&=2\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(z\) en la primera ecuación: \(z=6-x-y\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en las otras dos ecuaciones.<span class="linea"><strong>En la segunda:</strong></span><div class="calc">\(\begin{aligned}2x-y+(6-x-y)&=3\\x-2y+6&=3\\x-2y&=-3\end{aligned}\)</div><span class="linea"><strong>En la tercera:</strong></span><div class="calc">\(\begin{aligned}x+2y-(6-x-y)&=2\\x+2y-6+x+y&=2\\2x+3y-6&=2\\2x+3y&=8\end{aligned}\)</div></span></li>
+<li><span class="step-num">3</span><span>Resolvemos el sistema de 2×2 que resulta, \[\left\{\begin{aligned}x-2y&=-3\\2x+3y&=8\end{aligned}\right.\]<span class="linea">De la primera ecuación despejamos \(x\): \(x=2y-3\).</span><span class="linea">Sustituimos en la segunda:</span><div class="calc">\(\begin{aligned}2(2y-3)+3y&=8\\4y-6+3y&=8\\7y&=14\\y&=2\end{aligned}\)</div><span class="linea">Reemplazamos en \(x=2y-3\):</span><div class="calc">\(\begin{aligned}x&=2\cdot2-3\\x&=1\end{aligned}\)</div></span></li>
+<li><span class="step-num">4</span><span>Reemplazamos en \(z=6-x-y\):<div class="calc">\(\begin{aligned}z&=6-1-2\\z&=3\end{aligned}\)</div></span></li>
+<li><span class="step-num">5</span><span>Verificamos en las tres ecuaciones:<span class="linea">\(1+2+3=6\) ✓</span><span class="linea">\(2\cdot1-2+3=3\) ✓</span><span class="linea">\(1+2\cdot2-3=2\) ✓</span></span></li>
+</ol>
+<div class="result-line">\(S=\{(1;2;3)\}\)</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 17</span>
+<div class="activity">
+<div class="question">Se despejó \(z=6-x-y\) y se sustituye en \(x+2y-z=2\). ¿Cuál es el renglón correcto después de distribuir el signo menos?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">\(x+2y-6+x+y=2\)</button>
+<button class="opt" data-value="b" data-fb="El signo menos afecta a los tres términos del paréntesis: -(6-x-y)=-6+x+y.">\(x+2y-6-x-y=2\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el primer término: -(6-x-y) empieza con -6, no con +6.">\(x+2y+6+x+y=2\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(x+2y-(6-x-y)=2\), y al distribuir el signo menos queda \(x+2y-6+x+y=2\)." data-no="Sustituí \(z\) por \((6-x-y)\), entre paréntesis, y distribuí el signo menos a los tres términos."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 18</span>
+<div class="activity">
+<div class="question">¿Cuál es la solución de este sistema?\[\left\{\begin{aligned}x+y+z&=8\\y&=2x\\z&=x\end{aligned}\right.\]</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Revisá el orden de la terna: (x;y;z). Con x=2, y=2x=4 y z=x=2.">\(S=\{(2;2;4)\}\)</button>
+<button class="opt" data-value="b">\(S=\{(2;4;2)\}\)</button>
+<button class="opt" data-value="c" data-fb="Verificá la segunda ecuación: y=2x daría 2=8, que es falso. Revisá el orden de la terna.">\(S=\{(4;2;2)\}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Sustituyendo \(y=2x\) y \(z=x\) en la primera:<div class='calc'>\(\begin{aligned}x+2x+x&=8\\4x&=8\\x&=2\end{aligned}\)</div>Entonces \(y=2\cdot2=4\) y \(z=2\)." data-no="Sustituí \(y=2x\) y \(z=x\) en la primera ecuación y resolvé."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Clasificar un sistema de 3×3 al resolverlo</h3></div>
+<p class="muted">Al resolver por sustitución, cada paso puede ayudar a clasificar el sistema:</p>
+<div class="grid-2">
+<div class="box orange"><p><strong>Una igualdad falsa</strong>, en cualquier paso, indica que el sistema es incompatible.</p></div>
+<div class="box teal"><p><strong>Una igualdad verdadera</strong> (\(0=0\)) muestra que esa ecuación no aporta una condición nueva. No alcanza por sí sola para afirmar que el sistema es indeterminado: hay que analizar las ecuaciones restantes antes de clasificarlo.</p></div>
+</div>
+
+<div class="grid-2" style="margin-top:14px">
+<div class="guided orange">
+<div class="guided-title">Incompatible: \[\left\{\begin{aligned}x+y+z&=3\\x+y+z&=5\\x-y&=0\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(z\) en la primera ecuación: \(z=3-x-y\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda:<div class="calc">\(\begin{aligned}x+y+(3-x-y)&=5\\3&=5\end{aligned}\)</div></span></li>
+</ol>
+<div class="result-line">La igualdad es falsa: el sistema es incompatible. Las dos primeras ecuaciones se contradicen, porque la misma suma \(x+y+z\) no puede valer \(3\) y \(5\) a la vez.</div>
+</div>
+<div class="guided pink">
+<div class="guided-title">Compatible indeterminado: \[\left\{\begin{aligned}x+y+z&=6\\2x+2y+2z&=12\\x-y&=0\end{aligned}\right.\]</div>
+<ol class="steps">
+<li><span class="step-num">1</span><span>Despejamos \(z\) en la primera ecuación: \(z=6-x-y\).</span></li>
+<li><span class="step-num">2</span><span>Sustituimos en la segunda:<div class="calc">\(\begin{aligned}2x+2y+2(6-x-y)&=12\\12&=12\end{aligned}\)</div>La segunda ecuación no aporta información nueva (es proporcional a la primera), pero eso no alcanza para clasificar: falta analizar la tercera.</span></li>
+<li><span class="step-num">3</span><span>De la tercera ecuación, \(x-y=0\), se obtiene \(x=y\). Reemplazando en \(z=6-x-y\):<div class="calc">\(\begin{aligned}z&=6-y-y\\z&=6-2y\end{aligned}\)</div></span></li>
+<li><span class="step-num">4</span><span>Para cualquier valor real de \(y\), las otras incógnitas quedan determinadas:<span class="linea">si \(y=1\): \(x=1\) y \(z=4\) → \((1;1;4)\)</span><span class="linea">si \(y=2\): \(x=2\) y \(z=2\) → \((2;2;2)\)</span></span></li>
+</ol>
+<div class="result-line">El sistema tiene infinitas soluciones: \(S=\{(y;y;6-2y):y\in\mathbb{R}\}\).</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 19</span>
+<div class="activity">
+<div class="question">Al resolver un sistema de 3×3, después de sustituir en la segunda ecuación se obtiene \(0=0\). ¿Qué corresponde hacer?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="En un 2×2 alcanzaría, pero en un 3×3 todavía falta una ecuación, que podría contradecir a las otras.">Concluir que el sistema es compatible indeterminado</button>
+<button class="opt" data-value="b" data-fb="0=0 es verdadera: nunca indica que no hay solución.">Concluir que el sistema es incompatible</button>
+<button class="opt" data-value="c">Seguir analizando la ecuación restante antes de clasificar el sistema</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(0=0\) solo indica que esa ecuación no aporta una condición nueva. La ecuación restante puede dar una igualdad falsa, un valor o una nueva relación." data-no="Recordá la diferencia entre un sistema de 2×2 y uno de 3×3 cuando aparece \(0=0\)."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 6: APLICACIONES ============ -->
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Aplicaciones</span>
+<h2>Resolver situaciones con sistemas</h2>
+<p class="section-intro">Para resolver una situación mediante un sistema de ecuaciones, elegimos letras para representar las cantidades desconocidas: esas letras son las incógnitas del sistema.</p>
+
+<div class="subbloque" id="sub6-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Cómo abordar una situación</h3></div>
+<p class="muted">Para sistemas de 2×2 y de 3×3 se puede seguir el mismo procedimiento:</p>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Definir las variables</td><td>indicar qué cantidad desconocida representa cada letra, su unidad y qué valores puede tomar en la situación</td></tr>
+<tr><td>2. Plantear el sistema</td><td>traducir las condiciones del enunciado a ecuaciones</td></tr>
+<tr><td>3. Resolver el sistema</td><td>puede tener una única solución, infinitas o ninguna</td></tr>
+<tr><td>4. Verificar</td><td>comprobar que los resultados cumplen las ecuaciones y las condiciones del enunciado</td></tr>
+<tr><td>5. Interpretar y comunicar</td><td>explicar qué significa el resultado en la situación y redactar la respuesta con sus unidades, en palabras y no solo con números. Si el sistema no tiene solución o tiene infinitas, explicar qué implica ese resultado</td></tr>
+</tbody>
+</table>
+<div class="aviso"><span class="aviso-icon">⚠</span><div>Al definir las variables, hay que tener en cuenta qué valores tienen sentido en la situación: una cantidad de personas debe ser un número entero no negativo, mientras que un tiempo o un volumen puede expresarse con decimales.</div></div>
+<div class="box yellow"><p><strong>Dos controles distintos:</strong> comprobar una solución en las ecuaciones (verificación algebraica) y revisar si esas ecuaciones representan correctamente el enunciado (verificación del planteo) son controles distintos. Un sistema puede estar bien resuelto y, aun así, mal planteado: en ese caso, la solución cumple las ecuaciones, pero no responde al problema.</p></div>
+<table class="mini-table">
+<thead><tr><th>Clasificación del sistema</th><th>Qué significa en una situación</th></tr></thead>
+<tbody>
+<tr><td>Compatible determinado</td><td>los datos determinan una única respuesta (que además hay que controlar que sea admisible)</td></tr>
+<tr><td>Compatible indeterminado</td><td>los datos no alcanzan para determinar una única respuesta: hay muchas posibilidades, y solo valen las que cumplen las restricciones de la situación. Hace falta otra condición</td></tr>
+<tr><td>Incompatible</td><td>los datos son contradictorios: ninguna situación puede cumplir todas las condiciones a la vez</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 20</span>
+<div class="activity">
+<div class="question">Entre dos depósitos hay \(30\) cajas, y el depósito A tiene \(6\) cajas más que el depósito B. Si \(x\) es la cantidad de cajas de A e \(y\) la de B, ¿cuál es el planteo correcto?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(\displaystyle\left\{\begin{aligned}x+y&=30\\x&=y+6\end{aligned}\right.\)</button>
+<button class="opt" data-value="b" data-fb="Así, B tendría 6 cajas más que A. El que tiene más es A: x=y+6.">\(\displaystyle\left\{\begin{aligned}x+y&=30\\y&=x+6\end{aligned}\right.\)</button>
+<button class="opt" data-value="c" data-fb="Intercambiaste los datos: el total (30) es la suma, y la diferencia (6) es x-y.">\(\displaystyle\left\{\begin{aligned}x+y&=6\\x-y&=30\end{aligned}\right.\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la suma es \(30\), y A tiene \(6\) más que B. Se puede controlar el planteo con la solución: \(x=18\), \(y=12\)." data-no="Traducí cada condición por separado: ¿cuánto suman las cajas? ¿quién tiene más?"></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 21</span>
+<div class="activity">
+<div class="question">Un sistema bien resuelto da una solución que cumple las dos ecuaciones, pero no responde a lo que pide el enunciado. ¿Qué falló?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">El planteo: las ecuaciones no traducen correctamente el enunciado</button>
+<button class="opt" data-value="b" data-fb="Si la solución cumple las ecuaciones, la verificación algebraica está bien. El problema está antes.">La verificación algebraica</button>
+<button class="opt" data-value="c" data-fb="La resolución está bien: la solución cumple las ecuaciones. Cambiar de método daría la misma solución.">El método de resolución elegido</button>
+</div>
+<div class="feedback" data-ok="Correcto: un sistema puede estar bien resuelto y mal planteado. Por eso, además de verificar en las ecuaciones, hay que revisar que cada ecuación traduzca bien cada condición." data-no="Distinguí entre verificación algebraica y verificación del planteo."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Situaciones con sistemas de 2×2</h3></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Compra de insumos de oficina</h3><p>En una compra de insumos de oficina se adquirieron resmas de papel y cartuchos de tinta. En total se compraron \(12\) artículos y se gastaron \(\$33000\). Cada resma cuesta \(\$1500\) y cada cartucho \(\$4500\). ¿Cuántas resmas y cuántos cartuchos se compraron?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) cantidad de resmas; \(y=\) cantidad de cartuchos (números enteros no negativos).</p>
+<p><strong>Planteo:</strong> cantidad de artículos, \(x+y=12\); gasto total, en pesos, \(1500x+4500y=33000\).</p>
+<p><strong>Resolución:</strong> dividimos la segunda ecuación por \(1500\): \(x+3y=22\). De la primera despejamos \(x=12-y\) y sustituimos en la ecuación simplificada:</p>
+<div class="calc">\(\begin{aligned}(12-y)+3y&=22\\12+2y&=22\\2y&=10\\y&=5\end{aligned}\)</div>
+<p>Reemplazamos en \(x=12-y\):</p>
+<div class="calc">\(\begin{aligned}x&=12-5\\x&=7\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(7+5=12\) ✓; \(1500\cdot7+4500\cdot5=10500+22500=33000\) ✓. Además, \(7\) y \(5\) son enteros no negativos.</p>
+<p><strong>Interpretación:</strong> se compraron \(7\) resmas de papel y \(5\) cartuchos de tinta.</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Comparación de dos alternativas</h3><p>Una organización compara dos proveedores de mantenimiento. El proveedor A cobra \(\$4000\) fijos más \(\$50\) por hora de trabajo; el proveedor B cobra \(\$1000\) fijos más \(\$100\) por hora. ¿Para qué cantidad de horas los dos proveedores cobran lo mismo?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) horas de trabajo (variable continua, \(x\ge0\)); \(y=\) costo total, en pesos.</p>
+<p><strong>Planteo:</strong> el costo de cada proveedor en función de las horas: \[\left\{\begin{aligned}y&=4000+50x\\y&=1000+100x\end{aligned}\right.\]</p>
+<p><strong>Resolución:</strong> sustituimos \(y\) de la primera ecuación en la segunda:</p>
+<div class="calc">\(\begin{aligned}4000+50x&=1000+100x\\3000&=50x\\60&=x\end{aligned}\)</div>
+<p>Reemplazamos en la primera ecuación:</p>
+<div class="calc">\(\begin{aligned}y&=4000+50\cdot60\\y&=7000\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(4000+50\cdot60=7000\) ✓; \(1000+100\cdot60=7000\) ✓.</p>
+<p><strong>Interpretación:</strong> con \(60\) horas ambos proveedores cobran lo mismo, \(\$7000\). Con menos de \(60\) horas es más barato el proveedor B; con más de \(60\) horas, el proveedor A. Las rectas tienen pendientes distintas (\(50\) y \(100\)): el sistema es compatible determinado.</p>
+<figure class="plot" style="margin-top:10px"><svg id="plotProveedores" role="img" aria-label="Rectas de costo de los proveedores A y B que se cortan en (60;7000)"></svg>
+<figcaption>Costo de cada proveedor según las horas de trabajo. Las rectas se cortan en \((60;7000)\).</figcaption></figure>
+<div class="box violet"><p><strong>Observación:</strong> cuando las funciones representan ingresos y costos, su intersección determina el <strong>punto de equilibrio</strong>: la cantidad para la cual los ingresos igualan los costos.</p></div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 22</span>
+<div class="activity">
+<div class="question">En la comparación de proveedores, para un trabajo de \(40\) horas, ¿cuál conviene contratar?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Calculá: A cobra 4000+50·40=6000 y B cobra 1000+100·40=5000.">El proveedor A, que cobra \(\$5000\) contra \(\$6000\) de B</button>
+<button class="opt" data-value="b" data-fb="Cobran lo mismo solo con 60 horas. Con 40 horas, los costos son distintos.">Da lo mismo: los dos cobran \(\$7000\)</button>
+<button class="opt" data-value="c">El proveedor B, que cobra \(\$5000\) contra \(\$6000\) de A</button>
+</div>
+<div class="feedback" data-ok="Correcto: A cobra \(4000+50\cdot40=6000\) y B cobra \(1000+100\cdot40=5000\). Con menos de \(60\) horas, conviene B." data-no="Evaluá el costo de cada proveedor con \(x=40\)."></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Distribución de una inversión</h3><p>Una organización invierte \(\$100000\) en dos alternativas: una parte a una tasa anual del \(8\,\%\), y el resto a una tasa anual del \(5\,\%\). Al cabo de un año, el ingreso total en concepto de intereses fue de \(\$6800\). ¿Cuánto se invirtió en cada alternativa?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) monto invertido al \(8\,\%\); \(y=\) monto invertido al \(5\,\%\), en pesos (valores no negativos).</p>
+<p><strong>Planteo:</strong> monto total, \(x+y=100000\); interés total al cabo de un año, \(0{,}08x+0{,}05y=6800\).</p>
+<p><strong>Resolución:</strong> de la primera ecuación despejamos \(y=100000-x\) y sustituimos en la segunda:</p>
+<div class="calc">\(\begin{aligned}0{,}08x+0{,}05(100000-x)&=6800\\0{,}08x+5000-0{,}05x&=6800\\0{,}03x&=1800\\x&=60000\end{aligned}\)</div>
+<p>Reemplazamos en \(y=100000-x\):</p>
+<div class="calc">\(\begin{aligned}y&=100000-60000\\y&=40000\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(60000+40000=100000\) ✓; \(0{,}08\cdot60000+0{,}05\cdot40000=4800+2000=6800\) ✓. Los intereses corresponden a un año, igual que las tasas anuales.</p>
+<p><strong>Interpretación:</strong> se invirtieron \(\$60000\) al \(8\,\%\) y \(\$40000\) al \(5\,\%\).</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Preparación de una mezcla</h3><p>Una organización necesita preparar \(25\) litros de una solución con una concentración del \(12\,\%\) de un componente. Dispone de dos soluciones: una al \(10\,\%\) y otra al \(30\,\%\) de ese componente. ¿Cuántos litros de cada una debe mezclar?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) litros de la solución al \(10\,\%\); \(y=\) litros de la solución al \(30\,\%\) (el volumen es continuo: se admiten decimales no negativos).</p>
+<p>Si se usan \(x\) litros de la solución al \(10\,\%\), esa solución aporta \(0{,}10x\) litros del componente. La suma de los aportes debe ser el \(12\,\%\) de \(25\) litros: \(0{,}12\cdot25=3\) litros.</p>
+<p><strong>Planteo:</strong> volumen total, \(x+y=25\); litros del componente, \(0{,}10x+0{,}30y=3\).</p>
+<p><strong>Resolución:</strong> de la primera ecuación despejamos \(x=25-y\) y sustituimos en la segunda:</p>
+<div class="calc">\(\begin{aligned}0{,}10(25-y)+0{,}30y&=3\\2{,}5-0{,}10y+0{,}30y&=3\\0{,}20y&=0{,}5\\y&=2{,}5\end{aligned}\)</div>
+<p>Reemplazamos en \(x=25-y\):</p>
+<div class="calc">\(\begin{aligned}x&=25-2{,}5\\x&=22{,}5\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(22{,}5+2{,}5=25\) ✓; \(0{,}10\cdot22{,}5+0{,}30\cdot2{,}5=2{,}25+0{,}75=3\) ✓.</p>
+<p><strong>Interpretación:</strong> se deben mezclar \(22{,}5\) litros de la solución al \(10\,\%\) y \(2{,}5\) litros de la solución al \(30\,\%\). Como el volumen es continuo, los valores decimales son admisibles.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 23</span>
+<div class="activity">
+<div class="question">¿Cuántos litros del componente aportan \(10\) litros de una solución al \(30\,\%\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(3\) litros</button>
+<button class="opt" data-value="b" data-fb="30 % no son 30 litros: es el 30 % de los 10 litros, es decir 0,30·10.">\(30\) litros</button>
+<button class="opt" data-value="c" data-fb="0,30 es la proporción, no la cantidad: falta multiplicar por los 10 litros.">\(0{,}3\) litros</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(0{,}30\cdot10=3\) litros del componente." data-no="Calculá el \(30\,\%\) de \(10\) litros: \(0{,}30\cdot10\)."></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Una solución que no es admisible</h3><p>En una compra se adquirieron sillas y mesas: en total \(10\) muebles, y se gastaron \(\$42000\). Cada silla cuesta \(\$3000\) y cada mesa \(\$8000\). ¿Cuántas sillas y cuántas mesas se compraron?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) cantidad de sillas; \(y=\) cantidad de mesas (números enteros no negativos).</p>
+<p><strong>Planteo:</strong> cantidad de muebles, \(x+y=10\); gasto total, en pesos, \(3000x+8000y=42000\).</p>
+<p><strong>Resolución:</strong> dividimos la segunda ecuación por \(1000\): \(3x+8y=42\). De la primera despejamos \(x=10-y\) y sustituimos en la ecuación simplificada:</p>
+<div class="calc">\(\begin{aligned}3(10-y)+8y&=42\\30+5y&=42\\5y&=12\\y&=2{,}4\end{aligned}\)</div>
+<p>Reemplazamos en \(x=10-y\):</p>
+<div class="calc">\(\begin{aligned}x&=10-2{,}4\\x&=7{,}6\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(7{,}6+2{,}4=10\) ✓; \(3000\cdot7{,}6+8000\cdot2{,}4=22800+19200=42000\) ✓. La solución cumple las ecuaciones, pero no cumple la condición de que las cantidades sean enteras.</p>
+<p><strong>Interpretación:</strong> el sistema es compatible determinado, con solución \(S=\{(7{,}6;2{,}4)\}\), pero esos valores no son admisibles: no se pueden comprar \(7{,}6\) sillas ni \(2{,}4\) mesas. Con esos datos no existe ninguna compra posible: el problema no tiene solución en la situación, aunque el sistema sí la tenga.</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Cuando los datos no alcanzan</h3><p>Una organización dispone de \(120\) horas de trabajo mensuales para dos tipos de tareas, T1 y T2. Se indica que se usan las \(120\) horas, y que las horas de T1 son \(120\) menos las horas de T2. ¿Cuántas horas se asignan a cada tarea?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) horas de T1; \(y=\) horas de T2 (valores no negativos).</p>
+<p><strong>Planteo:</strong> horas totales, \(x+y=120\); horas de T1, \(x=120-y\).</p>
+<p><strong>Resolución:</strong> sustituimos \(x\) de la segunda ecuación en la primera:</p>
+<div class="calc">\(\begin{aligned}(120-y)+y&=120\\120&=120\end{aligned}\)</div>
+<p><strong>Verificación:</strong> cualquier par \((x;120-x)\) cumple las dos ecuaciones. Por ejemplo, \((50;70)\): \(50+70=120\) ✓ y \(50=120-70\) ✓.</p>
+<p><strong>Interpretación:</strong> la igualdad siempre verdadera muestra que la segunda ecuación no aporta una condición nueva: las dos ecuaciones dicen lo mismo. El sistema es compatible indeterminado, y los datos no alcanzan para determinar una única distribución.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 24</span>
+<div class="activity">
+<div class="question">Al resolver un problema sobre cantidades de personas se obtiene \(S=\{(12{,}5;7{,}5)\}\). ¿Qué se concluye?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Redondear cambia los valores: el nuevo par ya no cumpliría las ecuaciones.">Se redondea: la respuesta es \(13\) y \(8\) personas</button>
+<button class="opt" data-value="b">El sistema tiene solución, pero el problema no: esos valores no son admisibles</button>
+<button class="opt" data-value="c" data-fb="El sistema sí tiene solución (es compatible determinado); lo que falla es que no es admisible en la situación.">El sistema es incompatible</button>
+</div>
+<div class="feedback" data-ok="Correcto: el sistema es compatible determinado, pero no se pueden tener \(12{,}5\) personas. Con esos datos, la situación no tiene solución." data-no="Pensá qué valores puede tomar una cantidad de personas."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Situaciones con sistemas de 3×3</h3></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Distribución de un presupuesto</h3><p>Una organización distribuye un presupuesto de \(\$850000\) entre tres áreas: A, B y C. El área A recibe el doble que el área B, y el área C recibe \(\$50000\) más que el área B. ¿Cuánto recibe cada área?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x\), \(y\), \(z=\) montos, en pesos, de las áreas A, B y C (no negativos).</p>
+<p><strong>Planteo:</strong> total, \(x+y+z=850000\); A recibe el doble que B, \(x=2y\), es decir \(x-2y=0\); C recibe \(\$50000\) más que B, \(z=y+50000\), es decir \(-y+z=50000\).</p>
+<p><strong>Resolución:</strong> de la segunda ecuación despejamos \(x=2y\) y sustituimos en la primera:</p>
+<div class="calc">\(\begin{aligned}2y+y+z&=850000\\3y+z&=850000\end{aligned}\)</div>
+<p>La tercera ecuación no contiene \(x\) y queda igual. Se obtiene el sistema de 2×2 \[\left\{\begin{aligned}3y+z&=850000\\-y+z&=50000\end{aligned}\right.\]De la segunda despejamos \(z=y+50000\) y sustituimos en la primera:</p>
+<div class="calc">\(\begin{aligned}3y+(y+50000)&=850000\\4y+50000&=850000\\4y&=800000\\y&=200000\end{aligned}\)</div>
+<p>Calculamos las otras incógnitas:</p>
+<div class="calc">\(\begin{aligned}z&=200000+50000\\z&=250000\end{aligned}\)</div>
+<div class="calc">\(\begin{aligned}x&=2\cdot200000\\x&=400000\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(400000+200000+250000=850000\) ✓; \(400000=2\cdot200000\) ✓; \(250000=200000+50000\) ✓.</p>
+<p><strong>Interpretación:</strong> el área A recibe \(\$400000\), el área B \(\$200000\) y el área C \(\$250000\).</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Compra de tres tipos de insumos</h3><p>Una organización compra tres tipos de insumos, A, B y C, de precios unitarios \(\$100\), \(\$200\) y \(\$300\). En total compra \(100\) unidades y gasta \(\$20000\). Además, compra el triple de unidades de B que de A. ¿Cuántas unidades compra de cada tipo?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x\), \(y\), \(z=\) cantidad de unidades de A, B y C (números enteros no negativos).</p>
+<p><strong>Planteo:</strong> \[\left\{\begin{aligned}x+y+z&=100\\100x+200y+300z&=20000\\y&=3x\end{aligned}\right.\]</p>
+<p><strong>Resolución:</strong> dividimos la segunda ecuación por \(100\): \(x+2y+3z=200\). Sustituimos \(y=3x\) en las otras dos ecuaciones.</p>
+<p>En la primera:</p>
+<div class="calc">\(\begin{aligned}x+3x+z&=100\\4x+z&=100\end{aligned}\)</div>
+<p>En la segunda simplificada:</p>
+<div class="calc">\(\begin{aligned}x+2\cdot3x+3z&=200\\7x+3z&=200\end{aligned}\)</div>
+<p>Se obtiene el sistema de 2×2 \[\left\{\begin{aligned}4x+z&=100\\7x+3z&=200\end{aligned}\right.\]De la primera despejamos \(z=100-4x\) y sustituimos en la segunda:</p>
+<div class="calc">\(\begin{aligned}7x+3(100-4x)&=200\\7x+300-12x&=200\\-5x&=-100\\x&=20\end{aligned}\)</div>
+<p>Calculamos las otras incógnitas:</p>
+<div class="calc">\(\begin{aligned}y&=3\cdot20\\y&=60\end{aligned}\)</div>
+<div class="calc">\(\begin{aligned}z&=100-4\cdot20\\z&=20\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(20+60+20=100\) ✓; \(100\cdot20+200\cdot60+300\cdot20=2000+12000+6000=20000\) ✓; \(60=3\cdot20\) ✓.</p>
+<p><strong>Interpretación:</strong> compra \(20\) unidades de A, \(60\) de B y \(20\) de C. Son enteros no negativos: la solución es admisible.</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Planificación de la producción</h3><p>Una organización produce tres tipos de artículos, A, B y C. En un mes produjo \(60\) artículos. Cada artículo A requiere \(2\) horas de máquina, cada B requiere \(3\) y cada C requiere \(1\); en total se usaron \(140\) horas de máquina. Cada artículo A requiere \(1\) hora de trabajo, cada B requiere \(2\) y cada C requiere \(4\); en total se usaron \(120\) horas de trabajo. ¿Cuántos artículos de cada tipo se produjeron?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x\), \(y\), \(z=\) cantidad de artículos A, B y C producidos (números enteros no negativos).</p>
+<p><strong>Planteo:</strong> artículos producidos, \(x+y+z=60\); horas de máquina, \(2x+3y+z=140\); horas de trabajo, \(x+2y+4z=120\).</p>
+<p><strong>Resolución:</strong> despejamos \(z=60-x-y\) en la primera ecuación y sustituimos en las otras dos.</p>
+<p>En la segunda:</p>
+<div class="calc">\(\begin{aligned}2x+3y+(60-x-y)&=140\\x+2y+60&=140\\x+2y&=80\end{aligned}\)</div>
+<p>En la tercera:</p>
+<div class="calc">\(\begin{aligned}x+2y+4(60-x-y)&=120\\x+2y+240-4x-4y&=120\\-3x-2y+240&=120\\-3x-2y&=-120\\3x+2y&=120\end{aligned}\)</div>
+<p>Se obtiene el sistema de 2×2 \[\left\{\begin{aligned}x+2y&=80\\3x+2y&=120\end{aligned}\right.\]De la primera despejamos \(x=80-2y\) y sustituimos en la segunda:</p>
+<div class="calc">\(\begin{aligned}3(80-2y)+2y&=120\\240-6y+2y&=120\\240-4y&=120\\-4y&=-120\\y&=30\end{aligned}\)</div>
+<p>Calculamos las otras incógnitas:</p>
+<div class="calc">\(\begin{aligned}x&=80-2\cdot30\\x&=20\end{aligned}\)</div>
+<div class="calc">\(\begin{aligned}z&=60-20-30\\z&=10\end{aligned}\)</div>
+<p><strong>Verificación:</strong> \(20+30+10=60\) ✓; \(2\cdot20+3\cdot30+10=40+90+10=140\) ✓; \(20+2\cdot30+4\cdot10=20+60+40=120\) ✓.</p>
+<p><strong>Interpretación:</strong> se produjeron \(20\) artículos A, \(30\) artículos B y \(10\) artículos C. Son enteros no negativos: la solución es admisible.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 25</span>
+<div class="activity">
+<div class="question">Un presupuesto se reparte entre las áreas A, B y C, con montos \(x\), \(y\) y \(z\). «El área C recibe \(\$30000\) menos que el área A.» ¿Qué ecuación traduce esa condición?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Así, C recibiría más que A. Si C recibe menos, a lo de A hay que restarle 30000.">\(z=x+30000\)</button>
+<button class="opt" data-value="b">\(z=x-30000\)</button>
+<button class="opt" data-value="c" data-fb="Así, A sería quien recibe 30000 menos que C. Releé quién recibe menos.">\(x=z-30000\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: lo que recibe C es lo de A menos \(30000\). Equivalentemente, \(x-z=30000\)." data-no="Identificá quién recibe menos y escribí su monto en función del otro."></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Datos que no alcanzan en un sistema de 3×3</h3><p>Una organización distribuye \(\$120000\) entre tres áreas: A, B y C. Se indica que el área A recibe \(\$20000\) más que el área B, y que las áreas A y C reciben, entre las dos, lo que queda después de asignar el monto del área B. ¿Cuánto recibe cada área?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x\), \(y\), \(z=\) montos, en pesos, de las áreas A, B y C (no negativos).</p>
+<p><strong>Planteo:</strong> total, \(x+y+z=120000\); A recibe \(\$20000\) más que B, \(x-y=20000\); A y C reciben lo que queda después de B, \(x+z=120000-y\).</p>
+<p><strong>Resolución:</strong> despejamos \(z=120000-x-y\) en la primera ecuación. La segunda no contiene \(z\) y queda igual. En la tercera:</p>
+<div class="calc">\(\begin{aligned}x+(120000-x-y)&=120000-y\\120000-y&=120000-y\\0&=0\end{aligned}\)</div>
+<p>La tercera ecuación no aporta una condición nueva, pero eso no alcanza para clasificar: falta analizar la ecuación restante. De ella despejamos \(x\):</p>
+<div class="calc">\(\begin{aligned}x-y&=20000\\x&=y+20000\end{aligned}\)</div>
+<p>Entonces:</p>
+<div class="calc">\(\begin{aligned}z&=120000-(y+20000)-y\\z&=100000-2y\end{aligned}\)</div>
+<p><strong>Verificación:</strong> para cualquier valor de \(y\) se obtiene una terna \((y+20000;y;100000-2y)\) que cumple las tres ecuaciones. Por ejemplo, con \(y=30000\): \(x=50000\) y \(z=40000\), y se cumple \(50000+30000+40000=120000\) ✓, \(50000-30000=20000\) ✓, \(50000+40000=120000-30000\) ✓.</p>
+<p><strong>Interpretación:</strong> el sistema es compatible indeterminado: los datos no alcanzan para determinar una única distribución.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 26</span>
+<div class="activity">
+<div class="question">El sistema que modeliza una situación resulta compatible indeterminado. ¿Qué significa en la situación?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Los datos no alcanzan para una única respuesta: hace falta otra condición</button>
+<button class="opt" data-value="b" data-fb="Datos contradictorios corresponden a un sistema incompatible.">Los datos son contradictorios: ninguna situación cumple todas las condiciones</button>
+<button class="opt" data-value="c" data-fb="Una única respuesta corresponde a un sistema compatible determinado.">Los datos determinan una única respuesta</button>
+</div>
+<div class="feedback" data-ok="Correcto: hay muchas posibilidades, y solo valen las que cumplen las restricciones de la situación. Para una única respuesta, hace falta otra condición." data-no="Recordá qué significa cada clasificación en una situación."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 7: CIERRE ============ -->
+<section class="panel" id="p7">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y síntesis</h2>
+
+<div class="subbloque" id="sub7-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Errores frecuentes: mini auditoría</h3></div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel1"><span class="acc-tit">Verificar la solución en una sola ecuación</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel1"><div class="error-incorrecto">✗ Comprobar que el par cumple la primera ecuación y darlo por solución.</div><div class="error-correcto">✓ Una solución debe cumplir todas las ecuaciones: un par puede cumplir una y no la otra. Además, conviene verificar en las ecuaciones originales y no en las ya transformadas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel2"><span class="acc-tit">Dar por bueno un planteo solo porque el sistema se resolvió bien</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel2"><div class="error-incorrecto">✗ Pensar que, si la solución cumple las ecuaciones, el problema está resuelto.</div><div class="error-correcto">✓ La verificación algebraica y la verificación del planteo son controles distintos. Un sistema mal planteado puede resolverse sin errores de cálculo y, aun así, no responder al problema.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel3"><span class="acc-tit">No usar paréntesis al sustituir</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel3"><div class="error-incorrecto">✗ Escribir \(2x-3-x\) al sustituir \(y=3-x\) en \(2x-y\).</div><div class="error-correcto">✓ Cuando se sustituye una expresión que sigue a un signo menos, hay que encerrarla entre paréntesis y distribuir el signo: \(2x-(3-x)=2x-3+x\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel4"><span class="acc-tit">Confundir \(0=0\) con «no hay solución»</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel4"><div class="error-incorrecto">✗ Concluir que el sistema es incompatible al obtener \(0=0\).</div><div class="error-correcto">✓ Una igualdad siempre verdadera indica que esa ecuación es redundante, no contradictoria. En un 2×2 alcanza para concluir que hay infinitas soluciones; en un 3×3 hay que seguir analizando la ecuación restante. Solo una igualdad falsa (por ejemplo, \(0=4\)) indica que el sistema no tiene solución.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel5"><span class="acc-tit">Dar solo una parte de la solución</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel5"><div class="error-incorrecto">✗ Responder solo \(x=2\).</div><div class="error-correcto">✓ La solución de un sistema de 2×2 es un par \((x;y)\), y la de un sistema de 3×3 es una terna \((x;y;z)\). Hay que hallar el valor de todas las incógnitas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel6"><span class="acc-tit">Dar la respuesta sin interpretarla</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel6"><div class="error-incorrecto">✗ Responder «\(x=7\), \(y=5\)».</div><div class="error-correcto">✓ La respuesta se redacta en términos del problema, con sus unidades («se compraron 7 resmas y 5 cartuchos»), y hay que controlar que tenga sentido: que no sea negativa ni decimal cuando se cuentan objetos o personas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel7"><span class="acc-tit">Plantear dos ecuaciones que dicen lo mismo</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel7"><div class="error-incorrecto">✗ Usar dos condiciones equivalentes como si fueran dos datos distintos.</div><div class="error-correcto">✓ Dos ecuaciones equivalentes expresan la misma condición y no aportan información adicional, como en el ejemplo de las horas de T1 y T2. Para clasificar el sistema, hay que analizar todas sus ecuaciones.</div></div>
+</div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Referencia rápida</h3>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>Concepto</th><th>Definición / Idea</th></tr></thead>
+<tbody>
+<tr><td>Ecuación lineal de dos incógnitas</td><td>\(ax+by=c\), con \(a\) y \(b\) no ambos nulos. Solución: un par \((x;y)\). Tiene infinitas soluciones y su gráfico es una recta</td></tr>
+<tr><td>Ecuación lineal de tres incógnitas</td><td>\(ax+by+cz=d\), con \(a\), \(b\) y \(c\) no todos nulos. Solución: una terna \((x;y;z)\). Tiene infinitas soluciones y forma un plano en el espacio</td></tr>
+<tr><td>Sistema de 2×2 / 3×3</td><td>ecuaciones que deben cumplirse simultáneamente. Solución: un par (o una terna) que verifica todas</td></tr>
+<tr><td>Interpretación gráfica</td><td>2×2: secantes, una solución · paralelas, ninguna · coincidentes, infinitas. 3×3: un punto común · una recta o un plano · ninguno</td></tr>
+<tr><td>Método de sustitución</td><td>despejar una incógnita, sustituirla en las otras ecuaciones, resolver, reemplazar para hallar las demás incógnitas y verificar</td></tr>
+<tr><td>Compatible determinado</td><td>una única solución: se obtiene un valor para cada incógnita</td></tr>
+<tr><td>Compatible indeterminado</td><td>infinitas soluciones: una ecuación resulta redundante (\(0=0\)); en un 3×3 hay que seguir analizando la ecuación restante</td></tr>
+<tr><td>Incompatible</td><td>ninguna solución, \(S=\varnothing\): aparece una igualdad falsa (\(0=k\), con \(k\) distinto de \(0\))</td></tr>
+<tr><td>Procedimiento en una situación</td><td>definir las variables · plantear el sistema · resolver · verificar · interpretar y comunicar</td></tr>
+<tr><td>Verificaciones</td><td>algebraica: reemplazar la solución en todas las ecuaciones originales · del planteo: controlar que cada ecuación traduzca bien cada condición</td></tr>
+<tr><td>Análisis en la situación</td><td>controlar que la solución sea admisible (por ejemplo, entera y no negativa si se cuentan objetos o personas) y redactar la respuesta en palabras, con unidades</td></tr>
+</tbody>
+</table>
+<p class="sintesis-frase">Resolver un sistema es encontrar lo que cumple todas las condiciones a la vez; interpretar la solución es decidir si eso tiene sentido en la situación.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+/* ---------- Portada ---------- */
+document.body.style.overflow='hidden';
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  document.body.style.overflow='';
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+
+/* ---------- KaTeX ---------- */
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+
+/* ---------- Tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+/* ---------- Acordeón de errores frecuentes ---------- */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const abierto=item.classList.contains('open');
+  const s=btn.querySelector('.acc-icon');
+  if(s)s.textContent=abierto?'−':'+';
+  btn.setAttribute('aria-expanded',abierto?'true':'false');
+  setTimeout(()=>typeset(item),80);
+}
+
+/* ---------- Actividades de opción múltiple ---------- */
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:(opt.dataset.fb||feedback.dataset.no);
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+/* ============================================================
+   FORMATO DE NÚMEROS
+   ============================================================ */
+function redondear(n,d){const p=Math.pow(10,d==null?2:d);const r=Math.round(n*p)/p;return Object.is(r,-0)?0:r;}
+function fmtT(n,d){ // texto plano (SVG): coma decimal, signo menos tipográfico
+  const r=redondear(n,d);
+  let s=String(Math.abs(r)).replace('.',',');
+  return (r<0?'−':'')+s;
+}
+function fmtMiles(n){ // 125000 → 125.000
+  const r=Math.round(n);
+  const s=String(Math.abs(r)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return (r<0?'−':'')+s;
+}
+function fmtK(n,d){ // KaTeX: coma decimal
+  const r=redondear(n,d);
+  return String(r).replace('.','{,}');
+}
+function esExacto(n){return Math.abs(n*100-Math.round(n*100))<1e-9;}
+
+/* ============================================================
+   MOTOR DE GRÁFICOS SVG
+   ============================================================ */
+let plotSeq=0;
+const C={teal:'#0F6B6F',tealL:'#1F8C91',green:'#23865B',coral:'#E0735F',red:'#C94848',violet:'#7C5CE6',
+  orange:'#FF7A00',navy:'#223740',slate:'#5D737C',axis:'#9FB8BA',grid:'#EDF4F4',guide:'#A7B6BB'};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function plot(svg,cfg){
+  if(typeof svg==='string')svg=document.getElementById(svg);
+  if(!svg)return;
+  const W=cfg.w||520,H=cfg.h||400;
+  const m=Object.assign({l:44,r:18,t:18,b:32},cfg.margin||{});
+  const pw=W-m.l-m.r, ph=H-m.t-m.b;
+  const {xMin,xMax,yMin,yMax}=cfg;
+  const X=x=>m.l+(x-xMin)/(xMax-xMin)*pw;
+  const Y=y=>m.t+ph-(y-yMin)/(yMax-yMin)*ph;
+  const inside=(x,y)=>x>=xMin-1e-9&&x<=xMax+1e-9&&y>=yMin-1e-9&&y<=yMax+1e-9;
+  const fs=cfg.fs||11;
+  const font=`font-family="Inter,sans-serif"`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const id='clip'+(++plotSeq);
+  let s=`<defs><clipPath id="${id}"><rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}"/></clipPath></defs>`;
+  // cuadrícula
+  if(cfg.grid){
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep)s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${m.t+ph}" stroke="${C.grid}"/>`;
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep)s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${m.l+pw}" y2="${Y(y)}" stroke="${C.grid}"/>`;
+  }
+  // ejes
+  const ax=(yMin<=0&&yMax>=0)?Y(0):Y(yMin);
+  const ay=(xMin<=0&&xMax>=0)?X(0):X(xMin);
+  s+=`<line x1="${m.l}" y1="${ax}" x2="${m.l+pw}" y2="${ax}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  s+=`<line x1="${ay}" y1="${m.t}" x2="${ay}" y2="${m.t+ph}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  // marcas
+  if(!cfg.noTicks){
+    const fx=cfg.fmtX||(v=>fmtT(v)), fy=cfg.fmtY||(v=>fmtT(v));
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep){
+      const xr=redondear(x,6); if(xr===0&&!cfg.showZeroX)continue;
+      s+=`<line x1="${X(xr)}" y1="${ax-3}" x2="${X(xr)}" y2="${ax+3}" stroke="${C.axis}"/>`;
+      s+=`<text x="${X(xr)}" y="${ax+15}" font-size="${fs-1}" text-anchor="middle" fill="${C.slate}" ${font}>${fx(xr)}</text>`;
+    }
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep){
+      const yr=redondear(y,6); if(yr===0&&!cfg.showZeroY)continue;
+      s+=`<line x1="${ay-3}" y1="${Y(yr)}" x2="${ay+3}" y2="${Y(yr)}" stroke="${C.axis}"/>`;
+      s+=`<text x="${ay-7}" y="${Y(yr)+3.5}" font-size="${fs-1}" text-anchor="end" fill="${C.slate}" ${font}>${fy(yr)}</text>`;
+    }
+  }
+  if(cfg.xName&&cfg.xNameBelow)s+=`<text x="${m.l+pw/2}" y="${H-6}" font-size="${fs}" text-anchor="middle" fill="${C.slate}" font-weight="600" ${font}>${esc(cfg.xName)}</text>`;
+  else if(cfg.xName)s+=`<text x="${m.l+pw-2}" y="${ax-7}" font-size="${fs}" text-anchor="end" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.xName)}</text>`;
+  if(cfg.yName)s+=`<text x="${ay+7}" y="${m.t+11}" font-size="${fs}" text-anchor="start" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.yName)}</text>`;
+
+  let g='';
+  // tramos del eje x (signo)
+  (cfg.bands||[]).forEach(b=>{
+    const x1=X(Math.max(b.from,xMin)), x2=X(Math.min(b.to,xMax));
+    g+=`<line x1="${x1}" y1="${ax}" x2="${x2}" y2="${ax}" stroke="${b.color}" stroke-width="6" stroke-linecap="butt" opacity=".85"/>`;
+  });
+  // rectas verticales
+  (cfg.vlines||[]).forEach(v=>{
+    g+=`<line x1="${X(v.x)}" y1="${m.t}" x2="${X(v.x)}" y2="${m.t+ph}" stroke="${v.color||C.guide}" stroke-width="1.4" stroke-dasharray="${v.dash||'5 4'}"/>`;
+  });
+  // segmentos auxiliares
+  (cfg.segs||[]).forEach(q=>{
+    g+=`<line x1="${X(q.x1)}" y1="${Y(q.y1)}" x2="${X(q.x2)}" y2="${Y(q.y2)}" stroke="${q.color||C.guide}" stroke-width="1.2" stroke-dasharray="${q.dash||'4 4'}"/>`;
+  });
+  // curvas
+  (cfg.curves||[]).forEach(c=>{
+    const from=c.from!=null?c.from:xMin, to=c.to!=null?c.to:xMax;
+    if(c.discrete){
+      for(let x=from;x<=to+1e-9;x+=c.discrete){
+        const y=c.f(x);
+        g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="${c.r||2.4}" fill="${c.color||C.teal}"/>`;
+      }
+      return;
+    }
+    const N=c.n||300, span=(yMax-yMin);
+    let d='';
+    for(let i=0;i<=N;i++){
+      const x=from+(to-from)*i/N;
+      let y=c.f(x);
+      y=Math.max(yMin-span,Math.min(yMax+span,y));
+      d+=(i?'L':'M')+X(x).toFixed(2)+' '+Y(y).toFixed(2);
+    }
+    g+=`<path d="${d}" fill="none" stroke="${c.color||C.teal}" stroke-width="${c.width||3}" stroke-linecap="round" stroke-linejoin="round"${c.dash?` stroke-dasharray="${c.dash}"`:''}/>`;
+  });
+  s+=`<g clip-path="url(#${id})">${g}</g>`;
+  // puntos y etiquetas (fuera del recorte, solo si el punto está en la ventana)
+  (cfg.points||[]).forEach(p=>{
+    if(!inside(p.x,p.y))return;
+    const px=X(p.x), py=Y(p.y);
+    s+=p.hollow
+      ?`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="#fff" stroke="${p.color}" stroke-width="2"/>`
+      :`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="${p.color}" stroke="#fff" stroke-width="1.5"/>`;
+    if(p.label){
+      const lx=px+(p.dx!=null?p.dx:8), ly=py+(p.dy!=null?p.dy:-8);
+      const lines=String(p.label).split('\n');
+      lines.forEach((ln,i)=>{
+        s+=`<text x="${lx}" y="${ly+i*(fs+2)}" font-size="${p.fs||fs}" text-anchor="${p.anchor||'start'}" fill="${p.lc||p.color}" font-weight="700" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(ln)}</text>`;
+      });
+    }
+  });
+  (cfg.labels||[]).forEach(t=>{
+    s+=`<text x="${X(t.x)}" y="${Y(t.y)}" font-size="${t.fs||fs}" text-anchor="${t.anchor||'start'}" fill="${t.color||C.slate}" font-weight="${t.bold?700:500}" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(t.text)}</text>`;
+  });
+  svg.innerHTML=s;
+}
+
+/* ============================================================
+   EXPLORADOR: DOS RECTAS, UN SISTEMA
+   ============================================================ */
+const srInicial={m1:-1,b1:3,m2:2,b2:-3};
+const srState=Object.assign({},srInicial);
+function srRecta(m,b){ // y = mx + b en KaTeX
+  let t='y=';
+  if(m===0)return t+fmtK(b);
+  t+= m===1?'x':(m===-1?'-x':fmtK(m)+'x');
+  if(b!==0)t+=(b>0?'+':'-')+fmtK(Math.abs(b));
+  return t;
+}
+function srDibujar(){
+  const {m1,b1,m2,b2}=srState;
+  const f1=x=>m1*x+b1, f2=x=>m2*x+b2;
+  const coinc=(m1===m2&&b1===b2), paral=(m1===m2&&b1!==b2);
+  const pts=[];
+  let xi=null, yi=null;
+  if(!coinc&&!paral){
+    xi=(b2-b1)/(m1-m2); yi=f1(xi);
+    pts.push({x:xi,y:yi,color:C.navy,r:6,label:`(${(esExacto(xi)?'':'≈')+fmtT(xi)};${(esExacto(yi)?'':'≈')+fmtT(yi)})`,dx:10,dy:-10});
+  }
+  plot('srSvg',{w:520,h:420,fs:13,xMin:-6,xMax:6,yMin:-8,yMax:8,xStep:1,yStep:1,grid:true,
+    fmtX:v=>v%2===0?fmtT(v):'',fmtY:v=>v%2===0?fmtT(v):'',xName:'x',yName:'y',
+    curves:[{f:f1,color:C.teal,width:3.5},{f:f2,color:C.red,width:3.5,dash:coinc?'10 8':null}],points:pts});
+  ['m1','b1','m2','b2'].forEach(k=>document.getElementById('sr'+k.toUpperCase()).textContent=fmtT(srState[k]).replace('−','-'));
+  const S=document.getElementById('srSistema');
+  S.innerHTML=`\\[\\left\\{\\begin{aligned}${srRecta(m1,b1).replace('=','&=')}\\\\${srRecta(m2,b2).replace('=','&=')}\\end{aligned}\\right.\\]`;
+  let pos,comun,clas,sol;
+  if(coinc){pos='Coincidentes: misma pendiente y misma ordenada al origen';comun='Todos: las dos ecuaciones representan la misma recta';clas='Compatible indeterminado';sol=`Infinitas: \\(S=\\{(x;${srRecta(m1,b1).slice(2)}):x\\in\\mathbb{R}\\}\\)`;}
+  else if(paral){pos='Paralelas: misma pendiente y distinta ordenada al origen';comun='Ninguno';clas='Incompatible';sol='Ninguna: \\(S=\\varnothing\\)';}
+  else{
+    const ex=esExacto(xi)&&esExacto(yi);
+    pos='Secantes: pendientes distintas';comun='Uno solo';clas='Compatible determinado';
+    sol=`Una única solución: \\(S=\\{(${fmtK(xi)};${fmtK(yi)})\\}\\)`+(ex?'':' (valores aproximados)');
+  }
+  document.getElementById('srDatos').innerHTML=`
+    <div class="qx-dato"><span class="qx-lab">Posición de las rectas</span>${pos}</div>
+    <div class="qx-dato"><span class="qx-lab">Puntos en común</span>${comun}</div>
+    <div class="qx-dato"><span class="qx-lab">Clasificación del sistema</span><strong>${clas}</strong></div>
+    <div class="qx-dato" style="grid-column:1/-1"><span class="qx-lab">Soluciones</span>${sol}</div>`;
+  typeset(S);typeset(document.getElementById('srDatos'));
+}
+function srAdjust(k,d){
+  let v=Math.round((srState[k]+d)*10)/10;
+  if(k[0]==='m')v=Math.max(-3,Math.min(3,v));else v=Math.max(-6,Math.min(6,v));
+  srState[k]=v;srDibujar();
+}
+function srReset(){Object.assign(srState,srInicial);srDibujar();}
+
+/* ============================================================
+   PLANOS (esquemas)
+   ============================================================ */
+function poly(pts,fill,stroke){return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" fill-opacity=".42" stroke="${stroke}" stroke-width="1.6" stroke-linejoin="round"/>`;}
+const PV=['#7C5CE6','#5A3FC4'], PT=['#1F8C91','#0F6B6F'], PO=['#FF9A3D','#C25E00'];
+function dibujarPlanos(){
+  // 1) un único punto
+  let s='';
+  s+=poly([[40,128],[196,128],[262,92],[106,92]],PO[0],PO[1]);
+  s+=poly([[78,30],[222,30],[222,190],[78,190]],PV[0],PV[1]);
+  s+=poly([[130,18],[176,46],[176,206],[130,178]],PT[0],PT[1]);
+  s+=`<circle cx="153" cy="110" r="5.5" fill="#162E38" stroke="#fff" stroke-width="1.5"/>`;
+  document.getElementById('planos1').setAttribute('viewBox','0 0 300 225');
+  document.getElementById('planos1').innerHTML=s;
+  // 2) una recta en común
+  s='';
+  s+=poly([[90,60],[210,20],[210,180],[90,220]],PO[0],PO[1]);
+  s+=poly([[90,20],[210,60],[210,220],[90,180]],PT[0],PT[1]);
+  s+=poly([[80,40],[220,40],[220,200],[80,200]],PV[0],PV[1]);
+  s+=`<line x1="150" y1="40" x2="150" y2="200" stroke="#162E38" stroke-width="3.5" stroke-linecap="round"/>`;
+  document.getElementById('planos2').setAttribute('viewBox','0 0 300 240');
+  document.getElementById('planos2').innerHTML=s;
+  // 3) se cortan de a dos, sin punto común a los tres (prisma triangular)
+  s='';
+  const A=[95,185],B=[175,185],Cc=[135,115],d=[75,-50],e=0.45;
+  const add=(p,q)=>[p[0]+q[0],p[1]+q[1]];
+  function lado(P,Q,col){
+    const v=[Q[0]-P[0],Q[1]-P[1]];
+    const P2=[P[0]-e*v[0],P[1]-e*v[1]], Q2=[Q[0]+e*v[0],Q[1]+e*v[1]];
+    return poly([P2,Q2,add(Q2,d),add(P2,d)],col[0],col[1]);
+  }
+  s+=lado(B,Cc,PT)+lado(A,B,PO)+lado(Cc,A,PV);
+  [A,B,Cc].forEach(P=>{const Q=add(P,d);s+=`<line x1="${P[0]}" y1="${P[1]}" x2="${Q[0]}" y2="${Q[1]}" stroke="#162E38" stroke-width="2.2" stroke-linecap="round"/>`;});
+  document.getElementById('planos3').setAttribute('viewBox','0 0 300 240');
+  document.getElementById('planos3').innerHTML=s;
+}
+
+/* ============================================================
+   GRÁFICOS FIJOS
+   ============================================================ */
+function graficosFijos(){
+  plot('plotRecta',{w:480,h:380,xMin:-1.5,xMax:5,yMin:-2,yMax:8,xStep:1,yStep:1,grid:true,xName:'x',yName:'y',
+    curves:[{f:x=>-2*x+6,color:C.teal,width:3.5}],
+    points:[{x:0,y:6,color:C.red,label:'(0;6)',dx:10,dy:-6},{x:1,y:4,color:C.red,label:'(1;4)',dx:10,dy:-6},{x:3,y:0,color:C.red,label:'(3;0)',dx:8,dy:-10}],
+    labels:[{x:2.6,y:6.6,text:'2x + y = 6',color:C.teal,bold:true}]});
+  const mini={w:300,h:230,margin:{l:14,r:14,t:14,b:14},xMin:-1.5,xMax:5.5,yMin:-3,yMax:6,noTicks:true,xName:'x',yName:'y',fs:10};
+  plot('plotSec',Object.assign({},mini,{curves:[{f:x=>3-x,color:C.teal},{f:x=>2*x-3,color:C.red}],
+    points:[{x:2,y:1,color:C.navy,r:5,label:'(2;1)',dx:10,dy:6,lc:C.navy}]}));
+  plot('plotPar',Object.assign({},mini,{curves:[{f:x=>3-x,color:C.teal},{f:x=>5-x,color:C.red}]}));
+  plot('plotCoi',Object.assign({},mini,{curves:[{f:x=>3-x,color:C.teal,width:4},{f:x=>3-x,color:C.red,width:2.2,dash:'8 7'}]}));
+  plot('plotProveedores',{w:560,h:380,margin:{l:62,r:20,t:24,b:46},xMin:0,xMax:105,yMin:0,yMax:13000,xStep:20,yStep:2000,grid:true,
+    showZeroX:true,fmtX:v=>fmtT(v),fmtY:v=>fmtMiles(v),xNameBelow:true,xName:'horas de trabajo, x',yName:'costo, y (pesos)',
+    segs:[{x1:60,y1:0,x2:60,y2:7000},{x1:0,y1:7000,x2:60,y2:7000}],
+    curves:[{f:x=>4000+50*x,color:C.teal,width:3.5},{f:x=>1000+100*x,color:C.red,width:3.5}],
+    points:[{x:60,y:7000,color:C.navy,r:6,label:'(60;7000)',dx:10,dy:18,lc:C.navy}],
+    labels:[{x:103,y:7900,text:'Proveedor A: y = 4000 + 50x',color:C.teal,bold:true,anchor:'end'},{x:62,y:11800,text:'Proveedor B: y = 1000 + 100x',color:C.red,bold:true,anchor:'end'}]});
+}
+
+/* Inicializar */
+document.addEventListener('DOMContentLoaded',()=>{
+  requestAnimationFrame(()=>{
+    graficosFijos();
+    dibujarPlanos();
+    srDibujar();
+    typeset(document.body);
+  });
+});
+</script>
+</body>
+</html>
