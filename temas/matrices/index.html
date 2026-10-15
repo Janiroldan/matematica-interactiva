@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Matrices · Mg. Janina Roldan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --teal-900:#0A4F53;--teal-800:#0F6B6F;--teal-700:#1F8C91;--teal-100:#E9F7F7;
+  --navy-900:#162E38;--navy-800:#223740;--slate-700:#5D737C;
+  --line:#D7E7E8;--bg:#F4FAFA;--panel:#FFFFFF;
+  --orange:#FF7A00;--orange-soft:#FFF4E9;
+  --violet:#7C5CE6;--violet-soft:#F4F0FF;
+  --yellow-soft:#FFFBE8;--green:#23865B;--green-soft:#ECF8F1;
+  --red:#C94848;--red-soft:#FFF1F1;
+  --shadow-xl:0 24px 54px rgba(10,79,83,.12);
+  --shadow-lg:0 16px 34px rgba(10,79,83,.08);
+  --shadow-md:0 10px 24px rgba(10,79,83,.06);
+  --font:'Inter',system-ui,sans-serif;--max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy-800);background:linear-gradient(180deg,#F9FCFC 0%,#F2F8F8 100%);line-height:1.55;font-size:13.5px}
+p{margin-bottom:.82rem}p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy-900)}
+.portada{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-900) 100%);color:#fff;text-align:center;position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;overflow:hidden;transition:opacity .5s ease,transform .5s ease}
+.portada.oculta{opacity:0;pointer-events:none;transform:translateY(-16px)}
+.portada::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.portada::after{content:'';position:absolute;bottom:-80px;left:-40px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.04)}
+.portada-monograma{min-width:76px;height:76px;padding:0 18px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);font-size:1.3rem;font-weight:800;margin-bottom:18px}
+.portada h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;line-height:1.14;letter-spacing:-.02em;margin-bottom:14px;max-width:760px}
+.portada h2{font-size:clamp(.9rem,2vw,1.05rem);font-weight:500;color:rgba(255,255,255,.88);margin-bottom:32px;max-width:640px}
+.btn-comenzar{display:inline-block;background:var(--orange);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:15px 40px;border:none;border-radius:10px;cursor:pointer;transition:.18s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.btn-comenzar:hover{background:#e06e00;transform:translateY(-2px)}
+.capsula{display:none;max-width:var(--max);margin:18px auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-xl)}
+.capsula.visible{display:block}
+.hero{position:relative;padding:36px 34px 24px;color:#fff;background:linear-gradient(135deg,#0B5C61 0%,#116E72 52%,#163945 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-100px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%)}
+.eyebrow{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px;max-width:780px}
+.hero p{color:rgba(255,255,255,.9);font-size:.95rem;max-width:850px;margin-bottom:0}
+.tabs-wrap{position:sticky;top:8px;z-index:18;padding:12px 24px;background:linear-gradient(180deg,#F8FBFB 0%,rgba(248,251,251,.88) 100%)}
+.tabs-shell{border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:20px;padding:10px;box-shadow:var(--shadow-md)}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{border:none;cursor:pointer;font:inherit;font-weight:800;color:var(--teal-800);background:#EFF7F7;padding:11px 14px;border-radius:14px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+.tab:hover{transform:translateY(-1px);background:#E5F3F3}
+.tab.active{background:var(--teal-800);color:#fff;box-shadow:0 10px 20px rgba(15,107,111,.22)}
+.tab-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:rgba(255,255,255,.52)}
+.tab.active .tab-num{background:rgba(255,255,255,.18)}
+.progress-track{margin-top:10px;height:6px;border-radius:999px;background:#EAF3F3;overflow:hidden}
+.progress-fill{height:100%;width:14.3%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--orange));transition:width .28s}
+.content{padding:18px 24px 32px;background:var(--bg)}
+.panel{display:none;animation:fade .28s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section{background:linear-gradient(180deg,#fff 0%,#FCFEFE 100%);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-md)}
+.section+.section{margin-top:18px}
+.kicker{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--teal-100);color:var(--teal-800);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+h2{color:var(--navy-900);font-size:1.5rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:10px}
+h3{color:var(--navy-900);font-size:1rem;line-height:1.25;margin-bottom:8px}
+.section-intro{color:var(--slate-700);max-width:920px;margin-bottom:20px}
+.muted{color:var(--slate-700)}
+.subbloque{border-top:2px solid var(--teal-100);margin-top:26px;padding-top:20px}
+.subbloque:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.sub-titulo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sub-num{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-weight:800;font-size:.85rem}
+.sub-titulo h3{font-size:1.08rem;margin-bottom:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{border:1px solid var(--line);background:#FBFEFE;border-radius:16px;padding:14px}
+.box.orange{background:linear-gradient(180deg,#FFF7F0,#FFF3E6);border-color:#FFD8B8}
+.box.teal{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-color:#CFE8E9}
+.box.yellow{background:linear-gradient(180deg,#FFFDF1,#FFF9DF);border-color:#F0E39B}
+.box.violet{background:linear-gradient(180deg,#F8F6FF,#F1ECFF);border-color:#DDD3FA}
+.formula{margin:14px 0;padding:15px 18px;border-left:4px solid var(--orange);background:var(--orange-soft);border-radius:14px;overflow:auto}
+.formula.teal{border-left-color:var(--teal-800);background:var(--teal-100)}
+.formula.violet{border-left-color:var(--violet);background:var(--violet-soft)}
+.list{padding-left:18px}.list li+li{margin-top:8px}
+.concept-card{border:1px solid var(--line);border-left:5px solid var(--teal-800);background:#FBFEFE;border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.concept-card h3{color:var(--teal-800);font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.concept-card.yellow{border-left-color:#E4BF00;background:#fff;border-color:#F0E39B}
+.concept-card.orange{border-left-color:var(--orange);background:#fff;border-color:#FFD8B8}
+.concept-card.violet{border-left-color:var(--violet);background:#fff;border-color:#E3DAFB}
+.mini-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;margin:14px 0;font-size:.86rem}
+.mini-table th{background:var(--teal-800);color:#fff;text-align:left;padding:9px 11px;font-size:.82rem}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mini-table tr:last-child td{border-bottom:none}
+.check{color:var(--green);font-weight:800}
+.cruz{color:var(--red);font-weight:800}
+.aviso{display:flex;gap:10px;align-items:flex-start;border:1px solid #FFD8B8;background:var(--orange-soft);border-radius:12px;padding:11px 14px;margin:12px 0;font-size:.88rem;color:#7A3E00}
+.aviso .aviso-icon{flex:none;font-size:1rem}
+.aviso strong{color:#7A3E00}
+.aviso ul{padding-left:18px;margin-top:6px}.aviso li+li{margin-top:4px}
+.visual{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:16px}
+.visual img{display:block;width:100%;height:auto}
+.video-block{margin:12px 0}
+.video{position:relative;margin:8px 0;overflow:hidden;background:#0A2226;border:1px solid var(--line);border-radius:18px;padding-top:56.25%;height:0}
+.video iframe{position:absolute;top:0;left:0;display:block;width:100%;height:100%;border:0}
+.video-ficha{color:var(--slate-700);font-size:.8rem;margin-bottom:6px}
+.op-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:8px;background:var(--violet-soft);color:#4F35B8}
+.question{background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border:1px solid #CFE8E9;border-left:5px solid var(--teal-800);border-radius:14px;padding:13px 15px;margin-bottom:12px;font-weight:700;color:var(--navy-900);font-size:.92rem;line-height:1.5}
+.options{display:grid;gap:8px}
+.options.compact{display:flex;flex-wrap:wrap;gap:8px}
+.options.compact .opt{width:auto;flex:0 0 auto;padding:8px 18px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;color:var(--navy-800);transition:.16s;font-size:.88rem}
+.opt:hover{background:#F8FCFC;border-color:#BFDADB;transform:translateY(-1px)}
+.opt.correct{background:var(--green-soft);border-color:#BCE3CF;color:var(--green)}
+.opt.wrong{background:var(--red-soft);border-color:#F1C0C0;color:var(--red)}
+.opt:disabled{cursor:default;transform:none}
+.feedback{display:none;margin-top:10px;padding:11px 13px;border-radius:12px;font-weight:600;font-size:.9rem;line-height:1.5}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green);border:1px solid #BCE3CF}
+.feedback.no{background:var(--red-soft);color:var(--red);border:1px solid #F1C0C0}
+.btn-reintentar{font-size:.8rem;font-weight:700;color:var(--slate-700);cursor:pointer;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-family:inherit;margin-top:8px;display:inline-block}
+.btn-reintentar:hover{background:#F4FAFA}
+.activity{background:linear-gradient(180deg,#fff,#FBFEFE);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 14px rgba(10,79,83,.03)}
+.activity.activacion{background:linear-gradient(180deg,#FBFAFF,#F4F0FF);border:1px solid #E1D9F7;border-left:4px solid var(--violet)}
+.activity.activacion .question{background:#fff;border-color:#E1D9F7;border-left-color:var(--violet)}
+.practica-titulo{font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--teal-100)}
+.ejercicio-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.03em;margin-bottom:10px;background:var(--teal-100);color:var(--teal-800)}
+.ejercicio-badge.b-orange{background:var(--orange-soft);color:#8E4300}
+.ejercicio-badge.b-violet{background:var(--violet-soft);color:#4F35B8}
+.ejercicio-badge.b-pink{background:#FFF1F8;color:#8B1A5E}
+.guided{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;margin-bottom:14px}
+.guided-title{font-weight:800;color:var(--teal-800);font-size:.95rem;margin-bottom:10px}
+.steps{list-style:none;display:grid;gap:8px}
+.nobr{white-space:nowrap}
+.linea{display:block;margin-top:7px}
+.question .katex-display,.guided-title .katex-display,.ejemplo-card .katex-display,.steps .katex-display,.feedback .katex-display{text-align:left;margin:.45em 0 .45em 1.2em}
+.question .katex-display>.katex,.guided-title .katex-display>.katex,.ejemplo-card .katex-display>.katex,.steps .katex-display>.katex,.feedback .katex-display>.katex{text-align:left}
+
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:#FBFEFE;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.step-num{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--teal-800);color:#fff;font-size:.72rem;font-weight:800}
+.guided .result-line{margin-top:4px;padding:9px 12px;background:var(--teal-100);border-radius:10px;font-weight:700;color:var(--teal-900)}
+.guided.orange{border-left:4px solid var(--orange)}
+.guided.orange .step-num{background:var(--orange)}
+.guided.orange .result-line{background:var(--orange-soft);color:#8E4300}
+.guided.violet{border-left:4px solid var(--violet)}
+.guided.violet .step-num{background:var(--violet)}
+.guided.violet .result-line{background:var(--violet-soft);color:#4F35B8}
+.guided.pink{border-left:4px solid #C2478A}
+.guided.pink .step-num{background:#C2478A}
+.guided.pink .result-line{background:#FFF1F8;color:#8B1A5E}
+.accordion{display:grid;gap:8px}
+.acc-item{border:1px solid #F1C0C0;background:#fff;border-radius:14px;overflow:hidden}
+.acc-btn{width:100%;border:none;background:#fff;cursor:pointer;padding:13px 16px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;font-weight:700;color:var(--navy-900);font-size:.92rem}
+.acc-btn:hover{background:#FFF8F8}
+.acc-btn .acc-icon{font-size:1rem;color:var(--red);flex-shrink:0}
+.acc-panel{display:none;padding:0 16px 14px}
+.acc-item.open .acc-panel{display:block}
+.acc-item.open .acc-btn{background:#FFF8F8}
+.error-incorrecto{background:#fff;border:1px solid #F1C0C0;border-radius:10px;padding:10px 12px;margin:6px 0;color:#8B2F2F;font-weight:700;font-size:.9rem}
+.error-correcto{background:#fff;border:1px solid #BCE3CF;border-radius:10px;padding:10px 12px;margin:6px 0;color:#1F6E4E;font-weight:700;font-size:.9rem}
+.sintesis-card{border:1px solid #CFE8E9;border-left:5px solid var(--teal-900);background:linear-gradient(180deg,#F4FBFB,#EAF7F7);border-radius:16px;padding:18px 20px;margin-top:18px}
+.sintesis-card h3{color:var(--teal-900);font-size:1rem}
+.sintesis-frase{margin-top:10px;font-style:italic;color:var(--navy-900);font-weight:600}
+.pie{padding:26px;text-align:center;border-top:1px solid var(--line);background:#fff;color:var(--slate-700);font-size:.82rem}
+.pie strong{color:var(--teal-800)}
+.nav-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.btn-nav{font:inherit;font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-nav.prev{color:var(--teal-800);background:#fff;border:1px solid var(--teal-800)}
+.btn-nav.prev:hover{background:var(--teal-100)}
+.btn-nav.next{color:#fff;background:var(--teal-800);border:1px solid var(--teal-800)}
+.btn-nav.next:hover{background:var(--teal-700)}
+.ejemplo-card{border:1px solid #F3C6DE;border-radius:16px;overflow:hidden;margin:14px 0}
+.ejemplo-card .ejemplo-enunciado{padding:13px 16px;background:#FFF1F8;border-left:4px solid #C2478A}
+.ejemplo-card .ejemplo-enunciado h3{color:#8B1A5E;font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ejemplo-card .ejemplo-desarrollo{padding:13px 16px;background:#fff;border-top:1px solid #F3C6DE}
+.calc{margin:8px 0 2px 4px;overflow-x:auto}
+.ejemplo-card .ejemplo-desarrollo p+p{margin-top:6px}
+.btn-chip{font:inherit;font-weight:700;font-size:.85rem;padding:9px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800);transition:.15s}
+.btn-chip:hover{background:var(--teal-100)}
+.btn-chip.reset-btn{border-color:var(--slate-700);color:var(--slate-700)}
+
+/* ---- Explorador a, b, c ---- */
+.mb-widget{border:1px solid var(--line);background:linear-gradient(180deg,#fff,#FBFEFE);border-radius:20px;padding:20px;margin:16px 0}
+.mb-titulo{font-weight:800;color:var(--navy-900);margin-bottom:4px}
+.mb-sub{color:var(--slate-700);font-size:.86rem;margin-bottom:14px}
+.mb-svg-wrap{padding:6px 0 10px;text-align:center}
+.mb-svg-wrap svg{width:100%;max-width:520px;height:auto}
+.mb-controles{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:10px}
+.mb-grupo{display:flex;align-items:center;gap:10px;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+.mb-grupo .mb-label{font-weight:800;color:var(--teal-800);font-size:1rem;min-width:16px;text-align:center}
+.mb-grupo button{font:inherit;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:8px;cursor:pointer;border:1px solid var(--teal-800);background:#fff;color:var(--teal-800)}
+.mb-grupo button:hover{background:var(--teal-100)}
+.mb-grupo .mb-valor{font-weight:800;color:var(--navy-900);min-width:44px;text-align:center;font-size:.95rem}
+.mb-lectura{text-align:center;font-weight:700;color:var(--navy-900);background:var(--teal-100);border-radius:12px;padding:12px;margin-top:14px;font-size:.95rem}
+.mb-reset-wrap{text-align:center;margin-top:10px}
+.qx-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.qx-dato{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:.86rem}
+.qx-dato .qx-lab{display:block;font-size:.74rem;font-weight:700;color:var(--slate-700);margin-bottom:2px}
+.qx-nota{font-size:.8rem;color:var(--slate-700);text-align:center;margin-top:8px}
+
+/* ---- Gráficos generados ---- */
+.plot{margin:14px 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 10px 12px;text-align:center}
+.plot svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.plot figcaption{color:var(--slate-700);font-size:.8rem;margin-top:8px;line-height:1.5}
+.plot-mini{margin:0}
+.plot-mini svg{max-width:300px}
+.plot-mini h4{font-size:.86rem;color:var(--navy-900);margin-bottom:4px}
+.plot-grid{margin:14px 0}
+.rel{font-family:'Times New Roman',serif;font-size:1.21em;margin:0 .28em;line-height:1}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:4px}
+
+/* ---- Repaso: intersección de intervalos ---- */
+.repaso{margin-top:24px;border:1px dashed #CDBFF5;background:#FCFBFF;border-radius:18px;padding:18px}
+.repaso h3{font-size:1.02rem;margin:6px 0 6px}
+.repaso-badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:800;background:var(--violet-soft);color:#4F35B8}
+.repaso .mb-widget{margin:12px 0}
+.int-tipo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px}
+.int-dato{display:block;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-res{display:block;margin-top:8px;font-size:1.02rem}
+.int-concl{display:block;margin-top:4px;color:var(--teal-900)}
+.int-com{display:block;margin-top:6px;font-weight:500;font-size:.88rem;color:var(--navy-800)}
+.int-btn.activo{background:var(--teal-800);color:#fff}
+.int-btn.activo:hover{background:var(--teal-700)}
+/* ---- Bloque 10: matrices ---- */
+.calc-d{margin:10px 0 10px 1.2em;overflow-x:auto;padding:4px 0}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.mx-fila>span{max-width:100%;overflow-x:auto;overflow-y:hidden}
+.mx-fila{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;margin:12px 0 6px 1.2em}
+.op-line{font-weight:700;color:var(--teal-800);text-align:center;margin:4px 0}
+.tipos td:last-child{white-space:nowrap}
+.katex .cambia{background:#FFE6C7;border-radius:4px;padding:.05em .3em}
+.katex .hl{background:#FFE3C2;border-radius:4px;padding:.05em .3em}
+.katex .hl-col{background:#E9E2FF;border-radius:4px;padding:.05em .3em}
+.katex .hl-cell{background:#CDEFDD;border-radius:4px;padding:.05em .3em;box-shadow:0 0 0 2px var(--green)}
+.katex .celbtn{cursor:pointer;border-radius:4px;padding:.05em .3em;outline-offset:2px}
+.katex .celbtn:hover{background:#E3F2F2}
+.katex .celbtn:focus-visible{outline:2px solid var(--orange)}
+.katex .oculto{color:var(--slate-700)}
+#ubicarV .katex *,#prodEsc .katex *{pointer-events:none}
+#ubicarV .katex [data-i],#ubicarV .katex [data-i] *,#prodEsc .katex [data-i],#prodEsc .katex [data-i] *{pointer-events:auto;cursor:pointer}
+.ub-cols{text-align:center;font-size:.8rem;font-weight:700;color:var(--slate-700);margin-bottom:6px}
+.mx-ubicar{flex-direction:column;align-items:center;overflow-x:auto}
+.mxbox-c{display:flex;flex-direction:column;align-items:center}
+.mx-nom{font-weight:700;color:var(--navy-900);margin-right:6px}
+/* producto */
+.prod-esc{display:flex;flex-direction:column;align-items:center;margin:14px 0;overflow-x:auto;padding:4px 0}
+.prod-cap{font-size:.86rem;font-weight:700;color:var(--slate-700);margin-bottom:6px;text-align:center}
+.prod-esc .sym{font-size:1.2rem;font-weight:700;color:var(--slate-700)}
+.prod-esc .mxbox{display:flex;align-items:center}
+.prod-ord{display:block;text-align:center;font-size:.76rem;color:var(--slate-700);margin-top:2px}
+/* órdenes */
+.ord-sel{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:6px 0 14px}
+.ord-mat{display:flex;align-items:center;gap:8px;background:#F4FAFA;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+.ord-nom{font-weight:800;color:var(--teal-800);margin-right:4px}
+.ord-mat select{font:inherit;font-weight:700;padding:5px 8px;border-radius:8px;border:1px solid var(--teal-800);background:#fff;color:var(--navy-900)}
+.ord-x{font-weight:700;color:var(--slate-700)}
+.ord-res{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ord-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.88rem}
+.ord-item .qx-lab{display:block;font-size:.74rem;font-weight:700;color:var(--slate-700);margin-bottom:4px}
+.ord-item.si{border-color:#BCE3CF;background:var(--green-soft)}
+.ord-item.no{border-color:#F1C0C0;background:var(--red-soft)}
+.ord-dim{font-weight:800;padding:0 2px;border-radius:4px}
+.ord-dim.ok{color:var(--green);background:#D9F2E6}
+.ord-dim.mal{color:var(--red);background:#FCE0E0}
+/* ubicar */
+.mx-ubicar{display:flex;justify-content:center;margin:10px 0}
+.ub-tab{border-collapse:collapse}
+.ub-tab th{font-size:.76rem;color:var(--slate-700);font-weight:700;padding:4px 8px}
+.ub-tab th.fila{text-align:right}
+.ub-tab td.ub-mx{padding:0}
+/* Gauss-Jordan */
+.gj{margin:6px 0}
+.gj-paso{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0;background:#fff}
+.gj-paso.ini{background:#FBFEFE}
+.gj-cab{font-size:.76rem;font-weight:800;color:var(--slate-700);margin-bottom:4px}
+.gj-txt{margin-bottom:4px}
+.gj-ops{font-weight:700;color:var(--teal-800);margin:4px 0 8px}
+.gj-ops .gj-op{display:inline-block}
+.gj-ops .gj-op+.gj-op{margin-left:22px}
+.gj-mat{display:flex;justify-content:center;margin:6px 0}
+.gj details{margin-top:6px;font-size:.86rem}
+.gj summary{cursor:pointer;color:var(--teal-800);font-weight:700}
+.gj-cuentas{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:6px}
+.gj-fin{margin-top:8px;padding:10px 12px;background:var(--teal-100);border-radius:10px;color:var(--teal-900)}
+.gj-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}
+.gj-nav button:disabled{opacity:.45;cursor:default}
+@media(max-width:760px){.ord-res{grid-template-columns:1fr}.mxt td{padding:4px 7px;min-width:28px}}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:1020px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+@media(max-width:760px){.qx-datos{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:15px}
+  .capsula{margin:10px;border-radius:22px}
+  .hero{padding:26px 18px 18px}
+  .tabs-wrap,.content{padding-left:14px;padding-right:14px}
+  .section{padding:20px 16px}
+  .tab{flex:1 1 calc(50% - 8px);justify-content:center}
+  h2{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div class="portada" id="portada">
+<div class="portada-monograma" style="font-size:1.05rem">A = (aᵢⱼ)</div>
+<h1>Matrices</h1>
+<h2>Concepto, tipos, operaciones y resolución de sistemas por reducción, con interactivos, videos y actividades</h2>
+<button class="btn-comenzar" onclick="iniciarCapsula()">Comenzar</button>
+</div>
+
+<div class="capsula" id="capsula">
+<header class="hero">
+<span class="eyebrow">Espacio interactivo de aprendizaje</span>
+<h1>Matrices</h1>
+<p>Un recorrido con interactivos, videos y actividades cortas para organizar datos en matrices, operar con ellas, escribir un sistema en forma matricial y resolverlo por reducción (método de Gauss-Jordan). Te recomendamos recorrer las etapas en el orden propuesto.</p>
+</header>
+
+<div class="tabs-wrap">
+<div class="tabs-shell">
+<div class="tabs">
+<button class="tab active" data-tab="p1"><span class="tab-num">1</span>Matrices</button>
+<button class="tab" data-tab="p2"><span class="tab-num">2</span>Tipos</button>
+<button class="tab" data-tab="p3"><span class="tab-num">3</span>Operaciones</button>
+<button class="tab" data-tab="p4"><span class="tab-num">4</span>Producto</button>
+<button class="tab" data-tab="p5"><span class="tab-num">5</span>Forma matricial</button>
+<button class="tab" data-tab="p6"><span class="tab-num">6</span>Reducción</button>
+<button class="tab" data-tab="p7"><span class="tab-num">7</span>Aplicaciones</button>
+<button class="tab" data-tab="p8"><span class="tab-num">8</span>Cierre</button>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width:12.5%"></div></div>
+</div>
+</div>
+
+<main class="content">
+<!-- ============ PANEL 1: MATRICES ============ -->
+<section class="panel active" id="p1">
+<div class="section">
+<span class="kicker">Matrices</span>
+<h2>De los sistemas a las matrices</h2>
+<p class="section-intro">Si se fija el orden de las variables, los coeficientes de un sistema alcanzan para representarlo, sin escribir las incógnitas:</p>
+<div class="grid-2">
+<div class="box teal"><p class="muted">En el sistema</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\x-y&=1\end{aligned}\right.\]</div>
+<div class="box violet"><p class="muted">si las variables se ordenan como \(x\), \(y\), los coeficientes forman un arreglo rectangular:</p>\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1\\1&-1\end{matrix}\mkern5mu\right]}\]</div>
+</div>
+<p class="muted" style="margin-top:12px">Un arreglo así se llama <strong>matriz</strong>. Sirve para resolver sistemas y también para organizar datos: costos, stocks, ventas.</p>
+
+<div class="subbloque" id="sub1-1" style="margin-top:22px;border-top:2px solid var(--teal-100);padding-top:20px">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Definición y notación</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Una <strong>matriz</strong> de orden \(m\times n\) es un arreglo rectangular de números reales dispuestos en \(m\) filas y \(n\) columnas. Cada número del arreglo es un <strong>elemento</strong> de la matriz.</p></div>
+<p class="muted">El elemento de la fila \(i\) y la columna \(j\) se nota \(a_{ij}\):</p>
+<div class="formula violet">\[ A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&\cdots&a_{2n}\\\vdots&\vdots&\ddots&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\end{matrix}\mkern5mu\right]} \]</div>
+<p class="muted">En forma abreviada, \(A=(a_{ij})\). El orden se indica con las filas primero y las columnas después.</p>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate cómo se indica el orden de una matriz y cómo se ubica cada elemento según su fila y su columna.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/BbRfKVZNIiw" title="Qué son las matrices" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Datos organizados en una matriz</h3><p>Una organización tiene tres sucursales y vende dos productos, P y Q. En un mes vendió: en la sucursal 1, \(20\) unidades de P y \(15\) de Q; en la sucursal 2, \(30\) de P y \(10\) de Q; en la sucursal 3, \(25\) de P y \(5\) de Q. Los datos se organizan en una matriz \(V\), donde cada fila corresponde a una sucursal y cada columna a un producto.</p></div>
+<div class="ejemplo-desarrollo">
+<p>\(V\) tiene \(3\) filas y \(2\) columnas: su orden es \(3\times2\).</p>
+<div class="mx-ubicar" id="ubicarV"></div>
+<p class="qx-nota">Tocá un elemento de \(V\) para ver qué representa.</p>
+<div class="mb-lectura" id="ubicarLectura" aria-live="polite">El elemento \(v_{21}=30\) indica que la sucursal 2 vendió \(30\) unidades de P.</div>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 1</span>
+<div class="activity">
+<div class="question">¿Cuál es el orden de esta matriz?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&4&0&2\\3&-1&5&6\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="El orden se indica con las filas primero y las columnas después: tiene 2 filas y 4 columnas.">\(4\times2\)</button>
+<button class="opt" data-value="b">\(2\times4\)</button>
+<button class="opt" data-value="c" data-fb="8 es la cantidad de elementos. El orden indica cuántas filas y cuántas columnas tiene.">\(8\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: tiene \(2\) filas y \(4\) columnas." data-no="Contá primero las filas y después las columnas."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 2</span>
+<div class="activity">
+<div class="question">En la matriz \(V\) del ejemplo, ¿qué indica el elemento \(v_{12}=15\)?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="El primer subíndice indica la fila (la sucursal) y el segundo la columna (el producto): fila 1, columna 2.">La sucursal 2 vendió \(15\) unidades de P</button>
+<button class="opt" data-value="b" data-fb="La columna 1 corresponde a P; v₁₂ está en la columna 2, que corresponde a Q.">La sucursal 1 vendió \(15\) unidades de P</button>
+<button class="opt" data-value="c">La sucursal 1 vendió \(15\) unidades de Q</button>
+</div>
+<div class="feedback" data-ok="Correcto: fila 1 (sucursal 1), columna 2 (producto Q)." data-no="Leé el primer subíndice como fila y el segundo como columna."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 3</span>
+<div class="activity">
+<div class="question">Dada la matriz \(A\), ¿cuánto vale \(a_{23}\)?\[A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&-1&7\\0&5&3\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(3\)</button>
+<button class="opt" data-value="b" data-fb="7 es a₁₃: fila 1, columna 3. Buscá la fila 2.">\(7\)</button>
+<button class="opt" data-value="c" data-fb="5 es a₂₂: fila 2, columna 2. Buscá la columna 3.">\(5\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: fila 2, columna 3." data-no="Ubicá la fila 2 y, dentro de ella, la columna 3."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub1-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Igualdad de matrices</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Dos matrices son <strong>iguales</strong> cuando tienen el mismo orden y sus elementos correspondientes son iguales: \(A=B\) si y solo si \(a_{ij}=b_{ij}\) para todo \(i\) y todo \(j\).</p></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué elementos se igualan entre sí y cuántas ecuaciones se obtienen para hallar las incógnitas.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/NbK_goUkxGs" title="Igualdad de matrices" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Hallar incógnitas a partir de una igualdad de matrices</h3><p>Hallar \(x\) e \(y\) para que las matrices \(A\) y \(B\) sean iguales:</p><div class="mx-fila"><span>\(\displaystyle A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}x+1&3\\2&y\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle B={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&3\\2&2y-1\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="ejemplo-desarrollo">
+<p>Ambas matrices tienen orden \(2\times2\). Se igualan los elementos que ocupan la misma posición. Los elementos de las posiciones \((1;2)\) y \((2;1)\) ya coinciden. Quedan dos ecuaciones.</p>
+<p><strong>Posición \((1;1)\):</strong></p>
+<div class="calc">\(\begin{aligned}x+1&=5\\x&=5-1\\x&=4\end{aligned}\)</div>
+<p><strong>Posición \((2;2)\):</strong></p>
+<div class="calc">\(\begin{aligned}y&=2y-1\\1&=2y-y\\1&=y\end{aligned}\)</div>
+<p><strong>Verificación:</strong> con \(x=4\) e \(y=1\), las dos matrices son iguales; ambas resultan:</p>\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&3\\2&1\end{matrix}\mkern5mu\right]}\]
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 4</span>
+<div class="activity">
+<div class="question">¿Qué valores de \(x\) e \(y\) hacen iguales a estas matrices?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2x-1&4\\3&y+2\end{matrix}\mkern5mu\right]}={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&4\\3&-1\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Revisá x: de 2x-1=5 queda 2x=6, así que x=3. No alcanza con sumar 1.">\(x=2\), \(y=-3\)</button>
+<button class="opt" data-value="b">\(x=3\), \(y=-3\)</button>
+<button class="opt" data-value="c" data-fb="Revisá y: de y+2=-1 queda y=-1-2=-3.">\(x=3\), \(y=1\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Posición \((1;1)\):<div class='calc'>\(\begin{aligned}2x-1&=5\\2x&=6\\x&=3\end{aligned}\)</div>Posición \((2;2)\):<div class='calc'>\(\begin{aligned}y+2&=-1\\y&=-3\end{aligned}\)</div>" data-no="Igualá los elementos que ocupan la misma posición y despejá cada incógnita."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 5</span>
+<div class="activity">
+<div class="question">¿Pueden ser iguales estas dos matrices?<div class="mx-fila"><span>\(\displaystyle {\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&2\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle {\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1\\2\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Tener los mismos números no alcanza: una es 1×2 y la otra 2×1.">Sí, porque tienen los mismos elementos</button>
+<button class="opt" data-value="b" data-fb="No hay incógnitas que ajustar: el problema es el orden, que es distinto.">Depende del valor de sus elementos</button>
+<button class="opt" data-value="c">No, porque tienen distinto orden</button>
+</div>
+<div class="feedback" data-ok="Correcto: la primera es de orden \(1\times2\) y la segunda de orden \(2\times1\). Para ser iguales, primero deben tener el mismo orden." data-no="Revisá la primera condición de la definición de igualdad."></div>
+</div>
+</div>
+
+<div class="nav-actions"><span></span><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 2: TIPOS ============ -->
+<section class="panel" id="p2">
+<div class="section">
+<span class="kicker">Tipos de matrices</span>
+<h2>Nombres especiales según la forma o los elementos</h2>
+<p class="section-intro">Algunas matrices reciben nombres especiales, según su forma o sus elementos. Estas categorías no son excluyentes: una misma matriz puede cumplir varias características a la vez.</p>
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué mira cada clasificación: la forma de la matriz (cuántas filas y columnas tiene) o dónde están sus ceros.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/xXi-lVT8KwQ" title="Clasificación de matrices" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<table class="mini-table tipos">
+<thead><tr><th>Tipo</th><th>Característica</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td><strong>Matriz fila</strong></td><td>tiene una sola fila (orden \(1\times n\))</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&2&-1&3\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz columna</strong></td><td>tiene una sola columna (orden \(m\times1\))</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}4\\0\\-2\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz cuadrada</strong></td><td>tiene la misma cantidad de filas y de columnas (orden \(n\times n\)). Los elementos \(a_{11}\), \(a_{22}\), …, \(a_{nn}\) forman su <strong>diagonal principal</strong>, que va de la esquina superior izquierda a la inferior derecha</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&2\\3&4\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz nula</strong></td><td>todos sus elementos son \(0\)</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}0&0&0\\0&0&0\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz diagonal</strong></td><td>es cuadrada y todos los elementos que no están en la diagonal principal son \(0\)</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}3&0\\0&-2\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz identidad</strong> (\(I_n\))</td><td>es diagonal y tiene \(1\) en toda la diagonal principal. También es cuadrada y triangular superior e inferior</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&0\\0&1\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz triangular superior</strong></td><td>es cuadrada y todos los elementos por debajo de la diagonal principal son \(0\)</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&4&2\\0&3&5\\0&0&6\end{matrix}\mkern5mu\right]}\)</td></tr>
+<tr><td><strong>Matriz triangular inferior</strong></td><td>es cuadrada y todos los elementos por encima de la diagonal principal son \(0\)</td><td>\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&0&0\\5&-1&0\\4&3&7\end{matrix}\mkern5mu\right]}\)</td></tr>
+</tbody>
+</table>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 6</span>
+<div class="activity">
+<div class="question">¿Qué características cumple esta matriz?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&0\\5&1\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Es cuadrada y triangular inferior</button>
+<button class="opt" data-value="b" data-fb="Para ser triangular superior, los elementos por debajo de la diagonal deberían ser 0. Acá hay un 5 debajo.">Es cuadrada y triangular superior</button>
+<button class="opt" data-value="c" data-fb="Tiene 1 en la diagonal, pero no es diagonal: el 5 está fuera de la diagonal principal.">Es la matriz identidad</button>
+</div>
+<div class="feedback" data-ok="Correcto: es \(2\times2\) y el único elemento por encima de la diagonal principal es \(0\)." data-no="Ubicá la diagonal principal y fijate dónde están los ceros."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 7</span>
+<div class="activity">
+<div class="question">¿Cuál es la matriz identidad de orden \(3\)?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="La identidad tiene 1 solo en la diagonal principal; el resto de los elementos son 0.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&1&1\\1&1&1\\1&1&1\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="La identidad es cuadrada: esta matriz es de orden 2×3.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&0&0\\0&1&0\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&0&0\\0&1&0\\0&0&1\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: es cuadrada, con \(1\) en la diagonal principal y \(0\) en el resto." data-no="Recordá las condiciones: cuadrada, diagonal y con \(1\) en la diagonal principal."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 8</span>
+<div class="activity">
+<div class="question">¿Qué características cumple esta matriz?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&0&0\\0&0&0\\0&0&-1\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Para ser nula, todos sus elementos deberían ser 0: tiene un 2 y un -1.">Es la matriz nula</button>
+<button class="opt" data-value="b">Es cuadrada, diagonal y triangular superior e inferior</button>
+<button class="opt" data-value="c" data-fb="Que haya un 0 en la diagonal no impide que sea diagonal: lo que importa es que fuera de la diagonal todos los elementos sean 0.">No es diagonal, porque tiene un \(0\) en la diagonal principal</button>
+</div>
+<div class="feedback" data-ok="Correcto: fuera de la diagonal principal todos los elementos son \(0\). Por eso también es triangular superior e inferior." data-no="Fijate qué pide la definición de matriz diagonal: ¿qué tiene que pasar fuera de la diagonal principal?"></div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 3: SUMA, RESTA Y ESCALAR ============ -->
+<section class="panel" id="p3">
+<div class="section">
+<span class="kicker">Operaciones</span>
+<h2>Suma, resta y multiplicación por un escalar</h2>
+
+<div class="subbloque" id="sub3-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Suma y resta</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Sean \(A=(a_{ij})\) y \(B=(b_{ij})\) dos matrices del mismo orden \(m\times n\). La <strong>suma</strong> \(A+B\) es la matriz \(C\) de orden \(m\times n\) cuyos elementos son las sumas de los elementos correspondientes:</p>\[c_{ij}=a_{ij}+b_{ij}\]<p>La <strong>resta</strong> \(A-B\) se define de manera análoga: sus elementos son \(c_{ij}=a_{ij}-b_{ij}\).</p></div>
+<div class="box yellow"><p><strong>Condiciones:</strong> solo se pueden sumar o restar matrices del mismo orden. Si los órdenes son distintos, la operación no está definida.</p><p>En una situación contextualizada, además, las posiciones correspondientes deben representar las mismas categorías (por ejemplo, el mismo producto y la misma sucursal), en el mismo orden y con unidades compatibles. De lo contrario, la suma puede calcularse, pero no tiene sentido interpretarla.</p></div>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate qué se controla antes de operar y cómo se combinan los elementos que ocupan la misma posición.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/sPFjVxnF71c" title="Suma y resta de matrices" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Suma y resta de matrices</h3><p>Una organización registra las unidades vendidas de tres productos (P, Q y R) en dos sucursales. Las filas corresponden a las sucursales y las columnas, a los productos. Se quieren conocer las ventas totales de los dos meses y cómo varió cada venta de marzo a abril. Las ventas de marzo <span class="nobr">(\(M\))</span> y de abril <span class="nobr">(\(A\))</span> fueron:</p><div class="mx-fila"><span>\(\displaystyle M={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}20&15&10\\30&10&5\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}25&10&12\\28&14&6\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Suma \(M+A\):</strong> ventas totales de los dos meses. Como \(M\) y \(A\) tienen el mismo orden (\(2\times3\)), se suman los elementos que ocupan la misma posición (misma sucursal y mismo producto):</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}M+A&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}20+25&15+10&10+12\\30+28&10+14&5+6\end{matrix}\mkern5mu\right]}\\M+A&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}45&25&22\\58&24&11\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Resta \(A-M\):</strong> variación de abril respecto de marzo. Se resta a cada elemento de \(A\) el elemento de \(M\) que ocupa la misma posición (abril − marzo):</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}A-M&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}25-20&10-15&12-10\\28-30&14-10&6-5\end{matrix}\mkern5mu\right]}\\A-M&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&-5&2\\-2&4&1\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Interpretación:</strong> la matriz \(M+A\) muestra las unidades vendidas en total, por sucursal y producto: por ejemplo, la sucursal 1 vendió \(45\) unidades del producto P entre marzo y abril. La matriz \(A-M\) muestra la variación entre los dos meses: un elemento positivo indica un aumento de las ventas y uno negativo, una disminución. Por ejemplo, la sucursal 1 vendió \(5\) unidades menos del producto Q en abril (\(10-15=-5\)).</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 9</span>
+<div class="activity">
+<div class="question">Dadas las matrices \(A\) y \(B\), ¿cuál es \(A+B\)?<div class="mx-fila"><span>\(\displaystyle A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}3&-1\\0&2\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle B={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&4\\-2&5\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Revisá los signos: -1+4=3 y 0+(-2)=-2.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}4&5\\2&7\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Esa es la resta A-B. Para sumar, se suman los elementos correspondientes.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&-5\\2&-3\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}4&3\\-2&7\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(3+1=4\), \(-1+4=3\), \(0+(-2)=-2\) y \(2+5=7\)." data-no="Sumá los elementos que ocupan la misma posición, con cuidado de los signos."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 10</span>
+<div class="activity">
+<div class="question">\(A\) es de orden \(2\times3\) y \(B\) es de orden \(3\times2\). ¿Qué se puede decir de \(A+B\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Que tengan la misma cantidad de elementos no alcanza: para sumar, deben tener el mismo orden.">Está definida, porque las dos tienen \(6\) elementos</button>
+<button class="opt" data-value="b">No está definida, porque las matrices tienen distinto orden</button>
+<button class="opt" data-value="c" data-fb="No hay un orden «intermedio»: si los órdenes no coinciden, la suma no está definida.">Está definida, y su resultado es de orden \(3\times3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: solo se suman matrices del mismo orden, y \(2\times3\) no es igual a \(3\times2\)." data-no="Compará la cantidad de filas y de columnas de cada matriz."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub3-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Multiplicación por un escalar</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Sean \(A=(a_{ij})\) una matriz de orden \(m\times n\) y \(k\) un número real. El producto \(k\cdot A\) es la matriz \(C\) de orden \(m\times n\) cuyos elementos se obtienen multiplicando cada elemento de \(A\) por \(k\):</p>\[c_{ij}=k\cdot a_{ij}\]</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Actualización de precios</h3><p>Una organización compra tres insumos a dos proveedores. La matriz \(C\) muestra los precios unitarios, en pesos: cada fila corresponde a un proveedor y cada columna, a un insumo. Se prevé un aumento del \(10\,\%\) en todos los precios.</p>\[C={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}100&200&300\\150&250&350\end{matrix}\mkern5mu\right]}\]</div>
+<div class="ejemplo-desarrollo">
+<p>Un aumento del \(10\,\%\) equivale a multiplicar cada precio por \(1{,}10\):</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}1{,}10\cdot C&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1{,}10\cdot100&1{,}10\cdot200&1{,}10\cdot300\\1{,}10\cdot150&1{,}10\cdot250&1{,}10\cdot350\end{matrix}\mkern5mu\right]}\\1{,}10\cdot C&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}110&220&330\\165&275&385\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Interpretación:</strong> los nuevos precios unitarios son \(\$110\), \(\$220\) y \(\$330\) para el proveedor 1, y \(\$165\), \(\$275\) y \(\$385\) para el proveedor 2.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 11</span>
+<div class="activity">
+<div class="question">¿Cuál es el resultado de este producto?\[3\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&-1\\0&4\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}6&-3\\0&12\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Se multiplicaron solo los elementos de la primera columna: hay que multiplicar todos los elementos por 3.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}6&-1\\0&4\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Se sumó 3 a cada elemento. Multiplicar por un escalar es multiplicar cada elemento por 3.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5&2\\3&7\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: cada elemento se multiplica por \(3\)." data-no="Multiplicá todos los elementos de la matriz por \(3\)."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 12</span>
+<div class="activity">
+<div class="question">La matriz \(P\) tiene los precios, en pesos, de dos productos (columnas) en dos sucursales (filas). Se aplica un descuento del \(20\,\%\) a todos los precios. ¿Cuál es la matriz de precios con descuento?\[P={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}200&500\\300&400\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}160&400\\240&320\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Esa matriz muestra cuánto se descuenta de cada precio (el 20 %), no el precio final.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40&100\\60&80\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Se restó 20 a cada precio. Un descuento del 20 % es un porcentaje: cada precio se multiplica por 0,80.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}180&480\\280&380\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: un descuento del \(20\,\%\) equivale a multiplicar por \(1-\tfrac{20}{100}=0{,}80\), así que la matriz es \(0{,}80\cdot P\). Por ejemplo, \(0{,}80\cdot200=160\)." data-no="Pensá por qué número hay que multiplicar cada precio para aplicar el descuento, y multiplicá todos los elementos de \(P\)."></div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 4: PRODUCTO ============ -->
+<section class="panel" id="p4">
+<div class="section">
+<span class="kicker">Multiplicación de matrices</span>
+<h2>Fila por columna</h2>
+<p class="section-intro">El producto de matrices <strong>no</strong> se calcula multiplicando elemento a elemento. Su idea surge de un cálculo muy habitual: combinar cantidades con precios.</p>
+
+<div class="subbloque" id="sub4-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>La idea: cantidades por precios</h3></div>
+<p class="muted">Una sucursal vende \(20\) unidades del producto P y \(15\) del producto Q. Cada unidad de P cuesta \(\$200\) y cada unidad de Q, \(\$300\). Su ingreso es:</p>
+<div class="calc">\(\begin{aligned}\text{ingreso}&=20\cdot200+15\cdot300\\&=4000+4500\\&=8500\end{aligned}\)</div>
+<p class="muted">Las cantidades pueden ordenarse en una matriz fila y los precios, en una matriz columna. El cálculo anterior es, entonces, «fila por columna»:</p>
+<div class="formula teal">\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}20&15\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}200\\300\end{matrix}\mkern5mu\right]}={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}8500\end{matrix}\mkern5mu\right]}\]</div>
+<p class="muted">Se multiplica el primero por el primero y el segundo por el segundo, y se suman los productos. Por eso la fila debe tener tantos elementos como la columna. El producto de matrices aplica esta idea a cada fila de la primera matriz y a cada columna de la segunda.</p>
+</div>
+
+<div class="subbloque" id="sub4-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Definición y condición</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>Sean \(A\) una matriz de orden \(m\times n\) y \(B\) una matriz de orden \(n\times p\). El <strong>producto</strong> \(A\cdot B\) es la matriz \(C\) de orden \(m\times p\) cuyo elemento \(c_{ij}\) se obtiene multiplicando, uno a uno, los elementos de la fila \(i\) de \(A\) por los de la columna \(j\) de \(B\), y sumando los resultados:</p>\[c_{ij}=a_{i1}\cdot b_{1j}+a_{i2}\cdot b_{2j}+\dots+a_{in}\cdot b_{nj}\]</div>
+<div class="mb-widget" id="prodWidget">
+<div class="mb-titulo">Explorá: fila por columna</div>
+<div class="mb-sub">Tocá un elemento del resultado para ver qué fila y qué columna se combinan, y cómo se calcula. También podés avanzar elemento por elemento.</div>
+<div class="int-tipo" role="group" aria-label="Elegí el producto">
+<button class="btn-chip int-btn activo" data-prod="ej7">Producto \(A\cdot B\)</button>
+<button class="btn-chip int-btn" data-prod="ab8">No conmutativo: \(A\cdot B\)</button>
+<button class="btn-chip int-btn" data-prod="ba8">No conmutativo: \(B\cdot A\)</button>
+<button class="btn-chip int-btn" data-prod="vp">Ingresos: \(V\cdot p\)</button>
+</div>
+<div class="prod-esc" id="prodEsc"></div>
+<div class="mb-reset-wrap"><button class="btn-chip" id="prodSig">Calcular el siguiente elemento</button> <button class="btn-chip" id="prodTodo">Completar todo</button> <button class="btn-chip reset-btn" id="prodReset">↺ Reiniciar</button></div>
+<div class="mb-lectura" id="prodLectura" aria-live="polite"></div>
+</div>
+
+<div class="box yellow"><p><strong>Condición para multiplicar:</strong> el producto \(A\cdot B\) está definido solo si la cantidad de columnas de \(A\) es igual a la cantidad de filas de \(B\). El orden del resultado queda determinado por las filas de \(A\) y las columnas de \(B\): \((m\times n)\cdot(n\times p)=m\times p\).</p><p>En una situación contextualizada, para multiplicar cantidades por precios, el orden de los productos o insumos en las columnas de la primera matriz debe coincidir con su orden en las filas de la segunda.</p></div>
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate cómo se controla si el producto está definido y cómo se calcula cada elemento combinando una fila con una columna.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/EgokLSfRE54" title="Multiplicación de matrices" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="box violet"><p><strong>Probá</strong> las opciones «No conmutativo»: con las mismas dos matrices, \(A\cdot B\) y \(B\cdot A\) dan resultados distintos. En general, <strong>el producto de matrices no es conmutativo</strong>: el orden de los factores importa.</p></div>
+<p class="muted">La matriz identidad cumple en el producto el papel del número \(1\): si \(A\) es cuadrada de orden \(n\), entonces \(A\cdot I_n=I_n\cdot A=A\).</p>
+
+<div class="mb-widget" id="ordenesWidget">
+<div class="mb-titulo">Controlá los órdenes</div>
+<div class="mb-sub">Para cerrar las operaciones: elegí el orden de \(A\) y de \(B\), y controlá si están definidas la suma, la resta y el producto, y qué orden tiene el resultado.</div>
+<div class="ord-sel">
+<div class="ord-mat"><span class="ord-nom">\(A\)</span>
+<select id="ordM" aria-label="Filas de A"></select><span class="ord-x">×</span><select id="ordN" aria-label="Columnas de A"></select></div>
+<div class="ord-mat"><span class="ord-nom">\(B\)</span>
+<select id="ordP" aria-label="Filas de B"></select><span class="ord-x">×</span><select id="ordQ" aria-label="Columnas de B"></select></div>
+</div>
+<div class="ord-res" id="ordRes" aria-live="polite"></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 13</span>
+<div class="activity">
+<div class="question">\(A\) es de orden \(2\times3\) y \(B\) es de orden \(3\times4\). ¿Qué se puede decir de \(A\cdot B\)?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="El 3 que coincide es el que permite multiplicar; el orden del resultado lo dan las filas de A y las columnas de B.">Está definido, y el resultado es de orden \(3\times3\)</button>
+<button class="opt" data-value="b" data-fb="Para multiplicar no hace falta que tengan el mismo orden: alcanza con que las columnas de A coincidan con las filas de B.">No está definido, porque las matrices tienen distinto orden</button>
+<button class="opt" data-value="c">Está definido, y el resultado es de orden \(2\times4\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((2\times3)\cdot(3\times4)=2\times4\)." data-no="Compará las columnas de \(A\) con las filas de \(B\) y, si coinciden, usá las otras dos dimensiones."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 14</span>
+<div class="activity">
+<div class="question">Con las mismas matrices (\(A\) de orden \(2\times3\) y \(B\) de orden \(3\times4\)), ¿está definido \(B\cdot A\)?</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Que A·B esté definido no asegura que B·A también lo esté: cambia qué dimensiones se comparan.">Sí, porque \(A\cdot B\) está definido</button>
+<button class="opt" data-value="b">No, porque \(B\) tiene \(4\) columnas y \(A\) tiene \(2\) filas</button>
+<button class="opt" data-value="c" data-fb="Para B·A se comparan las columnas de B (4) con las filas de A (2), no las filas de B con las columnas de A.">Sí, porque \(B\) tiene \(3\) filas y \(A\) tiene \(3\) columnas</button>
+</div>
+<div class="feedback" data-ok="Correcto: para \(B\cdot A\), las columnas de \(B\) (\(4\)) deberían coincidir con las filas de \(A\) (\(2\))." data-no="En \(B\cdot A\), la primera matriz es \(B\): compará sus columnas con las filas de \(A\)."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 15</span>
+<div class="activity">
+<div class="question">Si \(C=A\cdot B\), ¿cuánto vale \(c_{21}\)?<div class="mx-fila"><span>\(\displaystyle A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&2\\3&0\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle B={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1\\4&-1\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\(6\)</button>
+<button class="opt" data-value="b" data-fb="Eso es multiplicar elemento a elemento (3·4). Hay que combinar la fila 2 de A con la columna 1 de B.">\(12\)</button>
+<button class="opt" data-value="c" data-fb="10 es c₁₁: fila 1 por columna 1. Buscá la fila 2 de A.">\(10\)</button>
+</div>
+<div class="feedback" data-ok="Correcto. Fila 2 de \(A\) por columna 1 de \(B\):<div class='calc'>\(\begin{aligned}c_{21}&=3\cdot2+0\cdot4\\c_{21}&=6+0\\c_{21}&=6\end{aligned}\)</div>" data-no="Multiplicá la fila 2 de \(A\) por la columna 1 de \(B\), elemento por elemento, y sumá."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 16</span>
+<div class="activity">
+<div class="question">Una sucursal vende \(10\) unidades de P y \(5\) de Q, a \(\$100\) y \(\$40\) por unidad. ¿Cuál es el resultado de este producto?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}10&5\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}100\\40\end{matrix}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Se cruzaron cantidades y precios: el primer elemento de la fila va con el primero de la columna (10·100).">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}900\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="No se suman las cantidades ni los precios: se multiplican uno a uno y se suman los productos.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2100\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1200\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto:<div class='calc'>\(\begin{aligned}10\cdot100+5\cdot40&=1000+200\\&=1200\end{aligned}\)</div>El ingreso es \(\$1200\)." data-no="Multiplicá el primero por el primero y el segundo por el segundo, y sumá."></div>
+</div>
+
+<span class="ejercicio-badge">Ejercicio 17</span>
+<div class="activity">
+<div class="question">\(A\) es una matriz cuadrada de orden \(3\). ¿Cuál es el resultado de \(A\cdot I_3\)?</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Eso pasaría al multiplicar por la matriz nula. La identidad cumple el papel del número 1.">\(O\)</button>
+<button class="opt" data-value="b">\(A\)</button>
+<button class="opt" data-value="c" data-fb="La identidad es el elemento neutro del producto: no cambia a la matriz.">\(I_3\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la identidad es el elemento neutro del producto, como el \(1\) entre los números." data-no="Pensá qué papel cumple la matriz identidad en el producto."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 5: FORMA MATRICIAL ============ -->
+<section class="panel" id="p5">
+<div class="section">
+<span class="kicker">Representación matricial</span>
+<h2>Un sistema escrito con matrices</h2>
+
+<div class="subbloque" id="sub5-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Matrices de un sistema</h3></div>
+<p class="muted">Un sistema puede escribirse como una única igualdad entre matrices, \(A\cdot X=B\), con la <strong>matriz de coeficientes</strong> \(A\), la <strong>matriz de incógnitas</strong> \(X\) y la <strong>matriz de términos independientes</strong> \(B\). Para un sistema de \(2\times2\):</p>
+<div class="formula teal">\[A\cdot X=B\]\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}x\\y\end{matrix}\mkern5mu\right]}={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}b_1\\b_2\end{matrix}\mkern5mu\right]}\]</div>
+<p class="muted">Al multiplicar \(A\) por \(X\) se obtienen los primeros miembros de las ecuaciones; por la igualdad de matrices, se recupera el sistema.</p>
+
+<div class="box yellow"><p><strong>Para armar las matrices de un sistema:</strong></p>
+<ul class="list">
+<li>Antes de construir la matriz, las ecuaciones se organizan con las variables a la izquierda y los términos independientes a la derecha.</li>
+<li>Se mantiene el mismo orden de las variables en todas las ecuaciones (por ejemplo, \(x\), \(y\), \(z\)).</li>
+<li>Si una variable no aparece en una ecuación, su coeficiente es \(0\).</li>
+<li>Cada columna de coeficientes corresponde siempre a la misma variable.</li>
+</ul></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Escribir un sistema en forma matricial</h3><p>Escribir en forma matricial el sistema:</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\x-y&=1\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo">
+<p>Las tres matrices del sistema son:</p>
+<div class="mx-fila"><span>\(\displaystyle A={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1\\1&-1\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle X={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}x\\y\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle B={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5\\1\end{matrix}\mkern5mu\right]}\)</span></div>
+<p>La forma matricial \(A\cdot X=B\) es:</p>
+\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1\\1&-1\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}x\\y\end{matrix}\mkern5mu\right]}={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5\\1\end{matrix}\mkern5mu\right]}\]
+<p>Al efectuar el producto, resulta:</p>
+\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2x+y\\x-y\end{matrix}\mkern5mu\right]}={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}5\\1\end{matrix}\mkern5mu\right]}\]
+<p>Por la igualdad de matrices, \(2x+y=5\) y \(x-y=1\): son las ecuaciones originales.</p>
+</div>
+</div>
+</div>
+
+<div class="subbloque" id="sub5-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Matriz ampliada</h3></div>
+<div class="concept-card violet"><h3>Definición</h3><p>La <strong>matriz ampliada</strong> de un sistema se obtiene agregando a la matriz de coeficientes una columna con los términos independientes, separada por una línea vertical:</p>\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}a_{11}&a_{12}&b_1\\a_{21}&a_{22}&b_2\end{array}\mkern5mu\right]}\]<p>Cada fila representa una ecuación del sistema, y cada columna a la izquierda de la línea, una incógnita.</p></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Armar y leer una matriz ampliada</h3><p>Escribir la matriz ampliada del sistema:</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y+z&=6\\2x-y+z&=3\\x+2y-z&=2\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo">
+\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}1&1&1&6\\2&-1&1&3\\1&2&-1&2\end{array}\mkern5mu\right]}\]
+<p>Recíprocamente, la siguiente matriz ampliada corresponde a un sistema de \(3\times3\). Cuando una incógnita no aparece en una ecuación, su coeficiente es \(0\):</p>
+\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}2&1&0&5\\0&1&-1&0\\1&0&3&7\end{array}\mkern5mu\right]}\]
+<p>El sistema es:</p>
+\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\y-z&=0\\x+3z&=7\end{aligned}\right.\]
+<p>Cada fila de la matriz es una ecuación, y un coeficiente \(0\) indica que esa incógnita no figura en ella.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-orange">Ejercicio 18</span>
+<div class="activity">
+<div class="question">¿Cuál es la matriz ampliada de este sistema?\[\left\{\def\arraystretch{1.3}\begin{aligned}x+2y&=4\\3x-y&=5\end{aligned}\right.\]</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&2&4\\3&-1&5\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Revisá el signo: en la segunda ecuación el coeficiente de y es -1.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&2&4\\3&1&5\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Cada fila es una ecuación, no cada columna. Se armó la matriz «traspuesta».">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&3&4\\2&-1&5\end{array}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: cada fila es una ecuación, las columnas de la izquierda son \(x\) e \(y\), y la última columna tiene los términos independientes." data-no="Escribí una fila por ecuación, respetando el orden \(x\), \(y\) y los signos."></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 19</span>
+<div class="activity">
+<div class="question">Con las variables en el orden \(x\), \(y\), \(z\), ¿cuál es la segunda fila de la matriz ampliada de este sistema?\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+z&=1\\y-z&=3\\x+y&=0\end{aligned}\right.\]</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}0&1&-1&3\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Falta el coeficiente de x: como x no aparece en la ecuación, su coeficiente es 0 y hay que escribirlo.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&-1&3\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el orden de las variables: la primera columna es x, la segunda y, la tercera z.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}1&-1&0&3\end{array}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(0x+1y-1z=3\). El \(0\) mantiene a cada coeficiente en la columna de su variable." data-no="Escribí un coeficiente para cada variable, en el orden \(x\), \(y\), \(z\), aunque alguna no aparezca."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 20</span>
+<div class="activity">
+<div class="question">¿A qué sistema corresponde esta matriz ampliada?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}3&0&6\\1&-2&4\end{array}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="Un coeficiente 0 indica que la variable no aparece: en la primera ecuación no hay y, y la última columna son los términos independientes.">\(\left\{\def\arraystretch{1.3}\begin{aligned}3x+6y&=0\\x-2y&=4\end{aligned}\right.\)</button>
+<button class="opt" data-value="b">\(\left\{\def\arraystretch{1.3}\begin{aligned}3x&=6\\x-2y&=4\end{aligned}\right.\)</button>
+<button class="opt" data-value="c" data-fb="Las filas son ecuaciones: se leyeron las columnas como si fueran ecuaciones.">\(\left\{\def\arraystretch{1.3}\begin{aligned}3x+y&=6\\-2y&=4\end{aligned}\right.\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: la primera fila es \(3x+0y=6\), es decir, \(3x=6\); la segunda es \(x-2y=4\)." data-no="Leé cada fila como una ecuación: primera columna \(x\), segunda \(y\), y a la derecha de la línea el término independiente."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 6: REDUCCIÓN ============ -->
+<section class="panel" id="p6">
+<div class="section">
+<span class="kicker">Resolución por reducción</span>
+<h2>El método de Gauss-Jordan</h2>
+
+<div class="subbloque" id="sub6-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Operaciones elementales entre filas</h3></div>
+<p class="muted">Resolver un sistema por <strong>reducción</strong> consiste en transformar su matriz ampliada, mediante operaciones elementales entre filas, hasta que la solución pueda leerse directamente. Las operaciones elementales son tres:</p>
+<table class="mini-table">
+<thead><tr><th>Operación</th><th>Notación</th><th>Qué hace con el sistema</th></tr></thead>
+<tbody>
+<tr><td>Intercambiar dos filas</td><td>\(F_i\leftrightarrow F_j\)</td><td>cambia el orden de dos ecuaciones</td></tr>
+<tr><td>Multiplicar una fila por un número \(k\), distinto de \(0\)</td><td>\(F_i\to k\cdot F_i\)</td><td>multiplica ambos miembros de una ecuación por \(k\)</td></tr>
+<tr><td>Sumar a una fila un múltiplo de otra</td><td>\(F_i\to F_i+k\cdot F_j\), con \(i\) distinto de \(j\)</td><td>reemplaza una ecuación por su suma con un múltiplo de otra</td></tr>
+</tbody>
+</table>
+<p class="muted">Cada operación transforma el sistema en otro <strong>equivalente</strong>, es decir, con las mismas soluciones. Esto ocurre porque cada operación es reversible: se deshace con otra del mismo tipo (se vuelven a intercambiar las filas, se multiplica por \(\tfrac{1}{k}\), o se resta el múltiplo que se había sumado). Por eso no se pierden ni se agregan soluciones, y la solución del último sistema es también la del sistema original.</p>
+
+<p class="muted">Veamos la misma transformación aplicada al sistema de la introducción y a su matriz ampliada. Se resta a la segunda fila el doble de la primera:</p>
+<div class="grid-2">
+<div class="box teal"><p><strong>Ecuaciones</strong></p>\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\x-y&=1\end{aligned}\right.\]<p class="op-line">\(F_2\to F_2-2\cdot F_1\)</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\-3x-3y&=-9\end{aligned}\right.\]</div>
+<div class="box violet"><p><strong>Matriz ampliada</strong></p>\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}2&1&5\\1&-1&1\end{array}\mkern5mu\right]}\]<p class="op-line">\(F_2\to F_2-2\cdot F_1\)</p>\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}2&1&5\\-3&-3&-9\end{array}\mkern5mu\right]}\]</div>
+</div>
+<p class="muted" style="margin-top:12px">En ambos casos se operó con toda la fila, incluido el término independiente: la ecuación \(-3x-3y=-9\) corresponde a la fila \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}-3&-3&-9\end{array}\mkern5mu\right]}\). Las cuentas de la nueva fila son:</p>
+<div class="calc">\(\begin{aligned}1-2\cdot2&=-3\\-1-2\cdot1&=-3\\1-2\cdot5&=-9\end{aligned}\)</div>
+<p class="muted">El sistema obtenido es equivalente al original; por ejemplo, el par \((2;1)\) verifica los dos.</p>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 21</span>
+<div class="activity">
+<div class="question">¿Cuál de estas transformaciones <strong>no</strong> es una operación elemental entre filas?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Multiplicar una fila por \(0\)</button>
+<button class="opt" data-value="b" data-fb="Intercambiar dos filas sí es una operación elemental: solo cambia el orden de las ecuaciones.">Intercambiar las filas 1 y 3</button>
+<button class="opt" data-value="c" data-fb="Sumar a una fila un múltiplo de otra sí es una operación elemental.">Sumar a la fila 2 el triple de la fila 1</button>
+</div>
+<div class="feedback" data-ok="Correcto: multiplicar por \(0\) borra la ecuación y no se puede deshacer. Por eso el número \(k\) debe ser distinto de \(0\)." data-no="Revisá la condición que tiene que cumplir \(k\) en la segunda operación."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 22</span>
+<div class="activity">
+<div class="question">Se aplica \(F_2\to F_2-3\cdot F_1\) a esta matriz. ¿Cómo queda la segunda fila?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&2&4\\3&-1&5\end{array}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="b">
+<button class="opt" data-value="a" data-fb="La operación también se aplica al término independiente: 5-3·4=-7.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&-7&5\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&-7&-7\end{array}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Revisá el signo: -1-3·2=-1-6=-7.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&5&-7\end{array}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto:<div class='calc'>\(\begin{aligned}3-3\cdot1&=0\\-1-3\cdot2&=-7\\5-3\cdot4&=-7\end{aligned}\)</div>" data-no="Calculá, para cada elemento de la fila 2, el elemento menos \(3\) veces el de la fila 1, incluido el término independiente."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Procedimiento de reducción</h3></div>
+<p class="muted">Este procedimiento se conoce como método de Gauss-Jordan o reducción por filas. Se busca transformar la matriz ampliada hasta una forma que permita reconocer las soluciones. Si el sistema es cuadrado y tiene solución única, en la parte de coeficientes se obtiene la matriz identidad y la última columna contiene la solución:</p>
+<div class="formula violet">\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}1&0&0&x\\0&1&0&y\\0&0&1&z\end{array}\mkern5mu\right]}\]</div>
+<p class="muted">No siempre se llega a la identidad: en otros sistemas pueden aparecer variables libres o una contradicción (lo vemos en el punto 3). En todos los casos se trabaja columna por columna:</p>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Primer pivote</td><td>en la primera columna, elegir un elemento no nulo, llevarlo a la posición \(a_{11}\) (intercambiando filas si hace falta) y transformarlo en \(1\) multiplicando su fila por un número. Ese \(1\) es el <strong>pivote</strong></td></tr>
+<tr><td>2. Ceros en la columna</td><td>con el pivote, hacer ceros en el resto de la columna, sumando a las otras filas un múltiplo de la fila del pivote</td></tr>
+<tr><td>3. Siguientes columnas</td><td>repetir con la segunda columna, buscando un pivote no nulo entre las filas restantes (en general, en la posición \(a_{22}\)), y luego con la tercera (si la hay), sin alterar los ceros ya obtenidos. Si en una columna no hay un elemento no nulo disponible, se continúa con la siguiente columna de coeficientes y se analiza el sistema</td></tr>
+<tr><td>4. Interpretar</td><td>si la parte izquierda es la identidad, la última columna da la solución; en los demás casos, se analiza el sistema como se explica en el punto 3</td></tr>
+</tbody>
+</table>
+
+<div class="video-block">
+<p class="muted">Mientras mirás el video, fijate en qué orden se eligen los pivotes y qué operación se usa para hacer cada cero.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/tW96L_P3o5c" title="Método de Gauss-Jordan" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Resolver un sistema de 2×2 por reducción</h3><p>Resolver por reducción el sistema (en cada paso se resaltan las filas que cambian):</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}2x+y&=5\\x-y&=1\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej11" data-modo="pasos"></div></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Resolver un sistema de 3×3 por reducción</h3><p>Resolver por reducción el sistema:</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y+z&=6\\2x-y+z&=3\\x+2y-z&=2\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej12" data-modo="pasos"></div></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 23</span>
+<div class="activity">
+<div class="question">Al reducir la matriz ampliada de un sistema de \(3\times3\) se llegó a esta matriz. ¿Cuál es la solución?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}1&0&0&2\\0&1&0&-1\\0&0&1&4\end{array}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="La solución está en la última columna, no en la diagonal de la parte izquierda.">\(S=\{(1;1;1)\}\)</button>
+<button class="opt" data-value="b" data-fb="Revisá el orden: la fila 1 da x, la fila 2 da y y la fila 3 da z.">\(S=\{(4;-1;2)\}\)</button>
+<button class="opt" data-value="c">\(S=\{(2;-1;4)\}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: cada fila se lee como una ecuación: \(x=2\), \(y=-1\) y \(z=4\)." data-no="Leé cada fila como una ecuación: \(1x+0y+0z=2\), etc."></div>
+</div>
+
+<span class="ejercicio-badge b-pink">Ejercicio 24</span>
+<div class="activity">
+<div class="question">Para hacer un cero en la posición \((2;1)\) de esta matriz, usando el pivote de la fila 1, ¿qué operación conviene?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&3&5\\4&2&6\end{array}\mkern5mu\right]}\]</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Restar F₁ una sola vez deja 4-1=3, no 0. Hay que restar 4 veces la fila del pivote.">\(F_2\to F_2-F_1\)</button>
+<button class="opt" data-value="b" data-fb="Así se modifica la fila del pivote, no la fila 2. La fila que cambia es la que tiene el elemento que se quiere anular.">\(F_1\to F_1-4\cdot F_2\)</button>
+<button class="opt" data-value="c">\(F_2\to F_2-4\cdot F_1\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(4-4\cdot1=0\). La fila que cambia es la 2, y se le resta \(4\) veces la fila del pivote." data-no="Buscá el múltiplo de la fila del pivote que, restado a la fila 2, anula el \(4\)."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub6-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Cómo se reconocen los tres casos</h3></div>
+<p class="muted">Al reducir la matriz ampliada puede ocurrir que no se llegue a la identidad. Para los sistemas de \(2\times2\) y \(3\times3\) de este bloque, la forma de las filas finales indica cuántas soluciones tiene el sistema:</p>
+<table class="mini-table">
+<thead><tr><th>Clasificación</th><th>Qué aparece en la matriz reducida</th></tr></thead>
+<tbody>
+<tr><td>Compatible determinado</td><td>no hay filas contradictorias y todas las incógnitas quedan determinadas (en un sistema cuadrado, se llega a la identidad en la parte izquierda): hay una única solución</td></tr>
+<tr><td>Compatible indeterminado</td><td>no hay filas contradictorias y queda al menos una incógnita libre, es decir, que puede tomar cualquier valor real: hay infinitas soluciones. Puede aparecer una fila de ceros, como \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&0&0\end{array}\mkern5mu\right]}\), que equivale a \(0=0\)</td></tr>
+<tr><td>Incompatible</td><td>aparece una fila con todos los coeficientes iguales a \(0\) y término independiente distinto de \(0\), como \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&0&4\end{array}\mkern5mu\right]}\), que equivale a \(0=4\), una igualdad falsa: no hay solución</td></tr>
+</tbody>
+</table>
+<div class="box yellow"><p><strong>Para tener en cuenta:</strong> una fila de ceros por sí sola no permite clasificar el sistema: hay que analizar todas las filas. Si, además, aparece una fila contradictoria, el sistema es incompatible.</p></div>
+
+<div class="grid-2" style="margin-top:14px">
+<div class="ejemplo-card" style="margin:0">
+<div class="ejemplo-enunciado"><h3>Ejemplo · 2×2 incompatible</h3>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y&=3\\2x+2y&=10\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej13" data-modo="todo"></div></div>
+</div>
+<div class="ejemplo-card" style="margin:0">
+<div class="ejemplo-enunciado"><h3>Ejemplo · 2×2 compatible indeterminado</h3>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y&=3\\2x+2y&=6\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej14" data-modo="todo"></div></div>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · 3×3 incompatible</h3><p>Resolver por reducción el sistema:</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y+z&=3\\x+y+z&=5\\x-y&=0\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej15" data-modo="todo"></div></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · 3×3 compatible indeterminado</h3><p>Resolver por reducción el sistema:</p>\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y+z&=6\\2x+2y+2z&=12\\x-y&=0\end{aligned}\right.\]</div>
+<div class="ejemplo-desarrollo"><div class="gj" data-gj="ej16" data-modo="todo"></div></div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 25</span>
+<div class="activity">
+<div class="question">Al reducir la matriz ampliada de un sistema de \(2\times2\) se llegó a esta matriz. ¿Cómo se clasifica el sistema?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&-2&4\\0&0&0\end{array}\mkern5mu\right]}\]</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="La fila de ceros equivale a 0=0, que es verdadera: no hay contradicción.">Incompatible</button>
+<button class="opt" data-value="b">Compatible indeterminado</button>
+<button class="opt" data-value="c" data-fb="Queda una sola ecuación con dos incógnitas: y queda libre, así que no hay una única solución.">Compatible determinado</button>
+</div>
+<div class="feedback" data-ok="Correcto: no hay filas contradictorias y queda una incógnita libre. Las soluciones son \(S=\{(4+2y;y):y\in\mathbb{R}\}\)." data-no="Interpretá cada fila como una ecuación y fijate si hay contradicción y si queda alguna incógnita libre."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 26</span>
+<div class="activity">
+<div class="question">Al reducir la matriz ampliada de un sistema de \(3\times3\) se llegó a esta matriz. ¿Cómo se clasifica el sistema?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}1&2&1&3\\0&1&1&2\\0&0&0&5\end{array}\mkern5mu\right]}\]</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Incompatible</button>
+<button class="opt" data-value="b" data-fb="La tercera fila no es una fila de ceros: tiene un 5 a la derecha de la línea.">Compatible indeterminado, porque hay una fila con ceros</button>
+<button class="opt" data-value="c" data-fb="No se llegó a la identidad, y la tercera fila es contradictoria.">Compatible determinado</button>
+</div>
+<div class="feedback" data-ok="Correcto: la tercera fila equivale a \(0=5\), que es falso. Alcanza con una fila contradictoria para que el sistema no tenga solución." data-no="Leé la última fila como una ecuación: ¿qué igualdad queda?"></div>
+</div>
+
+<span class="ejercicio-badge b-violet">Ejercicio 27</span>
+<div class="activity">
+<div class="question">En la reducción de un sistema de \(3\times3\) aparece una fila \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}0&0&0&0\end{array}\mkern5mu\right]}\). ¿Qué corresponde hacer?</div>
+<div class="options" data-answer="c">
+<button class="opt" data-value="a" data-fb="Una fila de ceros por sí sola no permite clasificar: otra fila podría ser contradictoria.">Concluir que el sistema es compatible indeterminado</button>
+<button class="opt" data-value="b" data-fb="La fila de ceros equivale a 0=0, que es verdadera: no indica que no haya solución.">Concluir que el sistema es incompatible</button>
+<button class="opt" data-value="c">Seguir analizando las demás filas antes de clasificar el sistema</button>
+</div>
+<div class="feedback" data-ok="Correcto: esa fila solo indica que una ecuación no aporta una condición nueva. Hay que revisar si alguna otra fila es contradictoria y cuántas incógnitas quedan libres." data-no="Recordá qué dice el recuadro «Para tener en cuenta» sobre las filas de ceros."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 7: APLICACIONES ============ -->
+<section class="panel" id="p7">
+<div class="section">
+<span class="kicker">Aplicaciones</span>
+<h2>Organizar datos y resolver situaciones</h2>
+
+<div class="subbloque" id="sub7-1">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Cómo abordar una situación con matrices</h3></div>
+<p class="muted">Las matrices se usan de dos maneras en las situaciones: para <strong>organizar datos y operar con ellos</strong> (suma, resta, producto por un escalar y producto de matrices) y para <strong>resolver sistemas</strong> de ecuaciones planteados a partir de una situación. Cuando se organizan datos, conviene seguir estos pasos:</p>
+<table class="mini-table">
+<thead><tr><th>Paso</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1. Definir filas y columnas</td><td>indicar qué representan las filas y las columnas, con sus unidades. Por ejemplo: filas = sucursales, columnas = productos, elementos = unidades vendidas</td></tr>
+<tr><td>2. Escribir las matrices</td><td>con los datos</td></tr>
+<tr><td>3. Controlar los órdenes</td><td>para sumar o restar, deben coincidir; para multiplicar, las columnas de la primera matriz deben coincidir con las filas de la segunda. Además, las posiciones correspondientes deben representar las mismas categorías, en el mismo orden y con unidades compatibles</td></tr>
+<tr><td>4. Operar</td><td>con la operación que corresponde a la pregunta</td></tr>
+<tr><td>5. Interpretar y comunicar</td><td>explicar qué representa cada elemento del resultado, con sus unidades, y controlar que los valores sean admisibles (por ejemplo, un stock no puede ser negativo)</td></tr>
+</tbody>
+</table>
+<p class="muted">Cuando se resuelve un sistema, se sigue el mismo procedimiento que para cualquier situación (definir las variables, plantear el sistema, resolver, verificar, interpretar y comunicar) y se utiliza la reducción de matrices en el paso de resolución.</p>
+</div>
+
+<div class="subbloque" id="sub7-2">
+<div class="sub-titulo"><div class="sub-num">2</div><h3>Organizar datos y operar</h3></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Stock final de insumos</h3><p>Una organización tiene dos depósitos, A y B, y maneja tres insumos: P, Q y R. Las filas corresponden a los depósitos y las columnas, a los insumos (en unidades). Al comienzo del mes el stock era \(S\); durante el mes ingresaron las unidades \(I\) y se consumieron las unidades \(C\). ¿Cuál es el stock final?</p><div class="mx-fila"><span>\(\displaystyle S={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40&25&60\\30&50&20\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle I={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}10&5&20\\15&0&10\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle C={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}25&10&30\\20&15&12\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Planteo:</strong> stock final = stock inicial + ingresos − consumos, es decir, \(S+I-C\). Las tres matrices tienen orden \(2\times3\): la operación está definida. Se opera elemento a elemento:</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}S+I-C&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40+10-25&25+5-10&60+20-30\\30+15-20&50+0-15&20+10-12\end{matrix}\mkern5mu\right]}\\S+I-C&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}25&20&50\\25&35&18\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Verificación:</strong> se revisaron las cuentas elemento por elemento y todos los resultados son números enteros no negativos, como corresponde a un stock.</p>
+<p><strong>Interpretación:</strong> al final del mes quedan, en el depósito A, \(25\) unidades del insumo P, \(20\) del Q y \(50\) del R; en el depósito B, \(25\) del P, \(35\) del Q y \(18\) del R.</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Ingresos por sucursal</h3><p>Con los datos de la matriz \(V\) de la pestaña 1, la organización vende el producto P a \(\$200\) y el producto Q a \(\$300\) por unidad. ¿Qué ingreso obtuvo cada sucursal?</p><div class="mx-fila"><span>\(\displaystyle V={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}20&15\\30&10\\25&5\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle p={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}200\\300\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Matrices:</strong> \(V\) es la matriz de unidades vendidas (filas: sucursales; columnas: productos) y \(p\) es la matriz columna de precios, en pesos por unidad.</p>
+<p><strong>Planteo:</strong> el ingreso de cada sucursal es la suma de unidades por precio de cada producto: es el producto \(V\cdot p\). \(V\) tiene orden \(3\times2\) y \(p\) tiene orden \(2\times1\): las columnas de \(V\) coinciden con las filas de \(p\) (en ambas, primero P y luego Q), y el resultado tiene orden \(3\times1\).</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}V\cdot p&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}20\cdot200+15\cdot300\\30\cdot200+10\cdot300\\25\cdot200+5\cdot300\end{matrix}\mkern5mu\right]}\\V\cdot p&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}4000+4500\\6000+3000\\5000+1500\end{matrix}\mkern5mu\right]}\\V\cdot p&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}8500\\9000\\6500\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Interpretación:</strong> la sucursal 1 obtuvo \(\$8500\), la sucursal 2 obtuvo \(\$9000\) y la sucursal 3 obtuvo \(\$6500\). En total, la organización ingresó \(\$24000\).</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-pink">Ejercicio 28</span>
+<div class="activity">
+<div class="question">En el ejemplo de ingresos, ¿por qué el producto se plantea como \(V\cdot p\) y no como \(p\cdot V\)?</div>
+<div class="options" data-answer="a">
+<button class="opt" data-value="a">Porque \(p\cdot V\) no está definido: \(p\) tiene \(1\) columna y \(V\) tiene \(3\) filas</button>
+<button class="opt" data-value="b" data-fb="El producto de matrices no es conmutativo, y en este caso p·V ni siquiera está definido.">Porque da lo mismo: el producto es conmutativo</button>
+<button class="opt" data-value="c" data-fb="No es una convención: el orden de los factores decide si el producto está definido y qué representa.">Porque, por convención, la matriz más grande va primero</button>
+</div>
+<div class="feedback" data-ok="Correcto: \((2\times1)\cdot(3\times2)\) no está definido. En cambio, \((3\times2)\cdot(2\times1)=3\times1\): un ingreso por sucursal." data-no="Controlá los órdenes de \(p\) y de \(V\) en cada caso."></div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Costo de los insumos de producción</h3><p>Una organización fabrica dos productos, X e Y, que requieren tres insumos. La matriz \(U\) indica cuántas unidades de cada insumo se necesitan para fabricar una unidad de producto (filas: productos; columnas: insumos). El precio de los insumos, en pesos por unidad, es la matriz columna \(c\). En el mes se fabricaron \(100\) unidades de X y \(80\) de Y (matriz fila \(q\)). En este ejemplo se calcula únicamente el costo de los insumos; no se incluyen otros gastos de producción, como salarios o energía. ¿Cuánto cuestan los insumos de una unidad de cada producto y cuál es el costo total de insumos del mes?</p><div class="mx-fila"><span>\(\displaystyle U={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1&3\\1&4&2\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle c={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}50\\30\\20\end{matrix}\mkern5mu\right]}\)</span><span>\(\displaystyle q={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}100&80\end{matrix}\mkern5mu\right]}\)</span></div></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Planteo:</strong> el costo de los insumos de una unidad de cada producto es \(U\cdot c\), de orden \((2\times3)\cdot(3\times1)=2\times1\); los insumos figuran en el mismo orden en las columnas de \(U\) y en las filas de \(c\). El costo total de insumos del mes es \(q\cdot(U\cdot c)\), de orden \((1\times2)\cdot(2\times1)=1\times1\).</p>
+<div class="calc-d">\(\displaystyle\begin{aligned}U\cdot c&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2\cdot50+1\cdot30+3\cdot20\\1\cdot50+4\cdot30+2\cdot20\end{matrix}\mkern5mu\right]}\\U\cdot c&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}100+30+60\\50+120+40\end{matrix}\mkern5mu\right]}\\U\cdot c&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}190\\210\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<div class="calc-d">\(\displaystyle\begin{aligned}q\cdot(U\cdot c)&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}100\cdot190+80\cdot210\end{matrix}\mkern5mu\right]}\\q\cdot(U\cdot c)&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}19000+16800\end{matrix}\mkern5mu\right]}\\q\cdot(U\cdot c)&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}35800\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Interpretación:</strong> los insumos de una unidad de X cuestan \(\$190\) y los de una unidad de Y, \(\$210\). El resultado \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}35800\end{matrix}\mkern5mu\right]}\) es una matriz de orden \(1\times1\): su único elemento representa el costo total de los insumos del mes, \(\$35800\).</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Ajuste de costos con una matriz diagonal</h3><p>Una cooperativa registra, en miles de pesos, los costos mensuales de tres sectores (Producción, Envasado y Logística; filas) en dos recursos: Insumos y Personal (columnas). Esos costos forman la matriz \(T\). El mes próximo los insumos aumentan un \(20\,\%\) y el personal disminuye un \(10\,\%\). ¿Cuál es la matriz de costos ajustada?</p>\[T={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40&30\\20&25\\10&15\end{matrix}\mkern5mu\right]}\]</div>
+<div class="ejemplo-desarrollo">
+<p><strong>Planteo:</strong> cada columna debe multiplicarse por un factor distinto: \(1+\tfrac{20}{100}=1{,}20\) para los insumos (aumento del \(20\,\%\)) y \(1-\tfrac{10}{100}=0{,}90\) para el personal (disminución del \(10\,\%\)). Esos factores se ubican en la diagonal principal de una matriz cuadrada \(D\), con ceros en el resto, para que el ajuste de un recurso no modifique al otro. Una matriz diagonal de este tipo se llama matriz de ajuste. Como \(T\) tiene \(2\) columnas, \(D\) es de orden \(2\times2\) y el producto \(M=T\cdot D\), de orden \((3\times2)\cdot(2\times2)=3\times2\), está definido.</p>
+\[D={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1{,}20&0\\0&0{,}90\end{matrix}\mkern5mu\right]}\]
+<div class="calc-d">\(\displaystyle\begin{aligned}T\cdot D&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40&30\\20&25\\10&15\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1{,}20&0\\0&0{,}90\end{matrix}\mkern5mu\right]}\\T\cdot D&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}40\cdot1{,}20+30\cdot0&40\cdot0+30\cdot0{,}90\\20\cdot1{,}20+25\cdot0&20\cdot0+25\cdot0{,}90\\10\cdot1{,}20+15\cdot0&10\cdot0+15\cdot0{,}90\end{matrix}\mkern5mu\right]}\\M=T\cdot D&={\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}48&27\\24&22{,}5\\12&13{,}5\end{matrix}\mkern5mu\right]}\end{aligned}\)</div>
+<p><strong>Interpretación:</strong> como \(D\) es diagonal, el producto multiplica la primera columna de \(T\) por \(1{,}20\) y la segunda por \(0{,}90\). Por ejemplo, el sector Producción pasa de \(40\) a \(48\) en insumos y de \(30\) a \(27\) en personal. El costo total de los tres sectores pasa de \(140\) a \(147\) (miles de pesos): los insumos suman \(14\) más y el personal, \(7\) menos.</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge">Ejercicio 29</span>
+<div class="activity">
+<div class="question">En el ejemplo de stock, ¿cuál es el stock final del insumo R en el depósito B?</div>
+<div class="options compact" data-answer="c">
+<button class="opt" data-value="a" data-fb="Los consumos se restan: stock final = stock inicial + ingresos − consumos.">\(42\) unidades</button>
+<button class="opt" data-value="b" data-fb="Ese es el resultado del insumo R en el depósito A. El depósito B es la fila 2.">\(50\) unidades</button>
+<button class="opt" data-value="c">\(18\) unidades</button>
+</div>
+<div class="feedback" data-ok="Correcto: fila 2 (depósito B), columna 3 (insumo R):<div class='calc'>\(\begin{aligned}20+10-12&=30-12\\&=18\end{aligned}\)</div>" data-no="Ubicá la fila del depósito B y la columna del insumo R, y calculá stock + ingresos − consumos."></div>
+</div>
+
+<span class="ejercicio-badge b-orange">Ejercicio 30</span>
+<div class="activity">
+<div class="question">En una matriz de costos, la primera columna debe aumentar un \(5\,\%\) y la segunda debe disminuir un \(15\,\%\). ¿Cuál es la matriz de ajuste \(D\)?</div>
+<div class="options compact" data-answer="a">
+<button class="opt" data-value="a">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1{,}05&0\\0&0{,}85\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="b" data-fb="Esos números son los porcentajes de cambio. El factor es 1 más (o menos) el porcentaje: 1,05 y 0,85.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}0{,}05&0\\0&-0{,}15\end{matrix}\mkern5mu\right]}\)</button>
+<button class="opt" data-value="c" data-fb="Una disminución del 15 % se representa con 1 - 0,15 = 0,85, no con 1,15.">\({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1{,}05&0\\0&1{,}15\end{matrix}\mkern5mu\right]}\)</button>
+</div>
+<div class="feedback" data-ok="Correcto: \(1+\tfrac{5}{100}=1{,}05\) y \(1-\tfrac{15}{100}=0{,}85\), ubicados en la diagonal." data-no="Calculá el factor de cada columna: \(1\) más el aumento o \(1\) menos la disminución."></div>
+</div>
+</div>
+
+<div class="subbloque" id="sub7-3">
+<div class="sub-titulo"><div class="sub-num">3</div><h3>Resolver situaciones con sistemas</h3></div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Compra de insumos de oficina</h3><p>En una compra de insumos de oficina se adquirieron resmas de papel y cartuchos de tinta. En total se compraron \(12\) artículos y se gastaron \(\$33000\). Cada resma cuesta \(\$1500\) y cada cartucho \(\$4500\). ¿Cuántas resmas y cuántos cartuchos se compraron?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> \(x=\) cantidad de resmas; \(y=\) cantidad de cartuchos (números enteros no negativos).</p>
+<p><strong>Planteo:</strong> cantidad de artículos, \(x+y=12\); gasto total, en pesos, \(1500x+4500y=33000\).</p>
+\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y&=12\\1500x+4500y&=33000\end{aligned}\right.\]
+<p><strong>Resolución:</strong> se escribe la matriz ampliada y se reduce.</p>
+<div class="gj" data-gj="ej21" data-modo="todo"></div>
+<p><strong>Verificación:</strong> \(7+5=12\) ✓; \(1500\cdot7+4500\cdot5=10500+22500=33000\) ✓. Además, \(7\) y \(5\) son enteros no negativos.</p>
+<p><strong>Interpretación:</strong> se compraron \(7\) resmas de papel y \(5\) cartuchos de tinta.</p>
+</div>
+</div>
+
+<div class="ejemplo-card">
+<div class="ejemplo-enunciado"><h3>Ejemplo · Distribución de un presupuesto</h3><p>Una organización distribuye un presupuesto de \(\$850000\) entre tres áreas: A, B y C. El área A recibe el doble que el área B, y el área C recibe \(\$50000\) más que el área B. ¿Cuánto recibe cada área?</p></div>
+<div class="ejemplo-desarrollo">
+<p><strong>Variables:</strong> montos en pesos, no negativos: \(x=\) monto del área A; \(y=\) monto del área B; \(z=\) monto del área C.</p>
+<p><strong>Planteo:</strong> total, \(x+y+z=850000\); A recibe el doble que B, \(x=2y\), es decir, \(x-2y=0\); C recibe \(\$50000\) más que B, \(z=y+50000\), es decir, \(-y+z=50000\).</p>
+\[\left\{\def\arraystretch{1.3}\begin{aligned}x+y+z&=850000\\x-2y&=0\\-y+z&=50000\end{aligned}\right.\]
+<p><strong>Resolución:</strong> se escribe la matriz ampliada y se reduce.</p>
+<div class="gj" data-gj="ej22" data-modo="todo"></div>
+<p><strong>Verificación:</strong> \(400000+200000+250000=850000\) ✓; \(400000=2\cdot200000\) ✓; \(250000=200000+50000\) ✓.</p>
+<p><strong>Interpretación:</strong> el área A recibe \(\$400000\), el área B recibe \(\$200000\) y el área C recibe \(\$250000\).</p>
+</div>
+</div>
+
+<div class="practica-titulo">Practicá</div>
+<span class="ejercicio-badge b-violet">Ejercicio 31</span>
+<div class="activity">
+<div class="question">Al reducir la matriz ampliada de un problema sobre cantidades de personas se llega a esta matriz. ¿Qué se concluye?\[{\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}1&0&12{,}5\\0&1&7{,}5\end{array}\mkern5mu\right]}\]</div>
+<div class="options" data-answer="b">
+<button class="opt" data-value="a" data-fb="Redondear cambia los valores: el nuevo par ya no cumpliría las ecuaciones.">Se redondea: la respuesta es \(13\) y \(8\) personas</button>
+<button class="opt" data-value="b">El sistema tiene solución, pero esos valores no son admisibles en la situación</button>
+<button class="opt" data-value="c" data-fb="No hay filas contradictorias: el sistema es compatible determinado. Lo que falla es que la solución no es admisible.">El sistema es incompatible</button>
+</div>
+<div class="feedback" data-ok="Correcto: el sistema es compatible determinado, con \(S=\{(12{,}5;7{,}5)\}\), pero no se puede tener media persona. Con esos datos, la situación no tiene solución." data-no="Pensá qué valores puede tomar una cantidad de personas."></div>
+</div>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><button class="btn-nav next" onclick="goStep(1)">Siguiente →</button></div>
+</div>
+</section>
+
+<!-- ============ PANEL 8: CIERRE ============ -->
+<section class="panel" id="p8">
+<div class="section">
+<span class="kicker">Cierre</span>
+<h2>Errores frecuentes y síntesis</h2>
+
+<div class="subbloque" id="sub8-1" style="border-top:none;margin-top:0;padding-top:0">
+<div class="sub-titulo"><div class="sub-num">1</div><h3>Errores frecuentes: mini auditoría</h3></div>
+<div class="accordion">
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel1"><span class="acc-tit">Sumar o restar matrices de distinto orden</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel1"><div class="error-incorrecto">✗ Sumar una matriz de orden \(2\times3\) con una de orden \(3\times2\) porque las dos tienen \(6\) elementos.</div><div class="error-correcto">✓ Solo se pueden sumar o restar matrices del mismo orden. Antes de operar, conviene comparar la cantidad de filas y de columnas de cada una.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel2"><span class="acc-tit">Multiplicar elemento a elemento</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel2"><div class="error-incorrecto">✗ Calcular \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}1&2\\3&4\end{matrix}\mkern5mu\right]}\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}0&1\\1&0\end{matrix}\mkern5mu\right]}\) como \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}0&2\\3&0\end{matrix}\mkern5mu\right]}\).</div><div class="error-correcto">✓ Cada elemento del resultado se obtiene multiplicando una fila de la primera matriz por una columna de la segunda y sumando los productos. El resultado correcto es \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&1\\4&3\end{matrix}\mkern5mu\right]}\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel3"><span class="acc-tit">Suponer que \(A\cdot B=B\cdot A\)</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel3"><div class="error-incorrecto">✗ Escribir \(p\cdot V\) en lugar de \(V\cdot p\), pensando que da lo mismo.</div><div class="error-correcto">✓ El producto de matrices no es conmutativo: cambiar el orden de los factores puede modificar el resultado e incluso hacer que el producto no esté definido.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel4"><span class="acc-tit">No controlar los órdenes antes de multiplicar</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel4"><div class="error-incorrecto">✗ Empezar a multiplicar sin revisar si las dimensiones son compatibles.</div><div class="error-correcto">✓ Para multiplicar \(A\cdot B\), las columnas de \(A\) deben coincidir con las filas de \(B\). El orden del resultado es: filas de \(A\) por columnas de \(B\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel5"><span class="acc-tit">Multiplicar por un escalar solo una parte de la matriz</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel5"><div class="error-incorrecto">✗ Calcular \(3\cdot{\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}2&-1\\0&4\end{matrix}\mkern5mu\right]}\) como \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}6&-1\\0&4\end{matrix}\mkern5mu\right]}\).</div><div class="error-correcto">✓ Al multiplicar una matriz por un número, se multiplican todos sus elementos, y no solo los de una fila o una columna: \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}6&-3\\0&12\end{matrix}\mkern5mu\right]}\).</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel6"><span class="acc-tit">Operar una fila sin incluir el término independiente</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel6"><div class="error-incorrecto">✗ Aplicar \(F_2\to F_2-3\cdot F_1\) solo a los coeficientes y dejar igual el número de la derecha.</div><div class="error-correcto">✓ La operación se aplica a toda la fila, incluida la columna de términos independientes. Si se omite, el nuevo sistema deja de ser equivalente al original.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel7"><span class="acc-tit">Interpretar mal una fila de ceros</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel7"><div class="error-incorrecto">✗ Concluir que el sistema no tiene solución porque apareció \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}0&0&0&0\end{array}\mkern5mu\right]}\).</div><div class="error-correcto">✓ Esa fila indica que la ecuación no aporta una condición nueva: no significa que el sistema no tenga solución. Solo una fila con ceros a la izquierda y un número distinto de \(0\) a la derecha, como \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{ccc|c}0&0&0&2\end{array}\mkern5mu\right]}\), indica que el sistema es incompatible. Para clasificar el sistema hay que analizar todas las filas.</div></div>
+</div>
+<div class="acc-item">
+<button class="acc-btn" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="accPanel8"><span class="acc-tit">Dar los resultados sin interpretarlos</span><span class="acc-icon" aria-hidden="true">+</span></button>
+<div class="acc-panel" id="accPanel8"><div class="error-incorrecto">✗ Responder solo con la matriz \({\def\arraystretch{1.45}\left[\mkern5mu\begin{matrix}8500\\9000\\6500\end{matrix}\mkern5mu\right]}\).</div><div class="error-correcto">✓ Los elementos de una matriz resultado tienen un significado y unidades. La respuesta debe indicar qué representa cada valor en la situación («la sucursal 1 obtuvo \(\$8500\)…») y controlar que sea admisible.</div></div>
+</div>
+</div>
+</div>
+
+<div class="sintesis-card">
+<h3>Referencia rápida</h3>
+<table class="mini-table" style="margin-top:10px">
+<thead><tr><th>Concepto</th><th>Definición / Notación</th></tr></thead>
+<tbody>
+<tr><td>Matriz de orden \(m\times n\)</td><td>arreglo rectangular de números con \(m\) filas y \(n\) columnas. \(a_{ij}\) es el elemento de la fila \(i\) y la columna \(j\)</td></tr>
+<tr><td>Igualdad de matrices</td><td>mismo orden y elementos correspondientes iguales</td></tr>
+<tr><td>Matriz cuadrada</td><td>orden \(n\times n\). Los elementos \(a_{11}\), \(a_{22}\), …, \(a_{nn}\) forman la diagonal principal</td></tr>
+<tr><td>Matriz identidad \(I_n\)</td><td>cuadrada y diagonal, con \(1\) en la diagonal principal. Si \(A\) es cuadrada de orden \(n\): \(A\cdot I_n=I_n\cdot A=A\)</td></tr>
+<tr><td>Matriz nula</td><td>todos sus elementos son \(0\)</td></tr>
+<tr><td>Suma y resta</td><td>solo con matrices del mismo orden: \(c_{ij}=a_{ij}\pm b_{ij}\). En una situación, las posiciones correspondientes deben representar las mismas categorías</td></tr>
+<tr><td>Producto por un escalar</td><td>\(c_{ij}=k\cdot a_{ij}\): se multiplican todos los elementos</td></tr>
+<tr><td>Producto de matrices</td><td>\((m\times n)\cdot(n\times p)=m\times p\). \(c_{ij}\) = fila \(i\) de \(A\) por columna \(j\) de \(B\). No es conmutativo</td></tr>
+<tr><td>Propiedades de la suma</td><td>conmutativa: \(A+B=B+A\) · asociativa: \((A+B)+C=A+(B+C)\) · neutro: \(A+O=A\) · opuesta: \(A+(-A)=O\)</td></tr>
+<tr><td>Propiedades del producto por un escalar</td><td>\(k\cdot(d\cdot A)=(k\cdot d)\cdot A\) · \((k+d)\cdot A=k\cdot A+d\cdot A\) · \(k\cdot(A+B)=k\cdot A+k\cdot B\) · \(1\cdot A=A\)</td></tr>
+<tr><td>Propiedades del producto de matrices</td><td>asociativa: \(A\cdot(B\cdot C)=(A\cdot B)\cdot C\) · distributiva: \(A\cdot(B+C)=A\cdot B+A\cdot C\) · neutro: \(I_m\cdot A=A\cdot I_n=A\) · \(A\cdot O=O\) · no conmutativa</td></tr>
+<tr><td>Forma matricial de un sistema</td><td>\(A\cdot X=B\): matriz de coeficientes, de incógnitas y de términos independientes. Coeficiente \(0\) si una variable no aparece</td></tr>
+<tr><td>Matriz ampliada</td><td>matriz de coeficientes con la columna de términos independientes, separada por una línea vertical</td></tr>
+<tr><td>Operaciones elementales</td><td>\(F_i\leftrightarrow F_j\) · \(F_i\to k\cdot F_i\) (\(k\) distinto de \(0\)) · \(F_i\to F_i+k\cdot F_j\). Se aplican a toda la fila y dan sistemas equivalentes</td></tr>
+<tr><td>Reducción (Gauss-Jordan)</td><td>columna por columna: pivote \(1\) y ceros en el resto de la columna. Si se llega a la identidad, la última columna da la solución</td></tr>
+<tr><td>Clasificación</td><td>determinado: una única solución · indeterminado: alguna incógnita libre, sin contradicciones · incompatible: aparece \({\def\arraystretch{1.45}\left[\mkern5mu\begin{array}{cc|c}0&0&k\end{array}\mkern5mu\right]}\), con \(k\) distinto de \(0\)</td></tr>
+<tr><td>Aplicaciones</td><td>definir qué representan filas y columnas, controlar los órdenes, operar e interpretar el resultado con sus unidades</td></tr>
+</tbody>
+</table>
+<p class="sintesis-frase">Una matriz ordena la información; las operaciones la combinan; la reducción la transforma sin perder soluciones.</p>
+</div>
+
+<div class="nav-actions"><button class="btn-nav prev" onclick="goStep(-1)">← Anterior</button><span></span></div>
+</div>
+</section>
+</main>
+<footer class="pie">© 2026 <strong>Mg. Janina Roldan</strong> · Licencia CC BY-NC-ND 4.0</footer>
+</div>
+
+<script>
+/* ---------- Portada ---------- */
+document.body.style.overflow='hidden';
+function iniciarCapsula(){
+  document.getElementById('portada').classList.add('oculta');
+  const cap=document.getElementById('capsula');
+  cap.classList.add('visible');
+  document.body.style.overflow='';
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});typeset(cap)},150);
+}
+
+/* ---------- KaTeX ---------- */
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el||document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+  }
+}
+
+/* ---------- Tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const progressFill=document.getElementById('progressFill');
+function activateTab(tab){
+  const index=tabs.indexOf(tab);
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const activePanel=document.getElementById(tab.dataset.tab);
+  activePanel.classList.add('active');
+  if(progressFill)progressFill.style.width=((index+1)/tabs.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>typeset(activePanel),80);
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab)));
+function goStep(delta){
+  const idx=tabs.findIndex(t=>t.classList.contains('active'));
+  const next=idx+delta;
+  if(next>=0&&next<tabs.length)activateTab(tabs[next]);
+}
+
+/* ---------- Acordeón de errores frecuentes ---------- */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  item.classList.toggle('open');
+  const abierto=item.classList.contains('open');
+  const s=btn.querySelector('.acc-icon');
+  if(s)s.textContent=abierto?'−':'+';
+  btn.setAttribute('aria-expanded',abierto?'true':'false');
+  setTimeout(()=>typeset(item),80);
+}
+
+/* ---------- Actividades de opción múltiple ---------- */
+function initActivity(group){
+  const feedback=group.nextElementSibling;
+  if(!feedback||!feedback.classList.contains('feedback'))return;
+  const correctAnswer=group.dataset.answer;
+  function reset(){
+    delete group.dataset.answered;
+    group.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong')});
+    feedback.className='feedback';feedback.innerHTML='';
+  }
+  group.querySelectorAll('.opt').forEach(opt=>opt.addEventListener('click',()=>{
+    if(group.dataset.answered)return;
+    group.dataset.answered='true';
+    const isCorrect=opt.dataset.value===correctAnswer;
+    group.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    if(isCorrect)opt.classList.add('correct');else opt.classList.add('wrong');
+    const msg=isCorrect?feedback.dataset.ok:(opt.dataset.fb||feedback.dataset.no);
+    feedback.className='feedback show '+(isCorrect?'ok':'no');
+    feedback.innerHTML=msg;
+    const btnR=document.createElement('button');
+    btnR.className='btn-reintentar';btnR.textContent='↺ Reintentar';
+    btnR.addEventListener('click',()=>{reset();setTimeout(()=>typeset(feedback.parentElement),80)});
+    feedback.appendChild(btnR);
+    setTimeout(()=>typeset(feedback),80);
+  }));
+}
+document.querySelectorAll('.options').forEach(group=>initActivity(group));
+
+/* ============================================================
+   FORMATO DE NÚMEROS
+   ============================================================ */
+function redondear(n,d){const p=Math.pow(10,d==null?2:d);const r=Math.round(n*p)/p;return Object.is(r,-0)?0:r;}
+function fmtT(n,d){ // texto plano (SVG): coma decimal, signo menos tipográfico
+  const r=redondear(n,d);
+  let s=String(Math.abs(r)).replace('.',',');
+  return (r<0?'−':'')+s;
+}
+function fmtMiles(n){ // 125000 → 125.000
+  const r=Math.round(n);
+  const s=String(Math.abs(r)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return (r<0?'−':'')+s;
+}
+function fmtK(n,d){ // KaTeX: coma decimal
+  const r=redondear(n,d);
+  return String(r).replace('.','{,}');
+}
+function esExacto(n){return Math.abs(n*100-Math.round(n*100))<1e-9;}
+
+/* ============================================================
+   MOTOR DE GRÁFICOS SVG
+   ============================================================ */
+let plotSeq=0;
+const C={teal:'#0F6B6F',tealL:'#1F8C91',green:'#23865B',coral:'#E0735F',red:'#C94848',violet:'#7C5CE6',
+  orange:'#FF7A00',navy:'#223740',slate:'#5D737C',axis:'#9FB8BA',grid:'#EDF4F4',guide:'#A7B6BB'};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function plot(svg,cfg){
+  if(typeof svg==='string')svg=document.getElementById(svg);
+  if(!svg)return;
+  const W=cfg.w||520,H=cfg.h||400;
+  const m=Object.assign({l:44,r:18,t:18,b:32},cfg.margin||{});
+  const pw=W-m.l-m.r, ph=H-m.t-m.b;
+  const {xMin,xMax,yMin,yMax}=cfg;
+  const X=x=>m.l+(x-xMin)/(xMax-xMin)*pw;
+  const Y=y=>m.t+ph-(y-yMin)/(yMax-yMin)*ph;
+  const inside=(x,y)=>x>=xMin-1e-9&&x<=xMax+1e-9&&y>=yMin-1e-9&&y<=yMax+1e-9;
+  const fs=cfg.fs||11;
+  const font=`font-family="Inter,sans-serif"`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const id='clip'+(++plotSeq);
+  let s=`<defs><clipPath id="${id}"><rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}"/></clipPath></defs>`;
+  // cuadrícula
+  if(cfg.grid){
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep)s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${m.t+ph}" stroke="${C.grid}"/>`;
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep)s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${m.l+pw}" y2="${Y(y)}" stroke="${C.grid}"/>`;
+  }
+  // ejes
+  const ax=(yMin<=0&&yMax>=0)?Y(0):Y(yMin);
+  const ay=(xMin<=0&&xMax>=0)?X(0):X(xMin);
+  s+=`<line x1="${m.l}" y1="${ax}" x2="${m.l+pw}" y2="${ax}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  s+=`<line x1="${ay}" y1="${m.t}" x2="${ay}" y2="${m.t+ph}" stroke="${C.axis}" stroke-width="1.5"/>`;
+  // marcas
+  if(!cfg.noTicks){
+    const fx=cfg.fmtX||(v=>fmtT(v)), fy=cfg.fmtY||(v=>fmtT(v));
+    if(cfg.xStep)for(let x=Math.ceil(xMin/cfg.xStep)*cfg.xStep;x<=xMax+1e-9;x+=cfg.xStep){
+      const xr=redondear(x,6); if(xr===0&&!cfg.showZeroX)continue;
+      s+=`<line x1="${X(xr)}" y1="${ax-3}" x2="${X(xr)}" y2="${ax+3}" stroke="${C.axis}"/>`;
+      s+=`<text x="${X(xr)}" y="${ax+15}" font-size="${fs-1}" text-anchor="middle" fill="${C.slate}" ${font}>${fx(xr)}</text>`;
+    }
+    if(cfg.yStep)for(let y=Math.ceil(yMin/cfg.yStep)*cfg.yStep;y<=yMax+1e-9;y+=cfg.yStep){
+      const yr=redondear(y,6); if(yr===0&&!cfg.showZeroY)continue;
+      s+=`<line x1="${ay-3}" y1="${Y(yr)}" x2="${ay+3}" y2="${Y(yr)}" stroke="${C.axis}"/>`;
+      s+=`<text x="${ay-7}" y="${Y(yr)+3.5}" font-size="${fs-1}" text-anchor="end" fill="${C.slate}" ${font}>${fy(yr)}</text>`;
+    }
+  }
+  if(cfg.xName&&cfg.xNameBelow)s+=`<text x="${m.l+pw/2}" y="${H-6}" font-size="${fs}" text-anchor="middle" fill="${C.slate}" font-weight="600" ${font}>${esc(cfg.xName)}</text>`;
+  else if(cfg.xName)s+=`<text x="${m.l+pw-2}" y="${ax-7}" font-size="${fs}" text-anchor="end" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.xName)}</text>`;
+  if(cfg.yName)s+=`<text x="${ay+7}" y="${m.t+11}" font-size="${fs}" text-anchor="start" fill="${C.slate}" font-style="italic" ${font}>${esc(cfg.yName)}</text>`;
+
+  let g='';
+  // tramos del eje x (signo)
+  (cfg.bands||[]).forEach(b=>{
+    const x1=X(Math.max(b.from,xMin)), x2=X(Math.min(b.to,xMax));
+    g+=`<line x1="${x1}" y1="${ax}" x2="${x2}" y2="${ax}" stroke="${b.color}" stroke-width="6" stroke-linecap="butt" opacity=".85"/>`;
+  });
+  // rectas verticales
+  (cfg.vlines||[]).forEach(v=>{
+    g+=`<line x1="${X(v.x)}" y1="${m.t}" x2="${X(v.x)}" y2="${m.t+ph}" stroke="${v.color||C.guide}" stroke-width="1.4" stroke-dasharray="${v.dash||'5 4'}"/>`;
+  });
+  // segmentos auxiliares
+  (cfg.segs||[]).forEach(q=>{
+    g+=`<line x1="${X(q.x1)}" y1="${Y(q.y1)}" x2="${X(q.x2)}" y2="${Y(q.y2)}" stroke="${q.color||C.guide}" stroke-width="1.2" stroke-dasharray="${q.dash||'4 4'}"/>`;
+  });
+  // curvas
+  (cfg.curves||[]).forEach(c=>{
+    const from=c.from!=null?c.from:xMin, to=c.to!=null?c.to:xMax;
+    if(c.discrete){
+      for(let x=from;x<=to+1e-9;x+=c.discrete){
+        const y=c.f(x);
+        g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="${c.r||2.4}" fill="${c.color||C.teal}"/>`;
+      }
+      return;
+    }
+    const N=c.n||300, span=(yMax-yMin);
+    let d='';
+    for(let i=0;i<=N;i++){
+      const x=from+(to-from)*i/N;
+      let y=c.f(x);
+      y=Math.max(yMin-span,Math.min(yMax+span,y));
+      d+=(i?'L':'M')+X(x).toFixed(2)+' '+Y(y).toFixed(2);
+    }
+    g+=`<path d="${d}" fill="none" stroke="${c.color||C.teal}" stroke-width="${c.width||3}" stroke-linecap="round" stroke-linejoin="round"${c.dash?` stroke-dasharray="${c.dash}"`:''}/>`;
+  });
+  s+=`<g clip-path="url(#${id})">${g}</g>`;
+  // puntos y etiquetas (fuera del recorte, solo si el punto está en la ventana)
+  (cfg.points||[]).forEach(p=>{
+    if(!inside(p.x,p.y))return;
+    const px=X(p.x), py=Y(p.y);
+    s+=p.hollow
+      ?`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="#fff" stroke="${p.color}" stroke-width="2"/>`
+      :`<circle cx="${px}" cy="${py}" r="${p.r||5.5}" fill="${p.color}" stroke="#fff" stroke-width="1.5"/>`;
+    if(p.label){
+      const lx=px+(p.dx!=null?p.dx:8), ly=py+(p.dy!=null?p.dy:-8);
+      const lines=String(p.label).split('\n');
+      lines.forEach((ln,i)=>{
+        s+=`<text x="${lx}" y="${ly+i*(fs+2)}" font-size="${p.fs||fs}" text-anchor="${p.anchor||'start'}" fill="${p.lc||p.color}" font-weight="700" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(ln)}</text>`;
+      });
+    }
+  });
+  (cfg.labels||[]).forEach(t=>{
+    s+=`<text x="${X(t.x)}" y="${Y(t.y)}" font-size="${t.fs||fs}" text-anchor="${t.anchor||'start'}" fill="${t.color||C.slate}" font-weight="${t.bold?700:500}" ${font} paint-order="stroke" stroke="#fff" stroke-width="3">${esc(t.text)}</text>`;
+  });
+  svg.innerHTML=s;
+}
+
+/* ============================================================
+   NÚMEROS RACIONALES (para la reducción)
+   ============================================================ */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;}
+function Q(n,d){d=d||1;if(d<0){n=-n;d=-d;}const g=gcd(n,d);return {n:n/g,d:d/g};}
+function qAdd(a,b){return Q(a.n*b.d+b.n*a.d,a.d*b.d);}
+function qMul(a,b){return Q(a.n*b.n,a.d*b.d);}
+function qAbs(a){return Q(Math.abs(a.n),a.d);}
+function qTex(a){
+  if(a.d===1)return String(a.n);
+  return (a.n<0?'-':'')+'\\tfrac{'+Math.abs(a.n)+'}{'+a.d+'}';
+}
+function qPar(a){return a.n<0?'('+qTex(a)+')':qTex(a);}
+function kx(x){return Array.isArray(x)?Q(x[0],x[1]):Q(x,1);}
+function tex(s){try{return katex.renderToString(s,{throwOnError:false,trust:true,strict:'ignore'});}catch(e){return s;}}
+
+/* Matriz escrita en LaTeX (KaTeX), con corchetes que acompañan la altura */
+const MXS='\\def\\arraystretch{1.45}';
+function mxTex(rows,opt){
+  opt=opt||{};
+  const nc=rows[0].length;
+  const spec=opt.nc!=null?'c'.repeat(opt.nc)+'|'+'c'.repeat(nc-opt.nc):'c'.repeat(nc);
+  const body=rows.map((r,i)=>r.map((v,j)=>{
+    let t=opt.cell?opt.cell(i,j,v):(typeof v==='object'?qTex(v):String(v));
+    const cls=[];
+    if(opt.cambia&&opt.cambia.has(i))cls.push('cambia');
+    if(opt.cls){const c=opt.cls(i,j);if(c)cls.push(c);}
+    if(opt.click)cls.push('celbtn');
+    if(cls.length)t=`\\htmlClass{${cls.join(' ')}}{${t}}`;
+    if(opt.click)t=`\\htmlData{i=${i}, j=${j}}{${t}}`;
+    return t;
+  }).join('&')).join('\\\\');
+  return `{${MXS}\\left[\\mkern5mu\\begin{array}{${spec}}${body}\\end{array}\\mkern5mu\\right]}`;
+}
+function mxHTML(rows,opt){return tex(mxTex(rows,opt));}
+function activarCeldas(cont,etq){
+  cont.querySelectorAll('[data-i]').forEach(el=>{
+    el.setAttribute('role','button');el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label',etq(+el.dataset.i,+el.dataset.j));
+    el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();el.click();}});
+  });
+}
+
+/* ============================================================
+   REDUCCIÓN DE GAUSS-JORDAN
+   ============================================================ */
+const GJ={
+ ej11:{m:[[2,1,5],[1,-1,1]],nc:2,pasos:[
+   {t:'Para tener un \\(1\\) en la posición \\((1;1)\\), se intercambian las filas:',ops:[['s',0,1]]},
+   {t:'Se hace un cero debajo del pivote:',ops:[['a',1,0,-2]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((2;2)\\):',ops:[['k',1,[1,3]]]},
+   {t:'Se hace un cero encima del pivote:',ops:[['a',0,1,1]]}],
+  fin:'<strong>Solución:</strong> \\(x=2\\) e \\(y=1\\), es decir, \\(S=\\{(2;1)\\}\\).<br><strong>Verificación:</strong> \\(2\\cdot2+1=5\\) ✓; \\(2-1=1\\) ✓.'},
+ ej12:{m:[[1,1,1,6],[2,-1,1,3],[1,2,-1,2]],nc:3,pasos:[
+   {t:'Se hacen ceros debajo del pivote \\(a_{11}=1\\):',ops:[['a',1,0,-2],['a',2,0,-1]]},
+   {t:'Para tener un \\(1\\) en la posición \\((2;2)\\), se intercambian las filas 2 y 3:',ops:[['s',1,2]]},
+   {t:'Se hacen ceros encima y debajo del nuevo pivote:',ops:[['a',0,1,-1],['a',2,1,3]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((3;3)\\):',ops:[['k',2,[-1,7]]]},
+   {t:'Se hacen ceros encima del último pivote:',ops:[['a',0,2,-3],['a',1,2,2]]}],
+  fin:'<strong>Solución:</strong> \\(x=1\\), \\(y=2\\), \\(z=3\\), es decir, \\(S=\\{(1;2;3)\\}\\). Es la misma solución que se obtiene por sustitución.<br><strong>Verificación:</strong> \\(1+2+3=6\\) ✓; \\(2\\cdot1-2+3=3\\) ✓; \\(1+2\\cdot2-3=2\\) ✓.'},
+ ej13:{m:[[1,1,3],[2,2,10]],nc:2,pasos:[
+   {t:'Se hace un cero debajo del pivote:',ops:[['a',1,0,-2]]}],
+  fin:'<strong>Conclusión:</strong> la segunda fila equivale a \\(0=4\\), que es falso: el sistema es incompatible y no tiene solución. Gráficamente, las rectas son paralelas.'},
+ ej14:{m:[[1,1,3],[2,2,6]],nc:2,pasos:[
+   {t:'Se hace un cero debajo del pivote:',ops:[['a',1,0,-2]]}],
+  fin:'La segunda fila equivale a \\(0=0\\): esa ecuación no aporta una condición nueva. Queda una sola ecuación con dos incógnitas, \\(x+y=3\\), y no hay filas contradictorias: el sistema es compatible indeterminado. Se despeja \\(x\\) en función de \\(y\\), que queda libre: \\(x=3-y\\), con \\(y\\in\\mathbb{R}\\).<br><strong>Solución:</strong> \\(S=\\{(3-y;y):y\\in\\mathbb{R}\\}\\). Por ejemplo, con \\(y=0\\), \\(y=1\\) e \\(y=3\\) se obtienen \\((3;0)\\), \\((2;1)\\) y \\((0;3)\\).'},
+ ej15:{m:[[1,1,1,3],[1,1,1,5],[1,-1,0,0]],nc:3,pasos:[
+   {t:'Se hacen ceros debajo del pivote \\(a_{11}=1\\):',ops:[['a',1,0,-1],['a',2,0,-1]]}],
+  fin:'<strong>Conclusión:</strong> la segunda fila equivale a \\(0=2\\), que es falso: el sistema es incompatible, aunque las otras filas no se contradigan entre sí.'},
+ ej16:{m:[[1,1,1,6],[2,2,2,12],[1,-1,0,0]],nc:3,pasos:[
+   {t:'Se hacen ceros debajo del pivote \\(a_{11}=1\\):',ops:[['a',1,0,-2],['a',2,0,-1]]},
+   {t:'La segunda fila equivale a \\(0=0\\): esa ecuación no aporta una condición nueva, pero eso no alcanza para clasificar el sistema; hay que seguir con las filas restantes. Se intercambian las filas 2 y 3:',ops:[['s',1,2]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((2;2)\\):',ops:[['k',1,[-1,2]]]},
+   {t:'Se hace un cero encima del pivote:',ops:[['a',0,1,-1]]}],
+  fin:'La primera fila equivale a \\(x+\\tfrac{1}{2}z=3\\) y la segunda, a \\(y+\\tfrac{1}{2}z=3\\). Como \\(z\\) queda libre, se despejan \\(x\\) e \\(y\\) en función de \\(z\\): \\(x=3-\\tfrac{1}{2}z\\) e \\(y=3-\\tfrac{1}{2}z\\), con \\(z\\in\\mathbb{R}\\).<br><strong>Solución:</strong> \\(S=\\{(3-\\tfrac{1}{2}z;3-\\tfrac{1}{2}z;z):z\\in\\mathbb{R}\\}\\). Por ejemplo, con \\(z=0\\) se obtiene \\((3;3;0)\\) y con \\(z=2\\), \\((2;2;2)\\). El sistema es compatible indeterminado.'},
+ ej21:{m:[[1,1,12],[1500,4500,33000]],nc:2,pasos:[
+   {t:'Se simplifica la segunda fila, dividiéndola por \\(1500\\):',ops:[['k',1,[1,1500]]]},
+   {t:'Se hace un cero debajo del pivote:',ops:[['a',1,0,-1]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((2;2)\\):',ops:[['k',1,[1,2]]]},
+   {t:'Se hace un cero encima del pivote:',ops:[['a',0,1,-1]]}],
+  fin:'<strong>Solución:</strong> \\(x=7\\) e \\(y=5\\), es decir, \\(S=\\{(7;5)\\}\\).'},
+ ej22:{m:[[1,1,1,850000],[1,-2,0,0],[0,-1,1,50000]],nc:3,pasos:[
+   {t:'Se hace un cero debajo del pivote \\(a_{11}=1\\):',ops:[['a',1,0,-1]]},
+   {t:'Para trabajar con números más simples, se intercambian las filas 2 y 3:',ops:[['s',1,2]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((2;2)\\):',ops:[['k',1,-1]]},
+   {t:'Se hacen ceros encima y debajo del pivote:',ops:[['a',0,1,-1],['a',2,1,3]]},
+   {t:'Se consigue un \\(1\\) en la posición \\((3;3)\\):',ops:[['k',2,[-1,4]]]},
+   {t:'Se hacen ceros encima del último pivote:',ops:[['a',0,2,-2],['a',1,2,1]]}],
+  fin:'<strong>Solución:</strong> \\(x=400000\\), \\(y=200000\\) y \\(z=250000\\), es decir, \\(S=\\{(400000;200000;250000)\\}\\).'}
+};
+
+function opTex(op){
+  const t=op[0],i=op[1]+1;
+  if(t==='s')return `F_${i}\\leftrightarrow F_${op[2]+1}`;
+  if(t==='k'){
+    const k=kx(op[2]);
+    let s;
+    if(k.d===1)s=k.n<0?`(${k.n})`:String(k.n);
+    else s=k.n<0?`\\left(${qTex(k)}\\right)`:qTex(k);
+    return `F_${i}\\to ${s}\\cdot F_${i}`;
+  }
+  const k=kx(op[3]),a=qAbs(k);
+  const coef=(a.n===1&&a.d===1)?'':qTex(a)+'\\cdot ';
+  return `F_${i}\\to F_${i}${k.n<0?'-':'+'}${coef}F_${op[2]+1}`;
+}
+function aplicarOp(M,op){
+  const R=M.map(r=>r.slice());
+  const t=op[0],i=op[1];
+  if(t==='s'){const j=op[2];[R[i],R[j]]=[R[j],R[i]];return {R,cuentas:null};}
+  if(t==='k'){
+    const k=kx(op[2]);
+    const lines=[];
+    R[i]=M[i].map(v=>{const r=qMul(k,v);lines.push(`${k.d===1&&k.n>=0?k.n:(k.n<0?'\\left('+qTex(k)+'\\right)':qTex(k))}\\cdot${qPar(v)}&=${qTex(r)}`);return r;});
+    return {R,cuentas:{fila:i,lines}};
+  }
+  const j=op[2],k=kx(op[3]),a=qAbs(k);
+  const coef=(a.n===1&&a.d===1)?'':qTex(a)+'\\cdot ';
+  const lines=[];
+  R[i]=M[i].map((v,c)=>{const r=qAdd(v,qMul(k,M[j][c]));lines.push(`${qTex(v)}${k.n<0?'-':'+'}${coef}${coef?qPar(M[j][c]):qPar(M[j][c])}&=${qTex(r)}`);return r;});
+  return {R,cuentas:{fila:i,lines}};
+}
+function calcularGJ(d){
+  let M=d.m.map(r=>r.map(v=>Q(v,1)));
+  const estados=[{M,cambia:new Set(),ops:[],cuentas:[],t:'Matriz ampliada:'}];
+  d.pasos.forEach(p=>{
+    const cambia=new Set(),cuentas=[];
+    p.ops.forEach(op=>{
+      const r=aplicarOp(M,op);M=r.R;
+      if(op[0]==='s'){cambia.add(op[1]);cambia.add(op[2]);}else cambia.add(op[1]);
+      if(r.cuentas)cuentas.push(r.cuentas);
+    });
+    estados.push({M,cambia,ops:p.ops.map(opTex),cuentas,t:p.t});
+  });
+  return estados;
+}
+function pasoHTML(e,k,N,nc){
+  let h=`<div class="gj-paso${k===0?' ini':''}">`;
+  if(k>0)h+=`<div class="gj-cab">Paso ${k} de ${N}</div>`;
+  h+=`<div class="gj-txt">${e.t}</div>`;
+  if(e.ops.length)h+=`<div class="gj-ops">${e.ops.map(o=>'<span class="gj-op">'+tex(o)+'</span>').join('')}</div>`;
+  h+=`<div class="gj-mat">${tex('\\displaystyle '+mxTex(e.M,{nc,cambia:e.cambia}))}</div>`;
+  if(e.cuentas.length){
+    h+='<details><summary>Ver las cuentas</summary><div class="gj-cuentas">';
+    e.cuentas.forEach(c=>{h+=`<div><strong style="display:block">Nueva fila ${c.fila+1}:</strong>${tex('\\begin{aligned}'+c.lines.join('\\\\')+'\\end{aligned}')}</div>`;});
+    h+='</div></details>';
+  }
+  return h+'</div>';
+}
+function initGJ(el){
+  const d=GJ[el.dataset.gj];if(!d)return;
+  const est=calcularGJ(d),N=est.length-1;
+  let modo=el.dataset.modo||'todo',idx=0;
+  function render(){
+    let h='';
+    if(modo==='todo'){
+      est.forEach((e,k)=>h+=pasoHTML(e,k,N,d.nc));
+      h+=`<div class="gj-fin">${d.fin}</div>`;
+      h+=`<div class="gj-nav"><button class="btn-chip" data-a="modo">Ver paso a paso</button></div>`;
+    }else{
+      h+=pasoHTML(est[idx],idx,N,d.nc);
+      if(idx===N)h+=`<div class="gj-fin">${d.fin}</div>`;
+      h+=`<div class="gj-nav"><button class="btn-chip" data-a="prev" ${idx===0?'disabled':''}>← Paso anterior</button><button class="btn-chip" data-a="next" ${idx===N?'disabled':''}>Paso siguiente →</button><button class="btn-chip reset-btn" data-a="modo">Ver todos los pasos</button></div>`;
+    }
+    el.innerHTML=h;
+    typeset(el);
+  }
+  el.addEventListener('click',ev=>{
+    const b=ev.target.closest('button[data-a]');if(!b)return;
+    const a=b.dataset.a;
+    if(a==='prev'&&idx>0)idx--;
+    else if(a==='next'&&idx<N)idx++;
+    else if(a==='modo'){modo=modo==='todo'?'pasos':'todo';idx=0;}
+    render();
+  });
+  render();
+}
+
+/* ============================================================
+   UBICAR UN ELEMENTO EN V
+   ============================================================ */
+const UB={M:[[20,15],[30,10],[25,5]],prod:['P','Q'],sel:[1,0]};
+function ubDibujar(){
+  const [si,sj]=UB.sel;
+  const etiquetas=`{${MXS}\\begin{array}{r}${UB.M.map((_,i)=>`\\text{Sucursal ${i+1}}`).join('\\\\')}\\end{array}}`;
+  const m=mxTex(UB.M,{click:true,cls:(i,j)=>(i===si&&j===sj)?'hl-cell':((i===si)?'hl':(j===sj?'hl-col':''))});
+  const el=document.getElementById('ubicarV');
+  el.innerHTML=`<div class="ub-cols">Columna 1: producto P · Columna 2: producto Q</div>`+tex(`\\displaystyle ${etiquetas}\\mkern8mu${m}`);
+  activarCeldas(el,(i,j)=>`Elemento de la fila ${i+1}, columna ${j+1}`);
+  const v=UB.M[si][sj];
+  const L=document.getElementById('ubicarLectura');
+  L.innerHTML=`El elemento \\(v_{${si+1}${sj+1}}=${v}\\) está en la fila ${si+1} y en la columna ${sj+1}: indica que la sucursal ${si+1} vendió \\(${v}\\) unidades de ${UB.prod[sj]}.`;
+  typeset(L);
+}
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('#ubicarV [data-i]');if(!b)return;
+  UB.sel=[+b.dataset.i,+b.dataset.j];ubDibujar();
+});
+
+/* ============================================================
+   CONTROL DE ÓRDENES
+   ============================================================ */
+function ordInit(){
+  const ids=['ordM','ordN','ordP','ordQ'],def=[2,3,3,2];
+  ids.forEach((id,k)=>{
+    const s=document.getElementById(id);
+    for(let v=1;v<=4;v++){const o=document.createElement('option');o.value=v;o.textContent=v;if(v===def[k])o.selected=true;s.appendChild(o);}
+    s.addEventListener('change',ordDibujar);
+  });
+  ordDibujar();
+}
+function ordDibujar(){
+  const [m,n,p,q]=['ordM','ordN','ordP','ordQ'].map(id=>+document.getElementById(id).value);
+  const dim=(a,b)=>{const ok=a===b;return [`<span class="ord-dim ${ok?'ok':'mal'}">${a}</span>`,`<span class="ord-dim ${ok?'ok':'mal'}">${b}</span>`];};
+  const suma=(m===p&&n===q);
+  const [x1,x2]=dim(n,p),[y1,y2]=dim(q,m);
+  const ab=n===p, ba=q===m;
+  document.getElementById('ordRes').innerHTML=`
+   <div class="ord-item ${suma?'si':'no'}"><span class="qx-lab">A + B y A − B</span>${suma?`Definidas: las dos matrices son de orden ${m}×${n}. El resultado es de orden ${m}×${n}.`:`No definidas: los órdenes ${m}×${n} y ${p}×${q} no coinciden.`}</div>
+   <div class="ord-item ${ab?'si':'no'}"><span class="qx-lab">A · B</span>(${m}×${x1})·(${x2}×${q})<br>${ab?`Definido: el resultado es de orden ${m}×${q}.`:`No definido: A tiene ${n} columna${n>1?'s':''} y B tiene ${p} fila${p>1?'s':''}.`}</div>
+   <div class="ord-item ${ba?'si':'no'}"><span class="qx-lab">B · A</span>(${p}×${y1})·(${y2}×${n})<br>${ba?`Definido: el resultado es de orden ${p}×${n}.`:`No definido: B tiene ${q} columna${q>1?'s':''} y A tiene ${m} fila${m>1?'s':''}.`}</div>`;
+}
+
+/* ============================================================
+   PRODUCTO: FILA POR COLUMNA
+   ============================================================ */
+const PROD={
+  ej7:{A:[[1,0,2],[3,1,-1]],B:[[2,1],[0,3],[1,-2]],na:'A',nb:'B'},
+  ab8:{A:[[1,2],[3,4]],B:[[0,1],[1,0]],na:'A',nb:'B'},
+  ba8:{A:[[0,1],[1,0]],B:[[1,2],[3,4]],na:'B',nb:'A'},
+  vp:{A:[[20,15],[30,10],[25,5]],B:[[200],[300]],na:'V',nb:'p',interp:(i)=>`Es el ingreso de la sucursal ${i+1}, en pesos.`}
+};
+const PS={k:'ej7',vis:new Set(),sel:null};
+function prodVal(d,i,j){let s=0;for(let t=0;t<d.B.length;t++)s+=d.A[i][t]*d.B[t][j];return s;}
+function prodDibujar(){
+  const d=PROD[PS.k],m=d.A.length,n=d.B.length,p=d.B[0].length;
+  const sel=PS.sel;
+  const C=Array.from({length:m},(_,i)=>Array.from({length:p},(_,j)=>prodVal(d,i,j)));
+  const tA=mxTex(d.A,{cls:(i,j)=>sel&&i===sel[0]?'hl':''});
+  const tB=mxTex(d.B,{cls:(i,j)=>sel&&j===sel[1]?'hl-col':''});
+  const tC=mxTex(C,{click:true,cls:(i,j)=>{const vis=PS.vis.has(i+'-'+j);return [sel&&i===sel[0]&&j===sel[1]?'hl-cell':'',vis?'':'oculto'].join(' ').trim();},
+    cell:(i,j,v)=>PS.vis.has(i+'-'+j)?String(v):'?'});
+  const esc=document.getElementById('prodEsc');
+  esc.innerHTML=`<div class="prod-cap">${tex(d.na+'\\cdot '+d.nb+'=C')}: órdenes (${m}×${n})·(${n}×${p}) = ${m}×${p}</div>`+tex('\\displaystyle '+tA+'\\cdot '+tB+'='+tC);
+  activarCeldas(esc,(i,j)=>`Calcular el elemento c ${i+1} ${j+1}`);
+  const L=document.getElementById('prodLectura');
+  if(sel){
+    const [i,j]=sel;const sub=`c_{${i+1}${j+1}}`;
+    const prods=[],vals=[];
+    for(let t=0;t<n;t++){const a=d.A[i][t],b=d.B[t][j];prods.push(`${a<0?'('+a+')':a}\\cdot${b<0?'('+b+')':b}`);vals.push(a*b);}
+    const sumaV=vals.map((v,t)=>t===0?String(v):(v<0?String(v):'+'+v)).join('');
+    const total=C[i][j];
+    L.innerHTML=`Fila ${i+1} de \\(${d.na}\\) por columna ${j+1} de <span class="nobr">\\(${d.nb}\\):</span><div class="calc" style="display:flex;justify-content:center">\\(\\begin{aligned}${sub}&=${prods.join('+')}\\\\${n>1?`${sub}&=${sumaV}\\\\`:''}${sub}&=${total}\\end{aligned}\\)</div>${d.interp?d.interp(i):''}`;
+  }else if(PS.vis.size===m*p){
+    L.innerHTML=`Resultado completo: una matriz de orden ${m}×${p}, porque \\(${d.na}\\) tiene ${m} fila${m>1?'s':''} y \\(${d.nb}\\) tiene ${p} columna${p>1?'s':''}.`;
+  }else{
+    L.innerHTML=`\\(${d.na}\\) es de orden ${m}×${n} y \\(${d.nb}\\) es de orden ${n}×${p}: las columnas de \\(${d.na}\\) coinciden con las filas de \\(${d.nb}\\), así que el producto está definido y el resultado es de orden ${m}×${p}. Tocá un elemento del resultado.`;
+  }
+  typeset(L);
+}
+function prodElegir(i,j){PS.sel=[i,j];PS.vis.add(i+'-'+j);prodDibujar();}
+function prodInit(){
+  const W=document.getElementById('prodWidget');
+  W.addEventListener('click',ev=>{
+    const c=ev.target.closest('#prodEsc [data-i]');
+    if(c){prodElegir(+c.dataset.i,+c.dataset.j);return;}
+    const t=ev.target.closest('button[data-prod]');
+    if(t){W.querySelectorAll('button[data-prod]').forEach(b=>b.classList.toggle('activo',b===t));PS.k=t.dataset.prod;PS.vis=new Set();PS.sel=null;prodDibujar();}
+  });
+  document.getElementById('prodSig').addEventListener('click',()=>{
+    const d=PROD[PS.k],m=d.A.length,p=d.B[0].length;
+    for(let i=0;i<m;i++)for(let j=0;j<p;j++)if(!PS.vis.has(i+'-'+j)){prodElegir(i,j);return;}
+  });
+  document.getElementById('prodTodo').addEventListener('click',()=>{
+    const d=PROD[PS.k];d.A.forEach((_,i)=>d.B[0].forEach((_,j)=>PS.vis.add(i+'-'+j)));PS.sel=null;prodDibujar();
+  });
+  document.getElementById('prodReset').addEventListener('click',()=>{PS.vis=new Set();PS.sel=null;prodDibujar();});
+  prodDibujar();
+}
+
+/* ============================================================
+   MATRICES EN LAS DEVOLUCIONES: renderizar al mostrarse
+   ============================================================ */
+/* Inicializar */
+document.addEventListener('DOMContentLoaded',()=>{
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.gj').forEach(initGJ);
+    ubDibujar();
+    ordInit();
+    prodInit();
+    typeset(document.body);
+  });
+});
+</script>
+</body>
+</html>
